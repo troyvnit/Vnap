@@ -1,13 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<controls:ExtendedTabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:local="clr-namespace:Vnap.Views;assembly=Vnap"
+             xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Vnap.Views.MainPage"
              Title="MainPage">
-  <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-    <Label Text="{Binding Title}" />
-    <Switch IsToggled="{Binding IsActive}" />
-    <Button Text="Navigate to View A" Command="{Binding NavigateCommand}" />
-  </StackLayout>
-</ContentPage>
+  
+</controls:ExtendedTabbedPage>

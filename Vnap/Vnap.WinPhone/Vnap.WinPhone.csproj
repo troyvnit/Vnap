@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CCB845D7-1F31-4D36-B50D-C80694F1A5CC}</ProjectGuid>
+    <ProjectGuid>{3389F6E6-8AB2-400B-AA9D-E42B965D3B96}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Vnap.WinPhone</RootNamespace>

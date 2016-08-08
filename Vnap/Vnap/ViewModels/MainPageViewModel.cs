@@ -1,52 +1,56 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
-using Prism.Events;
-using Vnap.Events;
-using Vnap.Views;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Vnap.ViewModels
 {
-    public class MainPageViewModel : BindableBase
+    public class MainPageViewModel : BaseViewModel
     {
-        INavigationService _navigationService;
-
-        private string _title = "MainPage";
+        private string _title;
         public string Title
         {
             get { return _title; }
             set { SetProperty(ref _title, value); }
         }
 
-        private bool _isActive = false;
-        public bool IsActive
+        private string[] _tabs;
+
+        public string[] Tabs
         {
-            get { return _isActive; }
-            set
+            get { return _tabs; }
+            set { SetProperty(ref _tabs, value); }
+        }
+
+        private List<string> listTabs = new List<string>() { "CAY TRONG", "THONG TIN", "TU VAN" };
+
+        public MainPageViewModel()
+        {
+
+            _tabs = listTabs.ToArray();
+        }
+
+        public override void OnNavigatedFrom(NavigationParameters parameters)
+        {
+
+        }
+
+        public override void OnNavigatedTo(NavigationParameters parameters)
+        {
+            var indexOfTab = 1;
+            if (parameters.ContainsKey("tab"))
             {
-
-                SetProperty(ref _isActive, value);
+                var tab = (string) parameters["tab"];
+                indexOfTab = listTabs.IndexOf(tab);
             }
-        }
-
-        public DelegateCommand NavigateCommand { get; private set; }
-
-        public MainPageViewModel(INavigationService navigationService, IEventAggregator ea)
-        {
-            _navigationService = navigationService;
-            NavigateCommand = new DelegateCommand(Navigate).ObservesCanExecute((p) => IsActive);
-
-            ea.GetEvent<StringEvent>().Subscribe(Handled);
-        }
-
-        private void Handled(string obj)
-        {
-            Title = obj;
-        }
-
-        private void Navigate()
-        {
-            _navigationService.Navigate("LeftMenuPage");
+            _tabs = new string[]
+            {
+                    listTabs[indexOfTab - 1],
+                    listTabs[indexOfTab],
+                    listTabs[indexOfTab + 1]
+            };
         }
     }
 }

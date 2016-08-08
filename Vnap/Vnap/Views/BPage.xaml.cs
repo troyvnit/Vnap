@@ -2,13 +2,11 @@
 
 namespace Vnap.Views
 {
-    public partial class LeftMenuPage : ContentPage
+    public partial class BPage : ContentPage
     {
-        public LeftMenuPage()
+        public BPage()
         {
             InitializeComponent();
-
-            WidthRequest = 250;
         }
     }
 }

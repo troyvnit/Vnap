@@ -10,13 +10,9 @@ namespace Vnap.Views
         public MainPage()
         {
             InitializeComponent();
-            var model = BindingContext as MainPageViewModel;
-            if (model != null)
-                foreach (var tab in model.Tabs)
-                {
-                    Children.Add(new APage(tab));
-                }
-            BackgroundColor = Color.White;
+            Children.Add(new PlantListPage());
+            Children.Add(new InfoPage());
+            Children.Add(new AdvisoryPage());
         }
     }
 }

@@ -20,8 +20,9 @@ namespace Vnap
             Container.RegisterTypeForNavigation<MainPage>();
             Container.RegisterTypeForNavigation<Navigation>();
             Container.RegisterTypeForNavigation<LeftMenu>();
-            Container.RegisterTypeForNavigation<APage>();
-            Container.RegisterTypeForNavigation<BPage>();
+            Container.RegisterTypeForNavigation<PlantListPage>();
+            Container.RegisterTypeForNavigation<InfoPage>();
+            Container.RegisterTypeForNavigation<AdvisoryPage>();
         }
 
         protected override void ConfigureModuleCatalog()

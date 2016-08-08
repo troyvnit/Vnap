@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using FFImageLoading;
 using Microsoft.Practices.Unity;
 using Prism.Unity;
 
@@ -20,6 +21,7 @@ namespace Vnap.Droid
             ToolbarResource = Resource.Layout.toolbar;
 
             base.OnCreate(bundle);
+            FFImageLoading.Forms.Droid.CachedImageRenderer.Init();
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App(new Androidinitializer()));

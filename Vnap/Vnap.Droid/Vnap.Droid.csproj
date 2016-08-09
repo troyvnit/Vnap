@@ -161,11 +161,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
+    <Compile Include="Renderers\LabelRenderer.cs" />
     <Compile Include="Renderers\TabbedPageRender.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\OpenSans-SemiboldItalic.ttf" />
+    <AndroidAsset Include="Assets\Fonts\OpenSans-Bold.ttf" />
+    <AndroidAsset Include="Assets\Fonts\OpenSans-BoldItalic.ttf" />
+    <AndroidAsset Include="Assets\Fonts\OpenSans-ExtraBold.ttf" />
+    <AndroidAsset Include="Assets\Fonts\OpenSans-ExtraBoldItalic.ttf" />
+    <AndroidAsset Include="Assets\Fonts\OpenSans-Italic.ttf" />
+    <AndroidAsset Include="Assets\Fonts\OpenSans-Light.ttf" />
+    <AndroidAsset Include="Assets\Fonts\OpenSans-LightItalic.ttf" />
+    <AndroidAsset Include="Assets\Fonts\OpenSans-Regular.ttf" />
+    <AndroidAsset Include="Assets\Fonts\OpenSans-Semibold.ttf" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />

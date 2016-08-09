@@ -9,12 +9,12 @@ namespace Vnap.ViewModels
 {
     public class BaseViewModel : BindableBase, INavigationAware
     {
-        private string title = string.Empty;
-        private string subTitle = string.Empty;
-        private string icon = string.Empty;
-        private bool isNotBusy = true;
-        private bool canLoadMore = true;
-        private bool isBusy;
+        private string _title = string.Empty;
+        private string _subTitle = string.Empty;
+        private string _icon = string.Empty;
+        private bool _isNotBusy = true;
+        private bool _canLoadMore = true;
+        private bool _isBusy;
 
         /// <summary>
         /// Gets or sets the title.
@@ -28,11 +28,11 @@ namespace Vnap.ViewModels
         {
             get
             {
-                return this.title;
+                return this._title;
             }
             set
             {
-                this.SetProperty(ref this.title, value);
+                this.SetProperty(ref this._title, value);
             }
         }
 
@@ -48,11 +48,11 @@ namespace Vnap.ViewModels
         {
             get
             {
-                return this.subTitle;
+                return this._subTitle;
             }
             set
             {
-                this.SetProperty(ref this.subTitle, value);
+                this.SetProperty(ref this._subTitle, value);
             }
         }
 
@@ -68,11 +68,11 @@ namespace Vnap.ViewModels
         {
             get
             {
-                return this.icon;
+                return this._icon;
             }
             set
             {
-                this.SetProperty(ref this.icon, value);
+                this.SetProperty(ref this._icon, value);
             }
         }
 
@@ -88,13 +88,13 @@ namespace Vnap.ViewModels
         {
             get
             {
-                return this.isBusy;
+                return this._isBusy;
             }
             set
             {
-                if (!this.SetProperty(ref this.isBusy, value))
+                if (!this.SetProperty(ref this._isBusy, value))
                     return;
-                this.IsNotBusy = !this.isBusy;
+                this.IsNotBusy = !this._isBusy;
             }
         }
 
@@ -110,11 +110,11 @@ namespace Vnap.ViewModels
         {
             get
             {
-                return this.isNotBusy;
+                return this._isNotBusy;
             }
             private set
             {
-                this.SetProperty(ref this.isNotBusy, value);
+                this.SetProperty(ref this._isNotBusy, value);
             }
         }
 
@@ -130,11 +130,11 @@ namespace Vnap.ViewModels
         {
             get
             {
-                return this.canLoadMore;
+                return this._canLoadMore;
             }
             set
             {
-                this.SetProperty(ref this.canLoadMore, value);
+                this.SetProperty(ref this._canLoadMore, value);
             }
         }
 

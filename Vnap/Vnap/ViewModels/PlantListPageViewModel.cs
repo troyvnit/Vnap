@@ -31,8 +31,11 @@ namespace Vnap.ViewModels
         {
             var newPlants = _plantService.Load(null);
 
+            var isEven = _plants.LastOrDefault() != null && _plants.LastOrDefault().IsEven;
             foreach (var plant in newPlants)
             {
+                isEven = !isEven;
+                plant.IsEven = isEven;
                 _plants.Add(plant);
             }
 
@@ -68,8 +71,11 @@ namespace Vnap.ViewModels
         {
             IsBusy = true;
             var items = _plantService.Load(item.CreatedDate);
+            var isEven = _plants.LastOrDefault() != null && _plants.LastOrDefault().IsEven;
             foreach (var plant in items)
             {
+                isEven = !isEven;
+                plant.IsEven = isEven;
                 _plants.Add(plant);
             }
             Title = $"Plants {_plants.Count}";

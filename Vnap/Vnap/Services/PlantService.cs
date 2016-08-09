@@ -26,8 +26,8 @@ namespace Vnap.Services
                 yield return new Plant()
                 {
                     Id = i,
-                    Name = "Carlsberg 33cl",
-                    Description = "Troy Desc",
+                    Name = "Cay Lua".ToUpper(),
+                    Description = "Duoc trong o cac tinh tay nam bo".ToUpper(),
                     CreatedDate = startDate.AddDays(i)
                 };
             }

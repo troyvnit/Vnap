@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace Vnap.Models
 {
@@ -12,5 +13,6 @@ namespace Vnap.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime CreatedDate { get; set; }
+        public bool IsEven { get; set; }
     }
 }

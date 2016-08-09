@@ -10,5 +10,12 @@ namespace Vnap.Views.Templates
             InitializeComponent();
             BindingContext = new Plant();
         }
+
+        protected override void OnBindingContextChanged()
+        {
+            base.OnBindingContextChanged();
+            var plant = BindingContext as Plant;
+            Name.HorizontalTextAlignment = Description.HorizontalTextAlignment = plant != null && plant.IsEven ? TextAlignment.Start : TextAlignment.End;
+        }
     }
 }

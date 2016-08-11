@@ -1,15 +1,16 @@
-﻿using Prism.Navigation;
+﻿using FormsPlugin.Iconize;
+using Prism.Navigation;
 using Xamarin.Forms;
 
 namespace Vnap.Views
 {
-    public partial class Navigation : NavigationPage, INavigationPageOptions
+    public partial class Navigation : IconNavigationPage, INavigationPageOptions
     {
-        public Navigation()
+        public bool ClearNavigationStackOnNavigation => true;
+
+        public Navigation(NavigationPage root) : base(root)
         {
             InitializeComponent();
         }
-
-        public bool ClearNavigationStackOnNavigation => true;
     }
 }

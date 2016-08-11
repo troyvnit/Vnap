@@ -23,12 +23,18 @@ namespace Vnap
             Container.RegisterTypeForNavigation<PlantListPage>();
             Container.RegisterTypeForNavigation<InfoPage>();
             Container.RegisterTypeForNavigation<AdvisoryPage>();
+            Container.RegisterTypeForNavigation<PlantDiseasePage>();
         }
 
         protected override void ConfigureModuleCatalog()
         {
             //ModuleCatalog.AddModule(new ModuleInfo(typeof(ModuleA.ModuleAModule)));
             //ModuleCatalog.AddModule(new ModuleInfo("ModuleA", typeof(ModuleA.ModuleAModule), InitializationMode.OnDemand));
+        }
+
+        public void Search(string query)
+        {
+            NavigationService.NavigateAsync($"Navigation/PlantDiseasePage?query={query}", animated: false);
         }
     }
 }

@@ -4,7 +4,7 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="Vnap.Views.MainPage"
-             Title="MainPage">
+             x:Class="Vnap.Views.PlantDiseasePage"
+             Title="{Binding Title}">
 
 </controls:ExtendedTabbedPage>

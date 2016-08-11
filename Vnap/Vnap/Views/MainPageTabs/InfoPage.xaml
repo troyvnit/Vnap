@@ -6,6 +6,6 @@
              x:Class="Vnap.Views.InfoPage"
              Title="Thong Tin">
 <StackLayout>
-  <Label Text="B" />
+  <Label Text="{Binding Title}" />
 </StackLayout>
 </ContentPage>

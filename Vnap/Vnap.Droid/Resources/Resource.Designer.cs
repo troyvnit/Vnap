@@ -2795,6 +2795,9 @@ namespace Vnap.Droid
 			// aapt resource value: 0x7f0a0041
 			public const int scrollable = 2131361857;
 			
+			// aapt resource value: 0x7f0a00a2
+			public const int search = 2131361954;
+			
 			// aapt resource value: 0x7f0a0066
 			public const int search_badge = 2131361894;
 			

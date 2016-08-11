@@ -24,12 +24,14 @@ namespace Vnap.Droid
             ToolbarResource = Resource.Layout.toolbar;
 
             base.OnCreate(bundle);
+
             FFImageLoading.Forms.Droid.CachedImageRenderer.Init();
             FormsPlugin.Iconize.Droid.IconControls.Init();
             Plugin.Iconize.Iconize.With(new Plugin.Iconize.Fonts.MaterialModule());
+            IconControls.Init(Resource.Id.toolbar, Resource.Id.sliding_tabs);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
-            IconControls.Init(Resource.Id.toolbar, Resource.Id.sliding_tabs);
+
             app = new App(new Androidinitializer());
             LoadApplication(app);
         }

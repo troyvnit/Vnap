@@ -2,6 +2,7 @@
 
 using Android.App;
 using Android.Content.PM;
+using Android.Graphics.Drawables;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
@@ -11,6 +12,7 @@ using FormsPlugin.Iconize.Droid;
 using Java.Interop;
 using Microsoft.Practices.Unity;
 using Prism.Unity;
+using Vnap.Droid.Utils.IconizeModules;
 
 namespace Vnap.Droid
 {
@@ -27,7 +29,7 @@ namespace Vnap.Droid
 
             FFImageLoading.Forms.Droid.CachedImageRenderer.Init();
             FormsPlugin.Iconize.Droid.IconControls.Init();
-            Plugin.Iconize.Iconize.With(new Plugin.Iconize.Fonts.MaterialModule());
+            Plugin.Iconize.Iconize.With(new LinearModule());
             IconControls.Init(Resource.Id.toolbar, Resource.Id.sliding_tabs);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
@@ -39,6 +41,8 @@ namespace Vnap.Droid
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             var search = FindViewById<Android.Support.V7.Widget.SearchView>(Resource.Id.search);
+            var searchIcon = (ImageView)search.FindViewById(Resource.Id.search_mag_icon);
+            searchIcon.SetImageResource(Resource.Drawable.icon);
             search.QueryTextSubmit += (sender, args) =>
             {
                 app.Search(search.Query);

@@ -7,6 +7,6 @@
                 x:Class="Vnap.Views.Navigation">
 
   <!--<iconize:IconNavigationPage.ToolbarItems>
-    <iconize:IconToolbarItem Icon="md-info" IconColor="White"/>
+    <iconize:IconToolbarItem Icon="lnr-alarm" IconColor="White"/>
   </iconize:IconNavigationPage.ToolbarItems>-->
 </iconize:IconNavigationPage>

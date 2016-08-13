@@ -181,7 +181,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
-    <Compile Include="Renderers\IconNavigationRender.cs" />
     <Compile Include="Renderers\LabelRender.cs" />
     <Compile Include="Renderers\TabbedPageRender.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />

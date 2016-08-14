@@ -26,8 +26,8 @@ namespace Vnap.Services
                 yield return new Plant()
                 {
                     Id = i,
-                    Name = "Cay Lua".ToUpper(),
-                    Description = "Duoc trong o cac tinh tay nam bo".ToUpper(),
+                    Name = "Cây Lúa".ToUpper(),
+                    Description = "Được trồng ở các tỉnh Tây Nam Bộ".ToUpper(),
                     CreatedDate = startDate.AddDays(i)
                 };
             }

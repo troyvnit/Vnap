@@ -4,6 +4,6 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Vnap.Views.AdvisoryPage"
-             Title="Tu Van">
+             Title="Tư Vấn">
 
 </ContentPage>

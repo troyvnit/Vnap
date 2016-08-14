@@ -8,7 +8,7 @@
 						 xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
 						 prism:ViewModelLocator.AutowireViewModel="True"
 						 x:Class="Vnap.Views.PlantListPage"
-						 Title="Cay Trong">
+						 Title="Cây Trồng">
 	<ContentPage.Resources>
 		<ResourceDictionary>
 			<converters:ItemVisibilityEventArgstemConverter

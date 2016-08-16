@@ -1,18 +1,20 @@
-﻿using System;
-using Vnap.ViewModels;
-using Xamarin.Forms;
-using XLabs.Forms.Controls;
+﻿using Vnap.ViewModels;
+using Vnap.Views.CustomPages;
 
 namespace Vnap.Views
 {
-    public partial class PlantDiseasePage : ExtendedTabbedPage
+    public partial class PlantDiseasePage : BindableTabbedPage
     {
         public PlantDiseasePage()
         {
             InitializeComponent();
-            Children.Add(new PlantDiseaseTab());
-            Children.Add(new PlantDiseaseTab());
-            Children.Add(new PlantDiseaseTab());
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            var plantDiseasePageViewModel = BindingContext as PlantDiseasePageViewModel;
+            if (plantDiseasePageViewModel != null) await plantDiseasePageViewModel.LoadAsync();
         }
     }
 }

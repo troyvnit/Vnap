@@ -38,6 +38,7 @@
     <Compile Include="App.cs" />
     <Compile Include="Behaviors\ListViewPagningBehavior.cs" />
     <Compile Include="Converters\ItemVisibilityEventArgstemConverter.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Models\LeftMenuItem.cs" />
     <Compile Include="Models\Plant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -47,6 +48,7 @@
     <Compile Include="ViewModels\NavigationViewModel.cs" />
     <Compile Include="ViewModels\LeftMenuViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="Views\CustomPages\BindableTabbedPage.cs" />
     <Compile Include="Views\PlantDiseasePage.xaml.cs">
       <DependentUpon>PlantDiseasePage.xaml</DependentUpon>
     </Compile>

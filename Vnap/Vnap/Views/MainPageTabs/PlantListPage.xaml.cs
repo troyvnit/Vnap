@@ -19,5 +19,12 @@ namespace Vnap.Views
             context?.PlantListItemSelectedHandler(selectedItem);
             PlantListView.SelectedItem = null;
         }
+
+        protected override async void OnAppearing()
+        {
+            var context = BindingContext as PlantListPageViewModel;
+            if (context != null) await context.LoadPlants(0);
+            base.OnAppearing();
+        }
     }
 }

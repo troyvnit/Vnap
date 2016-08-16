@@ -2,12 +2,20 @@
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Prism.Navigation;
 
 namespace Vnap.ViewModels
 {
-    public class BaseViewModel : BindableBase, INavigationAware
+    public interface IBaseViewModel
+    {
+        Task LoadAsync();
+    }
+
+    public class BaseViewModel : BindableBase, INavigationAware, IBaseViewModel
     {
         private string _title = string.Empty;
         private string _subTitle = string.Empty;
@@ -146,6 +154,11 @@ namespace Vnap.ViewModels
         public virtual void OnNavigatedTo(NavigationParameters parameters)
         {
             
+        }
+
+        public virtual Task LoadAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

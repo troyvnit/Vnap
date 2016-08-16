@@ -10,7 +10,8 @@ namespace Vnap.Service
     public interface IPlantService
     {
         void Sync();
-        Task<List<Plant>> Load(DateTime? fromDate);
+        Task<List<Plant>> GetPlants(int skip, int take = 5, int fromId = 0);
+        Task<int> GetPlantsCount();
     }
     public class PlantService : IPlantService
     {
@@ -34,6 +35,7 @@ namespace Vnap.Service
                 _plantRepository.Insert(new Plant()
                 {
                     Id = i,
+                    Priority = i,
                     Name = "Cây Lúa".ToUpper(),
                     Description = "Được trồng ở các tỉnh Tây Nam Bộ".ToUpper(),
                     CreatedDate = startDate.AddDays(i)
@@ -41,17 +43,30 @@ namespace Vnap.Service
             }
         }
 
-        public async Task<List<Plant>> Load(DateTime? fromDate)
+        public async Task<List<Plant>> GetPlants(int skip, int take, int fromId)
         {
-            if (!fromDate.HasValue)
-                return await _plantRepository.AsQueryable().OrderByDescending(plant => plant.CreatedDate).Take(20).ToListAsync();
+            var query = _plantRepository.AsQueryable()
+                .OrderByDescending(plant => plant.Priority)
+                .OrderByDescending(plant => plant.CreatedDate);
+            if (fromId > 0)
+            {
+                var fromPlant = await _plantRepository.Get(fromId);
+                query =
+                    query.Where(
+                        plant => plant.Priority >= fromPlant.Priority && plant.CreatedDate >= fromPlant.CreatedDate);
+            }
+            query = query.Skip(skip).Take(take);
+            return await query.ToListAsync();
+        }
 
-            var count = await _plantRepository.AsQueryable().Where(o => o.CreatedDate < fromDate).CountAsync();
-            if (count == 0)
-                return new List<Plant>();
+        public async Task<Plant> SearchFirstPlant(string query)
+        {
+            return await _plantRepository.AsQueryable().Where(plant => plant.Name.Contains(query) || plant.Description.Contains(query)).FirstOrDefaultAsync();
+        }
 
-            return await _plantRepository.AsQueryable().Where(plant => plant.CreatedDate <= fromDate).OrderByDescending(plant => plant.CreatedDate).Take(20).ToListAsync();
-
+        public async Task<int> GetPlantsCount()
+        {
+            return await _plantRepository.AsQueryable().CountAsync();
         }
     }
 }

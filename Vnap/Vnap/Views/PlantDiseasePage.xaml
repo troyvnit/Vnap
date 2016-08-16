@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<controls:ExtendedTabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+<customPages:BindableTabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-             xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
+             xmlns:customPages="clr-namespace:Vnap.Views.CustomPages;assembly=Vnap"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Vnap.Views.PlantDiseasePage"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             ChildrenList="{Binding PlantDiseaseTabs}">
 
-</controls:ExtendedTabbedPage>
+</customPages:BindableTabbedPage>

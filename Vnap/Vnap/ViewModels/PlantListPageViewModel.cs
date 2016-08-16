@@ -10,10 +10,13 @@ namespace Vnap.ViewModels
 {
     public class PlantListPageViewModel : BaseViewModel
     {
-        INavigationService _navigationService;
-        private IPlantService _plantService;
+        private readonly INavigationService _navigationService;
+        private readonly IPlantService _plantService;
 
-        private ObservableCollection<Plant> _plants = new ObservableCollection<Plant>();
+        private readonly ObservableCollection<Plant> _plants = new ObservableCollection<Plant>();
+        public ObservableCollection<Plant> Plants => _plants;
+
+        private int _totalPlants;
 
         public DelegateCommand RefreshCommand { get; set; }
         public DelegateCommand<Plant> LoadMoreCommand { get; set; }
@@ -26,9 +29,39 @@ namespace Vnap.ViewModels
             LoadMoreCommand = DelegateCommand<Plant>.FromAsyncHandler(ExecuteLoadMoreCommand, CanExecuteLoadMoreCommand);
         }
 
-        public async Task LoadPlants()
+        public bool CanExecuteRefreshCommand()
         {
-            var newPlants = await _plantService.Load(null);
+            return IsNotBusy;
+        }
+
+        public async Task ExecuteRefreshCommand()
+        {
+            IsBusy = true;
+
+            await LoadPlants(0);
+
+            IsBusy = false;
+        }
+
+        public bool CanExecuteLoadMoreCommand(Plant item)
+        {
+            return IsNotBusy && _plants.Count < _totalPlants;
+        }
+
+        public async Task ExecuteLoadMoreCommand(Plant item)
+        {
+            IsBusy = true;
+
+            var skip = _plants.Count;
+            await LoadPlants(skip);
+
+            IsBusy = false;
+        }
+
+        public async Task LoadPlants(int skip)
+        {
+            var newPlants = await _plantService.GetPlants(skip);
+            _totalPlants = await _plantService.GetPlantsCount();
 
             var isEven = _plants.LastOrDefault() != null && _plants.LastOrDefault().IsEven;
             foreach (var plant in newPlants)
@@ -42,59 +75,11 @@ namespace Vnap.ViewModels
                     IsEven = isEven
                 });
             }
-
-            Title = $"Plants {_plants.Count}";
-        }
-
-        public ObservableCollection<Plant> Plants
-        {
-            get { return _plants; }
-
-        }
-
-        public bool CanExecuteRefreshCommand()
-        {
-            return IsNotBusy;
-        }
-
-        public async Task ExecuteRefreshCommand()
-        {
-            IsBusy = true;
-
-            await LoadPlants();
-
-            IsBusy = false;
-        }
-
-        public bool CanExecuteLoadMoreCommand(Plant item)
-        {
-            return IsNotBusy && _plants.Count != 0 && _plants.OrderByDescending(o => o.CreatedDate).Last().CreatedDate == item.CreatedDate;
-        }
-
-        public async Task ExecuteLoadMoreCommand(Plant item)
-        {
-            IsBusy = true;
-            
-            var items = await _plantService.Load(item.CreatedDate);
-            var isEven = _plants.LastOrDefault() != null && _plants.LastOrDefault().IsEven;
-            foreach (var plant in items)
-            {
-                isEven = !isEven;
-                _plants.Add(new Plant()
-                {
-                    Id = plant.Id,
-                    Description = plant.Description,
-                    Name = plant.Name,
-                    IsEven = isEven
-                });
-            }
-            Title = $"Plants {_plants.Count}";
-            IsBusy = false;
         }
 
         public void PlantListItemSelectedHandler(Plant plant)
         {
-            _navigationService.NavigateAsync($"LeftMenu/Navigation/PlantDiseasePage?query={plant.Id}", animated: true);
+            _navigationService.NavigateAsync($"LeftMenu/Navigation/PlantDiseasePage?PlantId={plant.Id}", animated: false);
         }
     }
 }

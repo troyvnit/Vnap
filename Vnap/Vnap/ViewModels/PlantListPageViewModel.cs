@@ -1,42 +1,46 @@
 ﻿using Prism.Commands;
-using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Input;
+using Prism.Navigation;
 using Vnap.Models;
-using Vnap.Services;
-using Xamarin.Forms;
+using Vnap.Service;
 
 namespace Vnap.ViewModels
 {
     public class PlantListPageViewModel : BaseViewModel
     {
-        private PlantService _plantService = new PlantService();
+        INavigationService _navigationService;
+        private IPlantService _plantService;
+
         private ObservableCollection<Plant> _plants = new ObservableCollection<Plant>();
 
         public DelegateCommand RefreshCommand { get; set; }
         public DelegateCommand<Plant> LoadMoreCommand { get; set; }
 
-        public PlantListPageViewModel()
+        public PlantListPageViewModel(INavigationService navigationService, IPlantService plantService)
         {
-            LoadPlants();
+            _plantService = plantService;
+            _navigationService = navigationService;
             RefreshCommand = DelegateCommand.FromAsyncHandler(ExecuteRefreshCommand, CanExecuteRefreshCommand);
             LoadMoreCommand = DelegateCommand<Plant>.FromAsyncHandler(ExecuteLoadMoreCommand, CanExecuteLoadMoreCommand);
         }
 
         public async Task LoadPlants()
         {
-            var newPlants = _plantService.Load(null);
+            var newPlants = await _plantService.Load(null);
 
             var isEven = _plants.LastOrDefault() != null && _plants.LastOrDefault().IsEven;
             foreach (var plant in newPlants)
             {
                 isEven = !isEven;
-                plant.IsEven = isEven;
-                _plants.Add(plant);
+                _plants.Add(new Plant()
+                {
+                    Id = plant.Id,
+                    Description = plant.Description,
+                    Name = plant.Name,
+                    IsEven = isEven
+                });
             }
 
             Title = $"Plants {_plants.Count}";
@@ -70,17 +74,27 @@ namespace Vnap.ViewModels
         public async Task ExecuteLoadMoreCommand(Plant item)
         {
             IsBusy = true;
-            var items = _plantService.Load(item.CreatedDate);
+            
+            var items = await _plantService.Load(item.CreatedDate);
             var isEven = _plants.LastOrDefault() != null && _plants.LastOrDefault().IsEven;
             foreach (var plant in items)
             {
                 isEven = !isEven;
-                plant.IsEven = isEven;
-                _plants.Add(plant);
+                _plants.Add(new Plant()
+                {
+                    Id = plant.Id,
+                    Description = plant.Description,
+                    Name = plant.Name,
+                    IsEven = isEven
+                });
             }
             Title = $"Plants {_plants.Count}";
             IsBusy = false;
         }
 
+        public void PlantListItemSelectedHandler(Plant plant)
+        {
+            _navigationService.NavigateAsync($"LeftMenu/Navigation/PlantDiseasePage?query={plant.Id}", animated: true);
+        }
     }
 }

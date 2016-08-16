@@ -16,7 +16,7 @@
 		</ResourceDictionary>
 	</ContentPage.Resources>
 	<ContentPage.Content>
-		<ListView
+		<ListView x:Name="PlantListView"
 			CachingStrategy="RecycleElement"
 			BackgroundColor="White"
 			ItemsSource="{Binding Plants}"
@@ -25,7 +25,7 @@
 			RefreshCommand="{Binding RefreshCommand}"
 			IsRefreshing="{Binding IsBusy}"
       Margin="5,0,5,0"
-      ItemSelected="ListView_OnItemSelected_"
+      ItemSelected="PlantList_OnItemSelected"
       SeparatorVisibility="None">
 			<ListView.Behaviors>
 				<behaviors:ListViewPagningBehavior

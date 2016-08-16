@@ -1,4 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using Vnap.Models;
+using Vnap.ViewModels;
+using Xamarin.Forms;
 
 namespace Vnap.Views
 {
@@ -9,9 +11,13 @@ namespace Vnap.Views
             InitializeComponent();
         }
 
-        private void ListView_OnItemSelected_(object sender, SelectedItemChangedEventArgs e)
+        private void PlantList_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            ((ListView)sender).SelectedItem = null;
+            if(PlantListView.SelectedItem == null) return;
+            var context = BindingContext as PlantListPageViewModel;
+            var selectedItem = PlantListView.SelectedItem as Plant;
+            context?.PlantListItemSelectedHandler(selectedItem);
+            PlantListView.SelectedItem = null;
         }
     }
 }

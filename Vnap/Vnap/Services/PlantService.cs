@@ -5,7 +5,7 @@ using Vnap.Models;
 
 namespace Vnap.Services
 {
-    class PlantService
+    public class PlantService
     {
         List<Plant> _plantsContainer;
 

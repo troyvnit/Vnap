@@ -204,6 +204,7 @@
     <Compile Include="Providers\SQLiteProvider.cs" />
     <Compile Include="Utils\IconizeModules\Collection\LinearCollection.cs" />
     <Compile Include="Utils\IconizeModules\LinearModule.cs" />
+    <Compile Include="Utils\Typeface\TypefaceUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Fonts\OpenSans-SemiboldItalic.ttf" />

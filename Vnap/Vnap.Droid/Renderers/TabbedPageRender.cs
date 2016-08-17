@@ -4,6 +4,7 @@ using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 using Vnap.Droid.Renderers;
+using Vnap.Droid.Utils.Typeface;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.Platform.Android.AppCompat;
@@ -22,13 +23,9 @@ namespace Vnap.Droid.Renderers
 
             _tabLayout = (TabLayout)GetChildAt(1);
 
-            if (_tabLayout.TabCount > 3)
-            {
-                _tabLayout.TabMode = 0;
-            }
-
-            var fontFilePath = "Fonts/OpenSans-Bold.ttf";
-            var font = Typeface.CreateFromAsset(Forms.Context.Assets, fontFilePath);
+            if (_tabLayout.TabCount != Element.Children.Count)
+                return;
+            
             var vg = (ViewGroup)_tabLayout.GetChildAt(0);
             var tabsCount = vg.ChildCount;
             for (var j = 0; j < tabsCount; j++)
@@ -38,13 +35,27 @@ namespace Vnap.Droid.Renderers
                 for (var i = 0; i < tabChildsCount; i++)
                 {
                     var tabViewChild = vgTab.GetChildAt(i);
-                    var view = tabViewChild as TextView;
-                    if (view != null)
+                    var textView = tabViewChild as TextView;
+                    if (textView != null)
                     {
-                        view.Typeface = font;
+                        TypefaceUtil.SetTypeface(textView, FontAttributes.Bold);
                     }
                 }
             }
+        }
+
+        protected override void OnLayout(bool changed, int l, int t, int r, int b)
+        {
+            base.OnLayout(changed, l, t, r, b);
+
+            if (_tabLayout.TabCount != Element.Children.Count )
+                return;
+
+            if (Element.Children.Count > 3)
+            {
+                _tabLayout.TabMode = 0;
+            }
+
         }
     }
 }

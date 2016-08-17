@@ -12,6 +12,7 @@ namespace Vnap
     public class App : PrismApplication
     {
         private IPlantService _plantService;
+        private IPlantDiseaseService _plantDiseaseService;
         public App(IPlatformInitializer initializer = null) : base(initializer)
         {
             Sync();
@@ -32,6 +33,7 @@ namespace Vnap
             Container.RegisterTypeForNavigation<AdvisoryPage>();
             Container.RegisterTypeForNavigation<PlantDiseasePage>();
             Container.RegisterType<IPlantService, PlantService>();
+            Container.RegisterType<IPlantDiseaseService, PlantDiseaseService>();
             Container.RegisterType(typeof(IRepository<>), typeof(Repository<>));
         }
 
@@ -51,6 +53,9 @@ namespace Vnap
             await DatabaseHelper.InitialDatabase();
             _plantService = Container.Resolve<IPlantService>();
             _plantService.Sync();
+
+            _plantDiseaseService = Container.Resolve<IPlantDiseaseService>();
+            _plantDiseaseService.Sync();
         }
     }
 }

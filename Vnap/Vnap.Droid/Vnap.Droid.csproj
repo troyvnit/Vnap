@@ -241,6 +241,7 @@
     <AndroidResource Include="Resources\drawable\tab_color_selector.xml" />
     <AndroidResource Include="Resources\drawable\caylua.jpg" />
     <AndroidResource Include="Resources\drawable\no_avatar.png" />
+    <AndroidResource Include="Resources\drawable\daoon.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Vnap.Repository\Vnap.Repository.csproj">

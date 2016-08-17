@@ -5,11 +5,11 @@
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="Vnap.Views.Templates.PlantViewCell">
+             x:Class="Vnap.Views.Templates.PlantDiseaseViewCell">
   <StackLayout>
     <AbsoluteLayout x:Name="AbsoluteLayout" 
                     BackgroundColor="Gray" 
-                    HeightRequest="150" 
+                    HeightRequest="100" 
                     Margin="0,5,0,0">
       <ffimageloading:CachedImage x:Name="CachedImage"
             Source="{Binding Avatar}"
@@ -27,25 +27,16 @@
       <BoxView BackgroundColor="Black" 
                VerticalOptions="FillAndExpand"
                Opacity="0.5"
-               AbsoluteLayout.LayoutBounds="1, 0.8, 1, 0.3" 
+               AbsoluteLayout.LayoutBounds="1, 0.8, 1, 0.25" 
                AbsoluteLayout.LayoutFlags="All"/>
       <Label x:Name="Name" Text="{Binding Name}"
-             AbsoluteLayout.LayoutBounds="1, 0.77, 1, 0.25"
+             AbsoluteLayout.LayoutBounds="1, 0.82, 1, 0.25"
              AbsoluteLayout.LayoutFlags="All"
              HorizontalOptions="FillAndExpand"
              TextColor="#FFA300"
              HorizontalTextAlignment="Start"
              FontAttributes="Bold"
-             FontSize="18"
-             Margin="5,0,5,0"/>
-      <Label x:Name="Description" Text="{Binding Description}"
-             AbsoluteLayout.LayoutBounds="1, 0.83, 1, 0.15"
-             AbsoluteLayout.LayoutFlags="All"
-             HorizontalOptions="FillAndExpand"
-             TextColor="#FFA300"
-             HorizontalTextAlignment="Start"
-             FontAttributes="Bold"
-             FontSize="14"
+             FontSize="16"
              Margin="5,0,5,0"/>
     </AbsoluteLayout>
   </StackLayout>

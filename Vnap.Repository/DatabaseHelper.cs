@@ -11,6 +11,7 @@ namespace Vnap.Repository
             var db = DependencyService.Get<ISQLiteProvider>().GetSQLiteAsyncConnection("Vnap.db3");
 
             await db.CreateTableAsync<Plant>();
+            await db.CreateTableAsync<PlantDisease>();
         }
     }
 }

@@ -4,13 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Vnap.Entity;
 using Vnap.Repository;
+using Vnap.Service.Requests.Plant;
 
 namespace Vnap.Service
 {
     public interface IPlantService
     {
         void Sync();
-        Task<List<Plant>> GetPlants(int skip, int take = 5, int fromId = 0);
+        Task<List<Plant>> GetPlants(GetPlantsRq rq);
         Task<int> GetPlantsCount();
     }
     public class PlantService : IPlantService
@@ -38,24 +39,25 @@ namespace Vnap.Service
                     Priority = i,
                     Name = "Cây Lúa".ToUpper(),
                     Description = "Được trồng ở các tỉnh Tây Nam Bộ".ToUpper(),
+                    Avatar = "caylua.jpg",
                     CreatedDate = startDate.AddDays(i)
                 });
             }
         }
 
-        public async Task<List<Plant>> GetPlants(int skip, int take, int fromId)
+        public async Task<List<Plant>> GetPlants(GetPlantsRq rq)
         {
             var query = _plantRepository.AsQueryable()
                 .OrderByDescending(plant => plant.Priority)
                 .OrderByDescending(plant => plant.CreatedDate);
-            if (fromId > 0)
+            if (rq.FromId > 0)
             {
-                var fromPlant = await _plantRepository.Get(fromId);
+                var fromPlant = await _plantRepository.Get(rq.FromId);
                 query =
                     query.Where(
                         plant => plant.Priority >= fromPlant.Priority && plant.CreatedDate >= fromPlant.CreatedDate);
             }
-            query = query.Skip(skip).Take(take);
+            query = query.Skip(rq.Skip).Take(rq.Take);
             return await query.ToListAsync();
         }
 

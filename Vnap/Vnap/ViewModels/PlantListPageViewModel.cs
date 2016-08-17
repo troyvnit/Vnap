@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Prism.Navigation;
 using Vnap.Models;
 using Vnap.Service;
+using Vnap.Service.Requests.Plant;
 
 namespace Vnap.ViewModels
 {
@@ -60,7 +61,11 @@ namespace Vnap.ViewModels
 
         public async Task LoadPlants(int skip)
         {
-            var newPlants = await _plantService.GetPlants(skip);
+            var rq = new GetPlantsRq()
+            {
+                Skip = skip
+            };
+            var newPlants = await _plantService.GetPlants(rq);
             _totalPlants = await _plantService.GetPlantsCount();
 
             var isEven = _plants.LastOrDefault() != null && _plants.LastOrDefault().IsEven;
@@ -72,6 +77,7 @@ namespace Vnap.ViewModels
                     Id = plant.Id,
                     Description = plant.Description,
                     Name = plant.Name,
+                    Avatar = plant.Avatar,
                     IsEven = isEven
                 });
             }

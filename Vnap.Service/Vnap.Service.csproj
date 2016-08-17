@@ -35,8 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="PlantDiseaseService.cs" />
     <Compile Include="PlantService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\BaseRq.cs" />
+    <Compile Include="Requests\Plant\GetPlantDiseasesRq.cs" />
+    <Compile Include="Requests\Plant\GetPlantsRq.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SQLite-net, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">

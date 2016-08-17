@@ -7,7 +7,7 @@
 						 xmlns:templates="clr-namespace:Vnap.Views.Templates;assembly=Vnap"
 						 xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
 						 prism:ViewModelLocator.AutowireViewModel="True"
-						 x:Class="Vnap.Views.PlantDiseaseTab">
+						 x:Class="Vnap.Views.PlantDiseaseListPage">
 	<ContentPage.Resources>
 		<ResourceDictionary>
 			<converters:ItemVisibilityEventArgstemConverter
@@ -15,16 +15,16 @@
 		</ResourceDictionary>
 	</ContentPage.Resources>
 	<ContentPage.Content>
-		<ListView
+		<ListView x:Name="PlantDiseaseListView"
 			CachingStrategy="RecycleElement"
 			BackgroundColor="White"
-			ItemsSource="{Binding Plants}"
+			ItemsSource="{Binding PlantDiseases}"
 			HasUnevenRows="true"
 			IsPullToRefreshEnabled="true"
 			RefreshCommand="{Binding RefreshCommand}"
 			IsRefreshing="{Binding IsBusy}"
       Margin="5,0,5,0"
-      ItemSelected="ListView_OnItemSelected_"
+      ItemSelected="PlantDiseaseList_OnItemSelected"
       SeparatorVisibility="None">
 			<ListView.Behaviors>
 				<behaviors:ListViewPagningBehavior
@@ -34,7 +34,7 @@
 			</ListView.Behaviors>
 			<ListView.ItemTemplate>
 				<DataTemplate>
-					<templates:PlantViewCell />
+          <templates:PlantDiseaseViewCell />
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</ListView>

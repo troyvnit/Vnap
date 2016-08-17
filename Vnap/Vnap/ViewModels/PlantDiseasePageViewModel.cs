@@ -9,6 +9,7 @@ using Prism.Navigation;
 using Vnap.Extensions;
 using Vnap.Models;
 using Vnap.Service;
+using Vnap.Service.Requests.Plant;
 using Vnap.Views;
 using Xamarin.Forms;
 
@@ -22,7 +23,7 @@ namespace Vnap.ViewModels
 
         private ObservableCollection<Page> _plantDiseaseTabs = new ObservableCollection<Page>();
 
-        public ObservableCollection<Page> PlantDiseaseTabs
+        public ObservableCollection<Page> PlantDiseaseListPages
         {
             get
             {
@@ -38,16 +39,22 @@ namespace Vnap.ViewModels
 
         public async override Task LoadAsync()
         {
-            var plants = await _plantService.GetPlants(PlantDiseaseTabs.Count, 5, _currentPlantId);
+            var rq = new GetPlantsRq()
+            {
+                Skip = PlantDiseaseListPages.Count,
+                FromId = _currentPlantId
+            };
+
+            var plants = await _plantService.GetPlants(rq);
 
             var list = new List<Page>();
 
-            list.AddRange(plants.Select(p => new PlantDiseaseTab()
+            list.AddRange(plants.Select(p => new PlantDiseaseListPage()
             {
                 Title = p.Name
             }));
 
-            PlantDiseaseTabs = list.ToObservableCollection();
+            PlantDiseaseListPages = list.ToObservableCollection();
         }
 
         public override void OnNavigatedFrom(NavigationParameters parameters)

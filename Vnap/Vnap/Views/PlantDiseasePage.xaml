@@ -6,6 +6,6 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Vnap.Views.PlantDiseasePage"
              Title="{Binding Title}"
-             ChildrenList="{Binding PlantDiseaseTabs}">
+             ChildrenList="{Binding PlantDiseaseListPages}">
 
 </customPages:BindableTabbedPage>

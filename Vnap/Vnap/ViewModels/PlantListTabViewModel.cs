@@ -9,7 +9,7 @@ using Vnap.Service.Requests.Plant;
 
 namespace Vnap.ViewModels
 {
-    public class PlantListPageViewModel : BaseViewModel
+    public class PlantListTabViewModel : BaseViewModel
     {
         private readonly INavigationService _navigationService;
         private readonly IPlantService _plantService;
@@ -22,7 +22,7 @@ namespace Vnap.ViewModels
         public DelegateCommand RefreshCommand { get; set; }
         public DelegateCommand<Plant> LoadMoreCommand { get; set; }
 
-        public PlantListPageViewModel(INavigationService navigationService, IPlantService plantService)
+        public PlantListTabViewModel(INavigationService navigationService, IPlantService plantService)
         {
             _plantService = plantService;
             _navigationService = navigationService;

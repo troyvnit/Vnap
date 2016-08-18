@@ -1,5 +1,5 @@
 ﻿using Vnap.ViewModels;
-using Vnap.Views.CustomPages;
+using Vnap.Views.Customs;
 
 namespace Vnap.Views
 {

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="Vnap.Views.InfoPage"
+             x:Class="Vnap.Views.InfoTab"
              Title="Thông Tin">
 <StackLayout>
   <Label Text="{Binding Title}" />

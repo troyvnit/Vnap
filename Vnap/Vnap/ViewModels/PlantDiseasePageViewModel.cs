@@ -23,7 +23,7 @@ namespace Vnap.ViewModels
 
         private ObservableCollection<Page> _plantDiseaseTabs = new ObservableCollection<Page>();
 
-        public ObservableCollection<Page> PlantDiseaseListPages
+        public ObservableCollection<Page> PlantDiseaseListTabs
         {
             get
             {
@@ -41,7 +41,7 @@ namespace Vnap.ViewModels
         {
             var rq = new GetPlantsRq()
             {
-                Skip = PlantDiseaseListPages.Count,
+                Skip = PlantDiseaseListTabs.Count,
                 FromId = _currentPlantId
             };
 
@@ -49,12 +49,12 @@ namespace Vnap.ViewModels
 
             var list = new List<Page>();
 
-            list.AddRange(plants.Select(p => new PlantDiseaseListPage()
+            list.AddRange(plants.Select(p => new PlantDiseaseListTab()
             {
                 Title = p.Name
             }));
 
-            PlantDiseaseListPages = list.ToObservableCollection();
+            PlantDiseaseListTabs = list.ToObservableCollection();
         }
 
         public override void OnNavigatedFrom(NavigationParameters parameters)

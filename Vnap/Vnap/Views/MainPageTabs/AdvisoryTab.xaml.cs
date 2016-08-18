@@ -2,9 +2,9 @@
 
 namespace Vnap.Views
 {
-    public partial class InfoPage : ContentPage
+    public partial class AdvisoryTab : ContentPage
     {
-        public InfoPage()
+        public AdvisoryTab()
         {
             InitializeComponent();
         }

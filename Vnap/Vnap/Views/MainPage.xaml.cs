@@ -1,7 +1,4 @@
-﻿using System;
-using Vnap.ViewModels;
-using Xamarin.Forms;
-using XLabs.Forms.Controls;
+﻿using XLabs.Forms.Controls;
 
 namespace Vnap.Views
 {
@@ -10,9 +7,10 @@ namespace Vnap.Views
         public MainPage()
         {
             InitializeComponent();
-            Children.Add(new PlantListPage());
-            Children.Add(new InfoPage());
-            Children.Add(new AdvisoryPage());
+            Children.Add(new PlantDiseaseDetailTab());
+            Children.Add(new PlantListTab());
+            Children.Add(new InfoTab());
+            Children.Add(new AdvisoryTab());
         }
     }
 }

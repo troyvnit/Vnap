@@ -4,9 +4,9 @@ using Xamarin.Forms;
 
 namespace Vnap.Views
 {
-    public partial class PlantListPage : ContentPage
+    public partial class PlantListTab : ContentPage
     {
-        public PlantListPage()
+        public PlantListTab()
         {
             InitializeComponent();
         }
@@ -14,7 +14,7 @@ namespace Vnap.Views
         private void PlantList_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if(PlantListView.SelectedItem == null) return;
-            var context = BindingContext as PlantListPageViewModel;
+            var context = BindingContext as PlantListTabViewModel;
             var selectedItem = PlantListView.SelectedItem as Plant;
             context?.PlantListItemSelectedHandler(selectedItem);
             PlantListView.SelectedItem = null;
@@ -22,7 +22,7 @@ namespace Vnap.Views
 
         protected override async void OnAppearing()
         {
-            var context = BindingContext as PlantListPageViewModel;
+            var context = BindingContext as PlantListTabViewModel;
             if (context != null) await context.LoadPlants(0);
             base.OnAppearing();
         }

@@ -23,7 +23,7 @@ namespace Vnap.ViewModels
                    {
                        Icon = "lnr-home",
                        Text = "Trang chủ",
-                       Command = "Navigation/MainPage/PlantListPage",
+                       Command = "Navigation/MainPage/PlantListTab",
                        IsActived = true
                    },
                     new LeftMenuItem()
@@ -36,14 +36,14 @@ namespace Vnap.ViewModels
                    {
                        Icon = "lnr-bubble",
                        Text = "Tư vấn",
-                       Command = "Navigation/MainPage/AdvisoryPage",
+                       Command = "Navigation/MainPage/AdvisoryTab",
                        IsActived = true
                    },
                     new LeftMenuItem()
                    {
                        Icon = "lnr-bullhorn",
                        Text = "Thông tin",
-                       Command = "Navigation/MainPage/InfoPage",
+                       Command = "Navigation/MainPage/InfoTab",
                        IsActived = true
                    },
                     new LeftMenuItem()

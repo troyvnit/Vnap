@@ -6,7 +6,7 @@ using Xamarin.Forms;
 using XLabs.Forms.Controls;
 using XLabs.Forms.Mvvm;
 
-namespace Vnap.Views.CustomPages
+namespace Vnap.Views.Customs
 {
     public class BindableTabbedPage : ExtendedTabbedPage
     {

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<AbsoluteLayout xmlns="http://xamarin.com/schemas/2014/forms"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                x:Class="Vnap.Views.Components.SatelliteMenu" x:Name="Troy"
+                VerticalOptions="EndAndExpand"
+                HorizontalOptions="EndAndExpand"
+                WidthRequest="110"
+                HeightRequest="110"
+                AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                Padding="0,0,5,5">
+    <forms:CachedImage x:Name="MenuButton"
+                       Source="add"
+                       TransparencyEnabled="True"
+                       WidthRequest="50"
+                       HeightRequest="50"
+                       AbsoluteLayout.LayoutFlags="PositionProportional"
+                       AbsoluteLayout.LayoutBounds="1, 1" />
+    <forms:CachedImage x:Name="CallButton"
+                       Source="call"
+                       TransparencyEnabled="True"
+                       WidthRequest="35"
+                       HeightRequest="35"
+                       Margin="5"
+                       AbsoluteLayout.LayoutFlags="PositionProportional"
+                       AbsoluteLayout.LayoutBounds="1, -1" />
+    <forms:CachedImage x:Name="MessageButton"
+                       Source="message"
+                       TransparencyEnabled="True"
+                       WidthRequest="35"
+                       HeightRequest="35"
+                       Margin="5"
+                       AbsoluteLayout.LayoutFlags="PositionProportional"
+                       AbsoluteLayout.LayoutBounds="1, -1" />
+</AbsoluteLayout>

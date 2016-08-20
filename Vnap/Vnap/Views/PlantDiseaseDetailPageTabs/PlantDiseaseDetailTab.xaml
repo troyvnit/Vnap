@@ -1,80 +1,91 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              xmlns:customs="clr-namespace:Vnap.Views.Customs;assembly=Vnap"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:components="clr-namespace:Vnap.Views.Components;assembly=Vnap"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Vnap.Views.PlantDiseaseDetailTab"
              x:Name="PlantDiseaseDetailTabContentPage"
-             Title="Dao on">
-  <ContentPage.Content>
-    <StackLayout Padding="5,0,5,0">
-      <Grid RowSpacing="5" ColumnSpacing="5">
-        <Grid.RowDefinitions>
-          <RowDefinition
-            Height="*">
-          </RowDefinition>
-          <RowDefinition
-            Height="50">
-          </RowDefinition>
-        </Grid.RowDefinitions>
-
-        <AbsoluteLayout x:Name="AbsoluteLayout"
-              BackgroundColor="Gray"
-              HeightRequest="200"
-              Margin="0,5,0,0"
-              Grid.Row="0">
-          <ffimageloading:CachedImage
-            DownsampleHeight="250"
-            Aspect="AspectFill"
-            Source="{Binding PreviewImage}"
-            HorizontalOptions="FillAndExpand"
-            VerticalOptions="FillAndExpand"
-            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
-            AbsoluteLayout.LayoutFlags="All">
-          </ffimageloading:CachedImage>
-          <ActivityIndicator x:Name="ActivityIndicator"
-                             WidthRequest="35"
-                             HeightRequest="35"
-                             AbsoluteLayout.LayoutBounds="0.5, 0.5, -1, -1"
-                             AbsoluteLayout.LayoutFlags="PositionProportional" />
-          <ContentView AbsoluteLayout.LayoutBounds="0, 0.8, -1, -1"
-                 AbsoluteLayout.LayoutFlags="PositionProportional"
-                 BackgroundColor="#7F000000"
-                 Padding="5,2,5,2">
-            <Label Text="{Binding PreviewCaption}"
-                   TextColor="#FFA300"
-                   HorizontalTextAlignment="Start"
-                   FontAttributes="Bold"
-                   FontSize="18"/>
-          </ContentView>
-        </AbsoluteLayout>
-        <customs:ImageGalleryView
-          ItemsSource="{Binding Images}"
-          Grid.Row="1">
-          <customs:ImageGalleryView.ItemTemplate>
-            <DataTemplate>
-              <ffimageloading:CachedImage
-                DownsampleHeight="50"
-                DownsampleWidth="50"
-                HeightRequest="50"
-                WidthRequest="50"
-                Source="{Binding Source}"
-                Aspect="AspectFill">
-                <ffimageloading:CachedImage.GestureRecognizers>
-                  <TapGestureRecognizer
-                    Command="{Binding Path=BindingContext.PreviewImageCommand, Source={x:Reference PlantDiseaseDetailTabContentPage}}"
-                    CommandParameter="{Binding .}"/>
-                </ffimageloading:CachedImage.GestureRecognizers>
-              </ffimageloading:CachedImage>
-            </DataTemplate>
-          </customs:ImageGalleryView.ItemTemplate>
-        </customs:ImageGalleryView>
-      </Grid>
-      <ContentView BackgroundColor="White" Padding="10">
-        <WebView Source="{Binding Description}"></WebView>
-      </ContentView>
-    </StackLayout>
-  </ContentPage.Content>
+             Title="Đạo Ôn">
+    <ContentPage.Content>
+        <StackLayout Padding="5" BackgroundColor="#ECEFF4">
+            <Grid RowSpacing="5" ColumnSpacing="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition
+                        Height="200" />
+                    <RowDefinition
+                        Height="50" />
+                </Grid.RowDefinitions>
+                <AbsoluteLayout x:Name="AbsoluteLayout"
+                                BackgroundColor="Gray"
+                                HeightRequest="200"
+                                Grid.Row="0">
+                    <ffimageloading:CachedImage
+                        DownsampleHeight="200"
+                        Aspect="AspectFill"
+                        Source="{Binding PreviewImage}"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
+                        AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                        AbsoluteLayout.LayoutFlags="All" />
+                    <ActivityIndicator x:Name="ActivityIndicator"
+                                       WidthRequest="35"
+                                       HeightRequest="35"
+                                       AbsoluteLayout.LayoutBounds="0.5, 0.5, -1, -1"
+                                       AbsoluteLayout.LayoutFlags="PositionProportional" />
+                    <ContentView AbsoluteLayout.LayoutBounds="0, 0.8, -1, -1"
+                                 AbsoluteLayout.LayoutFlags="PositionProportional"
+                                 BackgroundColor="#7F000000"
+                                 Padding="5,2,5,2">
+                        <Label Text="{Binding PreviewCaption}"
+                               TextColor="#FFA300"
+                               HorizontalTextAlignment="Start"
+                               FontAttributes="Bold"
+                               FontSize="18" />
+                    </ContentView>
+                </AbsoluteLayout>
+                <customs:ImageGalleryView
+                    ItemsSource="{Binding Images}"
+                    Grid.Row="1">
+                    <customs:ImageGalleryView.ItemTemplate>
+                        <DataTemplate>
+                            <ffimageloading:CachedImage
+                                DownsampleHeight="50"
+                                DownsampleWidth="50"
+                                HeightRequest="50"
+                                WidthRequest="50"
+                                Source="{Binding Source}"
+                                Aspect="AspectFill">
+                                <ffimageloading:CachedImage.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Path=BindingContext.PreviewImageCommand, Source={x:Reference PlantDiseaseDetailTabContentPage}}"
+                                        CommandParameter="{Binding .}" />
+                                </ffimageloading:CachedImage.GestureRecognizers>
+                            </ffimageloading:CachedImage>
+                        </DataTemplate>
+                    </customs:ImageGalleryView.ItemTemplate>
+                </customs:ImageGalleryView>
+            </Grid>
+            <AbsoluteLayout VerticalOptions="FillAndExpand">
+                <ContentView BackgroundColor="White" Padding="10" Margin="0, 0, 0, 60"
+                             AbsoluteLayout.LayoutFlags="All"
+                             AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+                    <WebView Source="{Binding Description}" />
+                </ContentView>
+                <ffimageloading:CachedImage AbsoluteLayout.LayoutFlags="PositionProportional"
+                                            AbsoluteLayout.LayoutBounds="0, 1"
+                                            DownsampleHeight="45"
+                                            DownsampleWidth="250"
+                                            HeightRequest="45"
+                                            WidthRequest="250"
+                                            Source="solution"
+                                            Margin="5, 0, 0, 5"
+                                            Aspect="AspectFill" />
+                <components:SatelliteMenu />
+            </AbsoluteLayout>
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

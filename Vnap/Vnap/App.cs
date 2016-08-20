@@ -6,6 +6,8 @@ using Prism.Mvvm;
 using Prism.Unity;
 using Vnap.Repository;
 using Vnap.Service;
+using Vnap.Views.Customs;
+
 namespace Vnap
 {
     public class App : PrismApplication
@@ -31,7 +33,7 @@ namespace Vnap
             Container.RegisterTypeForNavigation<InfoTab>();
             Container.RegisterTypeForNavigation<AdvisoryTab>();
             Container.RegisterTypeForNavigation<PlantDiseasePage>();
-            Container.RegisterTypeForNavigation<PlantDiseaseDetailTab>();
+            Container.RegisterTypeForNavigation<PlantDiseaseDetailPage>();
             Container.RegisterType<IPlantService, PlantService>();
             Container.RegisterType<IPlantDiseaseService, PlantDiseaseService>();
             Container.RegisterType(typeof(IRepository<>), typeof(Repository<>));

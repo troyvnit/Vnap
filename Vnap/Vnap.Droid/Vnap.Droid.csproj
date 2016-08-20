@@ -243,6 +243,11 @@
     <AndroidResource Include="Resources\drawable\caylua.jpg" />
     <AndroidResource Include="Resources\drawable\no_avatar.png" />
     <AndroidResource Include="Resources\drawable\daoon.jpg" />
+    <AndroidResource Include="Resources\drawable\plus.png" />
+    <AndroidResource Include="Resources\drawable\add.png" />
+    <AndroidResource Include="Resources\drawable\call.png" />
+    <AndroidResource Include="Resources\drawable\message.png" />
+    <AndroidResource Include="Resources\drawable\solution.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Vnap.Repository\Vnap.Repository.csproj">

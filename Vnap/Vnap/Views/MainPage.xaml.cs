@@ -7,7 +7,6 @@ namespace Vnap.Views
         public MainPage()
         {
             InitializeComponent();
-            Children.Add(new PlantDiseaseDetailTab());
             Children.Add(new PlantListTab());
             Children.Add(new InfoTab());
             Children.Add(new AdvisoryTab());

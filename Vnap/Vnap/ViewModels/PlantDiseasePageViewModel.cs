@@ -41,20 +41,22 @@ namespace Vnap.ViewModels
         {
             var rq = new GetPlantsRq()
             {
-                Skip = PlantDiseaseListTabs.Count,
-                FromId = _currentPlantId
+                Skip = PlantDiseaseListTabs.Count
             };
 
             var plants = await _plantService.GetPlants(rq);
 
-            var list = new List<Page>();
-
-            list.AddRange(plants.Select(p => new PlantDiseaseListTab()
+            if (plants.Count != PlantDiseaseListTabs.Count)
             {
-                Title = p.Name
-            }));
+                var list = new List<Page>();
 
-            PlantDiseaseListTabs = list.ToObservableCollection();
+                list.AddRange(plants.Select(p => new PlantDiseaseListTab()
+                {
+                    Title = p.Name
+                }));
+
+                PlantDiseaseListTabs = list.ToObservableCollection();
+            }
         }
 
         public override void OnNavigatedFrom(NavigationParameters parameters)

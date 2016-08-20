@@ -14,7 +14,7 @@ namespace Vnap.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IPlantDiseaseService _plantDiseaseService;
 
-        private readonly ObservableCollection<PlantDisease> _plantDiseases = new ObservableCollection<PlantDisease>();
+        private ObservableCollection<PlantDisease> _plantDiseases = new ObservableCollection<PlantDisease>();
         public ObservableCollection<PlantDisease> PlantDiseases => _plantDiseases;
 
         private int _totalPlantDiseases;
@@ -39,6 +39,7 @@ namespace Vnap.ViewModels
         {
             IsBusy = true;
 
+            _plantDiseases = new ObservableCollection<PlantDisease>();
             await LoadPlantDiseases(0);
 
             IsBusy = false;
@@ -46,7 +47,7 @@ namespace Vnap.ViewModels
 
         public bool CanExecuteLoadMoreCommand(PlantDisease item)
         {
-            return IsNotBusy && _plantDiseases.Count < _totalPlantDiseases;
+            return IsNotBusy && _plantDiseases.Count > _totalPlantDiseases;
         }
 
         public async Task ExecuteLoadMoreCommand(PlantDisease item)

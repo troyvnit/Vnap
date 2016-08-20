@@ -1,42 +1,49 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-						 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-						 xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-						 xmlns:converters="clr-namespace:Vnap.Converters;assembly=Vnap"
-						 xmlns:behaviors="clr-namespace:Vnap.Behaviors;assembly=Vnap"
-						 xmlns:templates="clr-namespace:Vnap.Views.Templates;assembly=Vnap"
-						 xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
-						 prism:ViewModelLocator.AutowireViewModel="True"
-						 x:Class="Vnap.Views.PlantDiseaseListTab">
-	<ContentPage.Resources>
-		<ResourceDictionary>
-			<converters:ItemVisibilityEventArgstemConverter
-				x:Key="ItemVisibilityConverter" />
-		</ResourceDictionary>
-	</ContentPage.Resources>
-	<ContentPage.Content>
-		<ListView x:Name="PlantDiseaseListView"
-			CachingStrategy="RecycleElement"
-			BackgroundColor="White"
-			ItemsSource="{Binding PlantDiseases}"
-			HasUnevenRows="true"
-			IsPullToRefreshEnabled="true"
-			RefreshCommand="{Binding RefreshCommand}"
-			IsRefreshing="{Binding IsBusy}"
-      Margin="5,0,5,0"
-      ItemSelected="PlantDiseaseList_OnItemSelected"
-      SeparatorVisibility="None">
-			<ListView.Behaviors>
-				<behaviors:ListViewPagningBehavior
-					Command="{Binding LoadMoreCommand}"
-					Converter="{StaticResource ItemVisibilityConverter}">
-				</behaviors:ListViewPagningBehavior>
-			</ListView.Behaviors>
-			<ListView.ItemTemplate>
-				<DataTemplate>
-          <templates:PlantDiseaseViewCell />
-				</DataTemplate>
-			</ListView.ItemTemplate>
-		</ListView>
-	</ContentPage.Content>
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:converters="clr-namespace:Vnap.Converters;assembly=Vnap"
+             xmlns:behaviors="clr-namespace:Vnap.Behaviors;assembly=Vnap"
+             xmlns:templates="clr-namespace:Vnap.Views.Templates;assembly=Vnap"
+             xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
+             xmlns:customs="clr-namespace:Vnap.Views.Customs;assembly=Vnap"
+             xmlns:components="clr-namespace:Vnap.Views.Components;assembly=Vnap"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Vnap.Views.PlantDiseaseListTab">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ItemVisibilityEventArgstemConverter
+                x:Key="ItemVisibilityConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <AbsoluteLayout VerticalOptions="FillAndExpand">
+            <ListView x:Name="PlantDiseaseListView"
+                      CachingStrategy="RecycleElement"
+                      BackgroundColor="#ECEFF4"
+                      ItemsSource="{Binding PlantDiseases}"
+                      HasUnevenRows="true"
+                      IsPullToRefreshEnabled="true"
+                      RefreshCommand="{Binding RefreshCommand}"
+                      IsRefreshing="{Binding IsBusy}"
+                      Margin="5,0,5,0"
+                      ItemSelected="PlantDiseaseList_OnItemSelected"
+                      SeparatorVisibility="None"
+                      AbsoluteLayout.LayoutFlags="All"
+                      AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+                <ListView.Behaviors>
+                    <behaviors:ListViewPagningBehavior
+                        Command="{Binding LoadMoreCommand}"
+                        Converter="{StaticResource ItemVisibilityConverter}" />
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <templates:PlantDiseaseViewCell />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <components:SatelliteMenu />
+        </AbsoluteLayout>
+    </ContentPage.Content>
 </ContentPage>

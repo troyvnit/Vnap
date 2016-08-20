@@ -48,6 +48,7 @@
     <Compile Include="Utils\IImageResizer.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\PlantDiseaseDetailTabViewModel.cs" />
+    <Compile Include="ViewModels\PlantDiseaseDetailPageViewModel.cs" />
     <Compile Include="ViewModels\PlantDiseasePageViewModel.cs" />
     <Compile Include="ViewModels\NavigationViewModel.cs" />
     <Compile Include="ViewModels\LeftMenuViewModel.cs" />
@@ -55,8 +56,14 @@
     <Compile Include="ViewModels\PlantDiseaseListTabViewModel.cs" />
     <Compile Include="Views\Customs\BindableTabbedPage.cs" />
     <Compile Include="Views\Customs\ImageGalleryView.cs" />
+    <Compile Include="Views\Components\SatelliteMenu.xaml.cs">
+      <DependentUpon>SatelliteMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PlantDiseaseDetailPageTabs\PlantDiseaseDetailTab.xaml.cs">
       <DependentUpon>PlantDiseaseDetailTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlantDiseaseDetailPage.xaml.cs">
+      <DependentUpon>PlantDiseaseDetailPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlantDiseasePage.xaml.cs">
       <DependentUpon>PlantDiseasePage.xaml</DependentUpon>
@@ -256,6 +263,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\PlantDiseaseDetailPageTabs\PlantDiseaseDetailTab.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Components\SatelliteMenu.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\PlantDiseaseDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

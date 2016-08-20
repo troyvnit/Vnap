@@ -14,7 +14,7 @@ namespace Vnap.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IPlantService _plantService;
 
-        private readonly ObservableCollection<Plant> _plants = new ObservableCollection<Plant>();
+        private ObservableCollection<Plant> _plants = new ObservableCollection<Plant>();
         public ObservableCollection<Plant> Plants => _plants;
 
         private int _totalPlants;
@@ -39,6 +39,7 @@ namespace Vnap.ViewModels
         {
             IsBusy = true;
 
+            _plants = new ObservableCollection<Plant>();
             await LoadPlants(0);
 
             IsBusy = false;
@@ -46,7 +47,7 @@ namespace Vnap.ViewModels
 
         public bool CanExecuteLoadMoreCommand(Plant item)
         {
-            return IsNotBusy && _plants.Count < _totalPlants;
+            return IsNotBusy && _plants.Count > _totalPlants;
         }
 
         public async Task ExecuteLoadMoreCommand(Plant item)

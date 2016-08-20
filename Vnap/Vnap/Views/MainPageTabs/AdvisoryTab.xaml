@@ -2,8 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:customs="clr-namespace:Vnap.Views.Customs;assembly=Vnap"
+             xmlns:components="clr-namespace:Vnap.Views.Components;assembly=Vnap"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Vnap.Views.AdvisoryTab"
              Title="Tư Vấn">
 
+  <components:SatelliteMenu />
 </ContentPage>

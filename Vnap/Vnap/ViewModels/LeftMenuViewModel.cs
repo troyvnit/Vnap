@@ -21,14 +21,14 @@ namespace Vnap.ViewModels
                 {
                     new LeftMenuItem()
                    {
-                       Icon = "lnr-home",
+                       Icon = "flaticon-home",
                        Text = "Trang chủ",
                        Command = "Navigation/MainPage/PlantListTab",
                        IsActived = true
                    },
                     new LeftMenuItem()
                    {
-                       Icon = "lnr-apartment",
+                       Icon = "flaticon-house",
                        Text = "Giới thiệu về Vnap",
                        IsActived = true
                    },
@@ -41,14 +41,20 @@ namespace Vnap.ViewModels
                    },
                     new LeftMenuItem()
                    {
-                       Icon = "lnr-bullhorn",
+                       Icon = "flaticon-alarm",
                        Text = "Thông tin",
                        Command = "Navigation/MainPage/InfoTab",
                        IsActived = true
                    },
                     new LeftMenuItem()
                    {
-                       Icon = "lnr-users",
+                       Icon = "flaticon-smartphone-10",
+                       Text = "Hướng dẫn sử dụng",
+                       IsActived = true
+                   },
+                    new LeftMenuItem()
+                   {
+                       Icon = "flaticon-users-1",
                        Text = "Mời bạn bè sử dụng",
                        IsActived = true
                    }
@@ -66,13 +72,13 @@ namespace Vnap.ViewModels
                 {
                    new LeftMenuItem()
                    {
-                       Icon = "lnr-user",
+                       Icon = "flaticon-id-card-2",
                        Text = "Hồ sơ",
                        IsActived = true
                    },
                    new LeftMenuItem()
                    {
-                       Icon = "lnr-power-switch",
+                       Icon = "flaticon-exit-1",
                        Text = "Đăng xuất",
                        IsActived = true
                    }

@@ -21,7 +21,7 @@ namespace Vnap
 
         protected override void OnInitialized()
         {
-            NavigationService.NavigateAsync("LeftMenu/Navigation/MainPage", animated: false);
+            NavigationService.NavigateAsync("LeftMenu/Navigation/MainPage/PlantListTab", animated: false);
         }
 
         protected override void RegisterTypes()
@@ -32,6 +32,7 @@ namespace Vnap
             Container.RegisterTypeForNavigation<PlantListTab>();
             Container.RegisterTypeForNavigation<InfoTab>();
             Container.RegisterTypeForNavigation<AdvisoryTab>();
+            Container.RegisterTypeForNavigation<NewsTab>();
             Container.RegisterTypeForNavigation<PlantDiseasePage>();
             Container.RegisterTypeForNavigation<PlantDiseaseDetailPage>();
             Container.RegisterType<IPlantService, PlantService>();
@@ -54,10 +55,10 @@ namespace Vnap
         {
             await DatabaseHelper.InitialDatabase();
             _plantService = Container.Resolve<IPlantService>();
-            _plantService.Sync();
+            await _plantService.Sync();
 
             _plantDiseaseService = Container.Resolve<IPlantDiseaseService>();
-            _plantDiseaseService.Sync();
+            await _plantDiseaseService.Sync();
         }
     }
 }

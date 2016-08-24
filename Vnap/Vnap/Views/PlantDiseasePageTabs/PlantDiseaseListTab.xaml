@@ -33,7 +33,7 @@
                       AbsoluteLayout.LayoutFlags="All"
                       AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
                 <ListView.Behaviors>
-                    <behaviors:ListViewPagningBehavior
+                    <behaviors:ListViewBehavior
                         Command="{Binding LoadMoreCommand}"
                         Converter="{StaticResource ItemVisibilityConverter}" />
                 </ListView.Behaviors>

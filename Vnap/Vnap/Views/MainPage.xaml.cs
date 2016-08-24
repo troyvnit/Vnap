@@ -8,8 +8,9 @@ namespace Vnap.Views
         {
             InitializeComponent();
             Children.Add(new PlantListTab());
-            Children.Add(new InfoTab());
             Children.Add(new AdvisoryTab());
+            Children.Add(new InfoTab());
+            Children.Add(new NewsTab());
         }
     }
 }

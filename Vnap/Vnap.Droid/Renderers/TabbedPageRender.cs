@@ -1,8 +1,11 @@
 using System;
-using Android.Graphics;
+using System.Collections.Generic;
+using Android.Content;
 using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
+using FormsPlugin.Iconize.Droid;
+using Plugin.Iconize.Droid.Controls;
 using Vnap.Droid.Renderers;
 using Vnap.Droid.Utils.Typeface;
 using Xamarin.Forms;
@@ -15,18 +18,47 @@ namespace Vnap.Droid.Renderers
 {
     public class TabbedPageRender : TabbedPageRenderer
     {
+        private readonly List<String> _icons = new List<String>();
         private TabLayout _tabLayout;
+        private bool _onLayoutFinished;
+
+        protected override void OnAttachedToWindow()
+        {
+            UpdateTabbedIcons(Context);
+
+            base.OnAttachedToWindow();
+        }
 
         protected override void OnElementChanged(ElementChangedEventArgs<TabbedPage> e)
         {
-            base.OnElementChanged(e);
+            _icons.Clear();
+            if (e.NewElement != null)
+            {
+                foreach (var page in e.NewElement.Children)
+                {
+                    if (page.Icon != null)
+                    {
+                        _icons.Add(page.Icon.File);
+                        page.Icon = null;
+                    }
+                }
+            }
 
+            base.OnElementChanged(e);
+        }
+
+        protected override void OnLayout(bool changed, int l, int t, int r, int b)
+        {
+            base.OnLayout(changed, l, t, r, b);
+
+            if (_onLayoutFinished)
+                return;
+
+            this.LayoutParameters.Height = 10;
             _tabLayout = (TabLayout)GetChildAt(1);
 
-            if (_tabLayout.TabCount != Element.Children.Count)
-                return;
-            
             var vg = (ViewGroup)_tabLayout.GetChildAt(0);
+            vg.SetPadding(0, 0, 0, 0);
             var tabsCount = vg.ChildCount;
             for (var j = 0; j < tabsCount; j++)
             {
@@ -42,20 +74,38 @@ namespace Vnap.Droid.Renderers
                     }
                 }
             }
+
+            _onLayoutFinished = true;
         }
 
-        protected override void OnLayout(bool changed, int l, int t, int r, int b)
-        {
-            base.OnLayout(changed, l, t, r, b);
 
-            if (_tabLayout.TabCount != Element.Children.Count )
+        private void UpdateTabbedIcons(Context context)
+        {
+            var tabLayout = FindViewById<TabLayout>(IconControls.TabLayoutId);
+            if (tabLayout == null || tabLayout.TabCount == 0 || _icons.Count == 0)
                 return;
 
-            if (Element.Children.Count > 3)
+            if (_icons.Count > 0)
             {
-                _tabLayout.TabMode = 0;
+                tabLayout.TabMode = 1;
             }
 
+            for (var i = 0; i < tabLayout.TabCount; i++)
+            {
+                var tab = tabLayout.GetTabAt(i);
+
+                var icon = Plugin.Iconize.Iconize.FindIconForKey(_icons[i]);
+                if (icon != null)
+                {
+                    var drawable = new IconDrawable(context, icon).Color(Color.White.ToAndroid()).SizeDp(20);
+                    tab.SetIcon(drawable);
+                }
+                else
+                {
+                    var drawable = Resources.GetDrawable(_icons[i]);
+                    tab.SetIcon(drawable);
+                }
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Vnap.Service
 {
     public interface IPlantDiseaseService
     {
-        void Sync();
+        Task Sync();
         Task<List<PlantDisease>> GetPlantDiseases(GetPlantDiseasesRq rq);
         Task<int> GetPlantDiseasesCount();
     }
@@ -22,9 +22,13 @@ namespace Vnap.Service
             _plantDiseaseRepository = plantDiseaseRepository;
         }
 
-        public void Sync()
+        public async Task Sync()
         {
-            FillContainer();
+            var count = await _plantDiseaseRepository.AsQueryable().CountAsync();
+            if (count == 0)
+            {
+                FillContainer();
+            }
         }
 
         private void FillContainer()

@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<iconize:IconNavigationPage xmlns="http://xamarin.com/schemas/2014/forms"
+<NavigationPage xmlns="http://xamarin.com/schemas/2014/forms"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
                 xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
                 prism:ViewModelLocator.AutowireViewModel="True"
                 x:Class="Vnap.Views.Navigation">
 
-  <!--<iconize:IconNavigationPage.ToolbarItems>
-    <iconize:IconToolbarItem Icon="lnr-alarm" IconColor="White"/>
-  </iconize:IconNavigationPage.ToolbarItems>-->
-</iconize:IconNavigationPage>
+  <NavigationPage.ToolbarItems>
+    <ToolbarItem Icon="search" />
+  </NavigationPage.ToolbarItems>
+</NavigationPage>

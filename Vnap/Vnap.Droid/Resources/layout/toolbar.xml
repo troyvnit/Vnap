@@ -10,13 +10,19 @@
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     app:layout_scrollFlags="scroll|enterAlways">
   <RelativeLayout
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content">
-    <android.support.v7.widget.SearchView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+    <!--<android.support.v7.widget.SearchView
         android:id="@+id/search"
-        android:layout_alignParentRight="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:queryHint="Ban can giai phap?"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:showAsAction="always"
+        app:iconifiedByDefault="false"
+        app:queryHint="Ban can giai phap?"/>-->
+  <EditText
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="Bạn cần giải pháp?" />
   </RelativeLayout>
 </android.support.v7.widget.Toolbar>

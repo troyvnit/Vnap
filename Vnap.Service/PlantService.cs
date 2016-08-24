@@ -10,7 +10,7 @@ namespace Vnap.Service
 {
     public interface IPlantService
     {
-        void Sync();
+        Task Sync();
         Task<List<Plant>> GetPlants(GetPlantsRq rq);
         Task<int> GetPlantsCount();
     }
@@ -22,27 +22,55 @@ namespace Vnap.Service
             _plantRepository = plantRepository;
         }
 
-        public void Sync()
+        public async Task Sync()
         {
-            FillContainer();
+            var count = await _plantRepository.AsQueryable().CountAsync();
+            if (count == 0)
+            {
+                FillContainer();
+            }
         }
 
         private void FillContainer()
         {
             var startDate = new DateTime(2016, 1, 1);
 
-            for (int i = 0; i < 200; i++)
+            _plantRepository.Insert(new Plant()
             {
-                _plantRepository.Insert(new Plant()
-                {
-                    Id = i,
-                    Priority = i,
-                    Name = "Cây Lúa".ToUpper(),
-                    Description = "Được trồng ở các tỉnh Tây Nam Bộ".ToUpper(),
-                    Avatar = "caylua.jpg",
-                    CreatedDate = startDate.AddDays(i)
-                });
-            }
+                Id = 1,
+                Priority = 2,
+                Name = "Cây Lúa".ToUpper(),
+                Description = "Được trồng ở các tỉnh Tây Nam Bộ".ToUpper(),
+                Avatar = "caylua.jpg",
+                CreatedDate = startDate.AddDays(1)
+            });
+            _plantRepository.Insert(new Plant()
+            {
+                Id = 2,
+                Priority = 2,
+                Name = "Hồ Tiêu".ToUpper(),
+                Description = "Được trồng ở các tỉnh Tây Nam Bộ".ToUpper(),
+                Avatar = "caylua.jpg",
+                CreatedDate = startDate.AddDays(2)
+            });
+            _plantRepository.Insert(new Plant()
+            {
+                Id = 3,
+                Priority = 3,
+                Name = "Cà Phê".ToUpper(),
+                Description = "Được trồng ở các tỉnh Tây Nam Bộ".ToUpper(),
+                Avatar = "caylua.jpg",
+                CreatedDate = startDate.AddDays(3)
+            });
+            _plantRepository.Insert(new Plant()
+            {
+                Id = 4,
+                Priority = 4,
+                Name = "Cây Có Múi".ToUpper(),
+                Description = "Được trồng ở các tỉnh Tây Nam Bộ".ToUpper(),
+                Avatar = "caylua.jpg",
+                CreatedDate = startDate.AddDays(4)
+            });
         }
 
         public async Task<List<Plant>> GetPlants(GetPlantsRq rq)

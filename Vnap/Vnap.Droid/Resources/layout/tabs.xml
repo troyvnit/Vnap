@@ -8,9 +8,5 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     app:tabIndicatorColor="@android:color/white"
     app:tabGravity="fill"
-    app:tabMode="fixed"
-    app:tabIndicatorHeight="0dp"
-    app:tabMinWidth="100dp"
-    app:tabTextAppearance="@style/AppTabTextAppearance"
-    app:tabBackground="@drawable/tab_color_selector"
-    app:tabSelectedTextColor="?attr/colorPrimary"/>
+    app:tabMode="scrollable"
+    app:tabTextAppearance="@style/AppTabTextAppearance"/>

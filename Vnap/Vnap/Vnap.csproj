@@ -36,7 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
-    <Compile Include="Behaviors\ListViewPagningBehavior.cs" />
+    <Compile Include="Behaviors\ListViewBehavior.cs" />
     <Compile Include="Converters\ItemVisibilityEventArgstemConverter.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Models\Image.cs" />
@@ -58,6 +58,9 @@
     <Compile Include="Views\Customs\ImageGalleryView.cs" />
     <Compile Include="Views\Components\SatelliteMenu.xaml.cs">
       <DependentUpon>SatelliteMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainPageTabs\NewsTab.xaml.cs">
+      <DependentUpon>NewsTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlantDiseaseDetailPageTabs\PlantDiseaseDetailTab.xaml.cs">
       <DependentUpon>PlantDiseaseDetailTab.xaml</DependentUpon>
@@ -190,7 +193,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -275,6 +280,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\PlantDiseaseDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MainPageTabs\NewsTab.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

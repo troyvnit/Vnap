@@ -8,13 +8,13 @@ using Xamarin.Forms;
 
 namespace Vnap.Behaviors
 {
-    public class ListViewPagningBehavior : Behavior<ListView>
+    public class ListViewBehavior : Behavior<ListView>
     {
         public static readonly BindableProperty CommandProperty =
-            BindableProperty.Create("Command", typeof(ICommand), typeof(ListViewPagningBehavior), null);
+            BindableProperty.Create("Command", typeof(ICommand), typeof(ListViewBehavior), null);
 
         public static readonly BindableProperty InputConverterProperty =
-            BindableProperty.Create("Converter", typeof(IValueConverter), typeof(ListViewPagningBehavior), null);
+            BindableProperty.Create("Converter", typeof(IValueConverter), typeof(ListViewBehavior), null);
 
         public ListView AssociatedObject { get; private set; }
 

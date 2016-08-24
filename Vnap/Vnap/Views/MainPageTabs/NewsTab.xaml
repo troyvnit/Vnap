@@ -5,8 +5,8 @@
              xmlns:customs="clr-namespace:Vnap.Views.Customs;assembly=Vnap"
              xmlns:components="clr-namespace:Vnap.Views.Components;assembly=Vnap"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="Vnap.Views.AdvisoryTab"
-             Icon="lnr-bubble">
+             x:Class="Vnap.Views.NewsTab"
+             Icon="flaticon-newspaper">
 
   <components:SatelliteMenu />
 </ContentPage>

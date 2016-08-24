@@ -58,10 +58,10 @@ namespace Vnap.Views.Components
 
                         each = 0;
                         AbsoluteLayout.SetLayoutBounds(CallButton,
-                            new Rectangle(1 - (2 * offsetB), 1,
+                            new Rectangle(1 - (2.5 * offsetB), 1,
                                 AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize));
                         AbsoluteLayout.SetLayoutBounds(MessageButton,
-                           new Rectangle(1, 1 - (2 * offsetB),
+                           new Rectangle(1, 1 - (2.5 * offsetB),
                                AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize));
 
                         return true;

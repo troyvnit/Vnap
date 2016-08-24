@@ -1,12 +1,15 @@
 ﻿using System;
 
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
+using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Android.Util;
 using FFImageLoading;
 using FormsPlugin.Iconize.Droid;
 using Java.Interop;
@@ -30,6 +33,7 @@ namespace Vnap.Droid
             FFImageLoading.Forms.Droid.CachedImageRenderer.Init();
             FormsPlugin.Iconize.Droid.IconControls.Init();
             Plugin.Iconize.Iconize.With(new LinearModule());
+            Plugin.Iconize.Iconize.With(new FlatModule());
             IconControls.Init(Resource.Id.toolbar, Resource.Id.sliding_tabs);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
@@ -40,14 +44,59 @@ namespace Vnap.Droid
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
-            var search = FindViewById<Android.Support.V7.Widget.SearchView>(Resource.Id.search);
-            var searchIcon = (ImageView)search.FindViewById(Resource.Id.search_mag_icon);
-            searchIcon.SetImageResource(Resource.Drawable.icon);
-            search.QueryTextSubmit += (sender, args) =>
+            var search = FindViewById<EditText>(Resource.Id.search);
+            //var searchIcon = (ImageView)search.FindViewById(Resource.Id.search_mag_icon);
+            //var viewGroup = (ViewGroup)searchIcon.Parent;
+            //viewGroup.RemoveView(searchIcon);
+            //viewGroup.AddView(searchIcon);
+            
+            //search.QueryTextChange += (sender, args) =>
+            //{
+            //    if (!string.IsNullOrEmpty(search.Query))
+            //    {
+            //        if (viewGroup.GetChildAt(viewGroup.ChildCount - 1) != searchIcon)
+            //        {
+            //            viewGroup.AddView(searchIcon);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        viewGroup.RemoveView(searchIcon);
+            //    }
+            //};
+
+            //searchIcon.Click += (o, eventArgs) =>
+            //{
+            //    app.Search(search.Query);
+            //};
+
+            search.KeyPress += (sender, args) =>
             {
-                app.Search(search.Query);
+                args.Handled = false;
+                if (args.Event.Action == KeyEventActions.Down && args.KeyCode == Keycode.Enter)
+                {
+                    app.Search(search.Text);
+                    args.Handled = true;
+                }
             };
             return base.OnCreateOptionsMenu(menu);
+        }
+
+        public override View OnCreateView(View parent, string name, Context context, IAttributeSet attrs)
+        {
+
+            if (name.Contains("SearchView"))
+            {
+                var search = parent.FindViewById<Android.Support.V7.Widget.SearchView>(Resource.Id.search);
+                if (search != null)
+                {
+                    var searchIcon = (ImageView)search.FindViewById(Resource.Id.search_mag_icon);
+                    var viewGroup = (ViewGroup)searchIcon.Parent;
+                    viewGroup.RemoveView(searchIcon);
+                    viewGroup.AddView(searchIcon);
+                }
+            }
+            return base.OnCreateView(parent, name, context, attrs); ;
         }
     }
 

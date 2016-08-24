@@ -194,6 +194,10 @@
       <HintPath>..\..\packages\Xamarin.GooglePlayServices.Basement.29.0.0.1\lib\MonoAndroid41\Xamarin.GooglePlayServices.Basement.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="XLabs.Forms, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\XLabs.Forms.2.3.0-pre02\lib\portable-net45+netcore45+wpa81+monoandroid+MonoTouch+Xamarin.iOS10\XLabs.Forms.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -202,7 +206,9 @@
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\SQLiteProvider.cs" />
+    <Compile Include="Utils\IconizeModules\Collection\FlatCollection.cs" />
     <Compile Include="Utils\IconizeModules\Collection\LinearCollection.cs" />
+    <Compile Include="Utils\IconizeModules\FlatModule.cs" />
     <Compile Include="Utils\IconizeModules\LinearModule.cs" />
     <Compile Include="Utils\Image\ImageResizer.cs" />
     <Compile Include="Utils\Typeface\TypefaceUtil.cs" />
@@ -220,6 +226,7 @@
     <AndroidAsset Include="Assets\Fonts\OpenSans-Semibold.ttf" />
     <AndroidAsset Include="Assets\Fonts\LinearIcons-Regular.ttf" />
     <None Include="app.config" />
+    <AndroidAsset Include="Assets\Fonts\Flaticon.ttf" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
@@ -247,7 +254,8 @@
     <AndroidResource Include="Resources\drawable\add.png" />
     <AndroidResource Include="Resources\drawable\call.png" />
     <AndroidResource Include="Resources\drawable\message.png" />
-    <AndroidResource Include="Resources\drawable\solution.png" />
+    <AndroidResource Include="Resources\drawable\search.png" />
+    <AndroidResource Include="Resources\drawable\solution_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Vnap.Repository\Vnap.Repository.csproj">

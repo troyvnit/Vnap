@@ -73,14 +73,17 @@ namespace Vnap.ViewModels
             foreach (var plant in newPlants)
             {
                 isEven = !isEven;
-                _plants.Add(new Plant()
+                if (!_plants.Select(p => p.Id).Contains(plant.Id))
                 {
-                    Id = plant.Id,
-                    Description = plant.Description,
-                    Name = plant.Name,
-                    Avatar = plant.Avatar,
-                    IsEven = isEven
-                });
+                    _plants.Add(new Plant()
+                    {
+                        Id = plant.Id,
+                        Description = plant.Description,
+                        Name = plant.Name,
+                        Avatar = plant.Avatar,
+                        IsEven = isEven
+                    });
+                }
             }
         }
 

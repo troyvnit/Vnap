@@ -11,7 +11,7 @@
              xmlns:components="clr-namespace:Vnap.Views.Components;assembly=Vnap"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Vnap.Views.PlantListTab"
-             Title="Cây Trồng">
+             Icon="lnr-leaf">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:ItemVisibilityEventArgstemConverter
@@ -33,11 +33,11 @@
                       SeparatorVisibility="None"
                       AbsoluteLayout.LayoutFlags="All"
                       AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
-                <ListView.Behaviors>
-                    <behaviors:ListViewPagningBehavior
+                <!--<ListView.Behaviors>
+                    <behaviors:ListViewBehavior
                         Command="{Binding LoadMoreCommand}"
                         Converter="{StaticResource ItemVisibilityConverter}" />
-                </ListView.Behaviors>
+                </ListView.Behaviors>-->
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <templates:PlantViewCell />

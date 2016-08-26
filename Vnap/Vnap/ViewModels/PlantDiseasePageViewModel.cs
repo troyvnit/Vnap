@@ -46,7 +46,7 @@ namespace Vnap.ViewModels
 
             var plants = await _plantService.GetPlants(rq);
 
-            if (plants.Count != PlantDiseaseListTabs.Count)
+            if (plants.Count > PlantDiseaseListTabs.Count)
             {
                 var list = new List<Page>();
 

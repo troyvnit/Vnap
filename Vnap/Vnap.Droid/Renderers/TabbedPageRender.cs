@@ -54,8 +54,11 @@ namespace Vnap.Droid.Renderers
             if (_onLayoutFinished)
                 return;
 
-            this.LayoutParameters.Height = 10;
             _tabLayout = (TabLayout)GetChildAt(1);
+            if (_icons.Count > 0 || _tabLayout.TabCount <= 4)
+            {
+                _tabLayout.TabMode = 1;
+            }
 
             var vg = (ViewGroup)_tabLayout.GetChildAt(0);
             vg.SetPadding(0, 0, 0, 0);
@@ -84,11 +87,6 @@ namespace Vnap.Droid.Renderers
             var tabLayout = FindViewById<TabLayout>(IconControls.TabLayoutId);
             if (tabLayout == null || tabLayout.TabCount == 0 || _icons.Count == 0)
                 return;
-
-            if (_icons.Count > 0)
-            {
-                tabLayout.TabMode = 1;
-            }
 
             for (var i = 0; i < tabLayout.TabCount; i++)
             {

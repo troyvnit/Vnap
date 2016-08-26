@@ -14,20 +14,36 @@ namespace Vnap.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IPlantDiseaseService _plantDiseaseService;
 
-        private ObservableCollection<PlantDisease> _plantDiseases = new ObservableCollection<PlantDisease>();
-        public ObservableCollection<PlantDisease> PlantDiseases => _plantDiseases;
+        private ObservableCollection<PlantDiseaseGroup> _plantDiseaseGroups = new ObservableCollection<PlantDiseaseGroup>()
+        {
+            new PlantDiseaseGroup()
+            {
+                Id = 1,
+                Name = "DỊCH BỆNH",
+                ShortName = "DB",
+                Icon = "dead_plant.png"
+            },
+            new PlantDiseaseGroup()
+            {
+                Id = 2,
+                Name = "SÂU BỆNH",
+                ShortName = "SB",
+                Icon = "pests.png"
+            }
+        };
+        public ObservableCollection<PlantDiseaseGroup> PlantDiseaseGroups => _plantDiseaseGroups;
 
         private int _totalPlantDiseases;
 
         public DelegateCommand RefreshCommand { get; set; }
-        public DelegateCommand<PlantDisease> LoadMoreCommand { get; set; }
+        public DelegateCommand<PlantDiseaseGroup> LoadMoreCommand { get; set; }
 
         public PlantDiseaseListTabViewModel(INavigationService navigationService, IPlantDiseaseService plantDiseaseService)
         {
             _plantDiseaseService = plantDiseaseService;
             _navigationService = navigationService;
             RefreshCommand = DelegateCommand.FromAsyncHandler(ExecuteRefreshCommand, CanExecuteRefreshCommand);
-            LoadMoreCommand = DelegateCommand<PlantDisease>.FromAsyncHandler(ExecuteLoadMoreCommand, CanExecuteLoadMoreCommand);
+            LoadMoreCommand = DelegateCommand<PlantDiseaseGroup>.FromAsyncHandler(ExecuteLoadMoreCommand, CanExecuteLoadMoreCommand);
         }
 
         public bool CanExecuteRefreshCommand()
@@ -39,22 +55,22 @@ namespace Vnap.ViewModels
         {
             IsBusy = true;
 
-            _plantDiseases = new ObservableCollection<PlantDisease>();
+            _plantDiseaseGroups = new ObservableCollection<PlantDiseaseGroup>();
             await LoadPlantDiseases(0);
 
             IsBusy = false;
         }
 
-        public bool CanExecuteLoadMoreCommand(PlantDisease item)
+        public bool CanExecuteLoadMoreCommand(PlantDiseaseGroup item)
         {
-            return IsNotBusy && _plantDiseases.Count > _totalPlantDiseases;
+            return IsNotBusy && _plantDiseaseGroups.Count > _totalPlantDiseases;
         }
 
-        public async Task ExecuteLoadMoreCommand(PlantDisease item)
+        public async Task ExecuteLoadMoreCommand(PlantDiseaseGroup item)
         {
             IsBusy = true;
 
-            var skip = _plantDiseases.Count;
+            var skip = _plantDiseaseGroups.Count;
             await LoadPlantDiseases(skip);
 
             IsBusy = false;
@@ -70,18 +86,21 @@ namespace Vnap.ViewModels
             var newPlantDiseases = await _plantDiseaseService.GetPlantDiseases(rq);
             _totalPlantDiseases = await _plantDiseaseService.GetPlantDiseasesCount();
 
-            var isEven = _plantDiseases.LastOrDefault() != null && _plantDiseases.LastOrDefault().IsEven;
-            foreach (var plantDisease in newPlantDiseases)
+            foreach (var plantDiseaseGroup in _plantDiseaseGroups)
             {
-                isEven = !isEven;
-                _plantDiseases.Add(new PlantDisease()
+                var isEven = plantDiseaseGroup.LastOrDefault() != null && plantDiseaseGroup.LastOrDefault().IsEven;
+                foreach (var plantDisease in newPlantDiseases)
                 {
-                    Id = plantDisease.Id,
-                    Description = plantDisease.Description,
-                    Name = plantDisease.Name,
-                    Avatar = plantDisease.Avatar,
-                    IsEven = isEven
-                });
+                    isEven = !isEven;
+                    plantDiseaseGroup.Add(new PlantDisease()
+                    {
+                        Id = plantDisease.Id,
+                        Description = plantDisease.Description,
+                        Name = plantDisease.Name,
+                        Avatar = plantDisease.Avatar,
+                        IsEven = isEven
+                    });
+                }
             }
         }
 

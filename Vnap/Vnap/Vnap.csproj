@@ -41,6 +41,7 @@
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\LeftMenuItem.cs" />
+    <Compile Include="Models\PlantDiseaseGroup.cs" />
     <Compile Include="Models\PlantDisease.cs" />
     <Compile Include="Models\Plant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

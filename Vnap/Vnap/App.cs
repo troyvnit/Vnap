@@ -34,7 +34,8 @@ namespace Vnap
             Container.RegisterTypeForNavigation<AdvisoryTab>();
             Container.RegisterTypeForNavigation<NewsTab>();
             Container.RegisterTypeForNavigation<PlantDiseasePage>();
-            Container.RegisterTypeForNavigation<PlantDiseaseDetailPage>();
+            Container.RegisterTypeForNavigation<PlantDiseaseDetailPage>(); 
+            Container.RegisterTypeForNavigation<PlantDiseaseSolutionPage>();
             Container.RegisterType<IPlantService, PlantService>();
             Container.RegisterType<IPlantDiseaseService, PlantDiseaseService>();
             Container.RegisterType(typeof(IRepository<>), typeof(Repository<>));

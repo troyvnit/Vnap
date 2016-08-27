@@ -8,8 +8,7 @@
              xmlns:components="clr-namespace:Vnap.Views.Components;assembly=Vnap"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Vnap.Views.PlantDiseaseDetailTab"
-             x:Name="PlantDiseaseDetailTabContentPage"
-             Title="Đạo Ôn">
+             x:Name="PlantDiseaseDetailTabContentPage">
     <ContentPage.Content>
         <StackLayout Padding="5" BackgroundColor="#ECEFF4">
             <Grid RowSpacing="5" ColumnSpacing="5">
@@ -75,19 +74,10 @@
                              AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
                     <WebView Source="{Binding Description}" />
                 </ContentView>
-                <Button Text="Giải Pháp Phòng Trị" BackgroundColor="#FFA300" HeightRequest="60" TextColor="White"
+                <Button Text="Giải Pháp Phòng Trị" BackgroundColor="#FFA300" HeightRequest="60" TextColor="White" Command="{Binding NavigateCommand}" CommandParameter="LeftMenu/Navigation/PlantDiseaseSolutionPage"
                         FontSize="18" FontAttributes="Bold" Image="solution_icon" Margin="5, 0, 0, 5"
                         AbsoluteLayout.LayoutFlags="PositionProportional"
                         AbsoluteLayout.LayoutBounds="0, 1" />
-                <!--<ffimageloading:CachedImage AbsoluteLayout.LayoutFlags="PositionProportional"
-                                            AbsoluteLayout.LayoutBounds="0, 1"
-                                            DownsampleHeight="45"
-                                            DownsampleWidth="250"
-                                            HeightRequest="45"
-                                            WidthRequest="250"
-                                            Source="solution"
-                                            Margin="5, 0, 0, 5"
-                                            Aspect="AspectFill" />-->
                 <components:SatelliteMenu />
             </AbsoluteLayout>
         </StackLayout>

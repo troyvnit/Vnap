@@ -258,6 +258,7 @@
     <AndroidResource Include="Resources\drawable\solution_icon.png" />
     <AndroidResource Include="Resources\drawable\dead_plant.png" />
     <AndroidResource Include="Resources\drawable\pests.png" />
+    <AndroidResource Include="Resources\drawable\solution_avatar.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Vnap.Repository\Vnap.Repository.csproj">

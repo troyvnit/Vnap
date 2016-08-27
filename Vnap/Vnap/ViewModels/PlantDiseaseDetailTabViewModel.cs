@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Prism.Commands;
+using Prism.Navigation;
 using Xamarin.Forms;
 using Image = Vnap.Models.Image;
 
@@ -11,6 +12,7 @@ namespace Vnap.ViewModels
 {
     public class PlantDiseaseDetailTabViewModel : BaseViewModel
     {
+        private readonly INavigationService _navigationService;
         private readonly ObservableCollection<Image> _images = new ObservableCollection<Image>();
         public ObservableCollection<Image> Images => _images;
 
@@ -45,10 +47,18 @@ namespace Vnap.ViewModels
         }
 
         public DelegateCommand<Image> PreviewImageCommand { get; set; }
+        public DelegateCommand<string> NavigateCommand { get; set; }
 
-        public PlantDiseaseDetailTabViewModel()
+        public PlantDiseaseDetailTabViewModel(INavigationService navigationService)
         {
+            _navigationService = navigationService;
             PreviewImageCommand = new DelegateCommand<Image>(ExecutePreviewImageCommand, CanExecutePreviewImageCommand);
+            NavigateCommand = new DelegateCommand<string>(Navigate);
+        }
+
+        private void Navigate(string name)
+        {
+            _navigationService.NavigateAsync(name);
         }
 
         public bool CanExecutePreviewImageCommand(Image image)

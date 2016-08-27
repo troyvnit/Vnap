@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:customs="clr-namespace:Vnap.Views.Customs;assembly=Vnap"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:components="clr-namespace:Vnap.Views.Components;assembly=Vnap"
+             xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Vnap.Views.PlantDiseaseSolutionPage"
+             Title="Giải Pháp">
+    <ContentPage.Content>
+        <StackLayout Padding="5" BackgroundColor="#ECEFF4">
+          <ffimageloading:CachedImage
+                    DownsampleHeight="250"
+                    Aspect="AspectFill"
+                    Source="{Binding Avatar}"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand" />
+          <StackLayout Orientation="Horizontal" Padding="5,0,5,0">
+            <Label Text="{Binding CompanyName}" FontAttributes="Bold" FontSize="16" TextColor="Green" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
+            <controls:ExtendedLabel Text="Cần giải pháp khác?" TextColor="#FFA300" IsUnderline="True" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand"/>
+          </StackLayout>
+            <AbsoluteLayout VerticalOptions="FillAndExpand" BackgroundColor="White">
+                <ContentView Padding="10" 
+                             AbsoluteLayout.LayoutFlags="All"
+                             AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+                  <WebView Source="{Binding Description}" />
+                </ContentView>
+                <components:SatelliteMenu />
+            </AbsoluteLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -19,7 +19,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <AbsoluteLayout VerticalOptions="FillAndExpand">
+        <AbsoluteLayout VerticalOptions="FillAndExpand" BackgroundColor="#ECEFF4">
             <ListView x:Name="PlantListView"
                       CachingStrategy="RecycleElement"
                       BackgroundColor="#ECEFF4"

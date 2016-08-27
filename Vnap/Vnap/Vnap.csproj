@@ -39,8 +39,10 @@
     <Compile Include="Behaviors\ListViewBehavior.cs" />
     <Compile Include="Converters\ItemVisibilityEventArgstemConverter.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Mappers\AutoMapperConfiguration.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\LeftMenuItem.cs" />
+    <Compile Include="Models\Post.cs" />
     <Compile Include="Models\PlantDiseaseGroup.cs" />
     <Compile Include="Models\PlantDisease.cs" />
     <Compile Include="Models\Plant.cs" />
@@ -56,6 +58,7 @@
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\PlantDiseaseListTabViewModel.cs" />
     <Compile Include="ViewModels\PlantDiseaseSolutionPageViewModel.cs" />
+    <Compile Include="ViewModels\InfoListTabViewModel.cs" />
     <Compile Include="Views\Customs\BindableTabbedPage.cs" />
     <Compile Include="Views\Customs\ImageGalleryView.cs" />
     <Compile Include="Views\Components\SatelliteMenu.xaml.cs">
@@ -82,6 +85,9 @@
     <Compile Include="Views\Templates\PlantDiseaseViewCell.xaml.cs">
       <DependentUpon>PlantDiseaseViewCell.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Templates\PostViewCell.xaml.cs">
+      <DependentUpon>PostViewCell.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Templates\PlantViewCell.xaml.cs">
       <DependentUpon>PlantViewCell.xaml</DependentUpon>
     </Compile>
@@ -95,8 +101,8 @@
     <Compile Include="Views\MainPageTabs\AdvisoryTab.xaml.cs">
       <DependentUpon>AdvisoryTab.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MainPageTabs\InfoTab.xaml.cs">
-      <DependentUpon>InfoTab.xaml</DependentUpon>
+    <Compile Include="Views\MainPageTabs\InfoListTab.xaml.cs">
+      <DependentUpon>InfoListTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPageTabs\PlantListTab.xaml.cs">
       <DependentUpon>PlantListTab.xaml</DependentUpon>
@@ -222,7 +228,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\MainPageTabs\InfoTab.xaml">
+    <EmbeddedResource Include="Views\MainPageTabs\InfoListTab.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -297,6 +303,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\PlantDiseaseSolutionPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Templates\PostViewCell.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

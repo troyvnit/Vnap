@@ -4,6 +4,7 @@ using Vnap.Views;
 using Prism.Modularity;
 using Prism.Mvvm;
 using Prism.Unity;
+using Vnap.Mappers;
 using Vnap.Repository;
 using Vnap.Service;
 using Vnap.Views.Customs;
@@ -14,6 +15,7 @@ namespace Vnap
     {
         private IPlantService _plantService;
         private IPlantDiseaseService _plantDiseaseService;
+        private IPostService _postService;
         public App(IPlatformInitializer initializer = null) : base(initializer)
         {
             Sync();
@@ -21,6 +23,7 @@ namespace Vnap
 
         protected override void OnInitialized()
         {
+            AutoMapperConfiguration.Configure();
             NavigationService.NavigateAsync("LeftMenu/Navigation/MainPage/PlantListTab", animated: false);
         }
 
@@ -30,7 +33,7 @@ namespace Vnap
             Container.RegisterTypeForNavigation<Navigation>();
             Container.RegisterTypeForNavigation<LeftMenu>();
             Container.RegisterTypeForNavigation<PlantListTab>();
-            Container.RegisterTypeForNavigation<InfoTab>();
+            Container.RegisterTypeForNavigation<InfoListTab>();
             Container.RegisterTypeForNavigation<AdvisoryTab>();
             Container.RegisterTypeForNavigation<NewsTab>();
             Container.RegisterTypeForNavigation<PlantDiseasePage>();
@@ -38,6 +41,7 @@ namespace Vnap
             Container.RegisterTypeForNavigation<PlantDiseaseSolutionPage>();
             Container.RegisterType<IPlantService, PlantService>();
             Container.RegisterType<IPlantDiseaseService, PlantDiseaseService>();
+            Container.RegisterType<IPostService, PostService>();
             Container.RegisterType(typeof(IRepository<>), typeof(Repository<>));
         }
 
@@ -60,6 +64,9 @@ namespace Vnap
 
             _plantDiseaseService = Container.Resolve<IPlantDiseaseService>();
             await _plantDiseaseService.Sync();
+
+            _postService = Container.Resolve<IPostService>();
+            await _postService.Sync();
         }
     }
 }

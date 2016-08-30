@@ -6,6 +6,8 @@ namespace Vnap.Views
 {
     public partial class PlantDiseaseListTab : ContentPage
     {
+        private bool _loaded;
+
         public PlantDiseaseListTab()
         {
             InitializeComponent();
@@ -22,8 +24,12 @@ namespace Vnap.Views
 
         protected override async void OnAppearing()
         {
-            var context = BindingContext as PlantDiseaseListTabViewModel;
-            if (context != null) await context.LoadPlantDiseases(0);
+            if (!_loaded)
+            {
+                var context = BindingContext as PlantDiseaseListTabViewModel;
+                if (context != null) await context.LoadPlantDiseases(0);
+                _loaded = true;
+            }
             base.OnAppearing();
         }
     }

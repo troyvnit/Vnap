@@ -275,6 +275,8 @@
     <AndroidResource Include="Resources\drawable\bubble_accent.9.png" />
     <AndroidResource Include="Resources\drawable\bubble_primary.9.png" />
     <AndroidResource Include="Resources\drawable\loading.png" />
+    <AndroidResource Include="Resources\drawable\background.png" />
+    <AndroidResource Include="Resources\drawable\logo.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Vnap.Repository\Vnap.Repository.csproj">

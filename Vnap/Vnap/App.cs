@@ -1,4 +1,6 @@
-﻿using Microsoft.Practices.Unity;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.Practices.Unity;
 using Vnap.ViewModels;
 using Vnap.Views;
 using Prism.Modularity;
@@ -19,17 +21,17 @@ namespace Vnap
         private IMessageService _messageService;
         public App(IPlatformInitializer initializer = null) : base(initializer)
         {
-            Sync();
         }
 
         protected override void OnInitialized()
         {
             AutoMapperConfiguration.Configure();
-            NavigationService.NavigateAsync("LeftMenu/Navigation/MainPage/PlantListTab", animated: false);
+            NavigationService.NavigateAsync("SplashScreen", animated: false);
         }
 
         protected override void RegisterTypes()
         {
+            Container.RegisterTypeForNavigation<SplashScreen>();
             Container.RegisterTypeForNavigation<MainPage>();
             Container.RegisterTypeForNavigation<Navigation>();
             Container.RegisterTypeForNavigation<LeftMenu>();
@@ -58,9 +60,8 @@ namespace Vnap
             NavigationService.NavigateAsync($"Navigation/PlantDiseasePage?query={query}", animated: false);
         }
 
-        public async void Sync()
+        public async Task Sync()
         {
-            await DatabaseHelper.InitialDatabase();
             _plantService = Container.Resolve<IPlantService>();
             await _plantService.Sync();
 

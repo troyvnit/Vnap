@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Vnap.Views.SplashScreen"
+             BackgroundImage="background.png">
+  <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+    <forms:CachedImage Source="logo.png" HorizontalOptions="CenterAndExpand" Margin="0,150,0,150"/>
+    <ActivityIndicator x:Name="ActivityIndicator" IsRunning="True" WidthRequest="35" HeightRequest="35" />
+  </StackLayout>
+</ContentPage>

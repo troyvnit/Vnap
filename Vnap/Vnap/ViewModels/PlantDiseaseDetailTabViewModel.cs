@@ -86,7 +86,7 @@ namespace Vnap.ViewModels
 
         public void LoadImages()
         {
-            for (var i = 0; i <= 5; i++)
+            for (var i = 0; i <= 15; i++)
             {
                 var source = ImageSource.FromFile(i % 2 == 0 ? "daoon.jpg" : "caylua.jpg");
                 _images.Add(new Image

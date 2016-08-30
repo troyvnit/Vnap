@@ -31,6 +31,25 @@ namespace Vnap.Repository
             _db = DependencyService.Get<ISQLiteProvider>().GetSQLiteAsyncConnection("Vnap.db3");
         }
 
+        private async Task<Repository<T>> InitializeAsync()
+        {
+            var table =
+                await
+                    _db.QueryAsync<object>(
+                        $"SELECT name FROM sqlite_master WHERE type='table' AND name={typeof (T).Name}");
+            if (table.Count == 0)
+            {
+                await _db.CreateTableAsync<T>();
+            }
+            return this;
+        }
+
+        public static Task<Repository<T>> CreateAsync()
+        {
+            var repository = new Repository<T>();
+            return repository.InitializeAsync();
+        }
+
         public AsyncTableQuery<T> AsQueryable() =>
             _db.Table<T>();
 

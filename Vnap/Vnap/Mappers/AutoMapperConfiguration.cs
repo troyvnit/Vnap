@@ -24,7 +24,8 @@ namespace Vnap.Mappers
 
             protected override void Configure()
             {
-                this.CreateMap<PostEntity, Post>().ForMember(p => p.Description, o => o.MapFrom(pe => pe.Description.Substring(0, 50) + "..."));
+                CreateMap<PostEntity, Post>().ForMember(p => p.Description, o => o.MapFrom(pe => pe.Description.Substring(0, 50) + "..."));
+                CreateMap<MessageEntity, Message>();
             }
         }
 
@@ -37,7 +38,7 @@ namespace Vnap.Mappers
 
             protected override void Configure()
             {
-                this.CreateMap<Post, PostEntity>();
+                CreateMap<Post, PostEntity>();
             }
         }
     }

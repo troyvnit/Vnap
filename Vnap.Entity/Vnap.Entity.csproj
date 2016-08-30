@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BaseEntity.cs" />
+    <Compile Include="MessageEntity.cs" />
     <Compile Include="PostEntity.cs" />
     <Compile Include="PlantDisease.cs" />
     <Compile Include="Plant.cs" />

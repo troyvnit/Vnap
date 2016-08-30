@@ -4,9 +4,43 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              xmlns:customs="clr-namespace:Vnap.Views.Customs;assembly=Vnap"
              xmlns:components="clr-namespace:Vnap.Views.Components;assembly=Vnap"
+             xmlns:converters="clr-namespace:Vnap.Converters;assembly=Vnap"
+             xmlns:behaviors="clr-namespace:Vnap.Behaviors;assembly=Vnap"
+             xmlns:templates="clr-namespace:Vnap.Views.Templates;assembly=Vnap"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Vnap.Views.AdvisoryTab"
              Icon="lnr-bubble">
 
-  <components:SatelliteMenu />
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <converters:ItemVisibilityEventArgstemConverter
+          x:Key="ItemVisibilityConverter" />
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Content>
+      <ListView x:Name="MessageListView"
+                CachingStrategy="RecycleElement"
+                BackgroundColor="#ECEFF4"
+                ItemsSource="{Binding Messages}"
+                HasUnevenRows="true"
+                IsPullToRefreshEnabled="true"
+                RefreshCommand="{Binding RefreshCommand}"
+                IsRefreshing="{Binding IsBusy}"
+                Margin="5,0,5,0"
+                ItemSelected="MessageList_OnItemSelected"
+                SeparatorVisibility="None"
+                AbsoluteLayout.LayoutFlags="All"
+                AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+        <ListView.Behaviors>
+          <behaviors:ListViewBehavior
+              Command="{Binding LoadMoreCommand}"
+              Converter="{StaticResource ItemVisibilityConverter}" />
+        </ListView.Behaviors>
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <customs:MessageViewCell />
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+  </ContentPage.Content>
 </ContentPage>

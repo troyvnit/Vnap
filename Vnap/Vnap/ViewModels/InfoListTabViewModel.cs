@@ -6,7 +6,7 @@ using AutoMapper;
 using Prism.Navigation;
 using Vnap.Models;
 using Vnap.Service;
-using Vnap.Service.Requests.Plant;
+using Vnap.Service.Requests.Post;
 
 namespace Vnap.ViewModels
 {

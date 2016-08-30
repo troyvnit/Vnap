@@ -70,15 +70,18 @@ namespace Vnap.Droid
             //    app.Search(search.Query);
             //};
 
-            search.KeyPress += (sender, args) =>
+            if (search != null)
             {
-                args.Handled = false;
-                if (args.Event.Action == KeyEventActions.Down && args.KeyCode == Keycode.Enter)
+                search.KeyPress += (sender, args) =>
                 {
-                    app.Search(search.Text);
-                    args.Handled = true;
-                }
-            };
+                    args.Handled = false;
+                    if (args.Event.Action == KeyEventActions.Down && args.KeyCode == Keycode.Enter)
+                    {
+                        app.Search(search.Text);
+                        args.Handled = true;
+                    }
+                };
+            }
             return base.OnCreateOptionsMenu(menu);
         }
 

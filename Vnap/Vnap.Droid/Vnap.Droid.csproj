@@ -202,6 +202,7 @@
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderers\LabelRender.cs" />
+    <Compile Include="Renderers\MessageViewCellRender.cs" />
     <Compile Include="Renderers\TabbedPageRender.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -230,6 +231,18 @@
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
+    <AndroidResource Include="Resources\layout\image_item_opponent.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\image_item_owner.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\message_item_opponent.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\message_item_owner.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\icon.png" />
@@ -259,6 +272,9 @@
     <AndroidResource Include="Resources\drawable\dead_plant.png" />
     <AndroidResource Include="Resources\drawable\pests.png" />
     <AndroidResource Include="Resources\drawable\solution_avatar.jpg" />
+    <AndroidResource Include="Resources\drawable\bubble_accent.9.png" />
+    <AndroidResource Include="Resources\drawable\bubble_primary.9.png" />
+    <AndroidResource Include="Resources\drawable\loading.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Vnap.Repository\Vnap.Repository.csproj">

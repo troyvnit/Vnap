@@ -1,6 +1,6 @@
 ﻿using Vnap.Entity;
 
-namespace Vnap.Service.Requests.Plant
+namespace Vnap.Service.Requests.Post
 {
     public class GetPostsRq : BaseRq
     {

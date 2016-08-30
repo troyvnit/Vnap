@@ -42,6 +42,7 @@
     <Compile Include="Mappers\AutoMapperConfiguration.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\LeftMenuItem.cs" />
+    <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\PlantDiseaseGroup.cs" />
     <Compile Include="Models\PlantDisease.cs" />
@@ -50,6 +51,7 @@
     <Compile Include="Services\PlantService.cs" />
     <Compile Include="Utils\IImageResizer.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\AdvisoryTabViewModel.cs" />
     <Compile Include="ViewModels\PlantDiseaseDetailTabViewModel.cs" />
     <Compile Include="ViewModels\PlantDiseaseDetailPageViewModel.cs" />
     <Compile Include="ViewModels\PlantDiseasePageViewModel.cs" />
@@ -64,6 +66,7 @@
     <Compile Include="Views\Components\SatelliteMenu.xaml.cs">
       <DependentUpon>SatelliteMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Customs\MessageViewCell.cs" />
     <Compile Include="Views\MainPageTabs\NewsTab.xaml.cs">
       <DependentUpon>NewsTab.xaml</DependentUpon>
     </Compile>

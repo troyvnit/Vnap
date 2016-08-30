@@ -16,6 +16,7 @@ namespace Vnap
         private IPlantService _plantService;
         private IPlantDiseaseService _plantDiseaseService;
         private IPostService _postService;
+        private IMessageService _messageService;
         public App(IPlatformInitializer initializer = null) : base(initializer)
         {
             Sync();
@@ -42,6 +43,7 @@ namespace Vnap
             Container.RegisterType<IPlantService, PlantService>();
             Container.RegisterType<IPlantDiseaseService, PlantDiseaseService>();
             Container.RegisterType<IPostService, PostService>();
+            Container.RegisterType<IMessageService, MessageService>();
             Container.RegisterType(typeof(IRepository<>), typeof(Repository<>));
         }
 
@@ -67,6 +69,9 @@ namespace Vnap
 
             _postService = Container.Resolve<IPostService>();
             await _postService.Sync();
+
+            _messageService = Container.Resolve<IMessageService>();
+            await _messageService.Sync();
         }
     }
 }

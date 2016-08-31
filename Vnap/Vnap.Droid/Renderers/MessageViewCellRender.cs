@@ -40,7 +40,7 @@ namespace Vnap.Droid.Renderers
                     })
                     .Error(exception =>
                     {
-                        content.Text = "Lỗi hình!";
+                        content.Text = "Lỗi tải hình!";
                         content.SetTextColor(Color.Red);
                     }).Into(_imageView);
                     return template;

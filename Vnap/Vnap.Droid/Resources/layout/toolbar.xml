@@ -16,6 +16,7 @@
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/transparent"
         android:hint="Bạn cần giải pháp?" />
   </RelativeLayout>
 </android.support.v7.widget.Toolbar>

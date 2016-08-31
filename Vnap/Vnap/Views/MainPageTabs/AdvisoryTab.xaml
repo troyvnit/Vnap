@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
@@ -7,40 +8,54 @@
              xmlns:converters="clr-namespace:Vnap.Converters;assembly=Vnap"
              xmlns:behaviors="clr-namespace:Vnap.Behaviors;assembly=Vnap"
              xmlns:templates="clr-namespace:Vnap.Views.Templates;assembly=Vnap"
+             xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Vnap.Views.AdvisoryTab"
              Icon="lnr-bubble">
 
-  <ContentPage.Resources>
-    <ResourceDictionary>
-      <converters:ItemVisibilityEventArgstemConverter
-          x:Key="ItemVisibilityConverter" />
-    </ResourceDictionary>
-  </ContentPage.Resources>
-  <ContentPage.Content>
-      <ListView x:Name="MessageListView"
-                CachingStrategy="RecycleElement"
-                BackgroundColor="#ECEFF4"
-                ItemsSource="{Binding Messages}"
-                HasUnevenRows="true"
-                IsPullToRefreshEnabled="true"
-                RefreshCommand="{Binding RefreshCommand}"
-                IsRefreshing="{Binding IsBusy}"
-                Margin="5,0,5,0"
-                ItemSelected="MessageList_OnItemSelected"
-                SeparatorVisibility="None"
-                AbsoluteLayout.LayoutFlags="All"
-                AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
-        <ListView.Behaviors>
-          <behaviors:ListViewBehavior
-              Command="{Binding LoadMoreCommand}"
-              Converter="{StaticResource ItemVisibilityConverter}" />
-        </ListView.Behaviors>
-        <ListView.ItemTemplate>
-          <DataTemplate>
-            <customs:MessageViewCell />
-          </DataTemplate>
-        </ListView.ItemTemplate>
-      </ListView>
-  </ContentPage.Content>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ItemVisibilityEventArgstemConverter
+                x:Key="ItemVisibilityConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <AbsoluteLayout VerticalOptions="FillAndExpand" BackgroundColor="#ECEFF4">
+            <ListView x:Name="MessageListView"
+                      CachingStrategy="RecycleElement"
+                      BackgroundColor="#ECEFF4"
+                      ItemsSource="{Binding Messages}"
+                      HasUnevenRows="true"
+                      IsPullToRefreshEnabled="true"
+                      RefreshCommand="{Binding RefreshCommand}"
+                      IsRefreshing="{Binding IsBusy}"
+                      Margin="5,0,5,0"
+                      ItemSelected="MessageList_OnItemSelected"
+                      SeparatorVisibility="None"
+                      AbsoluteLayout.LayoutFlags="All"
+                      AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+                <ListView.Behaviors>
+                    <behaviors:ListViewBehavior
+                        Command="{Binding LoadMoreCommand}"
+                        Converter="{StaticResource ItemVisibilityConverter}" />
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <customs:MessageViewCell />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,1,1,.08"
+                         AbsoluteLayout.LayoutFlags="All" BackgroundColor="#289B47">
+                <iconize:IconLabel Text="lnr-phone-handset" TextColor="White" FontSize="26" Margin="10,0,0,0" HorizontalTextAlignment="Center"
+                                   HorizontalOptions="Start" VerticalOptions="CenterAndExpand" />
+                <iconize:IconLabel Text="flaticon-photo-camera" TextColor="White" FontSize="26" Margin="10,0,10,0" HorizontalTextAlignment="Center"
+                                   HorizontalOptions="Start" VerticalOptions="CenterAndExpand" />
+                <Entry Placeholder="Nhập nội dung cần tư vấn..." PlaceholderColor="White" FontSize="16" TextColor="White" InputTransparent="True" 
+                                   HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" />
+                <iconize:IconLabel Text="flaticon-paper-plane-1" TextColor="White" FontSize="26" Margin="10,0,10,0" HorizontalTextAlignment="Center"
+                                   HorizontalOptions="End" VerticalOptions="CenterAndExpand" />
+            </StackLayout>
+        </AbsoluteLayout>
+    </ContentPage.Content>
 </ContentPage>

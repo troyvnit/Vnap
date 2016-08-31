@@ -201,6 +201,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
+    <Compile Include="Renderers\EntryRender.cs" />
     <Compile Include="Renderers\LabelRender.cs" />
     <Compile Include="Renderers\MessageViewCellRender.cs" />
     <Compile Include="Renderers\TabbedPageRender.cs" />

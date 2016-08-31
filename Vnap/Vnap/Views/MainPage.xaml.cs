@@ -1,8 +1,8 @@
-﻿using XLabs.Forms.Controls;
+﻿using FormsPlugin.Iconize;
 
 namespace Vnap.Views
 {
-    public partial class MainPage : ExtendedTabbedPage
+    public partial class MainPage : IconTabbedPage
     {
         public MainPage()
         {

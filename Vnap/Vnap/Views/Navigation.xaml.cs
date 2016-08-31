@@ -4,7 +4,7 @@ using Xamarin.Forms;
 
 namespace Vnap.Views
 {
-    public partial class Navigation : NavigationPage, INavigationPageOptions
+    public partial class Navigation : IconNavigationPage, INavigationPageOptions
     {
         public bool ClearNavigationStackOnNavigation => true;
 

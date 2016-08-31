@@ -22,7 +22,6 @@
     <ContentPage.Content>
         <AbsoluteLayout VerticalOptions="FillAndExpand" BackgroundColor="#ECEFF4">
             <ListView x:Name="MessageListView"
-                      CachingStrategy="RecycleElement"
                       BackgroundColor="#ECEFF4"
                       ItemsSource="{Binding Messages}"
                       HasUnevenRows="true"

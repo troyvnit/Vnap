@@ -11,13 +11,13 @@ namespace Vnap.Service
     public interface IMessageService
     {
         Task Sync();
-        Task<List<MessageEntity>> GetMessages(GetMessagesRq rq);
+        Task<List<AdvisoryMessageEntity>> GetMessages(GetMessagesRq rq);
         Task<int> GetMessagesCount();
     }
     public class MessageService : IMessageService
     {
-        private IRepository<MessageEntity> _messageRepository;
-        public MessageService(IRepository<MessageEntity> messageRepository)
+        private IRepository<AdvisoryMessageEntity> _messageRepository;
+        public MessageService(IRepository<AdvisoryMessageEntity> messageRepository)
         {
             _messageRepository = messageRepository;
         }
@@ -35,7 +35,7 @@ namespace Vnap.Service
         {
             var startDate = new DateTime(2016, 1, 1);
 
-            _messageRepository.Insert(new MessageEntity()
+            _messageRepository.Insert(new AdvisoryMessageEntity()
             {
                 Id = 1,
                 Content = "Dự báo sâu bệnh tổng hợp trong tuần (22.08.2016)",
@@ -43,20 +43,20 @@ namespace Vnap.Service
                 IsAdviser = true,
                 CreatedDate = startDate.AddDays(1)
             });
-            _messageRepository.Insert(new MessageEntity()
+            _messageRepository.Insert(new AdvisoryMessageEntity()
             {
                 Id = 2,
                 Content = "Theo thông tin từ Bộ Nông nghiệp và Phát triển Nông thôn, trong tháng Tám, xuất khẩu gạo tiếp tục gặp bế tắc do không có nhu cầu nhập khẩu gạo mới từ cả thị trường truyền thống và các thị trường khác.",
                 CreatedDate = startDate.AddDays(2)
             });
-            _messageRepository.Insert(new MessageEntity()
+            _messageRepository.Insert(new AdvisoryMessageEntity()
             {
                 Id = 3,
                 Content = "Dự báo sâu bệnh tổng hợp trong tuần (22.08.2016)",
                 ImageUrl = "http://chuyennongvu.vn/wp-content/uploads/2015/06/da3lua.jpg",
                 CreatedDate = startDate.AddDays(3)
             });
-            _messageRepository.Insert(new MessageEntity()
+            _messageRepository.Insert(new AdvisoryMessageEntity()
             {
                 Id = 4,
                 AuthorName = "Troy Lee",
@@ -66,7 +66,7 @@ namespace Vnap.Service
             });
         }
 
-        public async Task<List<MessageEntity>> GetMessages(GetMessagesRq rq)
+        public async Task<List<AdvisoryMessageEntity>> GetMessages(GetMessagesRq rq)
         {
             var query = _messageRepository.AsQueryable()
                 .OrderByDescending(message => message.CreatedDate);

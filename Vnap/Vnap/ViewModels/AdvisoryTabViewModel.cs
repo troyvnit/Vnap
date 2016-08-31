@@ -16,20 +16,20 @@ namespace Vnap.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IMessageService _messageService;
 
-        private ObservableCollection<Message> _messages = new ObservableCollection<Message>();
-        public ObservableCollection<Message> Messages => _messages;
+        private ObservableCollection<AdvisoryMessage> _messages = new ObservableCollection<AdvisoryMessage>();
+        public ObservableCollection<AdvisoryMessage> Messages => _messages;
 
         private int _totalMessages;
 
         public DelegateCommand RefreshCommand { get; set; }
-        public DelegateCommand<Message> LoadMoreCommand { get; set; }
+        public DelegateCommand<AdvisoryMessage> LoadMoreCommand { get; set; }
 
         public AdvisoryTabViewModel(INavigationService navigationService, IMessageService messageService)
         {
             _messageService = messageService;
             _navigationService = navigationService;
             RefreshCommand = DelegateCommand.FromAsyncHandler(ExecuteRefreshCommand, CanExecuteRefreshCommand);
-            LoadMoreCommand = DelegateCommand<Message>.FromAsyncHandler(ExecuteLoadMoreCommand, CanExecuteLoadMoreCommand);
+            LoadMoreCommand = DelegateCommand<AdvisoryMessage>.FromAsyncHandler(ExecuteLoadMoreCommand, CanExecuteLoadMoreCommand);
         }
 
         public bool CanExecuteRefreshCommand()
@@ -41,18 +41,18 @@ namespace Vnap.ViewModels
         {
             IsBusy = true;
 
-            _messages = new ObservableCollection<Message>();
+            _messages = new ObservableCollection<AdvisoryMessage>();
             await LoadMessages(0);
 
             IsBusy = false;
         }
 
-        public bool CanExecuteLoadMoreCommand(Message item)
+        public bool CanExecuteLoadMoreCommand(AdvisoryMessage item)
         {
             return IsNotBusy && _messages.Count > _totalMessages;
         }
 
-        public async Task ExecuteLoadMoreCommand(Message item)
+        public async Task ExecuteLoadMoreCommand(AdvisoryMessage item)
         {
             IsBusy = true;
 
@@ -75,14 +75,17 @@ namespace Vnap.ViewModels
             {
                 if (!_messages.Select(p => p.Id).Contains(message.Id))
                 {
-                    _messages.Add(Mapper.Map<Message>(message));
+                    _messages.Add(Mapper.Map<AdvisoryMessage>(message));
                 }
             }
         }
 
-        public void MessageListItemSelectedHandler(Message message)
+        public void MessageListItemSelectedHandler(AdvisoryMessage message)
         {
-            _navigationService.NavigateAsync(message.NavigateUrl, animated: false);
+            if (!string.IsNullOrEmpty(message.ImageUrl))
+            {
+                _navigationService.NavigateAsync(message.ImageUrl, animated: false);
+            }
         }
     }
 }

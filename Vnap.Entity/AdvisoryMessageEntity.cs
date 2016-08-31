@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Vnap.Models
+namespace Vnap.Entity
 {
-    public class Message
+    public class AdvisoryMessageEntity : BaseEntity
     {
-        public int Id { get; set; }
         public string ImageUrl { get; set; }
         public bool IsAdviser { get; set; }
         public string AuthorName { get; set; }

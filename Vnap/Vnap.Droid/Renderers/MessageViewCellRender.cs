@@ -22,7 +22,7 @@ namespace Vnap.Droid.Renderers
         protected override View GetCellCore(Cell item, View convertView, ViewGroup parent, Context context)
         {
             var inflatorservice = (LayoutInflater)Forms.Context.GetSystemService(Android.Content.Context.LayoutInflaterService);
-            var textMsgVm = item.BindingContext as Message;
+            var textMsgVm = item.BindingContext as AdvisoryMessage;
             if (textMsgVm != null)
             {
                 if (!string.IsNullOrEmpty((textMsgVm.ImageUrl)))

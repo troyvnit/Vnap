@@ -15,10 +15,10 @@ namespace Vnap.Views
 
         private void MessageList_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            //if (MessageListView.SelectedItem == null) return;
-            //var context = BindingContext as AdvisoryTabViewModel;
-            //var selectedItem = MessageListView.SelectedItem as Message;
-            //context?.MessageListItemSelectedHandler(selectedItem);
+            if (MessageListView.SelectedItem == null) return;
+            var context = BindingContext as AdvisoryTabViewModel;
+            var selectedItem = MessageListView.SelectedItem as AdvisoryMessage;
+            context?.MessageListItemSelectedHandler(selectedItem);
             MessageListView.SelectedItem = null;
         }
 

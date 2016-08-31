@@ -13,7 +13,7 @@ namespace Vnap.Repository
             await db.CreateTableAsync<Plant>();
             await db.CreateTableAsync<PlantDisease>();
             await db.CreateTableAsync<PostEntity>();
-            await db.CreateTableAsync<MessageEntity>();
+            await db.CreateTableAsync<AdvisoryMessageEntity>();
         }
     }
 }

@@ -81,7 +81,7 @@ namespace Vnap.ViewModels
 
         public void PostListItemSelectedHandler(Post post)
         {
-            _navigationService.NavigateAsync($"LeftMenu/Navigation/PostDiseasePage?PostId={post.Id}", animated: false);
+            _navigationService.NavigateAsync(post.NavigateUrl, animated: false);
         }
     }
 }

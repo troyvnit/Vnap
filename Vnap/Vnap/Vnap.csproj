@@ -42,7 +42,7 @@
     <Compile Include="Mappers\AutoMapperConfiguration.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\LeftMenuItem.cs" />
-    <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\AdvisoryMessage.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\PlantDiseaseGroup.cs" />
     <Compile Include="Models\PlantDisease.cs" />

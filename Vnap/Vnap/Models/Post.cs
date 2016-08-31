@@ -14,6 +14,7 @@ namespace Vnap.Models
         public string Description { get; set; }
         public string Avatar { get; set; }
         public int Priority { get; set; }
+        public string NavigateUrl { get; set; }
         public DateTime CreatedDate { get; set; }
     }
 }

@@ -3,9 +3,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-             xmlns:customs="clr-namespace:Vnap.Views.Customs;assembly=Vnap"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:components="clr-namespace:Vnap.Views.Components;assembly=Vnap"
+             xmlns:rerenders="clr-namespace:Vnap.Views.Rerenders;assembly=Vnap"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Vnap.Views.PlantDiseaseDetailTab"
              x:Name="PlantDiseaseDetailTabContentPage">
@@ -47,10 +47,10 @@
                                FontSize="16" />
                     </ContentView>
                 </AbsoluteLayout>
-                <customs:ImageGalleryView
+                <rerenders:ImageGalleryView
                     ItemsSource="{Binding Images}"
                     Grid.Row="1">
-                    <customs:ImageGalleryView.ItemTemplate>
+                    <rerenders:ImageGalleryView.ItemTemplate>
                         <DataTemplate>
                             <ffimageloading:CachedImage
                                 DownsampleHeight="50"
@@ -66,8 +66,8 @@
                                 </ffimageloading:CachedImage.GestureRecognizers>
                             </ffimageloading:CachedImage>
                         </DataTemplate>
-                    </customs:ImageGalleryView.ItemTemplate>
-                </customs:ImageGalleryView>
+                    </rerenders:ImageGalleryView.ItemTemplate>
+                </rerenders:ImageGalleryView>
             </Grid>
             <AbsoluteLayout VerticalOptions="FillAndExpand">
                 <ContentView BackgroundColor="White" Padding="10" Margin="0, 0, 0, 70"

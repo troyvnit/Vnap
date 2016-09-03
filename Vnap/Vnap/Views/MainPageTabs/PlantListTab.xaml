@@ -7,8 +7,8 @@
              xmlns:behaviors="clr-namespace:Vnap.Behaviors;assembly=Vnap"
              xmlns:templates="clr-namespace:Vnap.Views.Templates;assembly=Vnap"
              xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
-             xmlns:customs="clr-namespace:Vnap.Views.Customs;assembly=Vnap"
              xmlns:components="clr-namespace:Vnap.Views.Components;assembly=Vnap"
+             xmlns:extendedControls="clr-namespace:Vnap.Views.ExtendedControls;assembly=Vnap"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Vnap.Views.PlantListTab"
              Icon="lnr-leaf">
@@ -20,30 +20,34 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout VerticalOptions="FillAndExpand" BackgroundColor="#ECEFF4">
-            <ListView x:Name="PlantListView"
-                      CachingStrategy="RecycleElement"
+            <extendedControls:ExtendedListView x:Name="PlantListView"
                       BackgroundColor="#ECEFF4"
                       ItemsSource="{Binding Plants}"
                       HasUnevenRows="true"
                       IsPullToRefreshEnabled="true"
                       RefreshCommand="{Binding RefreshCommand}"
+                      LoadMoreCommand="{Binding LoadMoreCommand}"
                       IsRefreshing="{Binding IsBusy}"
                       Margin="5,0,5,0"
-                      ItemSelected="PlantList_OnItemSelected"
+                      AllowSelectItem="False"
+                      ItemClickCommand="{Binding ItemClickCommand}"
                       SeparatorVisibility="None"
                       AbsoluteLayout.LayoutFlags="All"
                       AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+              <x:Arguments>
+                <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
+              </x:Arguments>
                 <!--<ListView.Behaviors>
                     <behaviors:ListViewBehavior
                         Command="{Binding LoadMoreCommand}"
                         Converter="{StaticResource ItemVisibilityConverter}" />
                 </ListView.Behaviors>-->
-                <ListView.ItemTemplate>
+              <extendedControls:ExtendedListView.ItemTemplate>
                     <DataTemplate>
                         <templates:PlantViewCell />
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </extendedControls:ExtendedListView.ItemTemplate>
+            </extendedControls:ExtendedListView>
             <ActivityIndicator x:Name="ActivityIndicator" IsRunning="{Binding IsBusy}" WidthRequest="35" HeightRequest="35" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"/>
             <components:SatelliteMenu />
         </AbsoluteLayout>

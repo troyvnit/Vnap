@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace Vnap.Views.Customs
+namespace Vnap.Views.Rerenders
 {
     public class MessageViewCell : ViewCell
     {

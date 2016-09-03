@@ -3,12 +3,12 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-             xmlns:customs="clr-namespace:Vnap.Views.Customs;assembly=Vnap"
              xmlns:components="clr-namespace:Vnap.Views.Components;assembly=Vnap"
              xmlns:converters="clr-namespace:Vnap.Converters;assembly=Vnap"
              xmlns:behaviors="clr-namespace:Vnap.Behaviors;assembly=Vnap"
              xmlns:templates="clr-namespace:Vnap.Views.Templates;assembly=Vnap"
              xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
+             xmlns:rerenders="clr-namespace:Vnap.Views.Rerenders;assembly=Vnap"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Vnap.Views.AdvisoryTab"
              Icon="lnr-bubble">
@@ -40,7 +40,7 @@
                 </ListView.Behaviors>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <customs:MessageViewCell />
+                        <rerenders:MessageViewCell />
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

@@ -1,14 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Prism.Mvvm;
-using Vnap.ViewModels;
+using FormsPlugin.Iconize;
 using Xamarin.Forms;
 using XLabs.Forms.Controls;
-using XLabs.Forms.Mvvm;
 
-namespace Vnap.Views.Customs
+namespace Vnap.Views.ExtendedControls
 {
-    public class BindableTabbedPage : ExtendedTabbedPage
+    public class BindableTabbedPage : IconTabbedPage
     {
         public BindableTabbedPage()
         {

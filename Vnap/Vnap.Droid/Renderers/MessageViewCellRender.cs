@@ -8,7 +8,7 @@ using FFImageLoading;
 using FFImageLoading.Views;
 using Vnap.Droid.Renderers;
 using Vnap.Models;
-using Vnap.Views.Customs;
+using Vnap.Views.Rerenders;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Color = Android.Graphics.Color;

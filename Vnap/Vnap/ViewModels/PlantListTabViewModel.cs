@@ -2,10 +2,14 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Prism.Navigation;
 using Vnap.Models;
 using Vnap.Service;
 using Vnap.Service.Requests.Plant;
+using Vnap.Views.ExtendedControls;
+using Vnap.Views.Templates;
+using Xamarin.Forms;
 
 namespace Vnap.ViewModels
 {
@@ -14,20 +18,26 @@ namespace Vnap.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IPlantService _plantService;
 
-        private ObservableCollection<Plant> _plants = new ObservableCollection<Plant>();
-        public ObservableCollection<Plant> Plants => _plants;
+        private ObservableRangeCollection<Plant> _plants = new ObservableRangeCollection<Plant>();
+        public ObservableRangeCollection<Plant> Plants
+        { 
+            get { return _plants ?? (_plants = new ObservableRangeCollection<Plant>()); }
+            set { SetProperty(ref _plants, value); }
+        }
 
         private int _totalPlants;
 
         public DelegateCommand RefreshCommand { get; set; }
-        public DelegateCommand<Plant> LoadMoreCommand { get; set; }
+        public DelegateCommand LoadMoreCommand { get; set; }
+        public DelegateCommand<Plant> ItemClickCommand { get; set; }
 
         public PlantListTabViewModel(INavigationService navigationService, IPlantService plantService)
         {
             _plantService = plantService;
             _navigationService = navigationService;
             RefreshCommand = DelegateCommand.FromAsyncHandler(ExecuteRefreshCommand, CanExecuteRefreshCommand);
-            LoadMoreCommand = DelegateCommand<Plant>.FromAsyncHandler(ExecuteLoadMoreCommand, CanExecuteLoadMoreCommand);
+            LoadMoreCommand = DelegateCommand.FromAsyncHandler(ExecuteLoadMoreCommand, CanExecuteLoadMoreCommand);
+            ItemClickCommand = new DelegateCommand<Plant>(ExecuteItemClickCommand, CanExecuteItemClickCommand);
         }
 
         public bool CanExecuteRefreshCommand()
@@ -39,18 +49,18 @@ namespace Vnap.ViewModels
         {
             IsBusy = true;
 
-            _plants = new ObservableCollection<Plant>();
+            _plants = new ObservableRangeCollection<Plant>();
             await LoadPlants(0);
 
             IsBusy = false;
         }
 
-        public bool CanExecuteLoadMoreCommand(Plant item)
+        public bool CanExecuteLoadMoreCommand()
         {
-            return IsNotBusy && _plants.Count > _totalPlants;
+            return IsNotBusy && _plants.Count < _totalPlants;
         }
 
-        public async Task ExecuteLoadMoreCommand(Plant item)
+        public async Task ExecuteLoadMoreCommand()
         {
             IsBusy = true;
 
@@ -68,26 +78,27 @@ namespace Vnap.ViewModels
             };
             var newPlants = await _plantService.GetPlants(rq);
             _totalPlants = await _plantService.GetPlantsCount();
-
-            var isEven = _plants.LastOrDefault() != null && _plants.LastOrDefault().IsEven;
-            foreach (var plant in newPlants)
+            
+            Plants.AddRange(newPlants.Select(Mapper.Map<Plant>));
+            for (int i = 0; i < Plants.Count; i++)
             {
-                isEven = !isEven;
-                if (!_plants.Select(p => p.Id).Contains(plant.Id))
-                {
-                    _plants.Add(new Plant()
-                    {
-                        Id = plant.Id,
-                        Description = plant.Description,
-                        Name = plant.Name,
-                        Avatar = plant.Avatar,
-                        IsEven = isEven
-                    });
-                }
+                Plants[i].IsEven = i % 2 == 0;
             }
         }
 
-        public void PlantListItemSelectedHandler(Plant plant)
+        public override async void OnNavigatedTo(NavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+
+            await ExecuteLoadMoreCommand();
+        }
+
+        public bool CanExecuteItemClickCommand(Plant plant)
+        {
+            return IsNotBusy;
+        }
+
+        public void ExecuteItemClickCommand(Plant plant)
         {
             _navigationService.NavigateAsync($"LeftMenu/Navigation/PlantDiseasePage?PlantId={plant.Id}", animated: false);
         }

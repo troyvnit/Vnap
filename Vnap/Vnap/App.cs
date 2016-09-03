@@ -9,7 +9,6 @@ using Prism.Unity;
 using Vnap.Mappers;
 using Vnap.Repository;
 using Vnap.Service;
-using Vnap.Views.Customs;
 
 namespace Vnap
 {

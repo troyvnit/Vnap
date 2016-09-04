@@ -6,6 +6,7 @@
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:components="clr-namespace:Vnap.Views.Components;assembly=Vnap"
              xmlns:rerenders="clr-namespace:Vnap.Views.Rerenders;assembly=Vnap"
+             xmlns:extendedControls="clr-namespace:Vnap.Views.ExtendedControls;assembly=Vnap"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Vnap.Views.PlantDiseaseDetailTab"
              x:Name="PlantDiseaseDetailTabContentPage">
@@ -47,10 +48,10 @@
                                FontSize="16" />
                     </ContentView>
                 </AbsoluteLayout>
-                <rerenders:ImageGalleryView
+                <extendedControls:ExtendedScrollView
                     ItemsSource="{Binding Images}"
                     Grid.Row="1">
-                    <rerenders:ImageGalleryView.ItemTemplate>
+                    <extendedControls:ExtendedScrollView.ItemTemplate>
                         <DataTemplate>
                             <ffimageloading:CachedImage
                                 DownsampleHeight="50"
@@ -66,8 +67,8 @@
                                 </ffimageloading:CachedImage.GestureRecognizers>
                             </ffimageloading:CachedImage>
                         </DataTemplate>
-                    </rerenders:ImageGalleryView.ItemTemplate>
-                </rerenders:ImageGalleryView>
+                    </extendedControls:ExtendedScrollView.ItemTemplate>
+                </extendedControls:ExtendedScrollView>
             </Grid>
             <AbsoluteLayout VerticalOptions="FillAndExpand">
                 <ContentView BackgroundColor="White" Padding="10" Margin="0, 0, 0, 70"

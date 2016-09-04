@@ -4,13 +4,13 @@ using System.Collections.Specialized;
 using System.Linq;
 using Xamarin.Forms;
 
-namespace Vnap.Views.Rerenders
+namespace Vnap.Views.ExtendedControls
 {
-    public class ImageGalleryView : ScrollView
+    public class ExtendedScrollView : ScrollView
     {
         readonly StackLayout _imageStack;
 
-        public ImageGalleryView()
+        public ExtendedScrollView()
         {
             this.Orientation = ScrollOrientation.Horizontal;
 
@@ -32,15 +32,15 @@ namespace Vnap.Views.Rerenders
 
 
         public static readonly BindableProperty ItemsSourceProperty =
-            BindableProperty.Create<ImageGalleryView, IList>(
+            BindableProperty.Create<ExtendedScrollView, IList>(
                 view => view.ItemsSource,
                 default(IList),
                 BindingMode.TwoWay,
                 propertyChanging: (bindableObject, oldValue, newValue) => {
-                    ((ImageGalleryView)bindableObject).ItemsSourceChanging();
+                    ((ExtendedScrollView)bindableObject).ItemsSourceChanging();
                 },
                 propertyChanged: (bindableObject, oldValue, newValue) => {
-                    ((ImageGalleryView)bindableObject).ItemsSourceChanged(bindableObject, oldValue, newValue);
+                    ((ExtendedScrollView)bindableObject).ItemsSourceChanged(bindableObject, oldValue, newValue);
                 }
             );
 
@@ -99,12 +99,12 @@ namespace Vnap.Views.Rerenders
         }
 
         public static readonly BindableProperty SelectedItemProperty =
-            BindableProperty.Create<ImageGalleryView, object>(
+            BindableProperty.Create<ExtendedScrollView, object>(
                 view => view.SelectedItem,
                 null,
                 BindingMode.TwoWay,
                 propertyChanged: (bindable, oldValue, newValue) => {
-                    ((ImageGalleryView)bindable).UpdateSelectedIndex();
+                    ((ExtendedScrollView)bindable).UpdateSelectedIndex();
                 }
             );
 
@@ -133,12 +133,12 @@ namespace Vnap.Views.Rerenders
         }
 
         public static readonly BindableProperty SelectedIndexProperty =
-            BindableProperty.Create<ImageGalleryView, int>(
+            BindableProperty.Create<ExtendedScrollView, int>(
                 carousel => carousel.SelectedIndex,
                 0,
                 BindingMode.TwoWay,
                 propertyChanged: (bindable, oldValue, newValue) => {
-                    ((ImageGalleryView)bindable).UpdateSelectedItem();
+                    ((ExtendedScrollView)bindable).UpdateSelectedItem();
                 }
             );
 

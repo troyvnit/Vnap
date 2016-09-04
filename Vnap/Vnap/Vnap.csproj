@@ -64,7 +64,7 @@
     <Compile Include="ViewModels\SplashScreenViewModel.cs" />
     <Compile Include="Views\ExtendedControls\BindableTabbedPage.cs" />
     <Compile Include="Views\ExtendedControls\ExtendedListView.cs" />
-    <Compile Include="Views\Rerenders\ImageGalleryView.cs" />
+    <Compile Include="Views\ExtendedControls\ExtendedScrollView.cs" />
     <Compile Include="Views\Components\SatelliteMenu.xaml.cs">
       <DependentUpon>SatelliteMenu.xaml</DependentUpon>
     </Compile>

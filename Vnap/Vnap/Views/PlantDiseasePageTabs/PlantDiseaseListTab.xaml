@@ -4,44 +4,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              xmlns:converters="clr-namespace:Vnap.Converters;assembly=Vnap"
-             xmlns:behaviors="clr-namespace:Vnap.Behaviors;assembly=Vnap"
              xmlns:templates="clr-namespace:Vnap.Views.Templates;assembly=Vnap"
-             xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
-             xmlns:customs="clr-namespace:Vnap.Views.Customs;assembly=Vnap"
              xmlns:components="clr-namespace:Vnap.Views.Components;assembly=Vnap"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:extendedControls="clr-namespace:Vnap.Views.ExtendedControls;assembly=Vnap"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Vnap.Views.PlantDiseaseListTab"
              BackgroundColor="#ECEFF4">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converters:ItemVisibilityEventArgstemConverter
-                x:Key="ItemVisibilityConverter" />
-        </ResourceDictionary>
-    </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout VerticalOptions="FillAndExpand">
-            <ListView x:Name="PlantDiseaseListView"
-                      CachingStrategy="RecycleElement"
+            <extendedControls:ExtendedListView x:Name="PlantDiseaseListView"
                       BackgroundColor="#ECEFF4"
                       ItemsSource="{Binding PlantDiseaseGroups}"
                       HasUnevenRows="true"
                       IsPullToRefreshEnabled="true"
                       RefreshCommand="{Binding RefreshCommand}"
+                      LoadMoreCommand="{Binding LoadMoreCommand}"
                       IsRefreshing="{Binding IsBusy}"
                       IsGroupingEnabled="True"
                       GroupDisplayBinding="{Binding Name}"
                       GroupShortNameBinding="{Binding ShortName}"
                       Margin="5,0,5,0"
-                      ItemSelected="PlantDiseaseList_OnItemSelected"
+                      AllowSelectItem="False"
+                      ItemClickCommand="{Binding ItemClickCommand}"
                       SeparatorVisibility="None"
                       AbsoluteLayout.LayoutFlags="All"
                       AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
-                <!--<ListView.Behaviors>
-                    <behaviors:ListViewBehavior
-                        Command="{Binding LoadMoreCommand}"
-                        Converter="{StaticResource ItemVisibilityConverter}" />
-                </ListView.Behaviors>-->
+              <x:Arguments>
+                <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
+              </x:Arguments>
               <ListView.GroupHeaderTemplate>
                 <DataTemplate>
                   <ViewCell>
@@ -57,7 +48,7 @@
                         <templates:PlantDiseaseViewCell />
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView>
+            </extendedControls:ExtendedListView>
           <ActivityIndicator x:Name="ActivityIndicator" IsRunning="{Binding IsBusy}" WidthRequest="35" HeightRequest="35" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"/>
             <components:SatelliteMenu />
         </AbsoluteLayout>

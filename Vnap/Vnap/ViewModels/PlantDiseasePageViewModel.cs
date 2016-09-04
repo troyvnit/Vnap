@@ -52,7 +52,8 @@ namespace Vnap.ViewModels
 
                 list.AddRange(plants.Select(p => new PlantDiseaseListTab()
                 {
-                    Title = p.Name
+                    Title = p.Name,
+                    Icon = ""
                 }));
 
                 PlantDiseaseListTabs = list.ToObservableCollection();

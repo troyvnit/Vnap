@@ -12,12 +12,6 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Vnap.Views.PlantListTab"
              Icon="lnr-leaf">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converters:ItemVisibilityEventArgstemConverter
-                x:Key="ItemVisibilityConverter" />
-        </ResourceDictionary>
-    </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout VerticalOptions="FillAndExpand" BackgroundColor="#ECEFF4">
             <extendedControls:ExtendedListView x:Name="PlantListView"
@@ -37,11 +31,6 @@
               <x:Arguments>
                 <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
               </x:Arguments>
-                <!--<ListView.Behaviors>
-                    <behaviors:ListViewBehavior
-                        Command="{Binding LoadMoreCommand}"
-                        Converter="{StaticResource ItemVisibilityConverter}" />
-                </ListView.Behaviors>-->
               <extendedControls:ExtendedListView.ItemTemplate>
                     <DataTemplate>
                         <templates:PlantViewCell />

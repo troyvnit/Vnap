@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Prism.Navigation;
 using Vnap.Models;
 using Vnap.Service;
@@ -36,14 +37,16 @@ namespace Vnap.ViewModels
         private int _totalPlantDiseases;
 
         public DelegateCommand RefreshCommand { get; set; }
-        public DelegateCommand<PlantDiseaseGroup> LoadMoreCommand { get; set; }
+        public DelegateCommand LoadMoreCommand { get; set; }
+        public DelegateCommand<PlantDisease> ItemClickCommand { get; set; }
 
         public PlantDiseaseListTabViewModel(INavigationService navigationService, IPlantDiseaseService plantDiseaseService)
         {
             _plantDiseaseService = plantDiseaseService;
             _navigationService = navigationService;
             RefreshCommand = DelegateCommand.FromAsyncHandler(ExecuteRefreshCommand, CanExecuteRefreshCommand);
-            LoadMoreCommand = DelegateCommand<PlantDiseaseGroup>.FromAsyncHandler(ExecuteLoadMoreCommand, CanExecuteLoadMoreCommand);
+            LoadMoreCommand = DelegateCommand.FromAsyncHandler(ExecuteLoadMoreCommand, CanExecuteLoadMoreCommand);
+            ItemClickCommand = new DelegateCommand<PlantDisease>(ExecuteItemClickCommand, CanExecuteItemClickCommand);
         }
 
         public bool CanExecuteRefreshCommand()
@@ -61,12 +64,12 @@ namespace Vnap.ViewModels
             IsBusy = false;
         }
 
-        public bool CanExecuteLoadMoreCommand(PlantDiseaseGroup item)
+        public bool CanExecuteLoadMoreCommand()
         {
             return IsNotBusy && _plantDiseaseGroups.Count > _totalPlantDiseases;
         }
 
-        public async Task ExecuteLoadMoreCommand(PlantDiseaseGroup item)
+        public async Task ExecuteLoadMoreCommand()
         {
             IsBusy = true;
 
@@ -88,23 +91,27 @@ namespace Vnap.ViewModels
 
             foreach (var plantDiseaseGroup in _plantDiseaseGroups)
             {
-                var isEven = plantDiseaseGroup.LastOrDefault() != null && plantDiseaseGroup.LastOrDefault().IsEven;
-                foreach (var plantDisease in newPlantDiseases)
+                plantDiseaseGroup.AddRange(newPlantDiseases.Select(Mapper.Map<PlantDisease>));
+                for (int i = 0; i < plantDiseaseGroup.Count; i++)
                 {
-                    isEven = !isEven;
-                    plantDiseaseGroup.Add(new PlantDisease()
-                    {
-                        Id = plantDisease.Id,
-                        Description = plantDisease.Description,
-                        Name = plantDisease.Name,
-                        Avatar = plantDisease.Avatar,
-                        IsEven = isEven
-                    });
+                    plantDiseaseGroup[i].IsEven = i % 2 == 0;
                 }
             }
         }
 
-        public void PlantDiseaseListItemSelectedHandler(PlantDisease plantDisease)
+        public override async void OnNavigatedTo(NavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+
+            await ExecuteLoadMoreCommand();
+        }
+
+        public bool CanExecuteItemClickCommand(PlantDisease plant)
+        {
+            return IsNotBusy;
+        }
+
+        public void ExecuteItemClickCommand(PlantDisease plantDisease)
         {
             _navigationService.NavigateAsync($"LeftMenu/Navigation/PlantDiseaseDetailPage?PlantDiseaseId={plantDisease.Id}", animated: false);
         }

@@ -88,7 +88,7 @@ namespace Vnap.ViewModels
         {
             for (var i = 0; i <= 15; i++)
             {
-                var source = ImageSource.FromFile(i % 2 == 0 ? "http://vannghetiengiang.vn/uploads/news/2014_11/cay-lua2.jpg" : "http://hoidap.vinhphucnet.vn/qt/hoidap/PublishingImages/75706PMbenhdaoon.jpg");
+                var source = i % 2 == 0 ? "http://vannghetiengiang.vn/uploads/news/2014_11/cay-lua2.jpg" : "http://hoidap.vinhphucnet.vn/qt/hoidap/PublishingImages/75706PMbenhdaoon.jpg";
                 _images.Add(new Image
                 {
                     Source = source,

@@ -11,7 +11,7 @@ namespace Vnap.Models
         }
 
         public int Id { get; set; }
-        public ImageSource Source { get; set; }
+        public string Source { get; set; }
         public string Caption { get; set; }
     }
 }

@@ -13,8 +13,8 @@ namespace Vnap.Droid.Renderers
         protected override void OnElementChanged(ElementChangedEventArgs<Label> e)
         {
             base.OnElementChanged(e);
-            var textView = (TextView)GetChildAt(0);
-            TypefaceUtil.SetTypeface(textView, e.NewElement.FontAttributes);
+            //var textView = (TextView)GetChildAt(0);
+            //TypefaceUtil.SetTypeface(textView, e.NewElement.FontAttributes);
         }
     }
 }

@@ -28,23 +28,23 @@ namespace Vnap.Droid.Renderers
                 _tabLayout.TabMode = 0;
             }
 
-            var vg = (ViewGroup)_tabLayout.GetChildAt(0);
-            vg.SetPadding(0, 0, 0, 0);
-            var tabsCount = vg.ChildCount;
-            for (var j = 0; j < tabsCount; j++)
-            {
-                var vgTab = (ViewGroup)vg.GetChildAt(j);
-                var tabChildsCount = vgTab.ChildCount;
-                for (var i = 0; i < tabChildsCount; i++)
-                {
-                    var tabViewChild = vgTab.GetChildAt(i);
-                    var textView = tabViewChild as TextView;
-                    if (textView != null)
-                    {
-                        TypefaceUtil.SetTypeface(textView, FontAttributes.Bold);
-                    }
-                }
-            }
+            //var vg = (ViewGroup)_tabLayout.GetChildAt(0);
+            //vg.SetPadding(0, 0, 0, 0);
+            //var tabsCount = vg.ChildCount;
+            //for (var j = 0; j < tabsCount; j++)
+            //{
+            //    var vgTab = (ViewGroup)vg.GetChildAt(j);
+            //    var tabChildsCount = vgTab.ChildCount;
+            //    for (var i = 0; i < tabChildsCount; i++)
+            //    {
+            //        var tabViewChild = vgTab.GetChildAt(i);
+            //        var textView = tabViewChild as TextView;
+            //        if (textView != null)
+            //        {
+            //            TypefaceUtil.SetTypeface(textView, FontAttributes.Bold);
+            //        }
+            //    }
+            //}
 
             _onLayoutFinished = true;
         }

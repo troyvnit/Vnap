@@ -42,7 +42,7 @@ namespace Vnap.Service
                     Id = i,
                     Priority = i,
                     Name = "Đạo Ôn".ToUpper(),
-                    Avatar = "daoon.jpg",
+                    Avatar = "http://hoidap.vinhphucnet.vn/qt/hoidap/PublishingImages/75706PMbenhdaoon.jpg",
                     CreatedDate = startDate.AddDays(i),
                     PlantId = 1
                 });

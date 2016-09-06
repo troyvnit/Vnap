@@ -41,7 +41,7 @@ namespace Vnap.Service
                 Priority = 2,
                 Name = "Cây Lúa".ToUpper(),
                 Description = "Được trồng ở các tỉnh Tây Nam Bộ".ToUpper(),
-                Avatar = "caylua.jpg",
+                Avatar = "http://vannghetiengiang.vn/uploads/news/2014_11/cay-lua2.jpg",
                 CreatedDate = startDate.AddDays(1)
             });
             _plantRepository.Insert(new Plant()
@@ -50,7 +50,7 @@ namespace Vnap.Service
                 Priority = 2,
                 Name = "Hồ Tiêu".ToUpper(),
                 Description = "Được trồng ở các tỉnh Tây Nam Bộ".ToUpper(),
-                Avatar = "caylua.jpg",
+                Avatar = "http://hoidap.vinhphucnet.vn/qt/hoidap/PublishingImages/75706PMbenhdaoon.jpg",
                 CreatedDate = startDate.AddDays(2)
             });
             _plantRepository.Insert(new Plant()
@@ -59,7 +59,7 @@ namespace Vnap.Service
                 Priority = 3,
                 Name = "Cà Phê".ToUpper(),
                 Description = "Được trồng ở các tỉnh Tây Nam Bộ".ToUpper(),
-                Avatar = "caylua.jpg",
+                Avatar = "http://vannghetiengiang.vn/uploads/news/2014_11/cay-lua2.jpg",
                 CreatedDate = startDate.AddDays(3)
             });
             _plantRepository.Insert(new Plant()
@@ -68,7 +68,7 @@ namespace Vnap.Service
                 Priority = 4,
                 Name = "Cây Có Múi".ToUpper(),
                 Description = "Được trồng ở các tỉnh Tây Nam Bộ".ToUpper(),
-                Avatar = "caylua.jpg",
+                Avatar = "http://hoidap.vinhphucnet.vn/qt/hoidap/PublishingImages/75706PMbenhdaoon.jpg",
                 CreatedDate = startDate.AddDays(4)
             });
         }

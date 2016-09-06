@@ -8,7 +8,7 @@ namespace Vnap.Views.Templates
         public PostViewCell()
         {
             InitializeComponent();
-            BindingContext = new Plant();
+            BindingContext = new Post();
         }
 
         protected override void OnBindingContextChanged()

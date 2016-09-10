@@ -15,6 +15,7 @@
                   AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
         <StackLayout Padding="5" BackgroundColor="#ECEFF4">
           <ffimageloading:CachedImage
+                    HeightRequest="250"
                     BackgroundColor="Gray"
                     DownsampleHeight="250"
                     Aspect="AspectFill"

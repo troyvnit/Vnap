@@ -24,30 +24,26 @@ namespace Vnap.Droid.Renderers
 
             if (e.OldElement != null)
             {
-                Control.Touch -= Control_Touch;
+                Control.Touch -= ControlOnTouch;
                 Control.ScrollChange -= ControlOnScrollChange;
             }
 
             if (e.NewElement != null)
             {
-                Control.Touch += Control_Touch;
+                Control.Touch += ControlOnTouch;
                 Control.ScrollChange += ControlOnScrollChange;
             }
         }
 
         private void ControlOnScrollChange(object sender, ScrollChangeEventArgs scrollChangeEventArgs)
         {
-            if (scrollChangeEventArgs.ScrollY == 0 || (scrollChangeEventArgs.ScrollY > scrollChangeEventArgs.OldScrollY && scrollChangeEventArgs.OldScrollY == 0))
+            if (scrollChangeEventArgs.ScrollY > 0 && scrollChangeEventArgs.OldScrollY == 0)
             {
                 Control.Parent.RequestDisallowInterceptTouchEvent(false);
             }
-            else
-            {
-                Control.Parent.RequestDisallowInterceptTouchEvent(true);
-            }
         }
 
-        void Control_Touch(object sender, Android.Views.View.TouchEventArgs e)
+        private void ControlOnTouch(object sender, Android.Views.View.TouchEventArgs e)
         {
             // Executing this will prevent the Scrolling to be intercepted by parent views
             switch (e.Event.Action)

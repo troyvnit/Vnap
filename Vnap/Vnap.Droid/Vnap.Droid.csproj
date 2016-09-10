@@ -211,9 +211,11 @@
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderers\EntryRender.cs" />
+    <Compile Include="Renderers\HtmlLabelRender.cs" />
     <Compile Include="Renderers\LabelRender.cs" />
     <Compile Include="Renderers\MessageViewCellRender.cs" />
     <Compile Include="Renderers\TabbedPageRender.cs" />
+    <Compile Include="Renderers\WebViewRender.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\SQLiteProvider.cs" />

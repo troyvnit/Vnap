@@ -81,7 +81,9 @@ namespace Vnap.ViewModels
             PreviewCaption = image.Caption;
             Description = new HtmlWebViewSource() { Html = @"<strong>BỆNH ĐẠO ÔN</strong> - Tên khoa học: <i>Pirycularia oryzae Cav</i>.<br/><label> Bệnh đạo ôn có thể phát sinh từ thời kỳ mạ đến lúa chín và có thể gây hại ở bẹ lá, lá, lóng thân, cổ bông, gié và hạt.
 <br/>- Bệnh trên mạ: Vết bệnh trên lá mạ lúc đầu hình bầu dục nhỏ sau tạo thành hình thoi hoặc dạng tương tự hình thoi,
-                màu nâu hồng hoặc nâu vàng.Khi bệnh nặng từng đám vết bệnh kế tiếp nhau làm cây mạ có thể héo khô hoặc chết.<br/>- Vết bệnh trên lá lúa: thông thường vết bệnh lúc đầu là những chấm nhỏ màu xanh hoặc mờ vết dầu, sau chuyển sang màu xám nhạt,  trên các giống lúa mẫn cảm các vết bệnh to, hình thoi, dày, màu nâu nhạt, có khi có quầng màu vàng nhạt, phần giữa vết bệnh có màu nâu xám.  </label>" };
+                màu nâu hồng hoặc nâu vàng.Khi bệnh nặng từng đám vết bệnh kế tiếp nhau làm cây mạ có thể héo khô hoặc chết.<br/>- Vết bệnh trên lá lúa: thông thường vết bệnh lúc đầu là những chấm nhỏ màu xanh hoặc mờ vết dầu, sau chuyển sang màu xám nhạt,  trên các giống lúa mẫn cảm các vết bệnh to, hình thoi, dày, màu nâu nhạt, có khi có quầng màu vàng nhạt, phần giữa vết bệnh có màu nâu xám.  </label><strong>BỆNH ĐẠO ÔN</strong> - Tên khoa học: <i>Pirycularia oryzae Cav</i>.<br/><label> Bệnh đạo ôn có thể phát sinh từ thời kỳ mạ đến lúa chín và có thể gây hại ở bẹ lá, lá, lóng thân, cổ bông, gié và hạt.
+<br/>- Bệnh trên mạ: Vết bệnh trên lá mạ lúc đầu hình bầu dục nhỏ sau tạo thành hình thoi hoặc dạng tương tự hình thoi,
+                màu nâu hồng hoặc nâu vàng.Khi bệnh nặng từng đám vết bệnh kế tiếp nhau làm cây mạ có thể héo khô hoặc chết.<br/>- Vết bệnh trên lá lúa: thông thường vết bệnh lúc đầu là những chấm nhỏ màu xanh hoặc mờ vết dầu, sau chuyển sang màu xám nhạt,  trên các giống lúa mẫn cảm các vết bệnh to, hình thoi, dày, màu nâu nhạt, có khi có quầng màu vàng nhạt, phần giữa vết bệnh có màu nâu xám.  </label>"};
         }
 
         public void LoadImages()

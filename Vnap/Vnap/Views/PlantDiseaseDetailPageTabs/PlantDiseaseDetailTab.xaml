@@ -10,78 +10,81 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Vnap.Views.PlantDiseaseDetailTab"
              x:Name="PlantDiseaseDetailTabContentPage">
-    <ContentPage.Content>
-        <StackLayout Padding="5" BackgroundColor="#ECEFF4">
-            <Grid RowSpacing="5" ColumnSpacing="5">
-                <Grid.RowDefinitions>
-                    <RowDefinition
-                        Height="200" />
-                    <RowDefinition
-                        Height="50" />
-                </Grid.RowDefinitions>
-                <AbsoluteLayout x:Name="AbsoluteLayout"
-                                BackgroundColor="Gray"
-                                HeightRequest="200"
-                                Grid.Row="0">
-                    <ffimageloading:CachedImage
-                        DownsampleHeight="200"
-                        Aspect="AspectFill"
-                        Source="{Binding PreviewImage}"
-                        HorizontalOptions="FillAndExpand"
-                        VerticalOptions="FillAndExpand"
-                        AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
-                        AbsoluteLayout.LayoutFlags="All" />
-                    <ActivityIndicator x:Name="ActivityIndicator"
-                                       IsRunning="{Binding IsBusy}"
-                                       WidthRequest="35"
-                                       HeightRequest="35"
-                                       AbsoluteLayout.LayoutBounds="0.5, 0.5, -1, -1"
-                                       AbsoluteLayout.LayoutFlags="PositionProportional" />
-                    <ContentView AbsoluteLayout.LayoutBounds="0, 0.9, -1, -1"
-                                 AbsoluteLayout.LayoutFlags="PositionProportional"
-                                 BackgroundColor="#7F000000"
-                                 Padding="5,2,5,2">
-                        <Label Text="{Binding PreviewCaption}"
-                               TextColor="#FFA300"
-                               HorizontalTextAlignment="Start"
-                               FontAttributes="Bold"
-                               FontSize="16" />
-                    </ContentView>
-                </AbsoluteLayout>
-                <extendedControls:ExtendedScrollView
-                    ItemsSource="{Binding Images}"
-                    Grid.Row="1">
-                    <extendedControls:ExtendedScrollView.ItemTemplate>
-                        <DataTemplate>
-                            <ffimageloading:CachedImage
-                                DownsampleHeight="50"
-                                DownsampleWidth="50"
-                                HeightRequest="50"
-                                WidthRequest="50"
-                                Source="{Binding Source}"
-                                Aspect="AspectFill">
-                                <ffimageloading:CachedImage.GestureRecognizers>
-                                    <TapGestureRecognizer
-                                        Command="{Binding Path=BindingContext.PreviewImageCommand, Source={x:Reference PlantDiseaseDetailTabContentPage}}"
-                                        CommandParameter="{Binding .}" />
-                                </ffimageloading:CachedImage.GestureRecognizers>
-                            </ffimageloading:CachedImage>
-                        </DataTemplate>
-                    </extendedControls:ExtendedScrollView.ItemTemplate>
-                </extendedControls:ExtendedScrollView>
-            </Grid>
-            <AbsoluteLayout VerticalOptions="FillAndExpand">
-                <ContentView BackgroundColor="White" Padding="10" Margin="0, 0, 0, 70"
-                             AbsoluteLayout.LayoutFlags="All"
-                             AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+
+    <AbsoluteLayout VerticalOptions="FillAndExpand" BackgroundColor="#ECEFF4">
+        <ScrollView Margin="0,0,0,70"
+                    AbsoluteLayout.LayoutFlags="All"
+                    AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+            <StackLayout Padding="5" BackgroundColor="#ECEFF4">
+                <Grid RowSpacing="5" ColumnSpacing="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition
+                            Height="200" />
+                        <RowDefinition
+                            Height="50" />
+                    </Grid.RowDefinitions>
+                    <AbsoluteLayout x:Name="AbsoluteLayout"
+                                    BackgroundColor="Gray"
+                                    HeightRequest="200"
+                                    Grid.Row="0">
+                        <ffimageloading:CachedImage
+                            DownsampleHeight="200"
+                            Aspect="AspectFill"
+                            Source="{Binding PreviewImage}"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="FillAndExpand"
+                            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                            AbsoluteLayout.LayoutFlags="All" />
+                        <ActivityIndicator x:Name="ActivityIndicator"
+                                           IsRunning="{Binding IsBusy}"
+                                           WidthRequest="35"
+                                           HeightRequest="35"
+                                           AbsoluteLayout.LayoutBounds="0.5, 0.5, -1, -1"
+                                           AbsoluteLayout.LayoutFlags="PositionProportional" />
+                        <ContentView AbsoluteLayout.LayoutBounds="0, 0.9, -1, -1"
+                                     AbsoluteLayout.LayoutFlags="PositionProportional"
+                                     BackgroundColor="#7F000000"
+                                     Padding="5,2,5,2">
+                            <Label Text="{Binding PreviewCaption}"
+                                   TextColor="#FFA300"
+                                   HorizontalTextAlignment="Start"
+                                   FontAttributes="Bold"
+                                   FontSize="16" />
+                        </ContentView>
+                    </AbsoluteLayout>
+                    <extendedControls:ExtendedScrollView
+                        ItemsSource="{Binding Images}"
+                        Grid.Row="1">
+                        <extendedControls:ExtendedScrollView.ItemTemplate>
+                            <DataTemplate>
+                                <ffimageloading:CachedImage
+                                    BackgroundColor="Gray"
+                                    DownsampleHeight="50"
+                                    DownsampleWidth="50"
+                                    HeightRequest="50"
+                                    WidthRequest="50"
+                                    Source="{Binding Source}"
+                                    Aspect="AspectFill">
+                                    <ffimageloading:CachedImage.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Path=BindingContext.PreviewImageCommand, Source={x:Reference PlantDiseaseDetailTabContentPage}}"
+                                            CommandParameter="{Binding .}" />
+                                    </ffimageloading:CachedImage.GestureRecognizers>
+                                </ffimageloading:CachedImage>
+                            </DataTemplate>
+                        </extendedControls:ExtendedScrollView.ItemTemplate>
+                    </extendedControls:ExtendedScrollView>
+                </Grid>
+                <ContentView BackgroundColor="White" Padding="10" HeightRequest="300">
                     <WebView Source="{Binding Description}" />
                 </ContentView>
-                <Button Text="Giải Pháp Phòng Trị" BackgroundColor="#FFA300" HeightRequest="60" TextColor="White" Command="{Binding NavigateCommand}" CommandParameter="LeftMenu/Navigation/PlantDiseaseSolutionPage"
-                        FontSize="18" FontAttributes="Bold" Image="solution_icon" Margin="5, 0, 0, 5"
-                        AbsoluteLayout.LayoutFlags="PositionProportional"
-                        AbsoluteLayout.LayoutBounds="0, 1" />
-                <components:SatelliteMenu />
-            </AbsoluteLayout>
-        </StackLayout>
-    </ContentPage.Content>
+            </StackLayout>
+        </ScrollView>
+        <Button Text="Giải Pháp Phòng Trị" BackgroundColor="#FFA300" HeightRequest="60" TextColor="White"
+                Command="{Binding NavigateCommand}" CommandParameter="LeftMenu/Navigation/PlantDiseaseSolutionPage"
+                FontSize="18" FontAttributes="Bold" Image="solution_icon" Margin="5, 0, 0, 5"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                AbsoluteLayout.LayoutBounds="0, 1" />
+        <components:SatelliteMenu />
+    </AbsoluteLayout>
 </ContentPage>

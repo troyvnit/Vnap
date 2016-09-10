@@ -68,6 +68,7 @@
     <Compile Include="Views\Components\SatelliteMenu.xaml.cs">
       <DependentUpon>SatelliteMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ExtendedControls\HtmlLabel.cs" />
     <Compile Include="Views\Rerenders\MessageViewCell.cs" />
     <Compile Include="Views\MainPageTabs\NewsTab.xaml.cs">
       <DependentUpon>NewsTab.xaml</DependentUpon>

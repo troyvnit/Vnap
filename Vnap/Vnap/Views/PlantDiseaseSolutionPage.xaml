@@ -9,9 +9,13 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Vnap.Views.PlantDiseaseSolutionPage"
              Title="Giải Pháp">
-    <ContentPage.Content>
+
+    <AbsoluteLayout VerticalOptions="FillAndExpand" BackgroundColor="#ECEFF4">
+      <ScrollView AbsoluteLayout.LayoutFlags="All"
+                  AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
         <StackLayout Padding="5" BackgroundColor="#ECEFF4">
           <ffimageloading:CachedImage
+                    BackgroundColor="Gray"
                     DownsampleHeight="250"
                     Aspect="AspectFill"
                     Source="{Binding Avatar}"
@@ -21,14 +25,11 @@
             <Label Text="{Binding CompanyName}" FontAttributes="Bold" FontSize="16" TextColor="Green" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
             <controls:ExtendedLabel Text="Cần giải pháp khác?" TextColor="#FFA300" IsUnderline="True" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand"/>
           </StackLayout>
-            <AbsoluteLayout VerticalOptions="FillAndExpand" BackgroundColor="White">
-                <ContentView Padding="10" 
-                             AbsoluteLayout.LayoutFlags="All"
-                             AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
-                  <WebView Source="{Binding Description}" />
-                </ContentView>
-                <components:SatelliteMenu />
-            </AbsoluteLayout>
+          <ContentView BackgroundColor="White" Padding="10" HeightRequest="400">
+            <WebView Source="{Binding Description}" />
+          </ContentView>
         </StackLayout>
-    </ContentPage.Content>
+      </ScrollView>
+      <components:SatelliteMenu />
+    </AbsoluteLayout>
 </ContentPage>

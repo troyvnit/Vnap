@@ -10,7 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Vnap.Web.Data;
-using Vnap.Core.DataAccess.Entity;
+using Vnap.Web.DataAccess.Entity;
+using Vnap.Web.DataAccess;
+using Vnap.Web.DataAccess.Repository;
+using Vnap.Web.Mappers;
 using Vnap.Web.Services;
 
 namespace Vnap.Web
@@ -22,15 +25,8 @@ namespace Vnap.Web
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
-
-            if (env.IsDevelopment())
-            {
-                // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-                builder.AddUserSecrets();
-            }
-
-            builder.AddEnvironmentVariables();
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables(); 
             Configuration = builder.Build();
         }
 
@@ -49,9 +45,22 @@ namespace Vnap.Web
 
             services.AddMvc();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowVnapOrigin",
+                    builder => builder
+                                .WithOrigins("http://localhost:8080")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod()
+                                .WithExposedHeaders());
+            });
+
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            services.AddSingleton<IDbFactory, DbFactory>();
+            services.AddSingleton<IPlantRepository, PlantRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,11 +80,13 @@ namespace Vnap.Web
                 app.UseExceptionHandler("/Home/Error");
             }
 
+
+
+            app.UseDefaultFiles();
+
             app.UseStaticFiles();
 
             app.UseIdentity();
-
-            // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
             app.UseMvc(routes =>
             {
@@ -83,6 +94,11 @@ namespace Vnap.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+
+            app.UseCors("AllowVnapOrigin");
+
+            AutoMapperConfiguration.Configure();
         }
     }
 }

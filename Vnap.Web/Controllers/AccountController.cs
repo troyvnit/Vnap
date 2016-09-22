@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using Vnap.Core.DataAccess.Entity;
+using Vnap.Web.DataAccess.Entity;
 using Vnap.Web.Models.AccountViewModels;
 using Vnap.Web.Services;
 

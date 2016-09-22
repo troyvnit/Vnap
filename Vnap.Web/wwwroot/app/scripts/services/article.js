@@ -1,0 +1,6 @@
+﻿/**
+ * Article - service
+ */
+function ArticleService() {
+
+}

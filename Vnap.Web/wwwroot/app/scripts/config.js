@@ -24,11 +24,20 @@ vnap
                 .state('index.plant', {
                     url: "/plant",
                     templateUrl: appBaseUrl + "views/plant/list.html",
-                    data: { pageTitle: 'Danh sách cây tr?ng' }
+                    data: { pageTitle: 'Danh sách cây tr?ng' },
+                    resolve: {
+                        loadPlugin: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    files: [appBaseUrl + "bower_components/ng-file-upload/ng-file-upload-all.min.js"]
+                                }
+                            ]);
+                        }
+                    }
                 })
-                .state('index.plant-add', {
-                    url: "/plant-add",
-                    templateUrl: appBaseUrl + "views/plant/add.html",
+                .state('index.plant-form', {
+                    url: "/plant-form/:id",
+                    templateUrl: appBaseUrl + "views/plant/form.html",
                     data: { pageTitle: 'Thêm cây tr?ng' },
                     resolve: {
                         loadPlugin: function ($ocLazyLoad) {
@@ -49,11 +58,6 @@ vnap
                     url: "/main",
                     templateUrl: appBaseUrl + "views/main.html",
                     data: { pageTitle: 'Gi?i thi?u' }
-                })
-                .state('index.minor', {
-                    url: "/minor",
-                    templateUrl: appBaseUrl + "views/minor.html",
-                    data: { pageTitle: 'Example view' }
                 });
         }]);
 

@@ -23,20 +23,10 @@
         <a ui-sref="index.main"><i class="fa fa-laptop"></i> <span class="nav-label">Main page</span> </a>
       </li>
       <li ui-sref-active="active">
-        <a ui-sref="index.article"><i class="fa fa-newspaper-o"></i> <span class="nav-label">Articles</span> </a>
-      </li>
-      <li ui-sref-active="active">
         <a ui-sref="index.plant"><i class="fa fa-chrome"></i> <span class="nav-label">{{'plant' | stringRes}}</span> </a>
         <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes('plant')}">
           <li ui-sref-active="active"><a ui-sref="index.plant"><i class="fa fa-camera-retro"></i> {{'list' | stringRes}}</a></li>
-          <li ui-sref-active="active"><a ui-sref="index.plant-add"><i class="fa fa-cubes"></i> {{'add' | stringRes}}</a></li>
-        </ul>
-      </li>
-      <li ui-sref-active="active">
-        <a ui-sref="index.images"><i class="fa fa-dropbox"></i> <span class="nav-label">Resources</span> </a>
-        <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes('images')}">
-          <li ui-sref-active="active"><a ui-sref="index.images"><i class="fa fa-file-image-o"></i> Images</a></li>
-          <li ui-sref-active="active"><a ui-sref="index.videos"><i class="fa fa-file-video-o"></i> Videos</a></li>
+          <li ui-sref-active="active"><a ui-sref="index.plant-form"><i class="fa fa-cubes"></i> {{'add' | stringRes}}</a></li>
         </ul>
       </li>
     </ul>

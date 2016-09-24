@@ -18,6 +18,7 @@ namespace Vnap.Web.DataAccess
         T GetSingle(Expression<Func<T, bool>> predicate);
         T GetSingle(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);
         Task<T> GetSingleAsync(int id);
+        Task<T> GetSingleReadOnlyAsync(int id);
         IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate);
         IQueryable<T> Queryable();
         Task<IEnumerable<T>> FindByAsync(Expression<Func<T, bool>> predicate);

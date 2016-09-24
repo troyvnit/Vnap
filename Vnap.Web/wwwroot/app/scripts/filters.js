@@ -27,6 +27,8 @@
                 'list': 'Danh sách',
                 'cancel': 'Hủy',
                 'save': 'Lưu',
+                'edit': 'Sửa',
+                'delete': 'Xóa',
                 'avatar': 'Hình đại diện',
 
                 'homeLinkText': 'Dashboard'

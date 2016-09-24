@@ -2,4 +2,5 @@
 angular.module('vnap')
     .controller('MainCtrl', MainCtrl)
     .controller('PlantCtrl', PlantCtrl)
+    .controller('PlantFormCtrl', PlantFormCtrl)
     .controller('ArticleCtrl', ArticleCtrl);

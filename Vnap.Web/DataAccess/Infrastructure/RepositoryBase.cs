@@ -40,7 +40,7 @@ namespace Vnap.Web.DataAccess
 
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return await _context.Set<TEntity>().ToListAsync();
+            return await _context.Set<TEntity>().AsNoTracking().ToListAsync();
         }
         public virtual IEnumerable<TEntity> AllIncluding(params Expression<Func<TEntity, object>>[] includeProperties)
         {
@@ -85,6 +85,10 @@ namespace Vnap.Web.DataAccess
         public async Task<TEntity> GetSingleAsync(int id)
         {
             return await _context.Set<TEntity>().FirstOrDefaultAsync(e => e.Id == id);
+        }
+        public async Task<TEntity> GetSingleReadOnlyAsync(int id)
+        {
+            return await _context.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
         }
         public virtual IEnumerable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
         {

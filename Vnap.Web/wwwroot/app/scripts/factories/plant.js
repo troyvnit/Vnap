@@ -44,5 +44,57 @@ function PlantFactory($http) {
         });
     };
 
+    Plant.prototype.Get = function (id, successCallback) {
+        $.ajax({
+            method: "Get",
+            url: apiBaseUrl + "plant/get",
+            data: {'id': id}
+        })
+        .success(function (data) {
+            if (successCallback) {
+                successCallback(data);
+            }
+        });
+    }
+
+    Plant.prototype.Add = function (plant, successCallback) {
+        $.ajax({
+            method: "POST",
+            url: apiBaseUrl + "plant/add",
+            data: plant
+        })
+        .success(function (data) {
+            if (successCallback) {
+                successCallback(data);
+            }
+        });
+    };
+
+    Plant.prototype.Update = function (plant, successCallback) {
+        $.ajax({
+            method: "POST",
+            url: apiBaseUrl + "plant/update",
+            data: plant
+        })
+        .success(function (data) {
+            if (successCallback) {
+                successCallback(data);
+            }
+        });
+    };
+
+    Plant.prototype.Delete = function (plant, successCallback) {
+        $.ajax({
+            method: "POST",
+            url: apiBaseUrl + "plant/delete",
+            data: plant
+        })
+        .success(function (data) {
+            if (successCallback) {
+                successCallback(data);
+            }
+        });
+    };
+
     return Plant;
 }

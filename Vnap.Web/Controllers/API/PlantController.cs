@@ -33,6 +33,14 @@ namespace Vnap.Web.Controllers.API
             return Json(pageData);
         }
 
+        [HttpGet("Get")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var plant = await _plantRepository.GetSingleReadOnlyAsync(id);
+            
+            return Json(plant);
+        }
+
         [HttpPost("Add")]
         public async Task<IActionResult> Add(PlantVM plantVm)
         {
@@ -42,6 +50,26 @@ namespace Vnap.Web.Controllers.API
             await _plantRepository.CommitAsync();
 
             return Json(plant);
+        }
+
+        [HttpPost("Update")]
+        public async Task<IActionResult> Update(PlantVM plantVm)
+        {
+            var plant = Mapper.Map<Plant>(plantVm);
+            plant.CreatedUser = await _userManager.FindByIdAsync("271c4e83-7bd2-4ac4-8535-2f8071394d76");
+            _plantRepository.Update(plant);
+            await _plantRepository.CommitAsync();
+
+            return Json(plant);
+        }
+
+        [HttpPost("Delete")]
+        public async Task<IActionResult> Delete(PlantVM plantVm)
+        {
+            await _plantRepository.DeleteByIdAsync(plantVm.Id);
+            await _plantRepository.CommitAsync();
+
+            return Json(plantVm);
         }
     }
 }

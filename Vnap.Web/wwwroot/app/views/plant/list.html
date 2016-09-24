@@ -21,7 +21,7 @@
         <div class="ibox-title">
           <h5>{{'plantListSubheader' | stringRes}}</h5>
           <div class="ibox-tools">
-            <a href="" class="btn btn-primary btn-xs" ui-sref="index.plant-add">{{'plantAdd' | stringRes}}</a>
+            <a href="" class="btn btn-primary btn-xs" ui-sref="index.plant-form">{{'plantAdd' | stringRes}}</a>
           </div>
         </div>
         <div class="ibox-content">
@@ -37,7 +37,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="plant in pctrl.Plant.plants">
+            <tr ng-repeat="plant in Plant.plants">
               <td>{{ plant.id }}</td>
               <td>{{ plant.name }}</td>
               <td>{{ plant.description }}</td>
@@ -45,8 +45,8 @@
               <td>{{ plant.createdDate }}</td>
               <td class="text-right">
                 <div class="btn-group">
-                  <button class="btn-white btn btn-xs">View</button>
-                  <button class="btn-white btn btn-xs">Edit</button>
+                  <button class="btn-info btn btn-xs" ui-sref="index.plant-form({id: plant.id})">{{'edit' | stringRes}}</button>
+                  <button class="btn-danger btn btn-xs" ng-click="confirmDelete(plant)">{{'delete' | stringRes}}</button>
                 </div>
               </td>
             </tr>

@@ -7,6 +7,6 @@ var vnap = angular.module('vnap', [
         'cloudinary'
 ]);
 
-var apiBaseUrl = 'http://localhost:6789/api/';
 var baseUrl = $('base').attr('href');
 var appBaseUrl = baseUrl + '/';
+var apiBaseUrl = baseUrl.replace('app', 'api');

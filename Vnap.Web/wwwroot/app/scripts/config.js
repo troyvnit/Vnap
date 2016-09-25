@@ -49,6 +49,38 @@ vnap
                         }
                     }
                 })
+                .state('index.plant-disease', {
+                    url: "/plant-disease",
+                    templateUrl: appBaseUrl + "views/plant-disease/list.html",
+                    data: { pageTitle: 'Danh sách b?nh' },
+                    resolve: {
+                        loadPlugin: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    files: [appBaseUrl + "bower_components/ng-file-upload/ng-file-upload-all.min.js"]
+                                }
+                            ]);
+                        }
+                    }
+                })
+                .state('index.plant-disease-form', {
+                    url: "/plant-disease-form/:id",
+                    templateUrl: appBaseUrl + "views/plant-disease/form.html",
+                    data: { pageTitle: 'Thêm b?nh' },
+                    resolve: {
+                        loadPlugin: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    files: [appBaseUrl + "bower_components/ng-file-upload/ng-file-upload-all.min.js"]
+                                },
+                                {
+                                    name: 'summernote',
+                                    files: [appBaseUrl + 'bower_components/summernote/dist/summernote.css', appBaseUrl + 'bower_components/summernote/dist/summernote.js', appBaseUrl + 'bower_components/angular-summernote/dist/angular-summernote.min.js']
+                                }
+                            ]);
+                        }
+                    }
+                })
                 .state('index.article', {
                     url: "/article",
                     templateUrl: appBaseUrl + "views/article.html",

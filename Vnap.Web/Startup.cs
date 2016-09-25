@@ -61,6 +61,8 @@ namespace Vnap.Web
 
             services.AddSingleton<IDbFactory, DbFactory>();
             services.AddSingleton<IPlantRepository, PlantRepository>();
+            services.AddSingleton<IPlantDiseaseRepository, PlantDiseaseRepository>();
+            services.AddSingleton<IImageRepository, ImageRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

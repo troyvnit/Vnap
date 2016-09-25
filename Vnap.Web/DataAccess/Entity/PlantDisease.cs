@@ -5,6 +5,11 @@ namespace Vnap.Web.DataAccess.Entity
 {
     public class PlantDisease : BaseEntity
     {
+        public PlantDisease()
+        {
+            Images = new List<Image>();
+            Solutions = new List<Solution>();
+        }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Avatar { get; set; }

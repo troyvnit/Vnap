@@ -24,7 +24,8 @@ namespace Vnap.Web.Mappers
 
             protected override void Configure()
             {
-                CreateMap<PlantVM, Plant>();
+                CreateMap<PlantVM, Plant>().ForMember(p => p.CreatedDate, o => o.Ignore());
+                CreateMap<PlantDiseaseVM, PlantDisease>().ForMember(p => p.CreatedDate, o => o.Ignore());
             }
         }
 
@@ -38,6 +39,7 @@ namespace Vnap.Web.Mappers
             protected override void Configure()
             {
                 CreateMap<Plant, PlantVM>();
+                CreateMap<PlantDisease, PlantDiseaseVM>().ForMember(pd => pd.PlantName, o => o.MapFrom(pd => pd.Plant != null ? pd.Plant.Name : string.Empty));
             }
         }
     }

@@ -30,7 +30,7 @@ namespace Vnap.Web.Controllers.API
         {
             IEnumerable<Plant> pageData = await _plantRepository.GetAllAsync();
 
-            return Json(pageData);
+            return Json(Mapper.Map<IEnumerable<PlantVM>>(pageData));
         }
 
         [HttpGet("Get")]
@@ -38,29 +38,35 @@ namespace Vnap.Web.Controllers.API
         {
             var plant = await _plantRepository.GetSingleReadOnlyAsync(id);
             
-            return Json(plant);
+            return Json(Mapper.Map<PlantVM>(plant));
+        }
+
+        [HttpGet("Search")]
+        public async Task<IActionResult> Search(string query)
+        {
+            var plants = await _plantRepository.FindByAsync(p => p.Name.Contains(query));
+
+            return Json(Mapper.Map<IEnumerable<PlantVM>>(plants));
         }
 
         [HttpPost("Add")]
         public async Task<IActionResult> Add(PlantVM plantVm)
         {
             var plant = Mapper.Map<Plant>(plantVm);
-            plant.CreatedUser = await _userManager.FindByIdAsync("271c4e83-7bd2-4ac4-8535-2f8071394d76");
             _plantRepository.Add(plant);
             await _plantRepository.CommitAsync();
 
-            return Json(plant);
+            return Json(plantVm);
         }
 
         [HttpPost("Update")]
         public async Task<IActionResult> Update(PlantVM plantVm)
         {
             var plant = Mapper.Map<Plant>(plantVm);
-            plant.CreatedUser = await _userManager.FindByIdAsync("271c4e83-7bd2-4ac4-8535-2f8071394d76");
             _plantRepository.Update(plant);
             await _plantRepository.CommitAsync();
 
-            return Json(plant);
+            return Json(plantVm);
         }
 
         [HttpPost("Delete")]

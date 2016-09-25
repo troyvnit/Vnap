@@ -18,6 +18,18 @@
                 'plantDetail': 'Chi tiết cây trồng',
                 'plantNamePlaceHolder': 'Tên cây trồng',
                 'plantDescriptionPlaceHolder': 'Mô tả cây trồng',
+
+                'plantDisease': 'Bệnh',
+                'plantDiseaseList': 'Danh sách bệnh',
+                'plantDiseaseListHeader': 'Quản lý bệnh',
+                'plantDiseaseListSubheader': 'Danh sách bệnh',
+
+                'plantDiseaseAdd': 'Thêm bệnh',
+                'plantDiseaseAddHeader': 'Thêm bệnh',
+                'plantDiseaseDetail': 'Chi tiết bệnh',
+                'plantDiseaseNamePlaceHolder': 'Tên bệnh',
+                'plantDiseaseDescriptionPlaceHolder': 'Mô tả bệnh',
+
                 'priorityPlaceHolder': 'Ưu tiên số từ nhỏ đến lơn',
 
                 'name': 'Tên',
@@ -30,6 +42,10 @@
                 'edit': 'Sửa',
                 'delete': 'Xóa',
                 'avatar': 'Hình đại diện',
+                'type': 'Loại',
+                'image': 'Hình ảnh',
+                'imageAdd': 'Thêm hình ảnh',
+                'imageListSubheader': 'Danh sách hình ảnh',
 
                 'homeLinkText': 'Dashboard'
             };

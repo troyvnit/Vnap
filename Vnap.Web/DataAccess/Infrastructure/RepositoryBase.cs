@@ -44,7 +44,7 @@ namespace Vnap.Web.DataAccess
         }
         public virtual IEnumerable<TEntity> AllIncluding(params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            IQueryable<TEntity> query = _context.Set<TEntity>();
+            IQueryable<TEntity> query = _context.Set<TEntity>().AsNoTracking();
             foreach (var includeProperty in includeProperties)
             {
                 query = query.Include(includeProperty);
@@ -54,7 +54,7 @@ namespace Vnap.Web.DataAccess
 
         public virtual async Task<IEnumerable<TEntity>> AllIncludingAsync(params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            IQueryable<TEntity> query = _context.Set<TEntity>();
+            IQueryable<TEntity> query = _context.Set<TEntity>().AsNoTracking();
             foreach (var includeProperty in includeProperties)
             {
                 query = query.Include(includeProperty);
@@ -63,17 +63,17 @@ namespace Vnap.Web.DataAccess
         }
         public TEntity GetSingle(int id)
         {
-            return _context.Set<TEntity>().FirstOrDefault(x => x.Id == id);
+            return _context.Set<TEntity>().AsNoTracking().FirstOrDefault(x => x.Id == id);
         }
 
         public TEntity GetSingle(Expression<Func<TEntity, bool>> predicate)
         {
-            return _context.Set<TEntity>().FirstOrDefault(predicate);
+            return _context.Set<TEntity>().AsNoTracking().FirstOrDefault(predicate);
         }
 
         public TEntity GetSingle(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            IQueryable<TEntity> query = _context.Set<TEntity>();
+            IQueryable<TEntity> query = _context.Set<TEntity>().AsNoTracking();
             foreach (var includeProperty in includeProperties)
             {
                 query = query.Include(includeProperty);
@@ -84,11 +84,13 @@ namespace Vnap.Web.DataAccess
 
         public async Task<TEntity> GetSingleAsync(int id)
         {
-            return await _context.Set<TEntity>().FirstOrDefaultAsync(e => e.Id == id);
+            return await _context.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
         }
         public async Task<TEntity> GetSingleReadOnlyAsync(int id)
         {
-            return await _context.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
+            var entity = await _context.Set<TEntity>().FirstOrDefaultAsync(e => e.Id == id);
+            _context.Entry(entity).State = EntityState.Detached;
+            return entity;
         }
         public virtual IEnumerable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
         {

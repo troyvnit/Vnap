@@ -29,6 +29,13 @@
           <li ui-sref-active="active"><a ui-sref="index.plant-form"><i class="fa fa-cubes"></i> {{'add' | stringRes}}</a></li>
         </ul>
       </li>
+      <li ui-sref-active="active">
+        <a ui-sref="index.plant-disease"><i class="fa fa-chrome"></i> <span class="nav-label">{{'plantDisease' | stringRes}}</span> </a>
+        <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes('plant-disease')}">
+          <li ui-sref-active="active"><a ui-sref="index.plant-disease"><i class="fa fa-camera-retro"></i> {{'list' | stringRes}}</a></li>
+          <li ui-sref-active="active"><a ui-sref="index.plant-disease-form"><i class="fa fa-cubes"></i> {{'add' | stringRes}}</a></li>
+        </ul>
+      </li>
     </ul>
   </div>
 </nav>

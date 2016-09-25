@@ -11,7 +11,7 @@ function PlantCtrl($scope, $rootScope, $uibModal, Plant) {
     $scope.confirmDelete = function (plant) {
         $scope.deletedPlant = plant;
         $scope.modalInstance = $uibModal.open({
-            templateUrl: 'views/modals/delete-plant-confirm.html',
+            templateUrl: 'views/modals/delete-confirm.html',
             scope: $scope
         });
     }

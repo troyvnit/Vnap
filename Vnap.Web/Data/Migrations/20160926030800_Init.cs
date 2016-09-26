@@ -74,7 +74,7 @@ namespace Vnap.Web.Data.Migrations
                     Caption = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     CreatedUserId = table.Column<string>(nullable: true),
-                    PlantDiseaseId = table.Column<int>(nullable: true),
+                    PlantDiseaseId = table.Column<int>(nullable: false),
                     ThumbnailUrl = table.Column<string>(nullable: true),
                     Url = table.Column<string>(nullable: true)
                 },
@@ -92,7 +92,7 @@ namespace Vnap.Web.Data.Migrations
                         column: x => x.PlantDiseaseId,
                         principalTable: "PlantDiseases",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

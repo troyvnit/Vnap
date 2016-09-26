@@ -4,7 +4,7 @@
  * @param {object} $rootScope TBD.
  * @param {object} PlantDisease TBD.
  */
-function PlantDiseaseFormCtrl($scope, $rootScope, $stateParams, $state, $http, PlantDisease, Upload, cloudinary) {
+function PlantDiseaseFormCtrl($scope, $rootScope, $stateParams, $state, $http, $uibModal, PlantDisease, Upload, cloudinary) {
 
     $scope.PlantDisease = new PlantDisease();
     $scope.plantDisease = { Id: 0, Images: [] };
@@ -20,6 +20,7 @@ function PlantDiseaseFormCtrl($scope, $rootScope, $stateParams, $state, $http, P
                 $scope.plantDisease.PlantId = data.plantId;
                 $scope.selectedPlant = { name: data.plantName, id: data.plantId };
                 $scope.plantDisease.PlantDiseaseType = data.plantDiseaseType;
+                $scope.plantDisease.Images = data.images;
             });
         });
     }
@@ -131,8 +132,10 @@ function PlantDiseaseFormCtrl($scope, $rootScope, $stateParams, $state, $http, P
                         })
                         .success(function (data, status, headers, config) {
 
-                            $scope.PlantDisease.AddImage({ plantDiseaseId: $scope.plantDisease.Id, imageUrl: data.url }, function () {
-                                $scope.plantDisease.Images.push({url: data.url});
+                            $scope.PlantDisease.AddImage({ plantDiseaseId: $scope.plantDisease.Id, imageUrl: data.url }, function (image) {
+                                $scope.$apply(function() {
+                                    $scope.plantDisease.Images.push(image);
+                                });
                             });
 
                         })
@@ -141,5 +144,33 @@ function PlantDiseaseFormCtrl($scope, $rootScope, $stateParams, $state, $http, P
                         });
                 }
             });
+    };
+
+    $scope.imageChanged = function(image) {
+        $scope.PlantDisease.UpdateImage(image, function () {
+            console.log('Updated image');
+        });
+    }
+
+    $scope.confirmDeleteImage = function (image) {
+        $scope.deletedImage = image;
+        $scope.modalInstance = $uibModal.open({
+            templateUrl: 'views/modals/delete-confirm.html',
+            scope: $scope
+        });
+    }
+
+    $scope.ok = function () {
+        $scope.PlantDisease.DeleteImage($scope.deletedImage, function () {
+            $scope.$apply(function () {
+                var index = $scope.plantDisease.Images.indexOf($scope.deletedImage);
+                $scope.plantDisease.Images.splice(index, 1);
+            });
+        });
+        $scope.modalInstance.close();
+    };
+
+    $scope.cancel = function () {
+        $scope.modalInstance.dismiss('cancel');
     };
 }

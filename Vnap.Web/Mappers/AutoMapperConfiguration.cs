@@ -26,6 +26,7 @@ namespace Vnap.Web.Mappers
             {
                 CreateMap<PlantVM, Plant>().ForMember(p => p.CreatedDate, o => o.Ignore());
                 CreateMap<PlantDiseaseVM, PlantDisease>().ForMember(p => p.CreatedDate, o => o.Ignore());
+                CreateMap<ImageVM, Image>().ForMember(p => p.CreatedDate, o => o.Ignore());
             }
         }
 
@@ -40,6 +41,7 @@ namespace Vnap.Web.Mappers
             {
                 CreateMap<Plant, PlantVM>();
                 CreateMap<PlantDisease, PlantDiseaseVM>().ForMember(pd => pd.PlantName, o => o.MapFrom(pd => pd.Plant != null ? pd.Plant.Name : string.Empty));
+                CreateMap<Image, ImageVM>();
             }
         }
     }

@@ -8,7 +8,7 @@ using Vnap.Web.Data;
 namespace Vnap.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20160920132824_Init")]
+    [Migration("20160926030800_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -189,7 +189,7 @@ namespace Vnap.Web.Data.Migrations
 
                     b.Property<string>("CreatedUserId");
 
-                    b.Property<int?>("PlantDiseaseId");
+                    b.Property<int>("PlantDiseaseId");
 
                     b.Property<string>("ThumbnailUrl");
 
@@ -343,9 +343,10 @@ namespace Vnap.Web.Data.Migrations
                         .WithMany()
                         .HasForeignKey("CreatedUserId");
 
-                    b.HasOne("Vnap.Web.DataAccess.Entity.PlantDisease")
+                    b.HasOne("Vnap.Web.DataAccess.Entity.PlantDisease", "PlantDisease")
                         .WithMany("Images")
-                        .HasForeignKey("PlantDiseaseId");
+                        .HasForeignKey("PlantDiseaseId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Vnap.Web.DataAccess.Entity.Plant", b =>

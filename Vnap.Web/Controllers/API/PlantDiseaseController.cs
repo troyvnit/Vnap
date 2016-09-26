@@ -50,7 +50,6 @@ namespace Vnap.Web.Controllers.API
         public async Task<IActionResult> Add(PlantDiseaseVM plantDiseaseVm)
         {
             var plantDisease = Mapper.Map<PlantDisease>(plantDiseaseVm);
-            plantDisease.Plant = await _plantRepository.GetSingleReadOnlyAsync(plantDisease.PlantId);
             _plantDiseaseRepository.Add(plantDisease);
             await _plantDiseaseRepository.CommitAsync();
 
@@ -61,7 +60,6 @@ namespace Vnap.Web.Controllers.API
         public async Task<IActionResult> Update(PlantDiseaseVM plantDiseaseVm)
         {
             var plantDisease = Mapper.Map<PlantDisease>(plantDiseaseVm);
-            plantDisease.Plant = await _plantRepository.GetSingleReadOnlyAsync(plantDisease.PlantId);
             _plantDiseaseRepository.Update(plantDisease);
             await _plantDiseaseRepository.CommitAsync();
 
@@ -80,19 +78,36 @@ namespace Vnap.Web.Controllers.API
         [HttpPost("AddImage")]
         public async Task<IActionResult> AddImage(int plantDiseaseId, string imageUrl)
         {
-            var plantDiseases = await _plantDiseaseRepository.AllIncludingAsync(pd => pd.Id == plantDiseaseId);
-            var plantDisease = plantDiseases.FirstOrDefault();
-            if (plantDisease != null)
+            var image = new Image()
             {
-                var image = new Image()
-                {
-                    Url = imageUrl
-                };
-                plantDisease.Images.Add(image);
-                await _plantDiseaseRepository.CommitAsync();
-                return Json(image);
-            }
-            return Json("");
+                Url = imageUrl,
+                PlantDiseaseId = plantDiseaseId
+            };
+            _imageRepository.Add(image);
+            await _imageRepository.CommitAsync();
+            _imageRepository.Detach(image);
+
+            return Json(Mapper.Map<ImageVM>(image));
+        }
+
+        [HttpPost("UpdateImage")]
+        public async Task<IActionResult> UpdateImage(ImageVM imageVm)
+        {
+            var image = Mapper.Map<Image>(imageVm);
+            _imageRepository.Update(image);
+            await _imageRepository.CommitAsync();
+            _imageRepository.Detach(image);
+
+            return Json(imageVm);
+        }
+
+        [HttpPost("DeleteImage")]
+        public async Task<IActionResult> DeleteImage(ImageVM imageVm)
+        {
+            await _imageRepository.DeleteByIdAsync(imageVm.Id);
+            await _imageRepository.CommitAsync();
+
+            return Json(imageVm);
         }
     }
 }

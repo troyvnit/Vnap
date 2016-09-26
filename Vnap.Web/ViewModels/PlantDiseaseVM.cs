@@ -19,6 +19,6 @@ namespace Vnap.Web.ViewModels
         public string PlantName { get; set; }
         public DateTime CreatedDate { get; set; }
 
-        public List<Image> Images { get; set; }
+        public List<ImageVM> Images { get; set; }
     }
 }

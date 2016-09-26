@@ -30,5 +30,6 @@ namespace Vnap.Web.DataAccess
         void Update(T entity);
         void Commit();
         Task CommitAsync();
+        void Detach(T entity);
     }
 }

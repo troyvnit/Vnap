@@ -148,5 +148,11 @@ namespace Vnap.Web.DataAccess
         {
             await _context.SaveChangesAsync();
         }
+
+        public virtual void Detach(TEntity entity)
+        {
+            EntityEntry dbEntityEntry = _context.Entry<TEntity>(entity);
+            dbEntityEntry.State = EntityState.Detached;
+        }
     }
 }

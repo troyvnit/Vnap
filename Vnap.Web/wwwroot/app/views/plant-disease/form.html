@@ -88,7 +88,7 @@
               </fieldset>
             </div>
           </uib-tab>
-          <uib-tab>
+          <uib-tab ng-show="plantDisease.Id > 0">
             <uib-tab-heading>
               {{'image' | stringRes}}
             </uib-tab-heading>
@@ -106,32 +106,32 @@
                       <thead>
                         <tr>
                           <th>
-                            Image preview
+                            Hình ảnh
                           </th>
                           <th>
-                            Image url
+                            Mô tả
                           </th>
                           <th>
-                            Sort order
+                            Thứ tự
                           </th>
                           <th>
-                            Actions
+                            Thao tác
                           </th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr ng-repeat="image in plantDisease.Images">
                           <td>
-                            <img ngf-src="image.url" height="200">
+                            <img ng-src="{{image.url}}" class="plant-disease-image">
                           </td>
                           <td>
-                            <input type="text" class="form-control" disabled value="{{image.url}}">
+                            <input type="text" class="form-control" value="{{image.caption}}" ng-model="image.caption" ng-blur="imageChanged(image)">
                           </td>
                           <td>
-                            <input type="text" class="form-control" value="1">
+                            <input type="number" class="form-control" value="{{image.priority}}" ng-model="image.priority" ng-blur="imageChanged(image)">
                           </td>
                           <td>
-                            <button class="btn btn-white"><i class="fa fa-trash"></i> </button>
+                            <button class="btn btn-white" ng-click="confirmDeleteImage(image)"><i class="fa fa-trash"></i> </button>
                           </td>
                         </tr>
                       </tbody>

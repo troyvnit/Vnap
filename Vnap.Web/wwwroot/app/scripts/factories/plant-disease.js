@@ -109,5 +109,31 @@ function PlantDiseaseFactory($http) {
         });
     };
 
+    PlantDisease.prototype.UpdateImage = function (data, successCallback) {
+        $.ajax({
+            method: "POST",
+            url: apiBaseUrl + "plantDisease/updateImage",
+            data: data
+        })
+        .success(function (data) {
+            if (successCallback) {
+                successCallback(data);
+            }
+        });
+    };
+
+    PlantDisease.prototype.DeleteImage = function (data, successCallback) {
+        $.ajax({
+            method: "POST",
+            url: apiBaseUrl + "plantDisease/deleteImage",
+            data: data
+        })
+        .success(function (data) {
+            if (successCallback) {
+                successCallback(data);
+            }
+        });
+    };
+
     return PlantDisease;
 }

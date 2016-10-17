@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Vnap.Entity;
 using Vnap.Repository;
 using Vnap.Service.Requests.Plant;
@@ -16,6 +18,7 @@ namespace Vnap.Service
     }
     public class PlantService : IPlantService
     {
+        HttpClient httpClient = new HttpClient();
         private IRepository<Plant> _plantRepository;
         public PlantService(IRepository<Plant> plantRepository)
         {
@@ -24,10 +27,26 @@ namespace Vnap.Service
 
         public async Task Sync()
         {
-            var count = await _plantRepository.AsQueryable().CountAsync();
-            if (count == 0)
+            try
             {
-                FillContainer();
+                var getPlantsRs = await httpClient.GetStringAsync("http://210.245.27.38:6789/api/plant");
+                var plants = JsonConvert.DeserializeObject<List<Plant>>(getPlantsRs);
+                foreach (var plant in plants)
+                {
+                    var existedPlant = await _plantRepository.Get(plant.Id);
+                    if (existedPlant != null)
+                    {
+                        await _plantRepository.Update(plant);
+                    }
+                    else
+                    {
+                        await _plantRepository.Insert(plant);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // ignored
             }
         }
 
@@ -76,7 +95,7 @@ namespace Vnap.Service
         public async Task<List<Plant>> GetPlants(GetPlantsRq rq)
         {
             var query = _plantRepository.AsQueryable()
-                .OrderByDescending(plant => plant.Priority)
+                .OrderBy(plant => plant.Priority)
                 .OrderByDescending(plant => plant.CreatedDate);
             if (rq.FromId > 0)
             {
@@ -85,8 +104,9 @@ namespace Vnap.Service
                     query.Where(
                         plant => plant.Priority >= fromPlant.Priority && plant.CreatedDate >= fromPlant.CreatedDate);
             }
-            query = query.Skip(rq.Skip).Take(rq.Take);
-            return await query.ToListAsync();
+            query = query.Skip(rq.Skip);
+            var plants = await query.ToListAsync();
+            return plants;
         }
 
         public async Task<Plant> SearchFirstPlant(string query)

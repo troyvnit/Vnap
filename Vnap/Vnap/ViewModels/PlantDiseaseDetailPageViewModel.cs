@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Prism.Navigation;
 using Vnap.Extensions;
 using Vnap.Models;
@@ -12,6 +13,7 @@ using Vnap.Service;
 using Vnap.Service.Requests.Plant;
 using Vnap.Views;
 using Xamarin.Forms;
+using Image = Vnap.Models.Image;
 
 namespace Vnap.ViewModels
 {
@@ -19,7 +21,7 @@ namespace Vnap.ViewModels
     {
         private readonly IPlantDiseaseService _plantDiseaseService;
 
-        private int _currentPlantDiseaseId;
+        public string CurrentPlantDisease;
 
         private ObservableCollection<Page> _plantDiseaseDetailTabs = new ObservableCollection<Page>();
 
@@ -37,11 +39,11 @@ namespace Vnap.ViewModels
             _plantDiseaseService = plantDiseaseService;
         }
 
-        public async override Task LoadAsync()
+        public override async Task LoadAsync()
         {
             var rq = new GetPlantDiseasesRq()
             {
-                Skip = PlantDiseaseDetailTabs.Count
+                Skip = 0
             };
 
             var plantDiseases = await _plantDiseaseService.GetPlantDiseases(rq);
@@ -53,7 +55,15 @@ namespace Vnap.ViewModels
                 list.AddRange(plantDiseases.Select(p => new PlantDiseaseDetailTab()
                 {
                     Title = p.Name,
-                    Icon = ""
+                    Icon = "",
+                    //BindingContext = new PlantDiseaseDetailTabViewModel()
+                    //{
+                    //    PreviewImage = p.Images.FirstOrDefault()?.Url,
+                    //    PreviewCaption = p.Images.FirstOrDefault()?.Caption,
+                    //    Images = p.Images.Select(Mapper.Map<Image>).ToObservableCollection(),
+                    //    Description = new HtmlWebViewSource() { Html = p.Description },
+                    //    PlantDisease = Mapper.Map<PlantDisease>(p)
+                    //}
                 }));
 
                 PlantDiseaseDetailTabs = list.ToObservableCollection();
@@ -68,11 +78,8 @@ namespace Vnap.ViewModels
 
         public override void OnNavigatedTo(NavigationParameters parameters)
         {
-            var plantDiseaseIdParameter = (string)parameters[parameters.Keys.FirstOrDefault(k => k == "PlantDiseaseId")];
-            if (!string.IsNullOrEmpty(plantDiseaseIdParameter))
-            {
-                _currentPlantDiseaseId = int.Parse(plantDiseaseIdParameter);
-            }
+            var plantDiseaseParameter = (string)parameters[parameters.Keys.FirstOrDefault(k => k == "PlantDisease")];
+            CurrentPlantDisease = plantDiseaseParameter;
             base.OnNavigatedTo(parameters);
         }
     }

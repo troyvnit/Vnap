@@ -3,6 +3,7 @@
   <color name="primaryDark">#248B3F</color>
   <color name="accent">#FFA300</color>
   <color name="window_background">#ECEFF4</color>
+  <color name="splash_background">#FFFFFF</color>
   <color name="tab_background_selected">#ECEFF4</color>
   <color name="tab_background_unselected">#289B47</color>
 </resources>

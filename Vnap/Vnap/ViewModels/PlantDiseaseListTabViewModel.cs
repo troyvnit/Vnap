@@ -19,14 +19,14 @@ namespace Vnap.ViewModels
         {
             new PlantDiseaseGroup()
             {
-                Id = 1,
+                Id = 0,
                 Name = "DỊCH BỆNH",
                 ShortName = "DB",
                 Icon = "dead_plant.png"
             },
             new PlantDiseaseGroup()
             {
-                Id = 2,
+                Id = 1,
                 Name = "SÂU BỆNH",
                 ShortName = "SB",
                 Icon = "pests.png"
@@ -35,6 +35,7 @@ namespace Vnap.ViewModels
         public ObservableCollection<PlantDiseaseGroup> PlantDiseaseGroups => _plantDiseaseGroups;
 
         private int _totalPlantDiseases;
+        public string Plant { get; set; }
 
         public DelegateCommand RefreshCommand { get; set; }
         public DelegateCommand LoadMoreCommand { get; set; }
@@ -83,7 +84,8 @@ namespace Vnap.ViewModels
         {
             var rq = new GetPlantDiseasesRq()
             {
-                Skip = skip
+                Skip = skip,
+                Plant = Plant
             };
 
             var newPlantDiseases = await _plantDiseaseService.GetPlantDiseases(rq);
@@ -91,7 +93,8 @@ namespace Vnap.ViewModels
 
             foreach (var plantDiseaseGroup in _plantDiseaseGroups)
             {
-                plantDiseaseGroup.AddRange(newPlantDiseases.Select(Mapper.Map<PlantDisease>));
+                plantDiseaseGroup.RemoveRange(plantDiseaseGroup.ToList());
+                plantDiseaseGroup.AddRange(newPlantDiseases.Where(pd => (int)pd.PlantDiseaseType == plantDiseaseGroup.Id).Select(Mapper.Map<PlantDisease>));
                 for (int i = 0; i < plantDiseaseGroup.Count; i++)
                 {
                     plantDiseaseGroup[i].IsEven = i % 2 == 0;
@@ -113,7 +116,7 @@ namespace Vnap.ViewModels
 
         public void ExecuteItemClickCommand(PlantDisease plantDisease)
         {
-            _navigationService.NavigateAsync($"LeftMenu/Navigation/PlantDiseaseDetailPage?PlantDiseaseId={plantDisease.Id}", animated: false);
+            _navigationService.NavigateAsync($"LeftMenu/Navigation/PlantDiseaseDetailPage?PlantDisease={plantDisease.Name}", animated: false);
         }
     }
 }

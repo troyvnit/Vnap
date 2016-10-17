@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Vnap.Entity;
 using Xamarin.Forms;
+using Image = Vnap.Entity.Image;
 
 namespace Vnap.Repository
 {
@@ -14,6 +15,7 @@ namespace Vnap.Repository
             await db.CreateTableAsync<PlantDisease>();
             await db.CreateTableAsync<PostEntity>();
             await db.CreateTableAsync<AdvisoryMessageEntity>();
+            await db.CreateTableAsync<Image>();
         }
     }
 }

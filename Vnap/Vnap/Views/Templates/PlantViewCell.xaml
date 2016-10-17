@@ -14,7 +14,7 @@
                   Margin="0,5,0,0">
     <ffimageloading:CachedImage x:Name="CachedImage"
                                 Source="{Binding Avatar}"
-                                Aspect="Fill"
+                                Aspect="AspectFill"
                                 HorizontalOptions="FillAndExpand"
                                 VerticalOptions="FillAndExpand"
                                 AbsoluteLayout.LayoutBounds="0, 0, 1, 1"

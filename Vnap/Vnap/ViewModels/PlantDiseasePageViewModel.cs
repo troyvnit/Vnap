@@ -4,8 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Prism.Navigation;
+using Prism.Unity.Navigation;
 using Vnap.Extensions;
 using Vnap.Models;
 using Vnap.Service;
@@ -19,7 +21,7 @@ namespace Vnap.ViewModels
     {
         private readonly IPlantService _plantService;
 
-        private int _currentPlantId;
+        public string CurrentPlant;
 
         private ObservableCollection<Page> _plantDiseaseTabs = new ObservableCollection<Page>();
 
@@ -37,7 +39,7 @@ namespace Vnap.ViewModels
             _plantService = plantService;
         }
 
-        public async override Task LoadAsync()
+        public override async Task LoadAsync()
         {
             var rq = new GetPlantsRq()
             {
@@ -67,11 +69,8 @@ namespace Vnap.ViewModels
 
         public override void OnNavigatedTo(NavigationParameters parameters)
         {
-            var plantIdParameter = (string)parameters[parameters.Keys.FirstOrDefault(k => k == "PlantId")];
-            if (!string.IsNullOrEmpty(plantIdParameter))
-            {
-                _currentPlantId = int.Parse(plantIdParameter);
-            }
+            var plantParameter = (string)parameters[parameters.Keys.FirstOrDefault(k => k == "Plant")];
+            CurrentPlant = plantParameter;
             base.OnNavigatedTo(parameters);
         }
     }

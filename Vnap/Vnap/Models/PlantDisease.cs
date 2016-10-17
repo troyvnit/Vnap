@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,14 @@ namespace Vnap.Models
         public string Avatar { get; set; }
         public DateTime CreatedDate { get; set; }
         public int PlantId { get; set; }
+        public string PlantName { get; set; }
+        public PlantDiseaseType PlantDiseaseType { get; set; }
+        public ObservableCollection<Image> Images { get; set; }
         public bool IsEven { get; set; }
+    }
+
+    public enum PlantDiseaseType
+    {
+        Pests = 0, Disease = 1
     }
 }

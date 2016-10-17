@@ -58,20 +58,5 @@ namespace Vnap
         {
             NavigationService.NavigateAsync($"Navigation/PlantDiseasePage?query={query}", animated: false);
         }
-
-        public async Task Sync()
-        {
-            _plantService = Container.Resolve<IPlantService>();
-            await _plantService.Sync();
-
-            _plantDiseaseService = Container.Resolve<IPlantDiseaseService>();
-            await _plantDiseaseService.Sync();
-
-            _postService = Container.Resolve<IPostService>();
-            await _postService.Sync();
-
-            _messageService = Container.Resolve<IMessageService>();
-            await _messageService.Sync();
-        }
     }
 }

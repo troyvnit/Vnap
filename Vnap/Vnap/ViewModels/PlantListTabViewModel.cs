@@ -57,7 +57,7 @@ namespace Vnap.ViewModels
 
         public bool CanExecuteLoadMoreCommand()
         {
-            return IsNotBusy && _plants.Count < _totalPlants;
+            return IsNotBusy;
         }
 
         public async Task ExecuteLoadMoreCommand()
@@ -100,7 +100,7 @@ namespace Vnap.ViewModels
 
         public void ExecuteItemClickCommand(Plant plant)
         {
-            _navigationService.NavigateAsync($"LeftMenu/Navigation/PlantDiseasePage?PlantId={plant.Id}", animated: false);
+            _navigationService.NavigateAsync($"LeftMenu/Navigation/PlantDiseasePage?Plant={plant.Name}", animated: false);
         }
     }
 }

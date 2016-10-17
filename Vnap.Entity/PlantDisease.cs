@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using SQLite;
 
 namespace Vnap.Entity
 {
@@ -10,5 +13,14 @@ namespace Vnap.Entity
         public int Priority { get; set; }
         public DateTime CreatedDate { get; set; }
         public int PlantId { get; set; }
+        public string PlantName { get; set; }
+        public PlantDiseaseType PlantDiseaseType { get; set; }
+        [Ignore]
+        public ObservableCollection<Image> Images { get; set; }
+    }
+
+    public enum PlantDiseaseType
+    {
+        Pests = 0, Disease = 1
     }
 }

@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="BaseEntity.cs" />
     <Compile Include="AdvisoryMessageEntity.cs" />
+    <Compile Include="Image.cs" />
     <Compile Include="PostEntity.cs" />
     <Compile Include="PlantDisease.cs" />
     <Compile Include="Plant.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Acr.UserDialogs;
 using FFImageLoading;
 using Prism.Navigation;
 using Vnap.Repository;
@@ -27,34 +28,36 @@ namespace Vnap.ViewModels
 
         public async Task InitialDatabase()
         {
+            UserDialogs.Instance.ShowLoading("Tải dữ liệu...");
             await DatabaseHelper.InitialDatabase();
             await _plantService.Sync();
             await _plantDiseaseService.Sync();
             await _postService.Sync();
             await _messageService.Sync();
-
-            ImageService.Instance.LoadUrl("http://vannghetiengiang.vn/uploads/news/2014_11/cay-lua2.jpg", TimeSpan.FromDays(3))
-            .Success(async (size, loadingResult) =>
-            {
-                _loaded++;
-                await Navigate();
-            })
-            .Error(async exception =>
-            {
-                _loaded++;
-                await Navigate();
-            }).Preload();
-            ImageService.Instance.LoadUrl("http://hoidap.vinhphucnet.vn/qt/hoidap/PublishingImages/75706PMbenhdaoon.jpg", TimeSpan.FromDays(3))
-            .Success(async (size, loadingResult) =>
-            {
-                _loaded++;
-                await Navigate();
-            })
-            .Error(async exception =>
-            {
-                _loaded++;
-                await Navigate();
-            }).Preload();
+            UserDialogs.Instance.HideLoading();
+            await _navigationService.NavigateAsync("LeftMenu/Navigation/MainPage/PlantListTab", animated: false);
+            //ImageService.Instance.LoadUrl("http://vannghetiengiang.vn/uploads/news/2014_11/cay-lua2.jpg", TimeSpan.FromDays(3))
+            //.Success(async (size, loadingResult) =>
+            //{
+            //    _loaded++;
+            //    await Navigate();
+            //})
+            //.Error(async exception =>
+            //{
+            //    _loaded++;
+            //    await Navigate();
+            //}).Preload();
+            //ImageService.Instance.LoadUrl("http://hoidap.vinhphucnet.vn/qt/hoidap/PublishingImages/75706PMbenhdaoon.jpg", TimeSpan.FromDays(3))
+            //.Success(async (size, loadingResult) =>
+            //{
+            //    _loaded++;
+            //    await Navigate();
+            //})
+            //.Error(async exception =>
+            //{
+            //    _loaded++;
+            //    await Navigate();
+            //}).Preload();
         }
 
         private async Task Navigate()

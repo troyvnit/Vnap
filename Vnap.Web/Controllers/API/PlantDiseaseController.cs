@@ -33,7 +33,7 @@ namespace Vnap.Web.Controllers.API
         [HttpGet]
         public async Task<IActionResult> List(int skip = 0, int take = 10)
         {
-            IEnumerable<PlantDisease> pageData = await _plantDiseaseRepository.AllIncludingAsync(pd => pd.Plant);
+            IEnumerable<PlantDisease> pageData = await _plantDiseaseRepository.AllIncludingAsync(pd => pd.Plant, pd => pd.Images);
 
             return Json(Mapper.Map<IEnumerable<PlantDiseaseVM>>(pageData));
         }

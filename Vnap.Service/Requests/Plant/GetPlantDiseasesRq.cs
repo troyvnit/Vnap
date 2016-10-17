@@ -3,6 +3,6 @@
     public class GetPlantDiseasesRq : BaseRq
     {
         public int FromId { get; set; }
-        public int PlantId { get; set; }
+        public string Plant { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System;
-
+using Acr.UserDialogs;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
@@ -19,10 +19,9 @@ using Vnap.Droid.Utils.IconizeModules;
 
 namespace Vnap.Droid
 {
-    [Activity(Label = "Vnap", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Theme = "@style/MyTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-        App app;
         protected override void OnCreate(Bundle bundle)
         {
             TabLayoutResource = Resource.Layout.tabs;
@@ -35,10 +34,11 @@ namespace Vnap.Droid
             Plugin.Iconize.Iconize.With(new LinearModule());
             Plugin.Iconize.Iconize.With(new FlatModule());
             IconControls.Init(Resource.Id.toolbar, Resource.Id.sliding_tabs);
+            UserDialogs.Init(this);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
-            app = new App(new Androidinitializer());
+            var app = new App(new Androidinitializer());
             LoadApplication(app);
         }
 

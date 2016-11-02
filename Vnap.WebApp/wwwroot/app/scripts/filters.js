@@ -30,11 +30,26 @@
                 'plantDiseaseNamePlaceHolder': 'Tên bệnh',
                 'plantDiseaseDescriptionPlaceHolder': 'Mô tả bệnh',
 
+                'solution': 'Giải pháp',
+                'solutionList': 'Danh sách giải pháp',
+                'solutionListHeader': 'Quản lý giải pháp',
+                'solutionListSubheader': 'Danh sách giải pháp',
+
+                'solutionAdd': 'Thêm giải pháp',
+                'solutionAddHeader': 'Thêm giải pháp',
+                'solutionDetail': 'Chi tiết giải pháp',
+                'solutionNamePlaceHolder': 'Tên giải pháp',
+                'solutionCompanyNamePlaceHolder': 'Tên công ty',
+                'solutionDescriptionPlaceHolder': 'Mô tả giải pháp',
+                'solutionPrimePlaceHolder': 'Giải pháp khuyến nghị',
+
                 'priorityPlaceHolder': 'Ưu tiên số từ nhỏ đến lơn',
 
                 'name': 'Tên',
+                'companyName': 'Tên công ty',
                 'description': 'Mô tả',
                 'priority': 'Thứ tự ưu tiên',
+                'prime': 'Khuyến nghị',
                 'add': 'Tạo mới',
                 'list': 'Danh sách',
                 'cancel': 'Hủy',

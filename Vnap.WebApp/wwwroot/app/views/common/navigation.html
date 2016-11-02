@@ -33,6 +33,13 @@
           <li ui-sref-active="active"><a ui-sref="index.plant-disease-form"><i class="fa fa-cubes"></i> {{'add' | stringRes}}</a></li>
         </ul>
       </li>
+      <li ui-sref-active="active">
+        <a ui-sref="index.solution"><i class="fa fa-chrome"></i> <span class="nav-label">{{'solution' | stringRes}}</span> </a>
+        <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes('solution')}">
+          <li ui-sref-active="active"><a ui-sref="index.solution"><i class="fa fa-camera-retro"></i> {{'list' | stringRes}}</a></li>
+          <li ui-sref-active="active"><a ui-sref="index.solution-form"><i class="fa fa-cubes"></i> {{'add' | stringRes}}</a></li>
+        </ul>
+      </li>
     </ul>
   </div>
 </nav>

@@ -1,4 +1,4 @@
-vnap
+﻿vnap
     .config([
         '$stateProvider',
         '$urlRouterProvider',
@@ -24,7 +24,7 @@ vnap
                 .state('index.plant', {
                     url: "/plant",
                     templateUrl: appBaseUrl + "views/plant/list.html",
-                    data: { pageTitle: 'Danh s�ch c�y tr?ng' },
+                    data: { pageTitle: 'Danh sách cây trồng' },
                     resolve: {
                         loadPlugin: function ($ocLazyLoad) {
                             return $ocLazyLoad.load([
@@ -38,7 +38,7 @@ vnap
                 .state('index.plant-form', {
                     url: "/plant-form/:Id",
                     templateUrl: appBaseUrl + "views/plant/form.html",
-                    data: { pageTitle: 'Th�m c�y tr?ng' },
+                    data: { pageTitle: 'Thêm cây trồng' },
                     resolve: {
                         loadPlugin: function ($ocLazyLoad) {
                             return $ocLazyLoad.load([
@@ -52,7 +52,7 @@ vnap
                 .state('index.plant-disease', {
                     url: "/plant-disease",
                     templateUrl: appBaseUrl + "views/plant-disease/list.html",
-                    data: { pageTitle: 'Danh s�ch b?nh' },
+                    data: { pageTitle: 'Danh sách bệnh' },
                     resolve: {
                         loadPlugin: function ($ocLazyLoad) {
                             return $ocLazyLoad.load([
@@ -66,7 +66,39 @@ vnap
                 .state('index.plant-disease-form', {
                     url: "/plant-disease-form/:Id",
                     templateUrl: appBaseUrl + "views/plant-disease/form.html",
-                    data: { pageTitle: 'Th�m b?nh' },
+                    data: { pageTitle: 'Thêm bệnh' },
+                    resolve: {
+                        loadPlugin: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    files: [appBaseUrl + "bower_components/ng-file-upload/ng-file-upload-all.min.js"]
+                                },
+                                {
+                                    name: 'summernote',
+                                    files: [appBaseUrl + 'bower_components/summernote/dist/summernote.css', appBaseUrl + 'bower_components/summernote/dist/summernote.js', appBaseUrl + 'bower_components/angular-summernote/dist/angular-summernote.min.js']
+                                }
+                            ]);
+                        }
+                    }
+                })
+                .state('index.solution', {
+                    url: "/solution",
+                    templateUrl: appBaseUrl + "views/solution/list.html",
+                    data: { pageTitle: 'Danh sách giải pháp' },
+                    resolve: {
+                        loadPlugin: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    files: [appBaseUrl + "bower_components/ng-file-upload/ng-file-upload-all.min.js"]
+                                }
+                            ]);
+                        }
+                    }
+                })
+                .state('index.solution-form', {
+                    url: "/solution-form/:Id",
+                    templateUrl: appBaseUrl + "views/solution/form.html",
+                    data: { pageTitle: 'Thêm giải pháp' },
                     resolve: {
                         loadPlugin: function ($ocLazyLoad) {
                             return $ocLazyLoad.load([

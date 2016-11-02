@@ -19,8 +19,6 @@ namespace Vnap.WebApp
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
             builder.RegisterType<DbFactory>().As<IDbFactory>().InstancePerRequest();
-            builder.RegisterType<RepositoryBase<Plant>>().As<IRepository<Plant>>().InstancePerRequest();
-            builder.RegisterType<RepositoryBase<PlantDisease>>().As<IRepository<PlantDisease>>().InstancePerRequest();
 
             // Repositories
             builder.RegisterAssemblyTypes(typeof(PlantRepository).Assembly)

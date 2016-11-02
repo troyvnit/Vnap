@@ -251,6 +251,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\API\SolutionController.cs" />
     <Compile Include="Controllers\API\PlantController.cs" />
     <Compile Include="Controllers\API\PlantDiseaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -272,6 +273,7 @@
     <Compile Include="DataAccess\Infrastructure\RepositoryBase.cs" />
     <Compile Include="DataAccess\Infrastructure\UnitOfWork.cs" />
     <Compile Include="DataAccess\Repository\ImageRepository.cs" />
+    <Compile Include="DataAccess\Repository\SolutionRepository.cs" />
     <Compile Include="DataAccess\Repository\PlantDiseaseRepository.cs" />
     <Compile Include="DataAccess\Repository\PlantRepository.cs" />
     <Compile Include="Global.asax.cs">
@@ -291,6 +293,7 @@
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ImageVM.cs" />
+    <Compile Include="ViewModels\SolutionVM.cs" />
     <Compile Include="ViewModels\PlantDiseaseVM.cs" />
     <Compile Include="ViewModels\PlantVM.cs" />
   </ItemGroup>
@@ -2531,19 +2534,21 @@
     <Content Include="wwwroot\app\bower_components\summernote\src\js\outro.js" />
     <Content Include="wwwroot\app\bower_components\summernote\src\js\summernote.js" />
     <Content Include="wwwroot\app\bower_components\summernote\tools\nuget.exe" />
-    <Content Include="wwwroot\app\index.html" />
     <Content Include="wwwroot\app\scripts\app.js" />
     <Content Include="wwwroot\app\scripts\config.js" />
     <Content Include="wwwroot\app\scripts\controllers.js" />
     <Content Include="wwwroot\app\scripts\controllers\article.js" />
     <Content Include="wwwroot\app\scripts\controllers\main.js" />
+    <Content Include="wwwroot\app\scripts\controllers\solution\form.js" />
+    <Content Include="wwwroot\app\scripts\controllers\solution\list.js" />
     <Content Include="wwwroot\app\scripts\controllers\plant-disease\form.js" />
     <Content Include="wwwroot\app\scripts\controllers\plant-disease\list.js" />
-    <Content Include="wwwroot\app\scripts\controllers\plant-form.js" />
-    <Content Include="wwwroot\app\scripts\controllers\plant.js" />
+    <Content Include="wwwroot\app\scripts\controllers\plant\form.js" />
+    <Content Include="wwwroot\app\scripts\controllers\plant\list.js" />
     <Content Include="wwwroot\app\scripts\directives.js" />
     <Content Include="wwwroot\app\scripts\factories.js" />
     <Content Include="wwwroot\app\scripts\factories\article.js" />
+    <Content Include="wwwroot\app\scripts\factories\solution.js" />
     <Content Include="wwwroot\app\scripts\factories\plant-disease.js" />
     <Content Include="wwwroot\app\scripts\factories\plant.js" />
     <Content Include="wwwroot\app\scripts\filters.js" />
@@ -2581,6 +2586,8 @@
     <Content Include="wwwroot\app\views\main.html" />
     <Content Include="wwwroot\app\views\minor.html" />
     <Content Include="wwwroot\app\views\modals\delete-confirm.html" />
+    <Content Include="wwwroot\app\views\solution\form.html" />
+    <Content Include="wwwroot\app\views\solution\list.html" />
     <Content Include="wwwroot\app\views\plant-disease\form.html" />
     <Content Include="wwwroot\app\views\plant-disease\list.html" />
     <Content Include="wwwroot\app\views\plant\form.html" />

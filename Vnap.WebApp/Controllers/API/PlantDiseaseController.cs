@@ -43,6 +43,15 @@ namespace Vnap.Web.Controllers.API
             return Mapper.Map<PlantDiseaseVM>(plantDiseases.FirstOrDefault(pd => pd.Id == id));
         }
 
+        [HttpGet]
+        [Route("Search")]
+        public async Task<IEnumerable<PlantDiseaseVM>> Search(string query)
+        {
+            var plantDiseases = await _plantDiseaseRepository.FindByAsync(p => p.Name.Contains(query));
+
+            return Mapper.Map<IEnumerable<PlantDiseaseVM>>(plantDiseases);
+        }
+
         [HttpPost]
         [Route("Add")]
         public async Task<PlantDiseaseVM> Add(PlantDiseaseVM plantDiseaseVm)

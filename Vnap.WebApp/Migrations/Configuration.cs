@@ -9,7 +9,7 @@ namespace Vnap.WebApp.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(Vnap.WebApp.Models.ApplicationDbContext context)

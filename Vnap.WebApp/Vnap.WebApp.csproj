@@ -2586,10 +2586,10 @@
     <Content Include="wwwroot\app\views\main.html" />
     <Content Include="wwwroot\app\views\minor.html" />
     <Content Include="wwwroot\app\views\modals\delete-confirm.html" />
+    <Content Include="wwwroot\app\views\plant-disease\detail.html" />
     <Content Include="wwwroot\app\views\solution\form.html" />
     <Content Include="wwwroot\app\views\solution\list.html" />
     <Content Include="wwwroot\app\views\plant-disease\form.html" />
-    <Content Include="wwwroot\app\views\plant-disease\list.html" />
     <Content Include="wwwroot\app\views\plant\form.html" />
     <Content Include="wwwroot\app\views\plant\list.html" />
     <Content Include="wwwroot\dist\fonts\glyphicons-halflings-regular.svg" />

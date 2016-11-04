@@ -21,6 +21,11 @@ function PlantDiseaseFormCtrl($scope, $rootScope, $stateParams, $state, $http, $
                 $scope.selectedPlant = { Name: data.PlantName, Id: data.PlantId };
                 $scope.plantDisease.PlantDiseaseType = data.PlantDiseaseType;
                 $scope.plantDisease.Images = data.Images;
+                $scope.plantDisease.Solutions = data.Solutions;
+
+                if ($stateParams.ActiveTabIndex) {
+                    $scope.troy = true;
+                }
             });
         });
     }

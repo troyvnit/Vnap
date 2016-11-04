@@ -29,7 +29,7 @@ namespace Vnap.Web.Controllers.API
         
         public async Task<IEnumerable<PlantDiseaseVM>> GetPlantDiseases(int skip = 0, int take = 10)
         {
-            IEnumerable<PlantDisease> pageData = await _plantDiseaseRepository.AllIncludingAsync(pd => pd.Plant, pd => pd.Images);
+            IEnumerable<PlantDisease> pageData = await _plantDiseaseRepository.AllIncludingAsync(pd => pd.Plant, pd => pd.Images, pd => pd.Solutions);
 
             return Mapper.Map<IEnumerable<PlantDiseaseVM>>(pageData);
         }
@@ -38,7 +38,7 @@ namespace Vnap.Web.Controllers.API
         [Route("Get")]
         public async Task<PlantDiseaseVM> Get(int id)
         {
-            var plantDiseases = await _plantDiseaseRepository.AllIncludingAsync(pd => pd.Plant, pd => pd.Images);
+            var plantDiseases = await _plantDiseaseRepository.AllIncludingAsync(pd => pd.Plant, pd => pd.Images, pd => pd.Solutions);
 
             return Mapper.Map<PlantDiseaseVM>(plantDiseases.FirstOrDefault(pd => pd.Id == id));
         }

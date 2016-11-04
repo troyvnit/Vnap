@@ -64,7 +64,7 @@
                     }
                 })
                 .state('index.plant-disease-form', {
-                    url: "/plant-disease-form/:Id",
+                    url: "/plant-disease-form/:Id/:ActiveTabIndex",
                     templateUrl: appBaseUrl + "views/plant-disease/form.html",
                     data: { pageTitle: 'Thêm bệnh' },
                     resolve: {
@@ -96,9 +96,9 @@
                     }
                 })
                 .state('index.solution-form', {
-                    url: "/solution-form/:Id",
+                    url: "/solution-form/:Id/:PlantDiseaseId/:PlantDiseaseName",
                     templateUrl: appBaseUrl + "views/solution/form.html",
-                    data: { pageTitle: 'Thêm giải pháp' },
+                    data: { pageTitle: 'Thêm/Sửa giải pháp' },
                     resolve: {
                         loadPlugin: function ($ocLazyLoad) {
                             return $ocLazyLoad.load([

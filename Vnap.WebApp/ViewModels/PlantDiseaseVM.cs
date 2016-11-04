@@ -20,5 +20,6 @@ namespace Vnap.Web.ViewModels
         public DateTime CreatedDate { get; set; }
 
         public List<ImageVM> Images { get; set; }
+        public List<SolutionVM> Solutions { get; set; }
     }
 }

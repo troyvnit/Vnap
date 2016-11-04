@@ -8,8 +8,9 @@ function SolutionCtrl($scope, $rootScope, $uibModal, Solution) {
     $scope.Solution = new Solution();
     $scope.Solution.GetAllSolutions();
 
-    $scope.confirmDelete = function (solution) {
+    $scope.confirmDelete = function (solution, solutions) {
         $scope.deletedSolution = solution;
+        $scope.solutions = solutions;
         $scope.modalInstance = $uibModal.open({
             templateUrl: 'views/modals/delete-confirm.html',
             scope: $scope
@@ -21,6 +22,11 @@ function SolutionCtrl($scope, $rootScope, $uibModal, Solution) {
             $scope.$apply(function () {
                 var index = $scope.Solution.solutions.indexOf($scope.deletedSolution);
                 $scope.Solution.solutions.splice(index, 1);
+
+                if ($scope.solutions) {
+                    index = $scope.solutions.indexOf($scope.deletedSolution);
+                    $scope.solutions.splice(index, 1);
+                }
             });
         });
         $scope.modalInstance.close();

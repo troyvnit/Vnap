@@ -10,19 +10,25 @@ function SolutionFormCtrl($scope, $rootScope, $stateParams, $state, $http, $uibM
     $scope.solution = { Id: 0, Images: [] };
     
     if ($stateParams.Id && $stateParams.Id > 0) {
-        $scope.Solution.Get($stateParams.Id, function (data) {
-            $scope.$apply(function() {
-                $scope.solution.Id = data.Id;
-                $scope.solution.Name = data.Name;
-                $scope.solution.CompanyName = data.CompanyName;
-                $scope.solution.Description = data.Description;
-                $scope.solution.Priority = data.Priority;
-                $scope.solution.Prime = data.Prime;
-                $scope.solution.Avatar = data.Avatar;
-                $scope.solution.PlantDiseaseId = data.PlantDiseaseId;
-                $scope.selectedPlantDisease = { Name: data.PlantDiseaseName, Id: data.PlantDiseaseId };
+        $scope.Solution.Get($stateParams.Id,
+            function(data) {
+                $scope.$apply(function() {
+                    $scope.solution.Id = data.Id;
+                    $scope.solution.Name = data.Name;
+                    $scope.solution.CompanyName = data.CompanyName;
+                    $scope.solution.Description = data.Description;
+                    $scope.solution.Priority = data.Priority;
+                    $scope.solution.Prime = data.Prime;
+                    $scope.solution.Avatar = data.Avatar;
+                    $scope.solution.PlantDiseaseId = data.PlantDiseaseId;
+                    $scope.selectedPlantDisease = { Name: data.PlantDiseaseName, Id: data.PlantDiseaseId };
+                });
             });
-        });
+    } else {
+        if ($stateParams.PlantDiseaseId && $stateParams.PlantDiseaseId > 0) {
+            $scope.solution.PlantDiseaseId = $stateParams.PlantDiseaseId;
+            $scope.selectedPlantDisease = { Name: $stateParams.PlantDiseaseName, Id: $stateParams.PlantDiseaseId };
+        }
     }
 
     $scope.fileProgress = 0;
@@ -77,6 +83,14 @@ function SolutionFormCtrl($scope, $rootScope, $stateParams, $state, $http, $uibM
             });
         }
     };
+
+    $scope.back = function() {
+        if ($stateParams.PlantDiseaseId && $stateParams.PlantDiseaseId > 0) {
+            $state.go("index.plant-disease-form", { Id: $stateParams.PlantDiseaseId, ActiveTabIndex: 2 });
+        } else {
+            $state.go("index.solution");
+        }
+    }
 
     $scope.searchPlantDisease = function (val) {
         return $http.get(apiBaseUrl + 'plantDisease/search', {

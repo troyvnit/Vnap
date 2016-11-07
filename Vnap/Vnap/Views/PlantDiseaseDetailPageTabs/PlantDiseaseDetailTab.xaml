@@ -4,15 +4,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             xmlns:components="clr-namespace:Vnap.Views.Components;assembly=Vnap"
-             xmlns:rerenders="clr-namespace:Vnap.Views.Rerenders;assembly=Vnap"
              xmlns:extendedControls="clr-namespace:Vnap.Views.ExtendedControls;assembly=Vnap"
+             xmlns:fab="clr-namespace:FAB.Forms;assembly=FAB.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Vnap.Views.PlantDiseaseDetailTab"
+             Icon=""
+             Title="{Binding Title}"
              x:Name="PlantDiseaseDetailTabContentPage">
 
     <AbsoluteLayout VerticalOptions="FillAndExpand" BackgroundColor="#ECEFF4">
-        <ScrollView Margin="0,0,0,70"
+        <ScrollView Padding="0,0,0,50"
                     AbsoluteLayout.LayoutFlags="All"
                     AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
             <StackLayout Padding="5" BackgroundColor="#ECEFF4">
@@ -80,11 +81,12 @@
                 </ContentView>
             </StackLayout>
         </ScrollView>
-        <Button Text="Giải Pháp Phòng Trị" BackgroundColor="#FFA300" HeightRequest="60" TextColor="White"
+      <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" AbsoluteLayout.LayoutFlags="WidthProportional,PositionProportional"
+                AbsoluteLayout.LayoutBounds="0, 1, 1, AutoSize">
+        <Button Text="Giải Pháp Phòng Trị" BackgroundColor="#289B47" TextColor="White"
                 Command="{Binding NavigateCommand}" CommandParameter="LeftMenu/Navigation/PlantDiseaseSolutionPage"
-                FontSize="18" FontAttributes="Bold" Image="solution_icon" Margin="5, 0, 0, 5"
-                AbsoluteLayout.LayoutFlags="PositionProportional"
-                AbsoluteLayout.LayoutBounds="0, 1" />
-        <components:SatelliteMenu />
+                FontSize="14" FontAttributes="Bold" HorizontalOptions="FillAndExpand"/>
+        <fab:FloatingActionButton Source="call.png" Size="Mini" NormalColor="#289B47" Margin="5" RippleColor="Accent" HorizontalOptions="End"/>
+      </StackLayout>
     </AbsoluteLayout>
 </ContentPage>

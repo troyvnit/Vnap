@@ -46,7 +46,7 @@ namespace Vnap.ViewModels
                 Skip = PlantDiseaseListTabs.Count
             };
 
-            var plants = await _plantService.GetPlants(rq);
+            var plants = _plantService.GetPlants(rq);
 
             if (plants.Count > PlantDiseaseListTabs.Count)
             {

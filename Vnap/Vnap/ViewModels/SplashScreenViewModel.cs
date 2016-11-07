@@ -29,13 +29,12 @@ namespace Vnap.ViewModels
         public async Task InitialDatabase()
         {
             UserDialogs.Instance.ShowLoading("Tải dữ liệu...");
-            await DatabaseHelper.InitialDatabase();
             await _plantService.Sync();
             await _plantDiseaseService.Sync();
             await _postService.Sync();
             await _messageService.Sync();
             UserDialogs.Instance.HideLoading();
-            await _navigationService.NavigateAsync("LeftMenu/Navigation/MainPage/PlantListTab", animated: false);
+            await _navigationService.GoBackAsync(useModalNavigation: true);
             //ImageService.Instance.LoadUrl("http://vannghetiengiang.vn/uploads/news/2014_11/cay-lua2.jpg", TimeSpan.FromDays(3))
             //.Success(async (size, loadingResult) =>
             //{

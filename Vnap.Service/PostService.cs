@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Vnap.Entity;
 using Vnap.Repository;
 using Vnap.Service.Requests.Post;
+using Vnap.Service.Utils;
 
 namespace Vnap.Service
 {
@@ -23,7 +25,7 @@ namespace Vnap.Service
 
         public async Task Sync()
         {
-            var count = await _postRepository.AsQueryable().CountAsync();
+            var count = LocalDataStorage.GetPosts().AsQueryable().Count();
             if (count == 0)
             {
                 FillContainer();
@@ -34,7 +36,8 @@ namespace Vnap.Service
         {
             var startDate = new DateTime(2016, 1, 1);
 
-            _postRepository.Insert(new PostEntity()
+            var posts = new List<PostEntity>();
+            posts.Add(new PostEntity()
             {
                 Id = 1,
                 Priority = 2,
@@ -43,7 +46,7 @@ namespace Vnap.Service
                 Avatar = "http://hoidap.vinhphucnet.vn/qt/hoidap/PublishingImages/75706PMbenhdaoon.jpg",
                 CreatedDate = startDate.AddDays(1)
             });
-            _postRepository.Insert(new PostEntity()
+            posts.Add(new PostEntity()
             {
                 Id = 2,
                 Priority = 2,
@@ -52,7 +55,7 @@ namespace Vnap.Service
                 Avatar = "http://hoidap.vinhphucnet.vn/qt/hoidap/PublishingImages/75706PMbenhdaoon.jpg",
                 CreatedDate = startDate.AddDays(2)
             });
-            _postRepository.Insert(new PostEntity()
+            posts.Add(new PostEntity()
             {
                 Id = 3,
                 Priority = 3,
@@ -61,7 +64,7 @@ namespace Vnap.Service
                 Avatar = "http://hoidap.vinhphucnet.vn/qt/hoidap/PublishingImages/75706PMbenhdaoon.jpg",
                 CreatedDate = startDate.AddDays(3)
             });
-            _postRepository.Insert(new PostEntity()
+            posts.Add(new PostEntity()
             {
                 Id = 4,
                 Priority = 4,
@@ -70,7 +73,7 @@ namespace Vnap.Service
                 Avatar = "http://hoidap.vinhphucnet.vn/qt/hoidap/PublishingImages/75706PMbenhdaoon.jpg",
                 CreatedDate = startDate.AddDays(4)
             });
-            _postRepository.Insert(new PostEntity()
+            posts.Add(new PostEntity()
             {
                 Id = 3,
                 Priority = 3,
@@ -79,7 +82,7 @@ namespace Vnap.Service
                 Avatar = "http://hoidap.vinhphucnet.vn/qt/hoidap/PublishingImages/75706PMbenhdaoon.jpg",
                 CreatedDate = startDate.AddDays(3)
             });
-            _postRepository.Insert(new PostEntity()
+            posts.Add(new PostEntity()
             {
                 Id = 4,
                 Priority = 4,
@@ -88,7 +91,7 @@ namespace Vnap.Service
                 Avatar = "http://hoidap.vinhphucnet.vn/qt/hoidap/PublishingImages/75706PMbenhdaoon.jpg",
                 CreatedDate = startDate.AddDays(4)
             });
-            _postRepository.Insert(new PostEntity()
+            posts.Add(new PostEntity()
             {
                 Id = 3,
                 Priority = 3,
@@ -97,7 +100,7 @@ namespace Vnap.Service
                 Avatar = "http://hoidap.vinhphucnet.vn/qt/hoidap/PublishingImages/75706PMbenhdaoon.jpg",
                 CreatedDate = startDate.AddDays(3)
             });
-            _postRepository.Insert(new PostEntity()
+            posts.Add(new PostEntity()
             {
                 Id = 4,
                 Priority = 4,
@@ -106,29 +109,32 @@ namespace Vnap.Service
                 Avatar = "http://hoidap.vinhphucnet.vn/qt/hoidap/PublishingImages/75706PMbenhdaoon.jpg",
                 CreatedDate = startDate.AddDays(4)
             });
+
+            LocalDataStorage.SetPosts(posts);
         }
 
         public async Task<List<PostEntity>> GetPosts(GetPostsRq rq)
         {
-            var query = _postRepository.AsQueryable()
+            var query = LocalDataStorage.GetPosts()
                 .OrderByDescending(post => post.Priority)
-                .OrderByDescending(post => post.CreatedDate);
+                .ThenByDescending(post => post.CreatedDate)
+                .AsQueryable();
             if (rq.PostType != PostType.All)
             {
                query = query.Where(post => post.PostType == rq.PostType);
             }
             query = query.Skip(rq.Skip).Take(rq.Take);
-            return await query.ToListAsync();
+            return query.ToList();
         }
 
         public async Task<PostEntity> SearchFirstPost(string query)
         {
-            return await _postRepository.AsQueryable().Where(post => post.Title.Contains(query) || post.Description.Contains(query)).FirstOrDefaultAsync();
+            return LocalDataStorage.GetPosts().AsQueryable().FirstOrDefault(post => post.Title.Contains(query) || post.Description.Contains(query));
         }
 
         public async Task<int> GetPostsCount()
         {
-            return await _postRepository.AsQueryable().CountAsync();
+            return LocalDataStorage.GetPosts().AsQueryable().Count();
         }
     }
 }

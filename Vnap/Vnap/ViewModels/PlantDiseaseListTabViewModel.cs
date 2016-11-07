@@ -7,6 +7,7 @@ using Prism.Navigation;
 using Vnap.Models;
 using Vnap.Service;
 using Vnap.Service.Requests.Plant;
+using Vnap.Views.ExtendedControls;
 
 namespace Vnap.ViewModels
 {
@@ -15,24 +16,8 @@ namespace Vnap.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IPlantDiseaseService _plantDiseaseService;
 
-        private ObservableCollection<PlantDiseaseGroup> _plantDiseaseGroups = new ObservableCollection<PlantDiseaseGroup>()
-        {
-            new PlantDiseaseGroup()
-            {
-                Id = 0,
-                Name = "DỊCH BỆNH",
-                ShortName = "DB",
-                Icon = "dead_plant.png"
-            },
-            new PlantDiseaseGroup()
-            {
-                Id = 1,
-                Name = "SÂU BỆNH",
-                ShortName = "SB",
-                Icon = "pests.png"
-            }
-        };
-        public ObservableCollection<PlantDiseaseGroup> PlantDiseaseGroups => _plantDiseaseGroups;
+        private ObservableRangeCollection<PlantDisease> _plantDiseases = new ObservableRangeCollection<PlantDisease>();
+        public ObservableRangeCollection<PlantDisease> PlantDiseases => _plantDiseases;
 
         private int _totalPlantDiseases;
         public string Plant { get; set; }
@@ -59,7 +44,7 @@ namespace Vnap.ViewModels
         {
             IsBusy = true;
 
-            _plantDiseaseGroups = new ObservableCollection<PlantDiseaseGroup>();
+            _plantDiseases = new ObservableRangeCollection<PlantDisease>();
             await LoadPlantDiseases(0);
 
             IsBusy = false;
@@ -67,14 +52,14 @@ namespace Vnap.ViewModels
 
         public bool CanExecuteLoadMoreCommand()
         {
-            return IsNotBusy && _plantDiseaseGroups.Count > _totalPlantDiseases;
+            return IsNotBusy && _plantDiseases.Count < _totalPlantDiseases;
         }
 
         public async Task ExecuteLoadMoreCommand()
         {
             IsBusy = true;
 
-            var skip = _plantDiseaseGroups.Count;
+            var skip = _plantDiseases.Count;
             await LoadPlantDiseases(skip);
 
             IsBusy = false;
@@ -88,17 +73,13 @@ namespace Vnap.ViewModels
                 Plant = Plant
             };
 
-            var newPlantDiseases = await _plantDiseaseService.GetPlantDiseases(rq);
-            _totalPlantDiseases = await _plantDiseaseService.GetPlantDiseasesCount();
+            var newPlantDiseases = _plantDiseaseService.GetPlantDiseases(rq);
+            _totalPlantDiseases = _plantDiseaseService.GetPlantDiseasesCount();
 
-            foreach (var plantDiseaseGroup in _plantDiseaseGroups)
+            PlantDiseases.AddRange(newPlantDiseases.Select(Mapper.Map<PlantDisease>));
+            for (int i = 0; i < PlantDiseases.Count; i++)
             {
-                plantDiseaseGroup.RemoveRange(plantDiseaseGroup.ToList());
-                plantDiseaseGroup.AddRange(newPlantDiseases.Where(pd => (int)pd.PlantDiseaseType == plantDiseaseGroup.Id).Select(Mapper.Map<PlantDisease>));
-                for (int i = 0; i < plantDiseaseGroup.Count; i++)
-                {
-                    plantDiseaseGroup[i].IsEven = i % 2 == 0;
-                }
+                PlantDiseases[i].IsEven = i % 2 == 0;
             }
         }
 
@@ -116,7 +97,7 @@ namespace Vnap.ViewModels
 
         public void ExecuteItemClickCommand(PlantDisease plantDisease)
         {
-            _navigationService.NavigateAsync($"LeftMenu/Navigation/PlantDiseaseDetailPage?PlantDisease={plantDisease.Name}", animated: false);
+            _navigationService.NavigateAsync($"LeftMenu/Navigation/PlantDiseaseDetailPage/PlantDiseaseDetailTab?PlantDiseaseId={plantDisease.Id}", animated: false);
         }
     }
 }

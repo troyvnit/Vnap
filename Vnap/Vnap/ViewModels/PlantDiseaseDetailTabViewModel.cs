@@ -22,10 +22,9 @@ namespace Vnap.ViewModels
 
         public ObservableCollection<Image> Images => _images;
 
-        public string PlantDisease { get; set; }
+        public int PlantDiseaseId { get; set; }
 
-
-        ImageSource _previewImage = null;
+        private ImageSource _previewImage = null;
         public ImageSource PreviewImage
         {
             get { return _previewImage; }
@@ -35,7 +34,7 @@ namespace Vnap.ViewModels
             }
         }
 
-        string _previewCaption = null;
+        private string _previewCaption = null;
         public string PreviewCaption
         {
             get { return _previewCaption; }
@@ -91,9 +90,9 @@ namespace Vnap.ViewModels
             PreviewCaption = image?.Caption;
         }
 
-        public async Task LoadPlantDiseaseDetails()
+        public void LoadPlantDiseaseDetails()
         {
-            var plantDisease = await _plantDiseaseService.GetPlantDisease(PlantDisease);
+            var plantDisease = _plantDiseaseService.GetPlantDisease(PlantDiseaseId);
             Description = new HtmlWebViewSource() { Html = plantDisease.Description };
             foreach (var image in plantDisease.Images)
             {
@@ -103,7 +102,16 @@ namespace Vnap.ViewModels
                     Url = image.Url ?? string.Empty
                 });
             }
+            Title = plantDisease.Name;
             SetPreview(Images.FirstOrDefault());
+        }
+
+        public override void OnNavigatedTo(NavigationParameters parameters)
+        {
+            var plantDiseaseIdParameter = int.Parse((string)parameters[parameters.Keys.FirstOrDefault(k => k == "PlantDiseaseId")]);
+            PlantDiseaseId = plantDiseaseIdParameter;
+            LoadPlantDiseaseDetails();
+            base.OnNavigatedTo(parameters);
         }
     }
 }

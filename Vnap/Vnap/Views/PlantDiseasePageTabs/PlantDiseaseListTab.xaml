@@ -3,11 +3,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-             xmlns:converters="clr-namespace:Vnap.Converters;assembly=Vnap"
              xmlns:templates="clr-namespace:Vnap.Views.Templates;assembly=Vnap"
-             xmlns:components="clr-namespace:Vnap.Views.Components;assembly=Vnap"
-             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:extendedControls="clr-namespace:Vnap.Views.ExtendedControls;assembly=Vnap"
+             xmlns:fab="clr-namespace:FAB.Forms;assembly=FAB.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Vnap.Views.PlantDiseaseListTab"
              BackgroundColor="#ECEFF4">
@@ -15,16 +13,12 @@
         <AbsoluteLayout VerticalOptions="FillAndExpand">
             <extendedControls:ExtendedListView x:Name="PlantDiseaseListView"
                       BackgroundColor="#ECEFF4"
-                      ItemsSource="{Binding PlantDiseaseGroups}"
+                      ItemsSource="{Binding PlantDiseases}"
                       HasUnevenRows="true"
                       IsPullToRefreshEnabled="true"
                       RefreshCommand="{Binding RefreshCommand}"
-                      LoadMoreCommand="{Binding LoadMoreCommand}"
                       IsRefreshing="{Binding IsBusy}"
-                      IsGroupingEnabled="True"
-                      GroupDisplayBinding="{Binding Name}"
-                      GroupShortNameBinding="{Binding ShortName}"
-                      Margin="5,0,5,0"
+                      Margin="5,0,5,5"
                       AllowSelectItem="False"
                       ItemClickCommand="{Binding ItemClickCommand}"
                       SeparatorVisibility="None"
@@ -33,16 +27,6 @@
               <x:Arguments>
                 <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
               </x:Arguments>
-              <ListView.GroupHeaderTemplate>
-                <DataTemplate>
-                  <ViewCell>
-                    <StackLayout VerticalOptions="FillAndExpand" Orientation="Horizontal" BackgroundColor="Transparent" Margin="0,10,0,10">
-                      <ffimageloading:CachedImage Source="{Binding Icon}" HeightRequest="20" />
-                      <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold" TextColor="#248B3F" VerticalOptions="Center" HorizontalOptions="Center"/>
-                    </StackLayout>
-                  </ViewCell>
-                </DataTemplate>
-              </ListView.GroupHeaderTemplate>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <templates:PlantDiseaseViewCell />
@@ -50,7 +34,7 @@
                 </ListView.ItemTemplate>
             </extendedControls:ExtendedListView>
           <ActivityIndicator x:Name="ActivityIndicator" IsRunning="{Binding IsBusy}" WidthRequest="35" HeightRequest="35" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"/>
-            <components:SatelliteMenu />
+          <fab:FloatingActionButton Source="call.png" Size="Normal" NormalColor="#289B47" Margin="5" RippleColor="Accent" AbsoluteLayout.LayoutBounds="1.0, 1.0, AutoSize, AutoSize" AbsoluteLayout.LayoutFlags="PositionProportional"/>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

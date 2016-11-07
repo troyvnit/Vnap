@@ -3,9 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              xmlns:components="clr-namespace:Vnap.Views.Components;assembly=Vnap"
+             xmlns:fab="clr-namespace:FAB.Forms;assembly=FAB.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Vnap.Views.NewsTab"
              Icon="flaticon-newspaper">
 
-  <components:SatelliteMenu />
+  <AbsoluteLayout VerticalOptions="FillAndExpand" BackgroundColor="#ECEFF4">
+    
+    <fab:FloatingActionButton Source="call.png" Size="Normal" NormalColor="#289B47" Margin="5" RippleColor="Accent" AbsoluteLayout.LayoutBounds="1.0, 1.0, AutoSize, AutoSize" AbsoluteLayout.LayoutFlags="PositionProportional"/>
+  </AbsoluteLayout>
 </ContentPage>

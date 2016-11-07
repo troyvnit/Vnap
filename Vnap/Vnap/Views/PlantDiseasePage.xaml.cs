@@ -6,6 +6,8 @@ namespace Vnap.Views
 {
     public partial class PlantDiseasePage : BindableTabbedPage
     {
+        private bool _jumped;
+
         public PlantDiseasePage()
         {
             InitializeComponent();
@@ -15,13 +17,10 @@ namespace Vnap.Views
                 if (context != null)
                 {
                     context.Plant = CurrentPage.Title;
-                    var executeLoadMoreCommand = context?.ExecuteLoadMoreCommand();
-                    await executeLoadMoreCommand;
-                }
-                var plantDiseasePageViewModel = BindingContext as PlantDiseasePageViewModel;
-                if (plantDiseasePageViewModel != null)
-                {
-                    if (CurrentPage != null) plantDiseasePageViewModel.CurrentPlant = CurrentPage.Title;
+                    if (context.PlantDiseases.Count == 0)
+                    {
+                        await context.LoadPlantDiseases(0);
+                    }
                 }
             };
         }
@@ -30,7 +29,7 @@ namespace Vnap.Views
         {
             base.OnAppearing();
             var plantDiseasePageViewModel = BindingContext as PlantDiseasePageViewModel;
-            if (plantDiseasePageViewModel != null)
+            if (plantDiseasePageViewModel != null && !_jumped)
             {
                 await plantDiseasePageViewModel.LoadAsync();
                 CurrentPage = Children.FirstOrDefault(c => c.Title == plantDiseasePageViewModel.CurrentPlant);

@@ -76,10 +76,10 @@ namespace Vnap.ViewModels
             {
                 Skip = skip
             };
-            var newPlants = await _plantService.GetPlants(rq);
-            _totalPlants = await _plantService.GetPlantsCount();
+            var newPlants = _plantService.GetPlants(rq);
+            _totalPlants = _plantService.GetPlantsCount();
             
-            Plants.AddRange(newPlants.Select(Mapper.Map<Plant>));
+            Plants.AddRange(newPlants.Where(p => Plants.All(ep => ep.Id != p.Id)).Select(Mapper.Map<Plant>));
             for (int i = 0; i < Plants.Count; i++)
             {
                 Plants[i].IsEven = i % 2 == 0;

@@ -21,6 +21,20 @@
                     url: "/index",
                     templateUrl: appBaseUrl + "views/common/content.html"
                 })
+                .state('index.user', {
+                    url: "/user",
+                    templateUrl: appBaseUrl + "views/user/list.html",
+                    data: { pageTitle: 'Danh sách người dùng' },
+                    resolve: {
+                        loadPlugin: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    files: [appBaseUrl + "bower_components/ng-file-upload/ng-file-upload-all.min.js"]
+                                }
+                            ]);
+                        }
+                    }
+                })
                 .state('index.plant', {
                     url: "/plant",
                     templateUrl: appBaseUrl + "views/plant/list.html",

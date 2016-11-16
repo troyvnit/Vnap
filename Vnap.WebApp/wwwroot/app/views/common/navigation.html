@@ -40,6 +40,12 @@
           <li ui-sref-active="active"><a ui-sref="index.solution-form"><i class="fa fa-cubes"></i> {{'add' | stringRes}}</a></li>
         </ul>
       </li>
+      <li ui-sref-active="active">
+        <a ui-sref="index.user"><i class="fa fa-chrome"></i> <span class="nav-label">{{'user' | stringRes}}</span> </a>
+        <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes('user')}">
+          <li ui-sref-active="active"><a ui-sref="index.user"><i class="fa fa-camera-retro"></i> {{'list' | stringRes}}</a></li>
+        </ul>
+      </li>
     </ul>
   </div>
 </nav>

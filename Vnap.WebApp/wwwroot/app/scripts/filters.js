@@ -8,6 +8,11 @@
                 'articlesHeader': 'Article Management',
                 'articlesSubheader': 'Articles',
 
+                'user': 'Người dùng',
+                'userList': 'Danh sách người dùng',
+                'userListHeader': 'Quản lý người dùng',
+                'userListSubheader': 'Danh sách người dùng',
+
                 'plant': 'Cây trồng',
                 'plantList': 'Danh sách cây trồng',
                 'plantListHeader': 'Quản lý cây trồng',

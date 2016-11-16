@@ -1,6 +1,7 @@
 // Declare your controllers
 angular.module('vnap')
     .controller('MainCtrl', MainCtrl)
+    .controller('UserCtrl', UserCtrl)
     .controller('PlantCtrl', PlantCtrl)
     .controller('PlantFormCtrl', PlantFormCtrl)
     .controller('PlantDiseaseCtrl', PlantDiseaseCtrl)

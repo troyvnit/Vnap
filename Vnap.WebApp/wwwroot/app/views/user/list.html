@@ -1,0 +1,55 @@
+﻿<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-10">
+    <h2>{{'userListHeader' | stringRes}}</h2>
+    <ol class="breadcrumb">
+      <li>
+        <a ui-sref="index.main">{{'homeLinkText' | stringRes}}</a>
+      </li>
+      <li>
+        <a>{{'user' | stringRes}}</a>
+      </li>
+      <li class="active">
+        <strong>{{'userList' | stringRes}}</strong>
+      </li>
+    </ol>
+  </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight ecommerce" ng-controller="UserCtrl">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox">
+        <div class="ibox-title">
+          <h5>{{'userListSubheader' | stringRes}}</h5>
+        </div>
+        <div class="ibox-content">
+          <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+            <thead>
+            <tr>
+              <th>Số điện thoại</th>
+              <th>Địa chỉ</th>
+              <th>Tỉnh/Thành phố</th>
+              <th>Cây trồng</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="user in User.users">
+              <td>{{ user.UserName }}</td>
+              <td>{{ user.Address }}</td>
+              <td>{{ user.City }}</td>
+              <td>{{ user.Plant }}</td>
+            </tr>
+            </tbody>
+            <!--<tfoot>
+            <tr>
+              <td colspan="6">
+                <ul class="pagination pull-right"></ul>
+              </td>
+            </tr>
+            </tfoot>-->
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

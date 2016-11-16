@@ -254,6 +254,8 @@
     <Compile Include="Controllers\API\SolutionController.cs" />
     <Compile Include="Controllers\API\PlantController.cs" />
     <Compile Include="Controllers\API\PlantDiseaseController.cs" />
+    <Compile Include="Controllers\API\SyncController.cs" />
+    <Compile Include="Controllers\API\UserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DataAccess\Entity\Article.cs" />
@@ -292,10 +294,12 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\UserVM.cs" />
     <Compile Include="ViewModels\ImageVM.cs" />
     <Compile Include="ViewModels\SolutionVM.cs" />
     <Compile Include="ViewModels\PlantDiseaseVM.cs" />
     <Compile Include="ViewModels\PlantVM.cs" />
+    <Compile Include="ViewModels\SyncResponseVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -2539,6 +2543,7 @@
     <Content Include="wwwroot\app\scripts\controllers.js" />
     <Content Include="wwwroot\app\scripts\controllers\article.js" />
     <Content Include="wwwroot\app\scripts\controllers\main.js" />
+    <Content Include="wwwroot\app\scripts\controllers\user\list.js" />
     <Content Include="wwwroot\app\scripts\controllers\solution\form.js" />
     <Content Include="wwwroot\app\scripts\controllers\solution\list.js" />
     <Content Include="wwwroot\app\scripts\controllers\plant-disease\form.js" />
@@ -2548,6 +2553,7 @@
     <Content Include="wwwroot\app\scripts\directives.js" />
     <Content Include="wwwroot\app\scripts\factories.js" />
     <Content Include="wwwroot\app\scripts\factories\article.js" />
+    <Content Include="wwwroot\app\scripts\factories\user.js" />
     <Content Include="wwwroot\app\scripts\factories\solution.js" />
     <Content Include="wwwroot\app\scripts\factories\plant-disease.js" />
     <Content Include="wwwroot\app\scripts\factories\plant.js" />
@@ -2586,7 +2592,8 @@
     <Content Include="wwwroot\app\views\main.html" />
     <Content Include="wwwroot\app\views\minor.html" />
     <Content Include="wwwroot\app\views\modals\delete-confirm.html" />
-    <Content Include="wwwroot\app\views\plant-disease\detail.html" />
+    <Content Include="wwwroot\app\views\user\list.html" />
+    <Content Include="wwwroot\app\views\plant-disease\list.html" />
     <Content Include="wwwroot\app\views\solution\form.html" />
     <Content Include="wwwroot\app\views\solution\list.html" />
     <Content Include="wwwroot\app\views\plant-disease\form.html" />

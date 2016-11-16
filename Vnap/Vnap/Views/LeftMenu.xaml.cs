@@ -10,6 +10,16 @@ namespace Vnap.Views
         public LeftMenu()
         {
             InitializeComponent();
+            IsPresentedChanged += (sender, args) =>
+            {
+                var context = BindingContext as LeftMenuViewModel;
+                if (context != null)
+                {
+                    context.UserName = App.CurrentUser.UserName;
+                    context.City = App.CurrentUser.City;
+                    context.Plant = App.CurrentUser.Plant;
+                }
+            };
         }
 
         public bool IsPresentedAfterNavigation => Device.Idiom != TargetIdiom.Phone;

@@ -49,5 +49,15 @@ namespace Vnap.Service.Utils
         {
             return Settings.Local.Get("Posts", new List<PostEntity>());
         }
+
+        public static void SetUser(User user)
+        {
+            Settings.Local.Set("User", user);
+        }
+
+        public static User GetUser()
+        {
+            return Settings.Local.Get("User", new User());
+        }
     }
 }

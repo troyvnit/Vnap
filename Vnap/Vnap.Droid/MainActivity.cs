@@ -1,19 +1,11 @@
-﻿using System;
-using Acr.UserDialogs;
+﻿using Acr.UserDialogs;
 using Android.App;
-using Android.Content;
 using Android.Content.PM;
-using Android.Graphics;
-using Android.Graphics.Drawables;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
-using Android.Util;
-using FFImageLoading;
 using FormsPlugin.Iconize.Droid;
-using Java.Interop;
 using Microsoft.Practices.Unity;
+using Plugin.CurrentActivity;
+using Plugin.Permissions;
 using Prism.Unity;
 using Vnap.Droid.Utils.IconizeModules;
 
@@ -34,12 +26,18 @@ namespace Vnap.Droid
             Plugin.Iconize.Iconize.With(new LinearModule());
             Plugin.Iconize.Iconize.With(new FlatModule());
             IconControls.Init(Resource.Id.toolbar, Resource.Id.sliding_tabs);
+            CrossCurrentActivity.Current.Activity = this;
             UserDialogs.Init(this);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
             var app = new App(new Androidinitializer());
             LoadApplication(app);
+        }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+        {
+            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
         //public override bool OnCreateOptionsMenu(IMenu menu)
@@ -49,7 +47,7 @@ namespace Vnap.Droid
         //    //var viewGroup = (ViewGroup)searchIcon.Parent;
         //    //viewGroup.RemoveView(searchIcon);
         //    //viewGroup.AddView(searchIcon);
-            
+
         //    //search.QueryTextChange += (sender, args) =>
         //    //{
         //    //    if (!string.IsNullOrEmpty(search.Query))

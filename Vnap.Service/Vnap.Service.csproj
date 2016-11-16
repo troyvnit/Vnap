@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="PlantDiseaseService.cs" />
     <Compile Include="MessageService.cs" />
+    <Compile Include="SyncService.cs" />
     <Compile Include="PostService.cs" />
     <Compile Include="PlantService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

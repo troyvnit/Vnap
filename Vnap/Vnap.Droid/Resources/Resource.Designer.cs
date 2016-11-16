@@ -4397,8 +4397,8 @@ namespace Vnap.Droid
 			// aapt resource value: 0x7f0200d8
 			public const int no_avatar = 2130837720;
 			
-			// aapt resource value: 0x7f0200e3
-			public const int notification_template_icon_bg = 2130837731;
+			// aapt resource value: 0x7f0200e4
+			public const int notification_template_icon_bg = 2130837732;
 			
 			// aapt resource value: 0x7f0200d9
 			public const int pests = 2130837721;
@@ -4416,19 +4416,22 @@ namespace Vnap.Droid
 			public const int search = 2130837725;
 			
 			// aapt resource value: 0x7f0200de
-			public const int solution_avatar = 2130837726;
+			public const int sign_up_background = 2130837726;
 			
 			// aapt resource value: 0x7f0200df
-			public const int solution_icon = 2130837727;
+			public const int solution_avatar = 2130837727;
 			
 			// aapt resource value: 0x7f0200e0
-			public const int splash_screen = 2130837728;
+			public const int solution_icon = 2130837728;
 			
 			// aapt resource value: 0x7f0200e1
-			public const int splash_screen_image = 2130837729;
+			public const int splash_screen = 2130837729;
 			
 			// aapt resource value: 0x7f0200e2
-			public const int tab_color_selector = 2130837730;
+			public const int splash_screen_image = 2130837730;
+			
+			// aapt resource value: 0x7f0200e3
+			public const int tab_color_selector = 2130837731;
 			
 			static Drawable()
 			{

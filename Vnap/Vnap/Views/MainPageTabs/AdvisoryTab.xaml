@@ -44,13 +44,13 @@
             </ListView>
             <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,1,1,.08"
                          AbsoluteLayout.LayoutFlags="All" BackgroundColor="#289B47">
-                <iconize:IconLabel Text="lnr-phone-handset" TextColor="White" FontSize="26" Margin="10,0,0,0" HorizontalTextAlignment="Center"
+                <iconize:IconLabel Text="lnr-phone-handset" TextColor="White" FontSize="20" Margin="10,0,0,0" HorizontalTextAlignment="Center"
                                    HorizontalOptions="Start" VerticalOptions="CenterAndExpand" />
-                <iconize:IconLabel Text="flaticon-photo-camera" TextColor="White" FontSize="26" Margin="10,0,10,0" HorizontalTextAlignment="Center"
+                <iconize:IconLabel Text="flaticon-photo-camera" TextColor="White" FontSize="20" Margin="10,0,10,0" HorizontalTextAlignment="Center"
                                    HorizontalOptions="Start" VerticalOptions="CenterAndExpand" />
                 <Entry Placeholder="Nhập nội dung cần tư vấn..." PlaceholderColor="White" FontSize="16" TextColor="White" InputTransparent="True" 
                                    HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" />
-                <iconize:IconLabel Text="flaticon-paper-plane-1" TextColor="White" FontSize="26" Margin="10,0,10,0" HorizontalTextAlignment="Center"
+                <iconize:IconLabel Text="flaticon-paper-plane-1" TextColor="White" FontSize="20" Margin="10,0,10,0" HorizontalTextAlignment="Center"
                                    HorizontalOptions="End" VerticalOptions="CenterAndExpand" />
             </StackLayout>
         </AbsoluteLayout>

@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Prism.Navigation;
 using Vnap.Models;
+using Vnap.Service.Utils;
 using Xamarin.Forms;
 
 namespace Vnap.ViewModels
@@ -13,6 +14,37 @@ namespace Vnap.ViewModels
     public class LeftMenuViewModel : BaseViewModel
     {
         INavigationService _navigationService;
+
+        string _userName = "???";
+        public string UserName
+        {
+            get { return _userName; }
+            set
+            {
+                SetProperty(ref _userName, value);
+            }
+        }
+
+        string _city = "???";
+        public string City
+        {
+            get { return _city; }
+            set
+            {
+                SetProperty(ref _city, value);
+            }
+        }
+
+        string _plant = "???";
+        public string Plant
+        {
+            get { return _plant; }
+            set
+            {
+                SetProperty(ref _plant, value);
+            }
+        }
+
         public ObservableCollection<LeftMenuItem> MenuItems
         {
             get

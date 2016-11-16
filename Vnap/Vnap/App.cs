@@ -6,9 +6,11 @@ using Vnap.Views;
 using Prism.Modularity;
 using Prism.Mvvm;
 using Prism.Unity;
+using Vnap.Entity;
 using Vnap.Mappers;
 using Vnap.Repository;
 using Vnap.Service;
+using Vnap.Service.Utils;
 
 namespace Vnap
 {
@@ -18,6 +20,18 @@ namespace Vnap
         private IPlantDiseaseService _plantDiseaseService;
         private IPostService _postService;
         private IMessageService _messageService;
+
+        private static User _currentUser = LocalDataStorage.GetUser();
+        public static User CurrentUser
+        {
+            get { return _currentUser; }
+            set
+            {
+                _currentUser = value;
+                LocalDataStorage.SetUser(value);
+            }
+        }
+
         public App(IPlatformInitializer initializer = null) : base(initializer)
         {
         }
@@ -43,6 +57,7 @@ namespace Vnap
             Container.RegisterTypeForNavigation<PlantDiseasePage>();
             Container.RegisterTypeForNavigation<PlantDiseaseDetailPage>(); 
             Container.RegisterTypeForNavigation<PlantDiseaseSolutionPage>();
+            Container.RegisterType<ISyncService, SyncService>();
             Container.RegisterType<IPlantService, PlantService>();
             Container.RegisterType<IPlantDiseaseService, PlantDiseaseService>();
             Container.RegisterType<IPostService, PostService>();

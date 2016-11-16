@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:extendedControls="clr-namespace:Vnap.Views.ExtendedControls;assembly=Vnap"
+             x:Class="Vnap.Views.Popups.CitiesPopup">
+  <StackLayout BackgroundColor="White" Margin="5" VerticalOptions="Center">
+    <extendedControls:ExtendedListView
+              AllowSelectItem="True"
+              ItemsSource="{Binding Cities}"
+              RowHeight="40"
+              SeparatorVisibility="Default"
+              ItemClickCommand="{Binding CityItemClickCommand}"
+              SelectedItem="{Binding City, Mode=TwoWay}">
+      <x:Arguments>
+        <ListViewCachingStrategy>RecycleElement</ListViewCachingStrategy>
+      </x:Arguments>
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+            <Label Text="{Binding .}" TextColor="#212121" FontSize="16" Margin="10,5,10,5" VerticalTextAlignment="Center"/>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </extendedControls:ExtendedListView>
+  </StackLayout>
+</pages:PopupPage>

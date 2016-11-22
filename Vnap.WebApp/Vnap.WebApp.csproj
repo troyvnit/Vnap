@@ -60,6 +60,10 @@
       <HintPath>..\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CloudinaryDotNet, Version=1.0.27.0, Culture=neutral, PublicKeyToken=c8234dc617ae7841, processorArchitecture=MSIL">
+      <HintPath>..\packages\CloudinaryDotNet.1.0.27\lib\net40\CloudinaryDotNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -251,6 +255,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\API\AdvisoryMessageController.cs" />
     <Compile Include="Controllers\API\SolutionController.cs" />
     <Compile Include="Controllers\API\PlantController.cs" />
     <Compile Include="Controllers\API\PlantDiseaseController.cs" />
@@ -258,9 +263,11 @@
     <Compile Include="Controllers\API\UserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="DataAccess\Entity\AdvisoryMessage.cs" />
     <Compile Include="DataAccess\Entity\Article.cs" />
     <Compile Include="DataAccess\Entity\ArticleCategory.cs" />
     <Compile Include="DataAccess\Entity\BaseEntity.cs" />
+    <Compile Include="DataAccess\Entity\Conversation.cs" />
     <Compile Include="DataAccess\Entity\Enums\PlantDiseaseType.cs" />
     <Compile Include="DataAccess\Entity\IEntity.cs" />
     <Compile Include="DataAccess\Entity\Image.cs" />
@@ -275,6 +282,8 @@
     <Compile Include="DataAccess\Infrastructure\RepositoryBase.cs" />
     <Compile Include="DataAccess\Infrastructure\UnitOfWork.cs" />
     <Compile Include="DataAccess\Repository\ImageRepository.cs" />
+    <Compile Include="DataAccess\Repository\AdvisoryMessageRepository.cs" />
+    <Compile Include="DataAccess\Repository\ConversationRepository.cs" />
     <Compile Include="DataAccess\Repository\SolutionRepository.cs" />
     <Compile Include="DataAccess\Repository\PlantDiseaseRepository.cs" />
     <Compile Include="DataAccess\Repository\PlantRepository.cs" />
@@ -294,6 +303,7 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AdvisoryMessageVM.cs" />
     <Compile Include="ViewModels\UserVM.cs" />
     <Compile Include="ViewModels\ImageVM.cs" />
     <Compile Include="ViewModels\SolutionVM.cs" />

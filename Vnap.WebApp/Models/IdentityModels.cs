@@ -30,6 +30,8 @@ namespace Vnap.WebApp.Models
         public DbSet<PlantDisease> PlantDiseases { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Solution> Solutions { get; set; }
+        public DbSet<AdvisoryMessage> AdvisoryMessages { get; set; }
+        public DbSet<Conversation> Conversations { get; set; }
 
         public virtual int Commit()
         {

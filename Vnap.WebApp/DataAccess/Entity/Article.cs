@@ -12,6 +12,7 @@ namespace Vnap.Web.DataAccess.Entity
         public DateTime? PublishedDate { get; set; }
         public bool IsActived { get; set; }
 
+        public int ArticleCategoryId { get; set; }
         public ArticleCategory ArticleCategory { get; set; }
     }
 }

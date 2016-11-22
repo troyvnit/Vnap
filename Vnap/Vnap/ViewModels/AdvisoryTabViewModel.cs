@@ -1,13 +1,22 @@
-﻿using Prism.Commands;
+﻿using System;
+using Prism.Commands;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
+using Acr.UserDialogs;
 using AutoMapper;
+using Newtonsoft.Json;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 using Prism.Navigation;
 using Vnap.Models;
 using Vnap.Service;
 using Vnap.Service.Requests.Message;
 using Vnap.Service.Requests.Plant;
+using Xamarin.Forms;
+using Image = Vnap.Models.Image;
 
 namespace Vnap.ViewModels
 {
@@ -15,14 +24,28 @@ namespace Vnap.ViewModels
     {
         private readonly INavigationService _navigationService;
         private readonly IMessageService _messageService;
+        private readonly HttpClient _httpClient = new HttpClient();
 
         private ObservableCollection<AdvisoryMessage> _messages = new ObservableCollection<AdvisoryMessage>();
         public ObservableCollection<AdvisoryMessage> Messages => _messages;
+
+        private string _newMessage = null;
+        public string NewMessage
+        {
+            get { return _newMessage; }
+            set
+            {
+                SetProperty(ref _newMessage, value);
+            }
+        }
 
         private int _totalMessages;
 
         public DelegateCommand RefreshCommand { get; set; }
         public DelegateCommand<AdvisoryMessage> LoadMoreCommand { get; set; }
+        public DelegateCommand<AdvisoryMessage> ItemClickCommand { get; set; }
+        public DelegateCommand SendAdvisoryMessageCommand { get; set; }
+        public DelegateCommand TakeOrPickPhotoCommand { get; set; }
 
         public AdvisoryTabViewModel(INavigationService navigationService, IMessageService messageService)
         {
@@ -30,6 +53,9 @@ namespace Vnap.ViewModels
             _navigationService = navigationService;
             RefreshCommand = DelegateCommand.FromAsyncHandler(ExecuteRefreshCommand, CanExecuteRefreshCommand);
             LoadMoreCommand = DelegateCommand<AdvisoryMessage>.FromAsyncHandler(ExecuteLoadMoreCommand, CanExecuteLoadMoreCommand);
+            ItemClickCommand = DelegateCommand<AdvisoryMessage>.FromAsyncHandler(ExecuteItemClickCommand);
+            SendAdvisoryMessageCommand = DelegateCommand.FromAsyncHandler(ExecuteSendAdvisoryMessageCommand);
+            TakeOrPickPhotoCommand = DelegateCommand.FromAsyncHandler(ExecuteTakeOrPickPhotoCommandAsync);
         }
 
         public bool CanExecuteRefreshCommand()
@@ -49,7 +75,7 @@ namespace Vnap.ViewModels
 
         public bool CanExecuteLoadMoreCommand(AdvisoryMessage item)
         {
-            return IsNotBusy && _messages.Count > _totalMessages;
+            return IsNotBusy && _messages.Count < _totalMessages;
         }
 
         public async Task ExecuteLoadMoreCommand(AdvisoryMessage item)
@@ -62,11 +88,102 @@ namespace Vnap.ViewModels
             IsBusy = false;
         }
 
+        public async Task ExecuteItemClickCommand(AdvisoryMessage item)
+        {
+            if (!string.IsNullOrEmpty(item.ImageUrl))
+            {
+                var navigationParams = new NavigationParameters();
+                navigationParams.Add("ImageUrl", item.ImageUrl);
+                await _navigationService.NavigateAsync($"PinchToZoomPage", navigationParams, animated: false, useModalNavigation: true);
+            }
+        }
+
+        private async Task ExecuteSendAdvisoryMessageCommand()
+        {
+            var result = await _httpClient.PostAsync("http://vnap.vn/api/advisorymessage/add", new StringContent(JsonConvert.SerializeObject(new AdvisoryMessage()
+            {
+                AuthorName = App.CurrentUser.UserName,
+                Content = NewMessage
+            }), Encoding.UTF8, "application/json"));
+            if (result.IsSuccessStatusCode)
+            {
+                var contents = await result.Content.ReadAsStringAsync();
+                if (contents != null)
+                {
+                    var advisoryMessage = JsonConvert.DeserializeObject<AdvisoryMessage>(contents);
+                    Messages.Add(advisoryMessage);
+                }
+            }
+        }
+
+        private async Task ExecuteTakeOrPickPhotoCommandAsync()
+        {
+            try
+            {
+                MediaFile file = null;
+                var takePhotoString = "Chụp ảnh";
+                var pickFromGalleryString = "Chọn từ thư viện";
+                var action = await UserDialogs.Instance.ActionSheetAsync("", "", "", null, takePhotoString, pickFromGalleryString, "Hủy");
+
+                if (action == takePhotoString)
+                {
+                    if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                    {
+                        UserDialogs.Instance.Alert("Vnap cần quyền truy cập Camera của bạn để thực hiện chức năng này!");
+                        return;
+                    }
+
+                    file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+                    {
+                        SaveToAlbum = true,
+                        AllowCropping = true
+                    });
+
+                    if (file == null)
+                        return;
+                }
+
+                if (action == pickFromGalleryString)
+                {
+                    if (!CrossMedia.Current.IsPickPhotoSupported)
+                    {
+                        UserDialogs.Instance.Alert("Vnap cần quyền truy cập Camera của bạn để thực hiện chức năng này!");
+                        return;
+                    }
+                    file = await CrossMedia.Current.PickPhotoAsync();
+
+                    if (file == null)
+                        return;
+                }
+
+                if (file != null)
+                {
+                    var content = new MultipartFormDataContent();
+                    content.Add(new StreamContent(file.GetStream()), "\"file\"", $"AM_{App.CurrentUser.UserName}_{DateTime.Now.Ticks}.png");
+                    var result = await _httpClient.PostAsync($"http://vnap.vn/api/advisorymessage/upload?authorName={App.CurrentUser.UserName}", content);
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var contents = await result.Content.ReadAsStringAsync();
+                        if (contents != null)
+                        {
+                            var advisoryMessage = JsonConvert.DeserializeObject<AdvisoryMessage>(contents);
+                            Messages.Add(advisoryMessage);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
+        }
+
         public async Task LoadMessages(int skip)
         {
             var rq = new GetMessagesRq()
             {
-                Skip = skip
+                Skip = skip,
+                ConversationName = App.CurrentUser.UserName
             };
             var newMessages = await _messageService.GetMessages(rq);
             _totalMessages = await _messageService.GetMessagesCount();

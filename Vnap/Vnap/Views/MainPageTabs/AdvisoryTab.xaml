@@ -7,6 +7,7 @@
              xmlns:behaviors="clr-namespace:Vnap.Behaviors;assembly=Vnap"
              xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
              xmlns:rerenders="clr-namespace:Vnap.Views.Rerenders;assembly=Vnap"
+             xmlns:extendedControls="clr-namespace:Vnap.Views.ExtendedControls;assembly=Vnap"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Vnap.Views.AdvisoryTab"
              Icon="lnr-bubble">
@@ -18,19 +19,23 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <AbsoluteLayout VerticalOptions="FillAndExpand" BackgroundColor="#ECEFF4">
-            <ListView x:Name="MessageListView"
+        <Grid VerticalOptions="FillAndExpand" BackgroundColor="#ECEFF4" RowSpacing="0">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+            <extendedControls:ExtendedListView x:Name="MessageListView"
                       BackgroundColor="#ECEFF4"
                       ItemsSource="{Binding Messages}"
                       HasUnevenRows="true"
                       IsPullToRefreshEnabled="true"
                       RefreshCommand="{Binding RefreshCommand}"
                       IsRefreshing="{Binding IsBusy}"
-                      Margin="5,0,5,0"
-                      ItemSelected="MessageList_OnItemSelected"
+                      Margin="5,5,5,0"
+                      AllowSelectItem="False"
+                      ItemClickCommand="{Binding ItemClickCommand}"
                       SeparatorVisibility="None"
-                      AbsoluteLayout.LayoutFlags="All"
-                      AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+                      Grid.Row="0">
                 <ListView.Behaviors>
                     <behaviors:ListViewBehavior
                         Command="{Binding LoadMoreCommand}"
@@ -41,18 +46,25 @@
                         <rerenders:MessageViewCell />
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView>
-            <StackLayout Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0,1,1,.08"
-                         AbsoluteLayout.LayoutFlags="All" BackgroundColor="#289B47">
+            </extendedControls:ExtendedListView>
+            <StackLayout Orientation="Horizontal" BackgroundColor="#289B47" Grid.Row="1">
                 <iconize:IconLabel Text="lnr-phone-handset" TextColor="White" FontSize="20" Margin="10,0,0,0" HorizontalTextAlignment="Center"
                                    HorizontalOptions="Start" VerticalOptions="CenterAndExpand" />
                 <iconize:IconLabel Text="flaticon-photo-camera" TextColor="White" FontSize="20" Margin="10,0,10,0" HorizontalTextAlignment="Center"
-                                   HorizontalOptions="Start" VerticalOptions="CenterAndExpand" />
-                <Entry Placeholder="Nhập nội dung cần tư vấn..." PlaceholderColor="White" FontSize="16" TextColor="White" InputTransparent="True" 
+                                   HorizontalOptions="Start" VerticalOptions="CenterAndExpand">
+                  <iconize:IconLabel.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TakeOrPickPhotoCommand}" />
+                  </iconize:IconLabel.GestureRecognizers>
+                </iconize:IconLabel>
+                <Entry Text="{Binding NewMessage}" Placeholder="Nhập nội dung cần tư vấn..." PlaceholderColor="White" FontSize="16" TextColor="White" InputTransparent="True" 
                                    HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" />
                 <iconize:IconLabel Text="flaticon-paper-plane-1" TextColor="White" FontSize="20" Margin="10,0,10,0" HorizontalTextAlignment="Center"
-                                   HorizontalOptions="End" VerticalOptions="CenterAndExpand" />
+                                   HorizontalOptions="End" VerticalOptions="CenterAndExpand">
+                  <iconize:IconLabel.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SendAdvisoryMessageCommand}" />
+                  </iconize:IconLabel.GestureRecognizers>
+                </iconize:IconLabel>
             </StackLayout>
-        </AbsoluteLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

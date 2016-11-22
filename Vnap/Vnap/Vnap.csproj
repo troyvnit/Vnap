@@ -52,6 +52,7 @@
     <Compile Include="Utils\IImageResizer.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\AdvisoryTabViewModel.cs" />
+    <Compile Include="ViewModels\PinchToZoomPageViewModel.cs" />
     <Compile Include="ViewModels\PlantDiseaseDetailTabViewModel.cs" />
     <Compile Include="ViewModels\PlantDiseaseDetailPageViewModel.cs" />
     <Compile Include="ViewModels\PlantDiseasePageViewModel.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="ViewModels\PlantDiseaseSolutionPageViewModel.cs" />
     <Compile Include="ViewModels\InfoListTabViewModel.cs" />
     <Compile Include="ViewModels\SplashScreenViewModel.cs" />
+    <Compile Include="Views\Components\PinchToZoom.cs" />
     <Compile Include="Views\ExtendedControls\BindablePicker.cs" />
     <Compile Include="Views\ExtendedControls\FixedTabbedPage.cs" />
     <Compile Include="Views\ExtendedControls\BindableTabbedPage.cs" />
@@ -71,6 +73,9 @@
       <DependentUpon>SatelliteMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ExtendedControls\HtmlLabel.cs" />
+    <Compile Include="Views\PinchToZoomPage.xaml.cs">
+      <DependentUpon>PinchToZoomPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Popups\PlantsPopup.xaml.cs">
       <DependentUpon>PlantsPopup.xaml</DependentUpon>
     </Compile>
@@ -197,6 +202,14 @@
     </Reference>
     <Reference Include="Plugin.Iconize, Version=1.0.10.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xam.Plugin.Iconize.1.0.10\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Plugin.Iconize.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Media, Version=2.6.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugin.Media.2.6.1\lib\portable-net45+wp80+win8+wpa81\Plugin.Media.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Plugin.Media.Abstractions, Version=2.6.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Xam.Plugin.Media.2.6.1\lib\portable-net45+wp80+win8+wpa81\Plugin.Media.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Prism, Version=6.2.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
@@ -380,6 +393,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Popups\PlantsPopup.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\PinchToZoomPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

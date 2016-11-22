@@ -57,6 +57,7 @@ namespace Vnap
             Container.RegisterTypeForNavigation<PlantDiseasePage>();
             Container.RegisterTypeForNavigation<PlantDiseaseDetailPage>(); 
             Container.RegisterTypeForNavigation<PlantDiseaseSolutionPage>();
+            Container.RegisterTypeForNavigation<PinchToZoomPage>();
             Container.RegisterType<ISyncService, SyncService>();
             Container.RegisterType<IPlantService, PlantService>();
             Container.RegisterType<IPlantDiseaseService, PlantDiseaseService>();

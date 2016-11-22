@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Net;
+using Android.App;
 using Android.Content;
 using Android.Graphics;
+using Android.Net;
 using Android.Views;
 using Android.Widget;
 using FFImageLoading;
@@ -33,10 +35,12 @@ namespace Vnap.Droid.Renderers
                     var content = template.FindViewById<TextView>(Resource.Id.message);
                     content.Text = "Đang tải hình ảnh...";
                     var _imageView = template.FindViewById<ImageViewAsync>(Resource.Id.image);
-                    ImageService.Instance.LoadUrl(textMsgVm.ImageUrl)
+                    _imageView.Visibility = ViewStates.Gone;
+                    ImageService.Instance.LoadUrl(textMsgVm.ImageUrl.Replace("upload", $"upload/a_exif,c_scale,w_{parent.Width}"))
                     .Success((size, loadingResult) =>
                     {
-                        content.Text = string.Empty;
+                        content.Visibility = ViewStates.Gone;
+                        _imageView.Visibility = ViewStates.Visible;
                     })
                     .Error(exception =>
                     {

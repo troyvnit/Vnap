@@ -230,8 +230,10 @@ namespace Vnap.ViewModels
             UserDialogs.Instance.ShowLoading("Tải dữ liệu...");
             var syncResult = await _syncService.Sync();
             await _postService.Sync();
-            await _messageService.Sync();
-            _plants = syncResult.Plants.Select(p => p.Name).ToObservableCollection();
+            if (syncResult.Plants != null)
+            {
+                _plants = syncResult.Plants.Select(p => p.Name).ToObservableCollection();
+            }
             UserDialogs.Instance.HideLoading();
 
             var user = App.CurrentUser;
@@ -239,6 +241,7 @@ namespace Vnap.ViewModels
                 !string.IsNullOrEmpty(user.Plant))
             {
                 await _navigationService.GoBackAsync(useModalNavigation: true);
+                await _messageService.Sync(user.UserName);
             }
             else
             {

@@ -47,7 +47,7 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label">{{'avatar' | stringRes}}:</label>
                   <div class="col-sm-8">
-                    <div id="direct_upload"
+                    <div id="direct_upload" class="direct-upload"
                          ngf-drop="uploadFiles($files)"
                          ngf-drag-over-class="dragOverClass($event)"
                          ng-model="files"
@@ -82,7 +82,7 @@
                 <div class="form-group">
                   <div class="col-sm-4 col-sm-offset-2">
                     <button class="btn btn-white" type="submit" ui-sref="index.plant-disease">{{'cancel' | stringRes}}</button>
-                    <button class="btn btn-primary" type="submit" ng-click="activeTabIndex = 2">{{'save' | stringRes}}</button>
+                    <button class="btn btn-primary" type="submit" ng-click="save()">{{'save' | stringRes}}</button>
                   </div>
                 </div>
               </fieldset>

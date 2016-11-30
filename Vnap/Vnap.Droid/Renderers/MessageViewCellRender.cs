@@ -36,7 +36,7 @@ namespace Vnap.Droid.Renderers
                     content.Text = "Đang tải hình ảnh...";
                     var _imageView = template.FindViewById<ImageViewAsync>(Resource.Id.image);
                     _imageView.Visibility = ViewStates.Gone;
-                    ImageService.Instance.LoadUrl(textMsgVm.ImageUrl.Replace("upload", $"upload/a_exif,c_scale,w_{parent.Width}"))
+                    ImageService.Instance.LoadUrl(textMsgVm.ImageUrl.Replace("upload/a_exif", $"upload/a_exif,c_scale,w_{parent.Width}"))
                     .Success((size, loadingResult) =>
                     {
                         content.Visibility = ViewStates.Gone;

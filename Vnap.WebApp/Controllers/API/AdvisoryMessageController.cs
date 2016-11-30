@@ -55,12 +55,13 @@ namespace Vnap.WebApp.Controllers.API
         [Route("Add")]
         public async Task<AdvisoryMessageVM> Add(AdvisoryMessageVM advisoryMessageVm)
         {
-            var conversation = await _conversationRepository.Queryable().FirstOrDefaultAsync(c => c.Name == advisoryMessageVm.AuthorName);
+            var conversationName = advisoryMessageVm.ConversationName ?? advisoryMessageVm.AuthorName;
+            var conversation = await _conversationRepository.Queryable().FirstOrDefaultAsync(c => c.Name == conversationName);
             if (conversation == null)
             {
                 conversation = new Conversation()
                 {
-                    Name = advisoryMessageVm.AuthorName
+                    Name = conversationName
                 };
                 _conversationRepository.Add(conversation);
             }

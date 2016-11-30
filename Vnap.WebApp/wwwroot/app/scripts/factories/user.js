@@ -12,7 +12,7 @@ function UserFactory($http) {
     };
 
     // apiBaseUrl is set in app.js
-    User.prototype.GetAllUsers = function () {
+    User.prototype.GetAllUsers = function (successCallback) {
         var _self = this;
         var url = apiBaseUrl + 'user';
 
@@ -38,6 +38,7 @@ function UserFactory($http) {
 
                 _self.busy = false;
                 _self.skip += _self.take;
+                successCallback(users);
             }
         }).error(function (data, status, headers, config) {
             _self.busy = false;
@@ -88,6 +89,32 @@ function UserFactory($http) {
             method: "POST",
             url: apiBaseUrl + "user/delete",
             data: user
+        })
+        .success(function (data) {
+            if (successCallback) {
+                successCallback(data);
+            }
+        });
+    };
+
+    User.prototype.LoadAdvisoryMessages = function(conversationName, successCallback) {
+        $.ajax({
+                method: "Get",
+                url: apiBaseUrl + "advisoryMessage",
+                data: { 'conversationName': conversationName }
+            })
+            .success(function(data) {
+                if (successCallback) {
+                    successCallback(data);
+                }
+            });
+    };
+
+    User.prototype.AddAdvisoryMessage = function (advisoryMessage, successCallback) {
+        $.ajax({
+            method: "POST",
+            url: apiBaseUrl + "advisoryMessage/add",
+            data: advisoryMessage
         })
         .success(function (data) {
             if (successCallback) {

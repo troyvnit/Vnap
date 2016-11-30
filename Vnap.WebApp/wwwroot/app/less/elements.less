@@ -316,8 +316,22 @@
   width: auto;
 }
 
-.chat-element > .pull-left {
+.chat-element > a {
+  float: left;
   margin-right: 10px;
+}
+
+.chat-element > div > a > img {
+  padding: 5px 0;
+  width: 100%;
+}
+
+.chat-element > div {
+  text-align: left;
+}
+
+.chat-element > div > small:first-child {
+  float: right;
 }
 
 .chat-element img.img-circle, .dropdown-messages-box img.img-circle {
@@ -344,8 +358,17 @@
 
 }
 
-.right.chat-element > .pull-right {
+.right.chat-element > a {
+  float: right;
   margin-left: 10px;
+}
+
+.right.chat-element > div {
+  text-align: right;
+}
+
+.right.chat-element > div > small:first-child {
+  float: left;
 }
 
 .chat-photo {

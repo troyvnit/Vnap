@@ -100,6 +100,7 @@ namespace Vnap.ViewModels
 
         private async Task ExecuteSendAdvisoryMessageCommand()
         {
+            UserDialogs.Instance.ShowLoading("Đang gửi...");
             var result = await _httpClient.PostAsync("http://vnap.vn/api/advisorymessage/add", new StringContent(JsonConvert.SerializeObject(new AdvisoryMessage()
             {
                 AuthorName = App.CurrentUser.UserName,
@@ -111,9 +112,11 @@ namespace Vnap.ViewModels
                 if (contents != null)
                 {
                     var advisoryMessage = JsonConvert.DeserializeObject<AdvisoryMessage>(contents);
-                    Messages.Add(advisoryMessage);
+                    _messages.Add(advisoryMessage);
+                    NewMessage = string.Empty;
                 }
             }
+            UserDialogs.Instance.HideLoading();
         }
 
         private async Task ExecuteTakeOrPickPhotoCommandAsync()
@@ -158,6 +161,7 @@ namespace Vnap.ViewModels
 
                 if (file != null)
                 {
+                    UserDialogs.Instance.ShowLoading("Đang gửi...");
                     var content = new MultipartFormDataContent();
                     content.Add(new StreamContent(file.GetStream()), "\"file\"", $"AM_{App.CurrentUser.UserName}_{DateTime.Now.Ticks}.png");
                     var result = await _httpClient.PostAsync($"http://vnap.vn/api/advisorymessage/upload?authorName={App.CurrentUser.UserName}", content);
@@ -167,9 +171,10 @@ namespace Vnap.ViewModels
                         if (contents != null)
                         {
                             var advisoryMessage = JsonConvert.DeserializeObject<AdvisoryMessage>(contents);
-                            Messages.Add(advisoryMessage);
+                            _messages.Add(advisoryMessage);
                         }
                     }
+                    UserDialogs.Instance.HideLoading();
                 }
             }
             catch (Exception e)

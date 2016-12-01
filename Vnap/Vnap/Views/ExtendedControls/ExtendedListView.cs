@@ -16,6 +16,7 @@ namespace Vnap.Views.ExtendedControls
     public class ExtendedListView : ListView
     {
         private bool _isLoadingMore;
+        private int _currentItems;
 
         #region Bindable Properties
 
@@ -26,6 +27,9 @@ namespace Vnap.Views.ExtendedControls
             typeof(ICommand), typeof(ExtendedListView));
 
         public static BindableProperty AllowSelectItemProperty = BindableProperty.Create("AllowSelectItem",
+            typeof(bool), typeof(ExtendedListView), false);
+
+        public static BindableProperty ScrollToBottomProperty = BindableProperty.Create("ScrollToBottom",
             typeof(bool), typeof(ExtendedListView), false);
 
         #endregion
@@ -48,6 +52,12 @@ namespace Vnap.Views.ExtendedControls
         {
             get { return (bool)GetValue(AllowSelectItemProperty); }
             set { SetValue(AllowSelectItemProperty, value); }
+        }
+
+        public bool ScrollToBottom
+        {
+            get { return (bool)GetValue(ScrollToBottomProperty); }
+            set { SetValue(ScrollToBottomProperty, value); }
         }
 
         #endregion
@@ -87,11 +97,18 @@ namespace Vnap.Views.ExtendedControls
         private void OnItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
             var items = ItemsSource as IList;
-            if (_isLoadingMore || items == null || items.Count == 0 || LoadMoreCommand == null || !LoadMoreCommand.CanExecute(e))
+
+            if (_isLoadingMore || items == null || items.Count == 0)
                 return;
 
+            if (ScrollToBottom && items.Count != _currentItems)
+            {
+                ScrollTo(items[items.Count - 1], ScrollToPosition.MakeVisible, true);
+                _currentItems = items.Count;
+            }
+
             // Hit the bottom
-            if (e.Item == items[items.Count - 1])
+            if (e.Item == items[items.Count - 1] && !(LoadMoreCommand == null || !LoadMoreCommand.CanExecute(e)))
             {
                 _isLoadingMore = true;
 

@@ -27,6 +27,7 @@
             <extendedControls:ExtendedListView x:Name="MessageListView"
                       BackgroundColor="#ECEFF4"
                       ItemsSource="{Binding Messages}"
+                      ScrollToBottom="True"
                       HasUnevenRows="true"
                       IsPullToRefreshEnabled="true"
                       RefreshCommand="{Binding RefreshCommand}"

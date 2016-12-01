@@ -85,9 +85,9 @@ namespace Vnap.Service
         {
             await Sync(rq.ConversationName);
             var query = LocalDataStorage.GetAdvisoryMessages()
-                .OrderByDescending(message => message.CreatedDate)
+                .OrderBy(message => message.CreatedDate)
                 .AsQueryable();
-            query = query.Skip(rq.Skip).Take(rq.Take);
+            query = query.Skip(rq.Skip);
             return query.ToList();
         }
 

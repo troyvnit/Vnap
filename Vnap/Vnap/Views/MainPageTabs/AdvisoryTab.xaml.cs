@@ -1,4 +1,5 @@
-﻿using Vnap.Models;
+﻿using System.Linq;
+using Vnap.Models;
 using Vnap.ViewModels;
 using Xamarin.Forms;
 
@@ -6,8 +7,6 @@ namespace Vnap.Views
 {
     public partial class AdvisoryTab : ContentPage
     {
-        private bool _loaded;
-
         public AdvisoryTab()
         {
             InitializeComponent();
@@ -24,12 +23,10 @@ namespace Vnap.Views
 
         protected override async void OnAppearing()
         {
-            if (!_loaded)
-            {
-                var context = BindingContext as AdvisoryTabViewModel;
-                if (context != null) await context.LoadMessages(0);
-                _loaded = true;
-            }
+            var context = BindingContext as AdvisoryTabViewModel;
+            if (context != null) await context.LoadMessages(0);
+            var last = MessageListView.ItemsSource.Cast<AdvisoryMessage>().LastOrDefault();
+            MessageListView.ScrollTo(last, ScrollToPosition.MakeVisible, true);
             base.OnAppearing();
         }
     }

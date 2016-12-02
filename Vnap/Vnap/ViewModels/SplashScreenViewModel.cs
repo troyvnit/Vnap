@@ -19,6 +19,7 @@ using Vnap.Repository;
 using Vnap.Service;
 using Vnap.Service.Utils;
 using Vnap.Views.Popups;
+using Xamarin.Forms;
 
 namespace Vnap.ViewModels
 {
@@ -241,7 +242,6 @@ namespace Vnap.ViewModels
                 !string.IsNullOrEmpty(user.Plant))
             {
                 await _navigationService.GoBackAsync(useModalNavigation: true);
-                await _messageService.Sync(user.UserName);
             }
             else
             {

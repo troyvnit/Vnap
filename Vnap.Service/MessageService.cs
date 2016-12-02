@@ -43,44 +43,6 @@ namespace Vnap.Service
             }
         }
 
-        private void FillContainer()
-        {
-            var startDate = new DateTime(2016, 1, 1);
-
-            var messages = new List<AdvisoryMessageEntity>();
-            messages.Add(new AdvisoryMessageEntity()
-            {
-                Id = 1,
-                Content = "Dự báo sâu bệnh tổng hợp trong tuần (22.08.2016)",
-                AuthorName = "Troy Lee",
-                IsAdviser = true,
-                CreatedDate = startDate.AddDays(1)
-            });
-            messages.Add(new AdvisoryMessageEntity()
-            {
-                Id = 2,
-                Content = "Theo thông tin từ Bộ Nông nghiệp và Phát triển Nông thôn, trong tháng Tám, xuất khẩu gạo tiếp tục gặp bế tắc do không có nhu cầu nhập khẩu gạo mới từ cả thị trường truyền thống và các thị trường khác.",
-                CreatedDate = startDate.AddDays(2)
-            });
-            messages.Add(new AdvisoryMessageEntity()
-            {
-                Id = 3,
-                Content = "Dự báo sâu bệnh tổng hợp trong tuần (22.08.2016)",
-                ImageUrl = "http://chuyennongvu.vn/wp-content/uploads/2015/06/da3lua.jpg",
-                CreatedDate = startDate.AddDays(3)
-            });
-            messages.Add(new AdvisoryMessageEntity()
-            {
-                Id = 4,
-                AuthorName = "Troy Lee",
-                IsAdviser = true,
-                Content = "Sau bắp, đậu nành... những năm gần đây Việt Nam lại đua nhau nhập đậu phộng, trong đó nguồn đậu phộng nhập khẩu chủ yếu từ Trung Quốc.",
-                CreatedDate = startDate.AddDays(4)
-            });
-
-            LocalDataStorage.SetAdvisoryMessages(messages);
-        }
-
         public async Task<List<AdvisoryMessageEntity>> GetMessages(GetMessagesRq rq)
         {
             await Sync(rq.ConversationName);

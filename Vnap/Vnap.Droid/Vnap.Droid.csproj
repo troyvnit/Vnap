@@ -34,9 +34,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
+    <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
-    <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+    <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
     <BundleAssemblies>False</BundleAssemblies>
     <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
     <Debugger>Xamarin</Debugger>
@@ -229,6 +229,15 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\monoandroid\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\monoandroid\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="Xamarin.Android.Support.Animated.Vector.Drawable, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -307,12 +316,15 @@
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\SQLiteProvider.cs" />
+    <Compile Include="Services\BackgroundServices\NotificationBackgroundService.cs" />
+    <Compile Include="Services\NotificationService.cs" />
     <Compile Include="SplashActivity.cs" />
     <Compile Include="Utils\IconizeModules\Collection\FlatCollection.cs" />
     <Compile Include="Utils\IconizeModules\Collection\LinearCollection.cs" />
     <Compile Include="Utils\IconizeModules\FlatModule.cs" />
     <Compile Include="Utils\IconizeModules\LinearModule.cs" />
     <Compile Include="Utils\Image\ImageResizer.cs" />
+    <Compile Include="Utils\NotificationBadgeHelper.cs" />
     <Compile Include="Utils\Typeface\TypefaceUtil.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -385,11 +397,25 @@
     <AndroidResource Include="Resources\drawable-hdpi\sign_up_background.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\sign_up_background.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\sign_up_background.png" />
+    <AndroidResource Include="Resources\drawable\small_icon.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\small_icon.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\small_icon.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\small_icon.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\small_icon.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\icon.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Vnap.Entity\Vnap.Entity.csproj">
+      <Project>{29A51B00-DA43-49EE-B70C-C1072F88BC07}</Project>
+      <Name>Vnap.Entity</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Vnap.Repository\Vnap.Repository.csproj">
       <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
       <Name>Vnap.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Vnap.Service\Vnap.Service.csproj">
+      <Project>{7D7E8E3A-B304-4817-ADC9-DB1BEFB4BC29}</Project>
+      <Name>Vnap.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\Vnap\Vnap.csproj">
       <Name>Vnap</Name>
@@ -404,8 +430,10 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets'))" />
     <Error Condition="!Exists('..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
   <Import Project="..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
      Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

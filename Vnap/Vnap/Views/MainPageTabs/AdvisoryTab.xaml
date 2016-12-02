@@ -24,6 +24,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
           </Grid.RowDefinitions>
+          <ActivityIndicator x:Name="ActivityIndicator" IsRunning="True" Margin="0,30,0,0" Grid.Row="0"/>
             <extendedControls:ExtendedListView x:Name="MessageListView"
                       BackgroundColor="#ECEFF4"
                       ItemsSource="{Binding Messages}"

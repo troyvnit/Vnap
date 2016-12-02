@@ -1,17 +1,21 @@
 ﻿using Acr.UserDialogs;
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
+using Android.Views;
 using FormsPlugin.Iconize.Droid;
 using Microsoft.Practices.Unity;
 using Plugin.CurrentActivity;
 using Plugin.Permissions;
 using Prism.Unity;
+using Vnap.Droid.Services.BackgroundServices;
 using Vnap.Droid.Utils.IconizeModules;
+using Xamarin.Forms;
 
 namespace Vnap.Droid
 {
-    [Activity(Theme = "@style/MyTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Theme = "@style/MyTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, WindowSoftInputMode = SoftInput.AdjustPan, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
@@ -33,6 +37,11 @@ namespace Vnap.Droid
 
             var app = new App(new Androidinitializer());
             LoadApplication(app);
+
+            MessagingCenter.Subscribe<NotificationMessage>(this, "NotificationBackgroundService", message => {
+                var notificationIntent = new Intent(this, typeof(NotificationBackgroundService));
+                StartService(notificationIntent);
+            });
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)

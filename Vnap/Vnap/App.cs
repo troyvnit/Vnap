@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 using Vnap.ViewModels;
@@ -8,9 +10,12 @@ using Prism.Mvvm;
 using Prism.Unity;
 using Vnap.Entity;
 using Vnap.Mappers;
+using Vnap.Models;
 using Vnap.Repository;
 using Vnap.Service;
 using Vnap.Service.Utils;
+using Vnap.Services;
+using Xamarin.Forms;
 
 namespace Vnap
 {
@@ -31,6 +36,8 @@ namespace Vnap
                 LocalDataStorage.SetUser(value);
             }
         }
+
+        public static int LatestAdvisoryMessageId { get; set; }
 
         public App(IPlatformInitializer initializer = null) : base(initializer)
         {
@@ -75,6 +82,17 @@ namespace Vnap
         public void Search(string query)
         {
             NavigationService.NavigateAsync($"Navigation/PlantDiseasePage?query={query}", animated: false);
+        }
+
+        protected override void OnResume()
+        {
+            DependencyService.Get<INotificationService>().ClearBadge();
+        }
+
+        protected override void OnStart()
+        {
+            var message = new NotificationMessage();
+            MessagingCenter.Send(message, "NotificationBackgroundService");
         }
     }
 }

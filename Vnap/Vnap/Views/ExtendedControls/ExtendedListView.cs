@@ -101,11 +101,12 @@ namespace Vnap.Views.ExtendedControls
             if (_isLoadingMore || items == null || items.Count == 0)
                 return;
 
-            if (ScrollToBottom && items.Count != _currentItems)
+            if (ScrollToBottom && _currentItems > 0 && items.Count != _currentItems)
             {
                 ScrollTo(items[items.Count - 1], ScrollToPosition.MakeVisible, true);
-                _currentItems = items.Count;
             }
+
+            _currentItems = items.Count;
 
             // Hit the bottom
             if (e.Item == items[items.Count - 1] && !(LoadMoreCommand == null || !LoadMoreCommand.CanExecute(e)))

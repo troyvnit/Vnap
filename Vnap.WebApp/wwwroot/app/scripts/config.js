@@ -129,8 +129,35 @@
                 })
                 .state('index.article', {
                     url: "/article",
-                    templateUrl: appBaseUrl + "views/article.html",
-                    data: { pageTitle: 'Article page' }
+                    templateUrl: appBaseUrl + "views/article/list.html",
+                    data: { pageTitle: 'Danh sách bài viết' },
+                    resolve: {
+                        loadPlugin: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    files: [appBaseUrl + "bower_components/ng-file-upload/ng-file-upload-all.min.js"]
+                                }
+                            ]);
+                        }
+                    }
+                })
+                .state('index.article-form', {
+                    url: "/article-form/:Id",
+                    templateUrl: appBaseUrl + "views/article/form.html",
+                    data: { pageTitle: 'Thêm/Sửa bài viết' },
+                    resolve: {
+                        loadPlugin: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    files: [appBaseUrl + "bower_components/ng-file-upload/ng-file-upload-all.min.js"]
+                                },
+                                {
+                                    name: 'summernote',
+                                    files: [appBaseUrl + 'bower_components/summernote/dist/summernote.css', appBaseUrl + 'bower_components/summernote/dist/summernote.js', appBaseUrl + 'bower_components/angular-summernote/dist/angular-summernote.min.js']
+                                }
+                            ]);
+                        }
+                    }
                 })
                 .state('index.main', {
                     url: "/main",

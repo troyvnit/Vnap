@@ -3,10 +3,17 @@
 
         return function (key) {
             var strings = {
-                'article': 'Article',
-                'articlesList': 'Article List',
-                'articlesHeader': 'Article Management',
-                'articlesSubheader': 'Articles',
+                'article': 'Bài viết',
+                'articleList': 'Danh sách bài viết',
+                'articleListHeader': 'Quản lý bài viết',
+                'articleListSubheader': 'Danh sách bài viết',
+
+                'articleAdd': 'Thêm bài viết',
+                'articleAddHeader': 'Thêm bài viết',
+                'articleDetail': 'Chi tiết bài viết',
+                'articleTitlePlaceHolder': 'Tiêu đề bài viết',
+                'articleDescriptionPlaceHolder': 'Mô tả bài viết',
+                'articleContentPlaceHolder': 'Nội dung bài viết',
 
                 'user': 'Người dùng',
                 'userList': 'Danh sách người dùng',
@@ -66,6 +73,7 @@
                 'image': 'Hình ảnh',
                 'imageAdd': 'Thêm hình ảnh',
                 'imageListSubheader': 'Danh sách hình ảnh',
+                'title': 'Tiêu đề',
 
                 'homeLinkText': 'Dashboard'
             };

@@ -8,4 +8,5 @@ angular.module('vnap')
     .controller('PlantDiseaseFormCtrl', PlantDiseaseFormCtrl)
     .controller('SolutionCtrl', SolutionCtrl)
     .controller('SolutionFormCtrl', SolutionFormCtrl)
-    .controller('ArticleCtrl', ArticleCtrl);
+    .controller('ArticleCtrl', ArticleCtrl)
+    .controller('ArticleFormCtrl', ArticleFormCtrl);

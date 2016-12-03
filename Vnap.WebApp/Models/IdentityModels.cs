@@ -32,6 +32,8 @@ namespace Vnap.WebApp.Models
         public DbSet<Solution> Solutions { get; set; }
         public DbSet<AdvisoryMessage> AdvisoryMessages { get; set; }
         public DbSet<Conversation> Conversations { get; set; }
+        public DbSet<Article> Articles { get; set; }
+        public DbSet<ArticleCategory> ArticleCategories { get; set; }
 
         public virtual int Commit()
         {

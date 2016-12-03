@@ -256,6 +256,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\AdvisoryMessageController.cs" />
+    <Compile Include="Controllers\API\ArticleController.cs" />
     <Compile Include="Controllers\API\SolutionController.cs" />
     <Compile Include="Controllers\API\PlantController.cs" />
     <Compile Include="Controllers\API\PlantDiseaseController.cs" />
@@ -268,6 +269,7 @@
     <Compile Include="DataAccess\Entity\ArticleCategory.cs" />
     <Compile Include="DataAccess\Entity\BaseEntity.cs" />
     <Compile Include="DataAccess\Entity\Conversation.cs" />
+    <Compile Include="DataAccess\Entity\Enums\ArticleType.cs" />
     <Compile Include="DataAccess\Entity\Enums\PlantDiseaseType.cs" />
     <Compile Include="DataAccess\Entity\IEntity.cs" />
     <Compile Include="DataAccess\Entity\Image.cs" />
@@ -284,6 +286,7 @@
     <Compile Include="DataAccess\Repository\ImageRepository.cs" />
     <Compile Include="DataAccess\Repository\AdvisoryMessageRepository.cs" />
     <Compile Include="DataAccess\Repository\ConversationRepository.cs" />
+    <Compile Include="DataAccess\Repository\ArticleRepository.cs" />
     <Compile Include="DataAccess\Repository\SolutionRepository.cs" />
     <Compile Include="DataAccess\Repository\PlantDiseaseRepository.cs" />
     <Compile Include="DataAccess\Repository\PlantRepository.cs" />
@@ -304,6 +307,7 @@
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AdvisoryMessageVM.cs" />
+    <Compile Include="ViewModels\ArticleVM.cs" />
     <Compile Include="ViewModels\UserVM.cs" />
     <Compile Include="ViewModels\ImageVM.cs" />
     <Compile Include="ViewModels\SolutionVM.cs" />
@@ -2548,11 +2552,14 @@
     <Content Include="wwwroot\app\bower_components\summernote\src\js\outro.js" />
     <Content Include="wwwroot\app\bower_components\summernote\src\js\summernote.js" />
     <Content Include="wwwroot\app\bower_components\summernote\tools\nuget.exe" />
-    <AndroidResource Include="wwwroot\app\img\no_avatar.png" />
+    <AndroidResource Include="wwwroot\app\img\no_avatar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AndroidResource>
     <Content Include="wwwroot\app\scripts\app.js" />
     <Content Include="wwwroot\app\scripts\config.js" />
     <Content Include="wwwroot\app\scripts\controllers.js" />
-    <Content Include="wwwroot\app\scripts\controllers\article.js" />
+    <Content Include="wwwroot\app\scripts\controllers\article\form.js" />
+    <Content Include="wwwroot\app\scripts\controllers\article\list.js" />
     <Content Include="wwwroot\app\scripts\controllers\main.js" />
     <Content Include="wwwroot\app\scripts\controllers\user\list.js" />
     <Content Include="wwwroot\app\scripts\controllers\solution\form.js" />
@@ -2603,6 +2610,8 @@
     <Content Include="wwwroot\app\views\main.html" />
     <Content Include="wwwroot\app\views\minor.html" />
     <Content Include="wwwroot\app\views\modals\delete-confirm.html" />
+    <Content Include="wwwroot\app\views\article\form.html" />
+    <Content Include="wwwroot\app\views\article\list.html" />
     <Content Include="wwwroot\app\views\user\list.html" />
     <Content Include="wwwroot\app\views\plant-disease\list.html" />
     <Content Include="wwwroot\app\views\solution\form.html" />

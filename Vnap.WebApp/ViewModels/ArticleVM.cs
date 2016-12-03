@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Vnap.Web.DataAccess.Entity;
 using Vnap.Web.DataAccess.Entity.Enums;
 
-namespace Vnap.Web.DataAccess.Entity
+namespace Vnap.Web.ViewModels
 {
-    public class Article : BaseEntity
+    public class ArticleVM
     {
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Slug { get; set; }
         public string Description { get; set; }
@@ -13,8 +18,6 @@ namespace Vnap.Web.DataAccess.Entity
         public DateTime? PublishedDate { get; set; }
         public bool IsActived { get; set; }
         public ArticleType ArticleType { get; set; }
-
-        public int? ArticleCategoryId { get; set; }
-        public ArticleCategory ArticleCategory { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

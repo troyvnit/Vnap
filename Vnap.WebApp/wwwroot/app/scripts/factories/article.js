@@ -44,5 +44,57 @@ function ArticleFactory($http) {
         });
     };
 
+    Article.prototype.Get = function (id, successCallback) {
+        $.ajax({
+            method: "Get",
+            url: apiBaseUrl + "article/get",
+            data: {'id': id}
+        })
+        .success(function (data) {
+            if (successCallback) {
+                successCallback(data);
+            }
+        });
+    }
+
+    Article.prototype.Add = function (article, successCallback) {
+        $.ajax({
+            method: "POST",
+            url: apiBaseUrl + "article/add",
+            data: article
+        })
+        .success(function (data) {
+            if (successCallback) {
+                successCallback(data);
+            }
+        });
+    };
+
+    Article.prototype.Update = function (article, successCallback) {
+        $.ajax({
+            method: "POST",
+            url: apiBaseUrl + "article/update",
+            data: article
+        })
+        .success(function (data) {
+            if (successCallback) {
+                successCallback(data);
+            }
+        });
+    };
+
+    Article.prototype.Delete = function (article, successCallback) {
+        $.ajax({
+            method: "POST",
+            url: apiBaseUrl + "article/delete",
+            data: article
+        })
+        .success(function (data) {
+            if (successCallback) {
+                successCallback(data);
+            }
+        });
+    };
+
     return Article;
 }

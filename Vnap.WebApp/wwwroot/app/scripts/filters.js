@@ -74,6 +74,7 @@
                 'imageAdd': 'Thêm hình ảnh',
                 'imageListSubheader': 'Danh sách hình ảnh',
                 'title': 'Tiêu đề',
+                'content': 'Nội dung',
 
                 'homeLinkText': 'Dashboard'
             };

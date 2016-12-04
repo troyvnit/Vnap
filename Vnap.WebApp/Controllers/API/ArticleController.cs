@@ -41,7 +41,17 @@ namespace Vnap.WebApp.Controllers.API
 
         [HttpGet]
         [Route("GetByLatestId")]
-        public async Task<IEnumerable<ArticleVM>> GetArticlesByLatestId(ArticleType articleType, int latestId)
+        public async Task<IEnumerable<ArticleVM>> GetArticlesByLatestId(int latestId)
+        {
+            var query = await _articleRepository.AllIncludingAsync();
+            IEnumerable<Article> articles = query.Where(a => a.Id > latestId);
+
+            return Mapper.Map<IEnumerable<ArticleVM>>(articles);
+        }
+
+        [HttpGet]
+        [Route("GetByTypeAndLatestId")]
+        public async Task<IEnumerable<ArticleVM>> GetArticlesByTypeAndLatestId(ArticleType articleType, int latestId)
         {
             var query = await _articleRepository.AllIncludingAsync();
             IEnumerable<Article> articles = query.Where(a => a.ArticleType == articleType && a.Id > latestId);

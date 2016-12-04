@@ -62,10 +62,11 @@ function PlantDiseaseFormCtrl($scope, $rootScope, $stateParams, $state, $http, $
                         .success(function(data, status, headers, config) {
 
                             $scope.plantDisease.Avatar = data.url;
-
+                            $scope.fileProgress = 0;
                         })
                         .error(function(data, status, headers, config) {
                             file.result = data;
+                            $scope.fileProgress = 0;
                         });
                 }
             });

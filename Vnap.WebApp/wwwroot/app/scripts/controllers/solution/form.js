@@ -63,10 +63,11 @@ function SolutionFormCtrl($scope, $rootScope, $stateParams, $state, $http, $uibM
                         .success(function(data, status, headers, config) {
 
                             $scope.solution.Avatar = data.url;
-
+                            $scope.fileProgress = 0;
                         })
                         .error(function(data, status, headers, config) {
                             file.result = data;
+                            $scope.fileProgress = 0;
                         });
                 }
             });

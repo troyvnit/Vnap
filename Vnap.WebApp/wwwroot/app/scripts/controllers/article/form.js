@@ -55,16 +55,17 @@ function ArticleFormCtrl($scope, $rootScope, $stateParams, $state, Article, Uplo
                         .success(function(data, status, headers, config) {
 
                             $scope.article.Avatar = data.url;
-
+                            $scope.fileProgress = 0;
                         })
                         .error(function(data, status, headers, config) {
                             file.result = data;
+                            $scope.fileProgress = 0;
                         });
                 }
             });
     };
 
-    $scope.articleTypes = [{ Name: 'Giới thiệu', Id: 0 }, { Name: 'Thông báo', Id: 1 }, { Name: 'Tin tức', Id: 1 }];
+    $scope.articleTypes = [{ Name: 'Giới thiệu', Id: 0 }, { Name: 'Thông báo', Id: 1 }, { Name: 'Tin tức', Id: 2 }];
 
     $scope.save = function () {
         if ($scope.article.Id > 0) {

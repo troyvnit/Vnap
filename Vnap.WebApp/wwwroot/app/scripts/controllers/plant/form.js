@@ -53,10 +53,11 @@ function PlantFormCtrl($scope, $rootScope, $stateParams, $state, Plant, Upload, 
                         .success(function(data, status, headers, config) {
 
                             $scope.plant.Avatar = data.url;
-
+                            $scope.fileProgress = 0;
                         })
                         .error(function(data, status, headers, config) {
                             file.result = data;
+                            $scope.fileProgress = 0;
                         });
                 }
             });

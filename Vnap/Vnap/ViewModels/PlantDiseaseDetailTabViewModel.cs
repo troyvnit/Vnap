@@ -53,21 +53,35 @@ namespace Vnap.ViewModels
                 SetProperty(ref _description, value);
             }
         }
-        
+
+        private Solution _solution = null;
+        public Solution Solution
+        {
+            get { return _solution; }
+            set
+            {
+                SetProperty(ref _solution, value);
+            }
+        }
+
         public DelegateCommand<Image> PreviewImageCommand { get; set; }
-        public DelegateCommand<string> NavigateCommand { get; set; }
+        public DelegateCommand NavigateCommand { get; set; }
 
         public PlantDiseaseDetailTabViewModel(INavigationService navigationService, IPlantDiseaseService plantDiseaseService)
         {
             _navigationService = navigationService;
             _plantDiseaseService = plantDiseaseService;
             PreviewImageCommand = new DelegateCommand<Image>(ExecutePreviewImageCommand, CanExecutePreviewImageCommand);
-            NavigateCommand = new DelegateCommand<string>(Navigate);
+            NavigateCommand = DelegateCommand.FromAsyncHandler(Navigate);
         }
 
-        private void Navigate(string name)
+        private async Task Navigate()
         {
-            _navigationService.NavigateAsync(name);
+            if (Solution != null)
+            {
+                var navigationParameters = new NavigationParameters { { "Solution", Solution } };
+                await _navigationService.NavigateAsync($"LeftMenu/Navigation/PlantDiseaseSolutionPage", navigationParameters, animated: false);
+            }
         }
 
         public bool CanExecutePreviewImageCommand(Image image)
@@ -104,6 +118,11 @@ namespace Vnap.ViewModels
             }
             Title = plantDisease.Name;
             SetPreview(Images.FirstOrDefault());
+            var solution = plantDisease.Solutions.FirstOrDefault(s => s.Prime);
+            if (solution != null)
+            {
+                Solution = Mapper.Map<Solution>(solution);
+            }
         }
 
         public override void OnNavigatedTo(NavigationParameters parameters)

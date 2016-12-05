@@ -44,15 +44,18 @@
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\LeftMenuItem.cs" />
     <Compile Include="Models\AdvisoryMessage.cs" />
-    <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\Article.cs" />
     <Compile Include="Models\PlantDiseaseGroup.cs" />
     <Compile Include="Models\PlantDisease.cs" />
     <Compile Include="Models\Plant.cs" />
+    <Compile Include="Models\Solution.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\INotificationService.cs" />
     <Compile Include="Utils\IImageResizer.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\AdvisoryTabViewModel.cs" />
+    <Compile Include="ViewModels\NewsListTabViewModel.cs" />
+    <Compile Include="ViewModels\ArticleDetailPageViewModel.cs" />
     <Compile Include="ViewModels\PinchToZoomPageViewModel.cs" />
     <Compile Include="ViewModels\PlantDiseaseDetailTabViewModel.cs" />
     <Compile Include="ViewModels\PlantDiseaseDetailPageViewModel.cs" />
@@ -62,7 +65,7 @@
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\PlantDiseaseListTabViewModel.cs" />
     <Compile Include="ViewModels\PlantDiseaseSolutionPageViewModel.cs" />
-    <Compile Include="ViewModels\InfoListTabViewModel.cs" />
+    <Compile Include="ViewModels\NoticeListTabViewModel.cs" />
     <Compile Include="ViewModels\SplashScreenViewModel.cs" />
     <Compile Include="Views\Components\PinchToZoom.cs" />
     <Compile Include="Views\ExtendedControls\BindablePicker.cs" />
@@ -74,6 +77,9 @@
       <DependentUpon>SatelliteMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ExtendedControls\HtmlLabel.cs" />
+    <Compile Include="Views\ArticleDetailPage.xaml.cs">
+      <DependentUpon>ArticleDetailPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PinchToZoomPage.xaml.cs">
       <DependentUpon>PinchToZoomPage.xaml</DependentUpon>
     </Compile>
@@ -84,8 +90,8 @@
       <DependentUpon>CitiesPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Rerenders\MessageViewCell.cs" />
-    <Compile Include="Views\MainPageTabs\NewsTab.xaml.cs">
-      <DependentUpon>NewsTab.xaml</DependentUpon>
+    <Compile Include="Views\MainPageTabs\NewsListTab.xaml.cs">
+      <DependentUpon>NewsListTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlantDiseaseDetailPageTabs\PlantDiseaseDetailTab.xaml.cs">
       <DependentUpon>PlantDiseaseDetailTab.xaml</DependentUpon>
@@ -108,8 +114,8 @@
     <Compile Include="Views\Templates\PlantDiseaseViewCell.xaml.cs">
       <DependentUpon>PlantDiseaseViewCell.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Templates\PostViewCell.xaml.cs">
-      <DependentUpon>PostViewCell.xaml</DependentUpon>
+    <Compile Include="Views\Templates\ArticleViewCell.xaml.cs">
+      <DependentUpon>ArticleViewCell.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Templates\PlantViewCell.xaml.cs">
       <DependentUpon>PlantViewCell.xaml</DependentUpon>
@@ -124,8 +130,8 @@
     <Compile Include="Views\MainPageTabs\AdvisoryTab.xaml.cs">
       <DependentUpon>AdvisoryTab.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MainPageTabs\InfoListTab.xaml.cs">
-      <DependentUpon>InfoListTab.xaml</DependentUpon>
+    <Compile Include="Views\MainPageTabs\NoticeListTab.xaml.cs">
+      <DependentUpon>NoticeListTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPageTabs\PlantListTab.xaml.cs">
       <DependentUpon>PlantListTab.xaml</DependentUpon>
@@ -295,7 +301,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\MainPageTabs\InfoListTab.xaml">
+    <EmbeddedResource Include="Views\MainPageTabs\NoticeListTab.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -363,7 +369,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\MainPageTabs\NewsTab.xaml">
+    <EmbeddedResource Include="Views\MainPageTabs\NewsListTab.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -375,7 +381,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Templates\PostViewCell.xaml">
+    <EmbeddedResource Include="Views\Templates\ArticleViewCell.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -400,6 +406,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\PinchToZoomPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ArticleDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

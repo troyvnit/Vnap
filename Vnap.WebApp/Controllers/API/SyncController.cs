@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -36,7 +37,7 @@ namespace Vnap.WebApp.Controllers.API
         {
             var plants = await _plantRepository.GetAllAsync();
             var plantDiseases = await _plantDiseaseRepository.AllIncludingAsync(pd => pd.Plant, pd => pd.Images, pd => pd.Solutions);
-            var introduction = await _articleRepository.FindByAsync(a => a.ArticleType == ArticleType.Introduction);
+            var introduction = await _articleRepository.Queryable().Where(a => a.ArticleType == ArticleType.Introduction).FirstOrDefaultAsync();
 
             return new SyncResponseVM()
             {

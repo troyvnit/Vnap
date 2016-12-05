@@ -3,12 +3,12 @@ using Xamarin.Forms;
 
 namespace Vnap.Views.Templates
 {
-    public partial class PostViewCell : ViewCell
+    public partial class ArticleViewCell : ViewCell
     {
-        public PostViewCell()
+        public ArticleViewCell()
         {
             InitializeComponent();
-            BindingContext = new Post();
+            BindingContext = new Article();
         }
 
         protected override void OnBindingContextChanged()

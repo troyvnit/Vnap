@@ -19,6 +19,7 @@ namespace Vnap.Models
         public string PlantName { get; set; }
         public PlantDiseaseType PlantDiseaseType { get; set; }
         public ObservableCollection<Image> Images { get; set; }
+        public ObservableCollection<Solution> Solutions { get; set; }
         public bool IsEven { get; set; }
     }
 

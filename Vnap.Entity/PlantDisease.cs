@@ -17,6 +17,7 @@ namespace Vnap.Entity
         public PlantDiseaseType PlantDiseaseType { get; set; }
         [Ignore]
         public ObservableCollection<Image> Images { get; set; }
+        public ObservableCollection<Solution> Solutions { get; set; }
     }
 
     public enum PlantDiseaseType

@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:components="clr-namespace:Vnap.Views.Components;assembly=Vnap"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Vnap.Views.ArticleDetailPage">
+  <StackLayout>
+    <WebView Source="{Binding Content}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+  </StackLayout>
+</ContentPage>

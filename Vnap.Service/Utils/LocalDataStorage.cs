@@ -40,14 +40,14 @@ namespace Vnap.Service.Utils
             return Settings.Local.Get("AdvisoryMessages", new List<AdvisoryMessageEntity>());
         }
 
-        public static void SetPosts(List<PostEntity> posts)
+        public static void SetArticles(List<ArticleEntity> posts)
         {
-            Settings.Local.Set("Posts", posts);
+            Settings.Local.Set("Articles", posts);
         }
 
-        public static List<PostEntity> GetPosts()
+        public static List<ArticleEntity> GetArticles()
         {
-            return Settings.Local.Get("Posts", new List<PostEntity>());
+            return Settings.Local.Get("Articles", new List<ArticleEntity>());
         }
 
         public static void SetUser(User user)

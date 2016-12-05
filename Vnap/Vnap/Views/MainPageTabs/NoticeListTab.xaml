@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:templates="clr-namespace:Vnap.Views.Templates;assembly=Vnap"
+             xmlns:converters="clr-namespace:Vnap.Converters;assembly=Vnap"
+             xmlns:behaviors="clr-namespace:Vnap.Behaviors;assembly=Vnap"
+             xmlns:fab="clr-namespace:FAB.Forms;assembly=FAB.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Vnap.Views.NoticeListTab"
+             Icon="flaticon-alarm">
+
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <converters:ItemVisibilityEventArgstemConverter
+          x:Key="ItemVisibilityConverter" />
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Content>
+    <AbsoluteLayout VerticalOptions="FillAndExpand" BackgroundColor="#ECEFF4">
+      <ListView x:Name="ArticleListView"
+                CachingStrategy="RecycleElement"
+                BackgroundColor="#ECEFF4"
+                ItemsSource="{Binding Articles}"
+                HasUnevenRows="true"
+                IsPullToRefreshEnabled="true"
+                RefreshCommand="{Binding RefreshCommand}"
+                IsRefreshing="{Binding IsBusy}"
+                Margin="5,0,5,0"
+                ItemSelected="ArticleList_OnItemSelected"
+                SeparatorVisibility="None"
+                AbsoluteLayout.LayoutFlags="All"
+                AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
+        <ListView.Behaviors>
+                    <behaviors:ListViewBehavior
+                        Command="{Binding LoadMoreCommand}"
+                        Converter="{StaticResource ItemVisibilityConverter}" />
+                </ListView.Behaviors>
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <templates:ArticleViewCell />
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+      <ActivityIndicator x:Name="ActivityIndicator" IsRunning="{Binding IsBusy}" WidthRequest="35" HeightRequest="35" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1"/>
+      <fab:FloatingActionButton Source="call.png" Size="Normal" NormalColor="#289B47" Margin="5" RippleColor="Accent" AbsoluteLayout.LayoutBounds="1.0, 1.0, AutoSize, AutoSize" AbsoluteLayout.LayoutFlags="PositionProportional"/>
+    </AbsoluteLayout>
+  </ContentPage.Content>
+</ContentPage>

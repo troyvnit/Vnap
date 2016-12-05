@@ -29,7 +29,7 @@ namespace Vnap.ViewModels
         private readonly ISyncService _syncService;
         private readonly IPlantService _plantService;
         private readonly IPlantDiseaseService _plantDiseaseService;
-        private readonly IPostService _postService;
+        private readonly IArticleService _articleService;
         private readonly IMessageService _messageService;
         private readonly HttpClient _httpClient = new HttpClient();
         private int _loaded;
@@ -146,14 +146,14 @@ namespace Vnap.ViewModels
         public DelegateCommand SignUpCommand { get; set; }
 
         public SplashScreenViewModel(INavigationService navigationService, ISyncService syncService,
-            IPlantService plantService, IPlantDiseaseService plantDiseaseService, IPostService postService,
+            IPlantService plantService, IPlantDiseaseService plantDiseaseService, IArticleService articleService,
             IMessageService messageService)
         {
             _navigationService = navigationService;
             _syncService = syncService;
             _plantService = plantService;
             _plantDiseaseService = plantDiseaseService;
-            _postService = postService;
+            _articleService = articleService;
             _messageService = messageService;
 
             CityItemClickCommand = DelegateCommand.FromAsyncHandler(ExecuteCityItemClickCommand);
@@ -230,7 +230,6 @@ namespace Vnap.ViewModels
         {
             UserDialogs.Instance.ShowLoading("Tải dữ liệu...");
             var syncResult = await _syncService.Sync();
-            await _postService.Sync();
             if (syncResult.Plants != null)
             {
                 _plants = syncResult.Plants.Select(p => p.Name).ToObservableCollection();

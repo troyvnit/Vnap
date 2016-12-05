@@ -84,7 +84,7 @@
       <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" AbsoluteLayout.LayoutFlags="WidthProportional,PositionProportional"
                 AbsoluteLayout.LayoutBounds="0, 1, 1, AutoSize">
         <Button Text="Giải Pháp Phòng Trị" BackgroundColor="#289B47" TextColor="White"
-                Command="{Binding NavigateCommand}" CommandParameter="LeftMenu/Navigation/PlantDiseaseSolutionPage"
+                Command="{Binding NavigateCommand}" 
                 FontSize="14" FontAttributes="Bold" HorizontalOptions="FillAndExpand"/>
         <fab:FloatingActionButton Source="call.png" Size="Mini" NormalColor="#289B47" Margin="5" RippleColor="Accent" HorizontalOptions="End"/>
       </StackLayout>

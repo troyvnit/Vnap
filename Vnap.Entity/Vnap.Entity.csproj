@@ -37,9 +37,10 @@
   <ItemGroup>
     <Compile Include="BaseEntity.cs" />
     <Compile Include="AdvisoryMessageEntity.cs" />
+    <Compile Include="Solution.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Image.cs" />
-    <Compile Include="PostEntity.cs" />
+    <Compile Include="ArticleEntity.cs" />
     <Compile Include="PlantDisease.cs" />
     <Compile Include="Plant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

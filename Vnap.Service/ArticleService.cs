@@ -4,28 +4,28 @@ using System.Linq;
 using System.Threading.Tasks;
 using Vnap.Entity;
 using Vnap.Repository;
-using Vnap.Service.Requests.Post;
+using Vnap.Service.Requests.Article;
 using Vnap.Service.Utils;
 
 namespace Vnap.Service
 {
-    public interface IPostService
+    public interface IArticleService
     {
         Task Sync();
-        Task<List<PostEntity>> GetPosts(GetPostsRq rq);
-        Task<int> GetPostsCount();
+        Task<List<ArticleEntity>> GetArticles(GetArticlesRq rq);
+        Task<int> GetArticlesCount();
     }
-    public class PostService : IPostService
+    public class ArticleService : IArticleService
     {
-        private IRepository<PostEntity> _postRepository;
-        public PostService(IRepository<PostEntity> postRepository)
+        private IRepository<ArticleEntity> _postRepository;
+        public ArticleService(IRepository<ArticleEntity> postRepository)
         {
             _postRepository = postRepository;
         }
 
         public async Task Sync()
         {
-            var count = LocalDataStorage.GetPosts().AsQueryable().Count();
+            var count = LocalDataStorage.GetArticles().AsQueryable().Count();
             if (count == 0)
             {
                 FillContainer();
@@ -36,8 +36,8 @@ namespace Vnap.Service
         {
             var startDate = new DateTime(2016, 1, 1);
 
-            var posts = new List<PostEntity>();
-            posts.Add(new PostEntity()
+            var posts = new List<ArticleEntity>();
+            posts.Add(new ArticleEntity()
             {
                 Id = 1,
                 Priority = 2,
@@ -46,7 +46,7 @@ namespace Vnap.Service
                 Avatar = "http://hoidap.vinhphucnet.vn/qt/hoidap/PublishingImages/75706PMbenhdaoon.jpg",
                 CreatedDate = startDate.AddDays(1)
             });
-            posts.Add(new PostEntity()
+            posts.Add(new ArticleEntity()
             {
                 Id = 2,
                 Priority = 2,
@@ -55,7 +55,7 @@ namespace Vnap.Service
                 Avatar = "http://hoidap.vinhphucnet.vn/qt/hoidap/PublishingImages/75706PMbenhdaoon.jpg",
                 CreatedDate = startDate.AddDays(2)
             });
-            posts.Add(new PostEntity()
+            posts.Add(new ArticleEntity()
             {
                 Id = 3,
                 Priority = 3,
@@ -64,7 +64,7 @@ namespace Vnap.Service
                 Avatar = "http://hoidap.vinhphucnet.vn/qt/hoidap/PublishingImages/75706PMbenhdaoon.jpg",
                 CreatedDate = startDate.AddDays(3)
             });
-            posts.Add(new PostEntity()
+            posts.Add(new ArticleEntity()
             {
                 Id = 4,
                 Priority = 4,
@@ -73,7 +73,7 @@ namespace Vnap.Service
                 Avatar = "http://hoidap.vinhphucnet.vn/qt/hoidap/PublishingImages/75706PMbenhdaoon.jpg",
                 CreatedDate = startDate.AddDays(4)
             });
-            posts.Add(new PostEntity()
+            posts.Add(new ArticleEntity()
             {
                 Id = 3,
                 Priority = 3,
@@ -82,7 +82,7 @@ namespace Vnap.Service
                 Avatar = "http://hoidap.vinhphucnet.vn/qt/hoidap/PublishingImages/75706PMbenhdaoon.jpg",
                 CreatedDate = startDate.AddDays(3)
             });
-            posts.Add(new PostEntity()
+            posts.Add(new ArticleEntity()
             {
                 Id = 4,
                 Priority = 4,
@@ -91,7 +91,7 @@ namespace Vnap.Service
                 Avatar = "http://hoidap.vinhphucnet.vn/qt/hoidap/PublishingImages/75706PMbenhdaoon.jpg",
                 CreatedDate = startDate.AddDays(4)
             });
-            posts.Add(new PostEntity()
+            posts.Add(new ArticleEntity()
             {
                 Id = 3,
                 Priority = 3,
@@ -100,7 +100,7 @@ namespace Vnap.Service
                 Avatar = "http://hoidap.vinhphucnet.vn/qt/hoidap/PublishingImages/75706PMbenhdaoon.jpg",
                 CreatedDate = startDate.AddDays(3)
             });
-            posts.Add(new PostEntity()
+            posts.Add(new ArticleEntity()
             {
                 Id = 4,
                 Priority = 4,
@@ -110,31 +110,28 @@ namespace Vnap.Service
                 CreatedDate = startDate.AddDays(4)
             });
 
-            LocalDataStorage.SetPosts(posts);
+            LocalDataStorage.SetArticles(posts);
         }
 
-        public async Task<List<PostEntity>> GetPosts(GetPostsRq rq)
+        public async Task<List<ArticleEntity>> GetArticles(GetArticlesRq rq)
         {
-            var query = LocalDataStorage.GetPosts()
+            var query = LocalDataStorage.GetArticles()
                 .OrderByDescending(post => post.Priority)
                 .ThenByDescending(post => post.CreatedDate)
                 .AsQueryable();
-            if (rq.PostType != PostType.All)
-            {
-               query = query.Where(post => post.PostType == rq.PostType);
-            }
+            query = query.Where(post => post.ArticleType == rq.ArticleType);
             query = query.Skip(rq.Skip).Take(rq.Take);
             return query.ToList();
         }
 
-        public async Task<PostEntity> SearchFirstPost(string query)
+        public async Task<ArticleEntity> SearchFirstArticle(string query)
         {
-            return LocalDataStorage.GetPosts().AsQueryable().FirstOrDefault(post => post.Title.Contains(query) || post.Description.Contains(query));
+            return LocalDataStorage.GetArticles().AsQueryable().FirstOrDefault(post => post.Title.Contains(query) || post.Description.Contains(query));
         }
 
-        public async Task<int> GetPostsCount()
+        public async Task<int> GetArticlesCount()
         {
-            return LocalDataStorage.GetPosts().AsQueryable().Count();
+            return LocalDataStorage.GetArticles().AsQueryable().Count();
         }
     }
 }

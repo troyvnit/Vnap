@@ -8,8 +8,8 @@
              xmlns:behaviors="clr-namespace:Vnap.Behaviors;assembly=Vnap"
              xmlns:fab="clr-namespace:FAB.Forms;assembly=FAB.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="Vnap.Views.InfoListTab"
-             Icon="flaticon-alarm">
+             x:Class="Vnap.Views.NewsListTab"
+             Icon="flaticon-newspaper">
 
   <ContentPage.Resources>
     <ResourceDictionary>
@@ -19,27 +19,27 @@
   </ContentPage.Resources>
   <ContentPage.Content>
     <AbsoluteLayout VerticalOptions="FillAndExpand" BackgroundColor="#ECEFF4">
-      <ListView x:Name="PostListView"
+      <ListView x:Name="ArticleListView"
                 CachingStrategy="RecycleElement"
                 BackgroundColor="#ECEFF4"
-                ItemsSource="{Binding Posts}"
+                ItemsSource="{Binding Articles}"
                 HasUnevenRows="true"
                 IsPullToRefreshEnabled="true"
                 RefreshCommand="{Binding RefreshCommand}"
                 IsRefreshing="{Binding IsBusy}"
                 Margin="5,0,5,0"
-                ItemSelected="PostList_OnItemSelected"
+                ItemSelected="ArticleList_OnItemSelected"
                 SeparatorVisibility="None"
                 AbsoluteLayout.LayoutFlags="All"
                 AbsoluteLayout.LayoutBounds="0, 0, 1, 1">
         <ListView.Behaviors>
-                    <behaviors:ListViewBehavior
-                        Command="{Binding LoadMoreCommand}"
-                        Converter="{StaticResource ItemVisibilityConverter}" />
-                </ListView.Behaviors>
+          <behaviors:ListViewBehavior
+              Command="{Binding LoadMoreCommand}"
+              Converter="{StaticResource ItemVisibilityConverter}" />
+        </ListView.Behaviors>
         <ListView.ItemTemplate>
           <DataTemplate>
-            <templates:PostViewCell />
+            <templates:ArticleViewCell />
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>

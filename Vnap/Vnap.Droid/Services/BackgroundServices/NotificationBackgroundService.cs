@@ -80,6 +80,50 @@ namespace Vnap.Droid.Services.BackgroundServices
                 }
             }, _cts.Token);
 
+            Task.Run(async () =>
+            {
+                try
+                {
+                    while (!_cts.IsCancellationRequested)
+                    {
+                        var articles = LocalDataStorage.GetArticles();
+                        var isNotEmpty = articles.Any();
+                        var url = isNotEmpty
+                                ? $"http://vnap.vn/api/Article/GetByLatestId?latestId={articles.OrderByDescending(a => a.CreatedDate).FirstOrDefault()?.Id}"
+                                : $"http://vnap.vn/api/Article";
+                        var getArticlesRs = await httpClient.GetStringAsync(url);
+                        var newArticles = JsonConvert.DeserializeObject<List<ArticleEntity>>(getArticlesRs);
+
+                        if (newArticles.Any())
+                        {
+                            articles.AddRange(newArticles.ToList());
+                            LocalDataStorage.SetArticles(articles);
+                            var first = newArticles.OrderByDescending(a => a.CreatedDate).FirstOrDefault();
+                            if (first != null && isNotEmpty)
+                            {
+                                _notificationService.Notify(first.Title, !string.IsNullOrEmpty(first.Description) ? first.Description : first.Content, newArticles.Count);
+                            }
+                        }
+                        Log.Info("", "Reconnecting to stream in 10 seconds");
+                        Thread.Sleep(10000);
+                    }
+                }
+                catch (Exception e)
+                {
+                    // Suppress?
+                }
+                finally
+                {
+                    if (_cts.IsCancellationRequested)
+                    {
+                        var message = new CancelledMessage();
+                        Device.BeginInvokeOnMainThread(
+                            () => MessagingCenter.Send(message, "CancelledMessage")
+                            );
+                    }
+                }
+            }, _cts.Token);
+
             return StartCommandResult.Sticky;
         }
     }

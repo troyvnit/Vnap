@@ -41,5 +41,6 @@ namespace Vnap.Service
     {
         public List<Plant> Plants { get; set; }
         public List<PlantDisease> PlantDiseases { get; set; }
+        public ArticleEntity Introduction { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace Vnap
     {
         private IPlantService _plantService;
         private IPlantDiseaseService _plantDiseaseService;
-        private IPostService _postService;
+        private IArticleService _articleService;
         private IMessageService _messageService;
 
         private static User _currentUser = LocalDataStorage.GetUser();
@@ -57,18 +57,19 @@ namespace Vnap
             Container.RegisterTypeForNavigation<Navigation>();
             Container.RegisterTypeForNavigation<LeftMenu>();
             Container.RegisterTypeForNavigation<PlantListTab>();
-            Container.RegisterTypeForNavigation<InfoListTab>();
+            Container.RegisterTypeForNavigation<NoticeListTab>();
             Container.RegisterTypeForNavigation<AdvisoryTab>();
-            Container.RegisterTypeForNavigation<NewsTab>();
+            Container.RegisterTypeForNavigation<NewsListTab>();
             Container.RegisterTypeForNavigation<PlantDiseaseDetailTab>();
             Container.RegisterTypeForNavigation<PlantDiseasePage>();
             Container.RegisterTypeForNavigation<PlantDiseaseDetailPage>(); 
             Container.RegisterTypeForNavigation<PlantDiseaseSolutionPage>();
             Container.RegisterTypeForNavigation<PinchToZoomPage>();
+            Container.RegisterTypeForNavigation<ArticleDetailPage>();
             Container.RegisterType<ISyncService, SyncService>();
             Container.RegisterType<IPlantService, PlantService>();
             Container.RegisterType<IPlantDiseaseService, PlantDiseaseService>();
-            Container.RegisterType<IPostService, PostService>();
+            Container.RegisterType<IArticleService, ArticleService>();
             Container.RegisterType<IMessageService, MessageService>();
             Container.RegisterType(typeof(IRepository<>), typeof(Repository<>));
         }

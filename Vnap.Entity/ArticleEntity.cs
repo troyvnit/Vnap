@@ -2,18 +2,19 @@
 
 namespace Vnap.Entity
 {
-    public class PostEntity : BaseEntity
+    public class ArticleEntity : BaseEntity
     {
         public string Title { get; set; }
         public string Description { get; set; }
+        public string Content { get; set; }
         public string Avatar { get; set; }
         public int Priority { get; set; }
-        public PostType PostType { get; set; }
+        public ArticleType ArticleType { get; set; }
         public DateTime CreatedDate { get; set; }
     }
 
-    public enum PostType
+    public enum ArticleType
     {
-        All, Info, News
+        Introduction, Notice, News
     }
 }

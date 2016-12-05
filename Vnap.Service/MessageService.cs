@@ -45,7 +45,6 @@ namespace Vnap.Service
 
         public async Task<List<AdvisoryMessageEntity>> GetMessages(GetMessagesRq rq)
         {
-            await Sync(rq.ConversationName);
             var query = LocalDataStorage.GetAdvisoryMessages()
                 .OrderBy(message => message.CreatedDate)
                 .AsQueryable();

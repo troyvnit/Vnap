@@ -7,13 +7,13 @@
           xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
           xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
           prism:ViewModelLocator.AutowireViewModel="True"
-          x:Class="Vnap.Views.Templates.PostViewCell">
+          x:Class="Vnap.Views.Templates.ArticleViewCell">
   <Grid RowSpacing="0" Margin="0,5,0,0" BackgroundColor="#FAFAFA">
     <Grid.RowDefinitions>
       <RowDefinition Height="100" />
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="120" />
+      <ColumnDefinition Width="100" />
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
 
@@ -22,14 +22,14 @@
                                   Grid.Row="0" Grid.Column="0"
                                 Margin="5"/>
     <StackLayout Grid.Row="0" Grid.Column="1" Padding="0,5,5,5">
-    <Label Text="{Binding Title}" FontSize="13" FontAttributes="Bold" TextColor="Black" 
-            VerticalOptions="Start" />
-    <Label Text="{Binding Description}" FontSize="11" TextColor="Black" 
-           VerticalOptions="Start" />
-    <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-      <iconize:IconLabel Text="flaticon-clock-1" TextColor="Gray" FontSize="10"/>
-      <Label Text="18 phút trước" TextColor="Gray" FontSize="10"/>
-    </StackLayout>
+      <Label Text="{Binding Title}" FontSize="13" FontAttributes="Bold" TextColor="Black" 
+              VerticalOptions="Start" />
+      <Label Text="{Binding Description}" FontSize="11" TextColor="Black" 
+             VerticalOptions="Start" />
+      <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand">
+        <iconize:IconLabel Text="flaticon-clock-1" TextColor="Gray" FontSize="10"/>
+        <Label Text="18 phút trước" TextColor="Gray" FontSize="10"/>
+      </StackLayout>
     </StackLayout>
   </Grid>
 </ViewCell>

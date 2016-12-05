@@ -75,7 +75,7 @@ namespace Vnap.ViewModels
                    {
                        Icon = "flaticon-alarm",
                        Text = "Thông tin",
-                       Command = "Navigation/MainPage/InfoListTab",
+                       Command = "Navigation/MainPage/NoticeListTab",
                        IsActived = true
                    },
                     new LeftMenuItem()

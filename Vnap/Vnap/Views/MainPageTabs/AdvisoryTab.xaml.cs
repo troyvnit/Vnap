@@ -26,7 +26,10 @@ namespace Vnap.Views
             var context = BindingContext as AdvisoryTabViewModel;
             if (context != null) await context.LoadMessages(0);
             var last = MessageListView.ItemsSource.Cast<AdvisoryMessage>().LastOrDefault();
-            MessageListView.ScrollTo(last, ScrollToPosition.MakeVisible, true);
+            if (last != null)
+            {
+                MessageListView.ScrollTo(last, ScrollToPosition.MakeVisible, true);
+            }
             base.OnAppearing();
         }
     }

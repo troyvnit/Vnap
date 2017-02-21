@@ -51,7 +51,11 @@
             </extendedControls:ExtendedListView>
             <StackLayout Orientation="Horizontal" BackgroundColor="#289B47" Grid.Row="1">
                 <iconize:IconLabel Text="lnr-phone-handset" TextColor="White" FontSize="20" Margin="10,0,0,0" HorizontalTextAlignment="Center"
-                                   HorizontalOptions="Start" VerticalOptions="CenterAndExpand" />
+                                   HorizontalOptions="Start" VerticalOptions="CenterAndExpand">
+                  <iconize:IconLabel.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding MakePhoneCallCommand}" />
+                  </iconize:IconLabel.GestureRecognizers>
+                </iconize:IconLabel>
                 <iconize:IconLabel Text="flaticon-photo-camera" TextColor="White" FontSize="20" Margin="10,0,10,0" HorizontalTextAlignment="Center"
                                    HorizontalOptions="Start" VerticalOptions="CenterAndExpand">
                   <iconize:IconLabel.GestureRecognizers>

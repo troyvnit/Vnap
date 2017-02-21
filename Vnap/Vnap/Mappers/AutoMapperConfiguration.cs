@@ -28,7 +28,7 @@ namespace Vnap.Mappers
                 CreateMap<Entity.Image, Models.Image>();
                 CreateMap<Entity.PlantDisease, Models.PlantDisease>();
                 CreateMap<Entity.Solution, Models.Solution>();
-                CreateMap<ArticleEntity, Article>().ForMember(p => p.Description, o => o.MapFrom(pe => pe.Description.Length >= 100 ? pe.Description.Substring(0, 100) + "..." : pe.Description));
+                CreateMap<ArticleEntity, Article>().ForMember(p => p.Description, o => o.MapFrom(pe => pe.Description.Length >= 80 ? pe.Description.Substring(0, 80) + "..." : pe.Description));
                 CreateMap<AdvisoryMessageEntity, AdvisoryMessage>();
             }
         }

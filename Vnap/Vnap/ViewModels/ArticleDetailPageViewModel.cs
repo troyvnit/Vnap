@@ -26,10 +26,11 @@ namespace Vnap.ViewModels
 
         public override void OnNavigatedTo(NavigationParameters parameters)
         {
-            var article = (Article)parameters[parameters.Keys.FirstOrDefault(k => k == "Article")];
-            if (!string.IsNullOrEmpty(article.Content))
+            var param = parameters[parameters.Keys.FirstOrDefault(k => k == "Article")];
+            var article = param as Article;
+            if (!string.IsNullOrEmpty(article?.Content))
             {
-                Content = new HtmlWebViewSource() { Html = article.Content }; 
+                Content = new HtmlWebViewSource() { Html = article.Content };
             }
         }
     }

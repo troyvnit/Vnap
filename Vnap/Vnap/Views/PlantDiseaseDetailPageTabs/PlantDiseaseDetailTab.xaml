@@ -86,7 +86,7 @@
         <Button Text="Giải Pháp Phòng Trị" BackgroundColor="#289B47" TextColor="White"
                 Command="{Binding NavigateCommand}" 
                 FontSize="14" FontAttributes="Bold" HorizontalOptions="FillAndExpand"/>
-        <fab:FloatingActionButton Source="call.png" Size="Mini" NormalColor="#289B47" Margin="5" RippleColor="Accent" HorizontalOptions="End"/>
+        <fab:FloatingActionButton Source="call.png" Size="Mini" NormalColor="#289B47" Margin="5" RippleColor="Accent" Clicked="FloatingActionButton_OnClicked" HorizontalOptions="End"/>
       </StackLayout>
     </AbsoluteLayout>
 </ContentPage>

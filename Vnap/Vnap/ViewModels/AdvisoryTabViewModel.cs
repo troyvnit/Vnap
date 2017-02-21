@@ -10,6 +10,7 @@ using AutoMapper;
 using Newtonsoft.Json;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
+using Plugin.Messaging;
 using Prism.Navigation;
 using Vnap.Models;
 using Vnap.Service;
@@ -46,6 +47,7 @@ namespace Vnap.ViewModels
         public DelegateCommand<AdvisoryMessage> ItemClickCommand { get; set; }
         public DelegateCommand SendAdvisoryMessageCommand { get; set; }
         public DelegateCommand TakeOrPickPhotoCommand { get; set; }
+        public DelegateCommand MakePhoneCallCommand { get; set; }
 
         public AdvisoryTabViewModel(INavigationService navigationService, IMessageService messageService)
         {
@@ -56,6 +58,14 @@ namespace Vnap.ViewModels
             ItemClickCommand = DelegateCommand<AdvisoryMessage>.FromAsyncHandler(ExecuteItemClickCommand);
             SendAdvisoryMessageCommand = DelegateCommand.FromAsyncHandler(ExecuteSendAdvisoryMessageCommand);
             TakeOrPickPhotoCommand = DelegateCommand.FromAsyncHandler(ExecuteTakeOrPickPhotoCommandAsync);
+            MakePhoneCallCommand = new DelegateCommand(ExecuteMakePhoneCallCommand);
+        }
+
+        private void ExecuteMakePhoneCallCommand()
+        {
+            var phoneDialer = CrossMessaging.Current.PhoneDialer;
+            if (phoneDialer.CanMakePhoneCall)
+                phoneDialer.MakePhoneCall("+84987575246", "Vnap");
         }
 
         public bool CanExecuteRefreshCommand()

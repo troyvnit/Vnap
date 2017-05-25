@@ -40,7 +40,7 @@
             <tr ng-repeat="article in Article.articles">
               <td>{{ article.Id }}</td>
               <td>{{ article.Title }}</td>
-              <td>{{ article.Description }}</td>
+              <td>Xem trong trang chi tiết</td>
               <td><select placeholder="Loại bài viết?" disabled="disabled" ng-options="articleType.Id as articleType.Name for articleType in articleTypes" ng-model="article.ArticleType"></select></td>
               <td>{{ article.CreatedDate }}</td>
               <td class="text-right">

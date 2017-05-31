@@ -4,6 +4,8 @@ using Vnap.Models;
 
 namespace Vnap.Mappers
 {
+    using Plugin.DeviceInfo;
+
     public class AutoMapperConfiguration
     {
         public static void Configure()
@@ -24,12 +26,12 @@ namespace Vnap.Mappers
 
             protected override void Configure()
             {
-                CreateMap<Entity.Plant, Models.Plant>();
-                CreateMap<Entity.Image, Models.Image>();
-                CreateMap<Entity.PlantDisease, Models.PlantDisease>();
-                CreateMap<Entity.Solution, Models.Solution>();
-                CreateMap<ArticleEntity, Article>().ForMember(p => p.Description, o => o.MapFrom(pe => pe.Description.Length >= 80 ? pe.Description.Substring(0, 80) + "..." : pe.Description));
-                CreateMap<AdvisoryMessageEntity, AdvisoryMessage>();
+                CreateMap<Entity.Plant, Models.Plant>().ForMember(s => s.Avatar, o => o.MapFrom(d => ScaleImageUrl(d.Avatar)));
+                CreateMap<Entity.Image, Models.Image>().ForMember(s => s.Url, o => o.MapFrom(d => ScaleImageUrl(d.Url)));
+                CreateMap<Entity.PlantDisease, Models.PlantDisease>().ForMember(s => s.Avatar, o => o.MapFrom(d => ScaleImageUrl(d.Avatar)));
+                CreateMap<Entity.Solution, Models.Solution>().ForMember(s => s.Avatar, o => o.MapFrom(d => ScaleImageUrl(d.Avatar)));
+                CreateMap<ArticleEntity, Article>().ForMember(s => s.Description, o => o.MapFrom(d => d.Description.Length >= 80 ? d.Description.Substring(0, 80) + "..." : d.Description));
+                CreateMap<AdvisoryMessageEntity, AdvisoryMessage>().ForMember(s => s.ImageUrl, o => o.MapFrom(d => ScaleImageUrl(d.ImageUrl)));
             }
         }
 
@@ -48,6 +50,12 @@ namespace Vnap.Mappers
                 CreateMap<Article, ArticleEntity>();
                 CreateMap<Models.Image, Entity.Image>();
             }
+        }
+
+        public static string ScaleImageUrl(string url)
+        {
+            var width = CrossDevice.Hardware.ScreenWidth;
+            return url.Replace("upload/", $"upload/c_scale,w_{width}/");
         }
     }
 }

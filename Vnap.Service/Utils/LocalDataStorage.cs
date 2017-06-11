@@ -12,52 +12,52 @@ namespace Vnap.Service.Utils
     {
         public static void SetPlants(List<Plant> plants)
         {
-            Settings.Local.Set("Plants", plants);
+            Settings.Current.Set("Plants", plants);
         }
 
         public static List<Plant> GetPlants()
         {
-            return Settings.Local.Get("Plants", new List<Plant>());
+            return Settings.Current.Get("Plants", new List<Plant>());
         }
 
         public static void SetPlantDiseases(List<PlantDisease> plantDiseases)
         {
-            Settings.Local.Set("PlantDiseases", plantDiseases);
+            Settings.Current.Set("PlantDiseases", plantDiseases);
         }
 
         public static List<PlantDisease> GetPlantDiseases()
         {
-            return Settings.Local.Get("PlantDiseases", new List<PlantDisease>());
+            return Settings.Current.Get("PlantDiseases", new List<PlantDisease>());
         }
 
         public static void SetAdvisoryMessages(List<AdvisoryMessageEntity> messages)
         {
-            Settings.Local.Set("AdvisoryMessages", messages);
+            Settings.Current.Set("AdvisoryMessages", messages);
         }
 
         public static List<AdvisoryMessageEntity> GetAdvisoryMessages()
         {
-            return Settings.Local.Get("AdvisoryMessages", new List<AdvisoryMessageEntity>());
+            return Settings.Current.Get("AdvisoryMessages", new List<AdvisoryMessageEntity>());
         }
 
         public static void SetArticles(List<ArticleEntity> posts)
         {
-            Settings.Local.Set("Articles", posts);
+            Settings.Current.Set("Articles", posts);
         }
 
         public static List<ArticleEntity> GetArticles()
         {
-            return Settings.Local.Get("Articles", new List<ArticleEntity>());
+            return Settings.Current.Get("Articles", new List<ArticleEntity>());
         }
 
         public static void SetUser(User user)
         {
-            Settings.Local.Set("User", user);
+            Settings.Current.Set("User", user);
         }
 
         public static User GetUser()
         {
-            return Settings.Local.Get("User", new User());
+            return Settings.Current.Get("User", new User());
         }
     }
 }

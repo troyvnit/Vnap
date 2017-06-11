@@ -156,9 +156,9 @@ namespace Vnap.ViewModels
             _articleService = articleService;
             _messageService = messageService;
 
-            CityItemClickCommand = DelegateCommand.FromAsyncHandler(ExecuteCityItemClickCommand);
-            PlantItemClickCommand = DelegateCommand.FromAsyncHandler(ExecutePlantItemClickCommand);
-            SignUpCommand = DelegateCommand.FromAsyncHandler(ExecuteSignUpCommand);
+            CityItemClickCommand = new DelegateCommand(ExecuteCityItemClickCommand);
+            PlantItemClickCommand = new DelegateCommand(ExecutePlantItemClickCommand);
+            SignUpCommand = new DelegateCommand(ExecuteSignUpCommand);
         }
 
         public async Task ExecuteOpenCitiesPopupCommand()
@@ -175,17 +175,17 @@ namespace Vnap.ViewModels
             await PopupNavigation.PushAsync(plantsPopup);
         }
 
-        private async Task ExecuteCityItemClickCommand()
+        private async void ExecuteCityItemClickCommand()
         {
             await PopupNavigation.PopAsync();
         }
 
-        private async Task ExecutePlantItemClickCommand()
+        private async void ExecutePlantItemClickCommand()
         {
             await PopupNavigation.PopAsync();
         }
 
-        private async Task ExecuteSignUpCommand()
+        private async void ExecuteSignUpCommand()
         {
             if (string.IsNullOrEmpty(UserName))
             {

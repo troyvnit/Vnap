@@ -72,10 +72,10 @@ namespace Vnap.ViewModels
             _navigationService = navigationService;
             _plantDiseaseService = plantDiseaseService;
             PreviewImageCommand = new DelegateCommand<Image>(ExecutePreviewImageCommand, CanExecutePreviewImageCommand);
-            NavigateCommand = DelegateCommand.FromAsyncHandler(Navigate);
+            NavigateCommand = new DelegateCommand(Navigate);
         }
 
-        private async Task Navigate()
+        private async void Navigate()
         {
             if (Solution != null)
             {

@@ -30,8 +30,8 @@ namespace Vnap.ViewModels
         {
             _plantDiseaseService = plantDiseaseService;
             _navigationService = navigationService;
-            RefreshCommand = DelegateCommand.FromAsyncHandler(ExecuteRefreshCommand, CanExecuteRefreshCommand);
-            LoadMoreCommand = DelegateCommand.FromAsyncHandler(ExecuteLoadMoreCommand, CanExecuteLoadMoreCommand);
+            RefreshCommand = new DelegateCommand(ExecuteRefreshCommand, CanExecuteRefreshCommand);
+            LoadMoreCommand = new DelegateCommand(ExecuteLoadMoreCommand, CanExecuteLoadMoreCommand);
             ItemClickCommand = new DelegateCommand<PlantDisease>(ExecuteItemClickCommand, CanExecuteItemClickCommand);
         }
 
@@ -40,7 +40,7 @@ namespace Vnap.ViewModels
             return IsNotBusy;
         }
 
-        public async Task ExecuteRefreshCommand()
+        public async void ExecuteRefreshCommand()
         {
             IsBusy = true;
 
@@ -55,7 +55,7 @@ namespace Vnap.ViewModels
             return IsNotBusy && _plantDiseases.Count < _totalPlantDiseases;
         }
 
-        public async Task ExecuteLoadMoreCommand()
+        public async void ExecuteLoadMoreCommand()
         {
             IsBusy = true;
 
@@ -83,11 +83,11 @@ namespace Vnap.ViewModels
             }
         }
 
-        public override async void OnNavigatedTo(NavigationParameters parameters)
+        public override void OnNavigatedTo(NavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
 
-            await ExecuteLoadMoreCommand();
+            ExecuteLoadMoreCommand();
         }
 
         public bool CanExecuteItemClickCommand(PlantDisease plant)

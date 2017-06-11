@@ -28,8 +28,8 @@ namespace Vnap.ViewModels
         {
             _articleService = articleService;
             _navigationService = navigationService;
-            RefreshCommand = DelegateCommand.FromAsyncHandler(ExecuteRefreshCommand, CanExecuteRefreshCommand);
-            LoadMoreCommand = DelegateCommand<Article>.FromAsyncHandler(ExecuteLoadMoreCommand, CanExecuteLoadMoreCommand);
+            RefreshCommand = new DelegateCommand(ExecuteRefreshCommand, CanExecuteRefreshCommand);
+            LoadMoreCommand = new DelegateCommand<Article>(ExecuteLoadMoreCommand, CanExecuteLoadMoreCommand);
         }
 
         public bool CanExecuteRefreshCommand()
@@ -37,7 +37,7 @@ namespace Vnap.ViewModels
             return IsNotBusy;
         }
 
-        public async Task ExecuteRefreshCommand()
+        public async void ExecuteRefreshCommand()
         {
             IsBusy = true;
 
@@ -52,7 +52,7 @@ namespace Vnap.ViewModels
             return IsNotBusy && _articles.Count > _totalArticles;
         }
 
-        public async Task ExecuteLoadMoreCommand(Article item)
+        public async void ExecuteLoadMoreCommand(Article item)
         {
             IsBusy = true;
 

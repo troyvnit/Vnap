@@ -160,5 +160,9 @@ namespace Vnap.ViewModels
         {
             throw new NotImplementedException();
         }
+
+        public void OnNavigatingTo(NavigationParameters parameters)
+        {
+        }
     }
 }

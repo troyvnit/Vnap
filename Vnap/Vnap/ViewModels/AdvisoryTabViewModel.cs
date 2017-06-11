@@ -53,11 +53,11 @@ namespace Vnap.ViewModels
         {
             _messageService = messageService;
             _navigationService = navigationService;
-            RefreshCommand = DelegateCommand.FromAsyncHandler(ExecuteRefreshCommand, CanExecuteRefreshCommand);
-            LoadMoreCommand = DelegateCommand<AdvisoryMessage>.FromAsyncHandler(ExecuteLoadMoreCommand, CanExecuteLoadMoreCommand);
-            ItemClickCommand = DelegateCommand<AdvisoryMessage>.FromAsyncHandler(ExecuteItemClickCommand);
-            SendAdvisoryMessageCommand = DelegateCommand.FromAsyncHandler(ExecuteSendAdvisoryMessageCommand);
-            TakeOrPickPhotoCommand = DelegateCommand.FromAsyncHandler(ExecuteTakeOrPickPhotoCommandAsync);
+            RefreshCommand = new DelegateCommand(ExecuteRefreshCommand, CanExecuteRefreshCommand);
+            LoadMoreCommand = new DelegateCommand<AdvisoryMessage>(ExecuteLoadMoreCommand, CanExecuteLoadMoreCommand);
+            ItemClickCommand = new DelegateCommand<AdvisoryMessage>(ExecuteItemClickCommand);
+            SendAdvisoryMessageCommand = new DelegateCommand(ExecuteSendAdvisoryMessageCommand);
+            TakeOrPickPhotoCommand = new DelegateCommand(ExecuteTakeOrPickPhotoCommandAsync);
             MakePhoneCallCommand = new DelegateCommand(ExecuteMakePhoneCallCommand);
         }
 
@@ -73,7 +73,7 @@ namespace Vnap.ViewModels
             return IsNotBusy;
         }
 
-        public async Task ExecuteRefreshCommand()
+        public async void ExecuteRefreshCommand()
         {
             IsBusy = true;
 
@@ -88,7 +88,7 @@ namespace Vnap.ViewModels
             return IsNotBusy && _messages.Count < _totalMessages;
         }
 
-        public async Task ExecuteLoadMoreCommand(AdvisoryMessage item)
+        public async void ExecuteLoadMoreCommand(AdvisoryMessage item)
         {
             IsBusy = true;
 
@@ -98,7 +98,7 @@ namespace Vnap.ViewModels
             IsBusy = false;
         }
 
-        public async Task ExecuteItemClickCommand(AdvisoryMessage item)
+        public async void ExecuteItemClickCommand(AdvisoryMessage item)
         {
             if (!string.IsNullOrEmpty(item.ImageUrl))
             {
@@ -108,7 +108,7 @@ namespace Vnap.ViewModels
             }
         }
 
-        private async Task ExecuteSendAdvisoryMessageCommand()
+        private async void ExecuteSendAdvisoryMessageCommand()
         {
             UserDialogs.Instance.ShowLoading("Đang gửi...");
             var result = await _httpClient.PostAsync("http://vnap.vn/api/advisorymessage/add", new StringContent(JsonConvert.SerializeObject(new AdvisoryMessage()
@@ -129,7 +129,7 @@ namespace Vnap.ViewModels
             UserDialogs.Instance.HideLoading();
         }
 
-        private async Task ExecuteTakeOrPickPhotoCommandAsync()
+        private async void ExecuteTakeOrPickPhotoCommandAsync()
         {
             try
             {

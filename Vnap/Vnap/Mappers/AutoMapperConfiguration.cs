@@ -24,7 +24,7 @@ namespace Vnap.Mappers
                 get { return "ServiceModelToModelMappingProfile"; }
             }
 
-            protected override void Configure()
+            protected void Configure()
             {
                 CreateMap<Entity.Plant, Models.Plant>().ForMember(s => s.Avatar, o => o.MapFrom(d => ScaleImageUrl(d.Avatar)));
                 CreateMap<Entity.Image, Models.Image>().ForMember(s => s.Url, o => o.MapFrom(d => ScaleImageUrl(d.Url)));
@@ -42,7 +42,7 @@ namespace Vnap.Mappers
                 get { return "ModelToServiceModelMappingProfile"; }
             }
 
-            protected override void Configure()
+            protected void Configure()
             {
                 CreateMap<Models.Plant, Entity.Plant>();
                 CreateMap<Models.PlantDisease, Entity.PlantDisease>();

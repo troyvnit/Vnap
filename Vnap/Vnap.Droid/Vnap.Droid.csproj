@@ -86,13 +86,11 @@
       <HintPath>..\..\packages\AndHUD.1.2.0\lib\MonoAndroid\AndHUD.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FAB.Droid, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FAB.Forms.2.1.1\lib\MonoAndroid10\FAB.Droid.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="FAB.Droid, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FAB.Forms.2.2.0-pre1\lib\MonoAndroid10\FAB.Droid.dll</HintPath>
     </Reference>
-    <Reference Include="FAB.Forms, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FAB.Forms.2.1.1\lib\MonoAndroid10\FAB.Forms.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="FAB.Forms, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FAB.Forms.2.2.0-pre1\lib\MonoAndroid10\FAB.Forms.dll</HintPath>
     </Reference>
     <Reference Include="FFImageLoading, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.FFImageLoading.2.2.9\lib\MonoAndroid10\FFImageLoading.dll</HintPath>
@@ -344,6 +342,7 @@
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderers\EntryRender.cs" />
+    <Compile Include="Renderers\FloatingActionButtonRenderer.cs" />
     <Compile Include="Renderers\HtmlLabelRender.cs" />
     <Compile Include="Renderers\LabelRender.cs" />
     <Compile Include="Renderers\MessageViewCellRender.cs" />

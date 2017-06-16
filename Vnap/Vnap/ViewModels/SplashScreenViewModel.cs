@@ -164,14 +164,14 @@ namespace Vnap.ViewModels
         public async Task ExecuteOpenCitiesPopupCommand()
         {
             var citiesPopup = new CitiesPopup();
-
+            citiesPopup.BindingContext = this;
             await PopupNavigation.PushAsync(citiesPopup);
         }
 
         public async Task ExecuteOpenPlantsPopupCommand()
         {
             var plantsPopup = new PlantsPopup();
-
+            plantsPopup.BindingContext = this;
             await PopupNavigation.PushAsync(plantsPopup);
         }
 

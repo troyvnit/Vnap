@@ -76,6 +76,7 @@
     <Compile Include="Views\Components\SatelliteMenu.xaml.cs">
       <DependentUpon>SatelliteMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ExtendedControls\ExtendedFloatingActionButton.cs" />
     <Compile Include="Views\ExtendedControls\HtmlLabel.cs" />
     <Compile Include="Views\ArticleDetailPage.xaml.cs">
       <DependentUpon>ArticleDetailPage.xaml</DependentUpon>
@@ -160,9 +161,8 @@
       <HintPath>..\..\packages\ExifLib.PCL.1.0.1\lib\portable-net45+sl50+win+WindowsPhoneApp81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10\ExifLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FAB.Forms, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FAB.Forms.2.1.1\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\FAB.Forms.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="FAB.Forms, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FAB.Forms.2.2.0-pre1\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\FAB.Forms.dll</HintPath>
     </Reference>
     <Reference Include="FFImageLoading, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.FFImageLoading.2.2.9\lib\portable-net45+win8+wpa81+wp8\FFImageLoading.dll</HintPath>

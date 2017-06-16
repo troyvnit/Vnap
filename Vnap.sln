@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vnap", "Vnap\Vnap\Vnap.csproj", "{0FC60E78-A140-4666-A8B0-ACF165C5815E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vnap.Droid", "Vnap\Vnap.Droid\Vnap.Droid.csproj", "{C618B80E-E0A1-49AE-9F18-3BA51D6E891D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vnap.iOS", "Vnap\Vnap.iOS\Vnap.iOS.csproj", "{31FE66CB-E22F-409C-90F3-65888E36A93E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vnap.Repository", "Vnap.Repository\Vnap.Repository.csproj", "{67F9D3A8-F71E-4428-913F-C37AE82CDB24}"
 EndProject
@@ -163,38 +161,6 @@ Global
 		{C618B80E-E0A1-49AE-9F18-3BA51D6E891D}.Release|x86.ActiveCfg = Release|Any CPU
 		{C618B80E-E0A1-49AE-9F18-3BA51D6E891D}.Release|x86.Build.0 = Release|Any CPU
 		{C618B80E-E0A1-49AE-9F18-3BA51D6E891D}.Release|x86.Deploy.0 = Release|Any CPU
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Ad-Hoc|Any CPU.ActiveCfg = Ad-Hoc|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Ad-Hoc|ARM.ActiveCfg = Ad-Hoc|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Ad-Hoc|iPhoneSimulator
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Ad-Hoc|iPhoneSimulator.Build.0 = Ad-Hoc|iPhoneSimulator
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Ad-Hoc|x64.ActiveCfg = Ad-Hoc|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Ad-Hoc|x86.ActiveCfg = Ad-Hoc|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.AppStore|Any CPU.ActiveCfg = AppStore|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.AppStore|ARM.ActiveCfg = AppStore|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.AppStore|iPhone.Build.0 = AppStore|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.AppStore|iPhoneSimulator.ActiveCfg = AppStore|iPhoneSimulator
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.AppStore|iPhoneSimulator.Build.0 = AppStore|iPhoneSimulator
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.AppStore|x64.ActiveCfg = AppStore|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.AppStore|x86.ActiveCfg = AppStore|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Debug|Any CPU.ActiveCfg = Debug|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Debug|ARM.ActiveCfg = Debug|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Debug|iPhone.ActiveCfg = Debug|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Debug|iPhone.Build.0 = Debug|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Debug|x64.ActiveCfg = Debug|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Debug|x86.ActiveCfg = Debug|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Release|Any CPU.ActiveCfg = Release|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Release|ARM.ActiveCfg = Release|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Release|iPhone.ActiveCfg = Release|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Release|iPhone.Build.0 = Release|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Release|x64.ActiveCfg = Release|iPhone
-		{31FE66CB-E22F-409C-90F3-65888E36A93E}.Release|x86.ActiveCfg = Release|iPhone
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.Ad-Hoc|Any CPU.ActiveCfg = Release|Any CPU
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.Ad-Hoc|Any CPU.Build.0 = Release|Any CPU
 		{67F9D3A8-F71E-4428-913F-C37AE82CDB24}.Ad-Hoc|ARM.ActiveCfg = Release|Any CPU

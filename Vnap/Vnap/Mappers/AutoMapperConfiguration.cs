@@ -23,7 +23,7 @@ namespace Vnap.Mappers
             {
                 CreateMap<Entity.Plant, Models.Plant>().ForMember(s => s.Avatar, o => o.MapFrom(d => ScaleImageUrl(d.Avatar)));
                 CreateMap<Entity.Image, Models.Image>().ForMember(s => s.Url, o => o.MapFrom(d => ScaleImageUrl(d.Url)))
-                    .ForMember(s => s.ThumbnailUrl, o => o.MapFrom(d => ScaleImageThumbnailUrl(d.)));
+                    .ForMember(s => s.ThumbnailUrl, o => o.MapFrom(d => ScaleImageThumbnailUrl(d.Url)));
                 CreateMap<Entity.PlantDisease, Models.PlantDisease>().ForMember(s => s.Avatar, o => o.MapFrom(d => ScaleImageUrl(d.Avatar)));
                 CreateMap<Entity.Solution, Models.Solution>().ForMember(s => s.Avatar, o => o.MapFrom(d => ScaleImageUrl(d.Avatar)));
                 CreateMap<ArticleEntity, Article>().ForMember(s => s.Description, o => o.MapFrom(d => d.Description.Length >= 80 ? d.Description.Substring(0, 80) + "..." : d.Description));

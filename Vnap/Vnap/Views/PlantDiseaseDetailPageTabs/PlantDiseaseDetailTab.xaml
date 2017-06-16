@@ -64,7 +64,7 @@
                                     DownsampleWidth="50"
                                     HeightRequest="50"
                                     WidthRequest="50"
-                                    Source="{Binding Url}"
+                                    Source="{Binding ThumbnailUrl}"
                                     Aspect="AspectFill">
                                     <ffimageloading:CachedImage.GestureRecognizers>
                                         <TapGestureRecognizer

@@ -10,6 +10,7 @@ using Vnap.Models;
 using Vnap.Service;
 using Xamarin.Forms;
 using Image = Vnap.Models.Image;
+using Plugin.DeviceInfo;
 
 namespace Vnap.ViewModels
 {
@@ -106,14 +107,15 @@ namespace Vnap.ViewModels
 
         public void LoadPlantDiseaseDetails()
         {
-            var plantDisease = _plantDiseaseService.GetPlantDisease(PlantDiseaseId);
+            var plantDisease = Mapper.Map<PlantDisease>(_plantDiseaseService.GetPlantDisease(PlantDiseaseId));
             Description = new HtmlWebViewSource() { Html = plantDisease.Description };
             foreach (var image in plantDisease.Images)
             {
                 _images.Add(new Image()
                 {
                     Caption = image.Caption,
-                    Url = image.Url ?? string.Empty
+                    Url = image.Url ?? string.Empty,
+                    ThumbnailUrl = image.ThumbnailUrl ?? string.Empty
                 });
             }
             Title = plantDisease.Name;

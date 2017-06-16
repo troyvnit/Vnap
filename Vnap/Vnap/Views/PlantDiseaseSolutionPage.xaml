@@ -19,7 +19,7 @@
                     HeightRequest="250"
                     BackgroundColor="Gray"
                     DownsampleHeight="250"
-                    Aspect="AspectFill"
+                    Aspect="AspectFit"
                     Source="{Binding Avatar}"
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="FillAndExpand" />

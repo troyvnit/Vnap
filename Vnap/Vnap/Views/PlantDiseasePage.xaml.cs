@@ -19,10 +19,10 @@ namespace Vnap.Views
                     if (plantDiseasePageViewModel != null)
                     {
                         plantDiseasePageViewModel.CurrentPlant = CurrentPage.Title;
-                    }
-                    if (context.PlantDiseases.Count == 0)
-                    {
-                        await context.LoadPlantDiseases(0);
+                        if (context.PlantDiseases.Count == 0)
+                        {
+                            await context.LoadPlantDiseases(0, plantDiseasePageViewModel.SearchKey);
+                        }
                     }
                 }
             };

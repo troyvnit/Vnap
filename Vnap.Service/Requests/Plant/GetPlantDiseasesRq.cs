@@ -4,5 +4,6 @@
     {
         public int FromId { get; set; }
         public string Plant { get; set; }
+        public string SearchKey { get; set; }
     }
 }

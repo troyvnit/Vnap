@@ -4,6 +4,7 @@ using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Views;
+using Android.Widget;
 using FormsPlugin.Iconize.Droid;
 using Microsoft.Practices.Unity;
 using Plugin.CurrentActivity;
@@ -49,48 +50,43 @@ namespace Vnap.Droid
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
-        //public override bool OnCreateOptionsMenu(IMenu menu)
-        //{
-        //    var search = FindViewById<EditText>(Resource.Id.search);
-        //    //var searchIcon = (ImageView)search.FindViewById(Resource.Id.search_mag_icon);
-        //    //var viewGroup = (ViewGroup)searchIcon.Parent;
-        //    //viewGroup.RemoveView(searchIcon);
-        //    //viewGroup.AddView(searchIcon);
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            var search = FindViewById<EditText>(Resource.Id.search);
+            //var searchIcon = (ImageView)search.FindViewById(Resource.Id.search_mag_icon);
+            //var viewGroup = (ViewGroup)searchIcon.Parent;
+            //viewGroup.RemoveView(searchIcon);
+            //viewGroup.AddView(searchIcon);
 
-        //    //search.QueryTextChange += (sender, args) =>
-        //    //{
-        //    //    if (!string.IsNullOrEmpty(search.Query))
-        //    //    {
-        //    //        if (viewGroup.GetChildAt(viewGroup.ChildCount - 1) != searchIcon)
-        //    //        {
-        //    //            viewGroup.AddView(searchIcon);
-        //    //        }
-        //    //    }
-        //    //    else
-        //    //    {
-        //    //        viewGroup.RemoveView(searchIcon);
-        //    //    }
-        //    //};
+            //search.QueryTextChange += (sender, args) =>
+            //{
+            //    if (!string.IsNullOrEmpty(search.Query))
+            //    {
+            //        if (viewGroup.GetChildAt(viewGroup.ChildCount - 1) != searchIcon)
+            //        {
+            //            viewGroup.AddView(searchIcon);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        viewGroup.RemoveView(searchIcon);
+            //    }
+            //};
 
-        //    //searchIcon.Click += (o, eventArgs) =>
-        //    //{
-        //    //    app.Search(search.Query);
-        //    //};
+            //searchIcon.Click += (o, eventArgs) =>
+            //{
+            //    app.Search(search.Query);
+            //};
 
-        //    if (search != null)
-        //    {
-        //        search.KeyPress += (sender, args) =>
-        //        {
-        //            args.Handled = false;
-        //            if (args.Event.Action == KeyEventActions.Down && args.KeyCode == Keycode.Enter)
-        //            {
-        //                app.Search(search.Text);
-        //                args.Handled = true;
-        //            }
-        //        };
-        //    }
-        //    return base.OnCreateOptionsMenu(menu);
-        //}
+            if (search != null)
+            {
+                search.TextChanged += (sender, args) =>
+                {
+                    App.SearchKey = search.Text;
+                };
+            }
+            return base.OnCreateOptionsMenu(menu);
+        }
 
         //public override View OnCreateView(View parent, string name, Context context, IAttributeSet attrs)
         //{

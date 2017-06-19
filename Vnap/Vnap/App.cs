@@ -25,6 +25,7 @@ namespace Vnap
         private IPlantDiseaseService _plantDiseaseService;
         private IArticleService _articleService;
         private IMessageService _messageService;
+        public static string SearchKey;
 
         private static User _currentUser = LocalDataStorage.GetUser();
         public static User CurrentUser
@@ -78,11 +79,6 @@ namespace Vnap
         {
             //ModuleCatalog.AddModule(new ModuleInfo(typeof(ModuleA.ModuleAModule)));
             //ModuleCatalog.AddModule(new ModuleInfo("ModuleA", typeof(ModuleA.ModuleAModule), InitializationMode.OnDemand));
-        }
-
-        public void Search(string query)
-        {
-            NavigationService.NavigateAsync($"Navigation/PlantDiseasePage?query={query}", animated: false);
         }
 
         protected override void OnResume()

@@ -65,12 +65,13 @@ namespace Vnap.ViewModels
             IsBusy = false;
         }
 
-        public async Task LoadPlantDiseases(int skip)
+        public async Task LoadPlantDiseases(int skip, string searchKey = "")
         {
             var rq = new GetPlantDiseasesRq()
             {
                 Skip = skip,
-                Plant = Plant
+                Plant = Plant,
+                SearchKey = searchKey
             };
 
             var newPlantDiseases = _plantDiseaseService.GetPlantDiseases(rq);

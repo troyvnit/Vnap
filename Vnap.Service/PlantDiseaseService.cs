@@ -51,10 +51,16 @@ namespace Vnap.Service
                 .OrderBy(plantDisease => plantDisease.Priority)
                 .ThenByDescending(plantDisease => plantDisease.CreatedDate)
                 .AsQueryable();
-            if (rq.Plant != null)
+
+            if (!string.IsNullOrEmpty(rq.SearchKey))
+            {
+                query = query.Where(plantDisease => plantDisease.PlantName.ToLower().Contains(rq.SearchKey.ToLower()) || plantDisease.Name.Contains(rq.SearchKey.ToLower()) || plantDisease.Description.Contains(rq.SearchKey.ToLower()));
+            }
+            else if (rq.Plant != null)
             {
                 query = query.Where(plantDisease => plantDisease.PlantName.ToLower() == rq.Plant.ToLower());
             }
+            
             var plantDiseases = query.ToList();
 
             return plantDiseases;

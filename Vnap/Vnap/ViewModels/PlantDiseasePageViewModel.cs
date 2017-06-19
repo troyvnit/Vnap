@@ -23,6 +23,8 @@ namespace Vnap.ViewModels
 
         public string CurrentPlant;
 
+        public string SearchKey;
+
         private ObservableCollection<Page> _plantDiseaseTabs = new ObservableCollection<Page>();
 
         public ObservableCollection<Page> PlantDiseaseListTabs
@@ -41,22 +43,37 @@ namespace Vnap.ViewModels
 
         public override async Task LoadAsync()
         {
-            var rq = new GetPlantsRq()
+            if (string.IsNullOrEmpty(SearchKey))
             {
-                Skip = PlantDiseaseListTabs.Count
-            };
+                var rq = new GetPlantsRq()
+                {
+                    Skip = PlantDiseaseListTabs.Count
+                };
 
-            var plants = _plantService.GetPlants(rq);
+                var plants = _plantService.GetPlants(rq);
 
-            if (plants.Count > PlantDiseaseListTabs.Count)
+                if (plants.Count > PlantDiseaseListTabs.Count)
+                {
+                    var list = new List<Page>();
+
+                    list.AddRange(plants.Select(p => new PlantDiseaseListTab()
+                    {
+                        Title = p.Name,
+                        Icon = ""
+                    }));
+
+                    PlantDiseaseListTabs = list.ToObservableCollection();
+                }
+            }
+            else
             {
                 var list = new List<Page>();
 
-                list.AddRange(plants.Select(p => new PlantDiseaseListTab()
+                list.Add(new PlantDiseaseListTab()
                 {
-                    Title = p.Name,
+                    Title = SearchKey,
                     Icon = ""
-                }));
+                });
 
                 PlantDiseaseListTabs = list.ToObservableCollection();
             }
@@ -71,6 +88,10 @@ namespace Vnap.ViewModels
         {
             var plantParameter = (string)parameters[parameters.Keys.FirstOrDefault(k => k == "Plant")];
             CurrentPlant = plantParameter;
+
+            var searchKeyParameter = (string)parameters[parameters.Keys.FirstOrDefault(k => k == "SearchKey")];
+            SearchKey = searchKeyParameter;
+
             base.OnNavigatedTo(parameters);
         }
     }

@@ -28,7 +28,7 @@ namespace Vnap.Views
                 var plantDiseasePageViewModel = BindingContext as PlantDiseasePageViewModel;
                 if (plantDiseasePageViewModel != null)
                 {
-                    if (Children.Count == plantDiseasePageViewModel.PlantDiseaseListTabs.Count)
+                    if (Children.Count == plantDiseasePageViewModel.PlantDiseaseListTabs.Count && !string.IsNullOrEmpty(plantDiseasePageViewModel.CurrentPlant))
                     {
                         CurrentPage = Children.FirstOrDefault(c => c.Title.ToLower() == plantDiseasePageViewModel.CurrentPlant.ToLower());
                     }

@@ -18,7 +18,6 @@ namespace Vnap.Service
         List<PlantDisease> GetPlantDiseases(GetPlantDiseasesRq rq);
         int GetPlantDiseasesCount();
         PlantDisease GetPlantDisease(int id);
-        PlantDisease SearchFirstPlantDisease(string query);
     }
     public class PlantDiseaseService : IPlantDiseaseService
     {

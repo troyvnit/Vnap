@@ -43,7 +43,7 @@ namespace Vnap.ViewModels
 
         public override async Task LoadAsync()
         {
-            if (string.IsNullOrEmpty(SearchKey))
+            if (string.IsNullOrEmpty(App.SearchKey))
             {
                 var rq = new GetPlantsRq()
                 {
@@ -71,7 +71,7 @@ namespace Vnap.ViewModels
 
                 list.Add(new PlantDiseaseListTab()
                 {
-                    Title = SearchKey,
+                    Title = App.SearchKey,
                     Icon = ""
                 });
 
@@ -88,9 +88,6 @@ namespace Vnap.ViewModels
         {
             var plantParameter = (string)parameters[parameters.Keys.FirstOrDefault(k => k == "Plant")];
             CurrentPlant = plantParameter;
-
-            var searchKeyParameter = (string)parameters[parameters.Keys.FirstOrDefault(k => k == "SearchKey")];
-            SearchKey = searchKeyParameter;
 
             base.OnNavigatedTo(parameters);
         }

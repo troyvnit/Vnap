@@ -100,6 +100,7 @@ namespace Vnap.ViewModels
 
         public void ExecuteItemClickCommand(Plant plant)
         {
+            App.SearchKey = string.Empty;
             _navigationService.NavigateAsync($"LeftMenu/Navigation/PlantDiseasePage?Plant={plant.Name}", animated: false);
         }
     }

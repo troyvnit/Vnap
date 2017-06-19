@@ -24,7 +24,7 @@ namespace Vnap.ViewModels
         {
             if (!string.IsNullOrEmpty(App.SearchKey))
             {
-                _navigationService.NavigateAsync($"PlantDiseasePage?SearchKey={App.SearchKey}", animated: false);
+                _navigationService.NavigateAsync($"MainPage/PlantListTab/PlantDiseasePage?SearchKey={App.SearchKey}", animated: false, useModalNavigation: true);
             }
         }
 

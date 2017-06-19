@@ -17,7 +17,7 @@
         <StackLayout Padding="5" BackgroundColor="#ECEFF4">
           <ffimageloading:CachedImage
                     HeightRequest="250"
-                    BackgroundColor="Gray"
+                    BackgroundColor="#ECEFF4"
                     DownsampleHeight="250"
                     Aspect="AspectFit"
                     Source="{Binding Avatar}"

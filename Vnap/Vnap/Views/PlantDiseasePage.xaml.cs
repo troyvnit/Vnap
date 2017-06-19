@@ -15,14 +15,22 @@ namespace Vnap.Views
                 if (context != null)
                 {
                     context.Plant = CurrentPage.Title;
-                    var plantDiseasePageViewModel = BindingContext as PlantDiseasePageViewModel;
-                    if (plantDiseasePageViewModel != null)
-                    {
-                        plantDiseasePageViewModel.CurrentPlant = CurrentPage.Title;
-                    }
+                    
                     if (context.PlantDiseases.Count == 0)
                     {
                         await context.LoadPlantDiseases(0, App.SearchKey);
+                    }
+                }
+            };
+
+            ChildAdded += (sender, args) =>
+            {
+                var plantDiseasePageViewModel = BindingContext as PlantDiseasePageViewModel;
+                if (plantDiseasePageViewModel != null)
+                {
+                    if (Children.Count == plantDiseasePageViewModel.PlantDiseaseListTabs.Count)
+                    {
+                        CurrentPage = Children.FirstOrDefault(c => c.Title.ToLower() == plantDiseasePageViewModel.CurrentPlant.ToLower());
                     }
                 }
             };
@@ -35,7 +43,6 @@ namespace Vnap.Views
             if (plantDiseasePageViewModel != null)
             {
                 await plantDiseasePageViewModel.LoadAsync();
-                CurrentPage = plantDiseasePageViewModel.PlantDiseaseListTabs.FirstOrDefault(c => c.Title.ToLower() == plantDiseasePageViewModel.CurrentPlant.ToLower());
             }
         }
     }

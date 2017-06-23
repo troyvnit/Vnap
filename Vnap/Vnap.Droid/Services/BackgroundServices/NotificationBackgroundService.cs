@@ -39,7 +39,7 @@ namespace Vnap.Droid.Services.BackgroundServices
                 {
                     while (!_cts.IsCancellationRequested)
                     {
-                        if(App.CurrentUser != null)
+                        if(App.CurrentUser != null && !string.IsNullOrEmpty(App.CurrentUser.UserName))
                         {
                             var advisoryMessages = LocalDataStorage.GetAdvisoryMessages();
                             var isNotEmpty = advisoryMessages.Any();

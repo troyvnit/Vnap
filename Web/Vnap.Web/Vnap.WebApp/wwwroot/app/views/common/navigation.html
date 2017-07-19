@@ -1,0 +1,58 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+  <div class="sidebar-collapse">
+    <ul side-navigation class="nav metismenu" id="side-menu">
+      <li class="nav-header">
+        <div class="profile-element" uib-dropdown>
+          <a uib-dropdown-toggle href="#">
+            <span class="clear">
+              <span class="block m-t-xs">
+                <strong class="font-bold">{{main.userName}}</strong>
+              </span>
+              <span class="text-muted text-xs block">User Menu<b class="caret"></b></span>
+            </span>
+          </a>
+          <ul uib-dropdown-menu class="animated flipInX m-t-xs">
+            <li><a href="">Logout</a></li>
+          </ul>
+        </div>
+        <div class="logo-element">
+          Vnap
+        </div>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="index.plant"><i class="fa fa-chrome"></i> <span class="nav-label">{{'plant' | stringRes}}</span> </a>
+        <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes('plant')}">
+          <li ui-sref-active="active"><a ui-sref="index.plant"><i class="fa fa-camera-retro"></i> {{'list' | stringRes}}</a></li>
+          <li ui-sref-active="active"><a ui-sref="index.plant-form"><i class="fa fa-cubes"></i> {{'add' | stringRes}}</a></li>
+        </ul>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="index.plant-disease"><i class="fa fa-chrome"></i> <span class="nav-label">{{'plantDisease' | stringRes}}</span> </a>
+        <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes('plant-disease')}">
+          <li ui-sref-active="active"><a ui-sref="index.plant-disease"><i class="fa fa-camera-retro"></i> {{'list' | stringRes}}</a></li>
+          <li ui-sref-active="active"><a ui-sref="index.plant-disease-form"><i class="fa fa-cubes"></i> {{'add' | stringRes}}</a></li>
+        </ul>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="index.solution"><i class="fa fa-chrome"></i> <span class="nav-label">{{'solution' | stringRes}}</span> </a>
+        <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes('solution')}">
+          <li ui-sref-active="active"><a ui-sref="index.solution"><i class="fa fa-camera-retro"></i> {{'list' | stringRes}}</a></li>
+          <li ui-sref-active="active"><a ui-sref="index.solution-form"><i class="fa fa-cubes"></i> {{'add' | stringRes}}</a></li>
+        </ul>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="index.user"><i class="fa fa-chrome"></i> <span class="nav-label">{{'user' | stringRes}}</span> </a>
+        <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes('user')}">
+          <li ui-sref-active="active"><a ui-sref="index.user"><i class="fa fa-camera-retro"></i> {{'list' | stringRes}}</a></li>
+        </ul>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="index.article"><i class="fa fa-chrome"></i> <span class="nav-label">{{'article' | stringRes}}</span> </a>
+        <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes('article')}">
+          <li ui-sref-active="active"><a ui-sref="index.article"><i class="fa fa-camera-retro"></i> {{'list' | stringRes}}</a></li>
+          <li ui-sref-active="active"><a ui-sref="index.article-form"><i class="fa fa-cubes"></i> {{'add' | stringRes}}</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>

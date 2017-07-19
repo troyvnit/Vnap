@@ -2651,7 +2651,6 @@
     <Content Include="wwwroot\dist\views\plant\form.html" />
     <Content Include="wwwroot\dist\views\plant\list.html" />
     <Content Include="wwwroot\favicon.ico" />
-    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\Vnap.pubxml" />
     <None Include="wwwroot\_references.js" />
   </ItemGroup>
@@ -3114,7 +3113,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>47562</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:47562/</IISUrl>
+          <IISUrl>http://localhost:6789/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:6789/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

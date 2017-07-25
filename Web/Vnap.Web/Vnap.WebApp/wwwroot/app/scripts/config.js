@@ -2,20 +2,26 @@
     .config([
         '$stateProvider',
         '$urlRouterProvider',
+        '$locationProvider',
         '$ocLazyLoadProvider',
         'IdleProvider',
-        function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdleProvider) {
+        function ($stateProvider, $urlRouterProvider, $locationProvider, $ocLazyLoadProvider, IdleProvider) {
 
             IdleProvider.idle(5); // in seconds
             IdleProvider.timeout(120); // in seconds
 
-            $urlRouterProvider.otherwise("/index/plant");
+            $locationProvider.html5Mode(true);
             $ocLazyLoadProvider.config({
                 // Set to true if you want to see what and when is dynamically loaded
                 debug: false
             });
 
             $stateProvider
+                .state('login', {
+                    url: "/login",
+                    templateUrl: appBaseUrl + "views/account/login.html",
+                    data: { pageTitle: 'Đăng nhập' }
+                })
                 .state('index', {
                     abstract: true,
                     url: "/index",

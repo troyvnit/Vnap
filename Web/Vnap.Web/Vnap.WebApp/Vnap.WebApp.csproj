@@ -2600,6 +2600,7 @@
     <Content Include="wwwroot\app\styles\patterns\shattered.png" />
     <Content Include="wwwroot\app\styles\patterns\triangular.png" />
     <Content Include="wwwroot\app\styles\style.css" />
+    <Content Include="wwwroot\app\views\account\login.html" />
     <Content Include="wwwroot\app\views\article-details.html" />
     <Content Include="wwwroot\app\views\article.html" />
     <Content Include="wwwroot\app\views\common\content.html" />

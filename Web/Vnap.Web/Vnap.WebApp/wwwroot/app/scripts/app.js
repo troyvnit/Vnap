@@ -4,9 +4,19 @@ var vnap = angular.module('vnap', [
         'ui.bootstrap',                 // Bootstrap
         'oc.lazyLoad',
         'ngIdle',                       // Idle timer
+        'LocalStorageModule',
         'cloudinary'
 ]);
 
 var baseUrl = $('base').attr('href');
-var appBaseUrl = baseUrl + '/';
+var appBaseUrl = baseUrl + 'wwwroot/app/';
 var apiBaseUrl = '/api/';
+
+vnap.constant('ngAuthSettings', {
+    apiServiceBaseUri: baseUrl,
+    clientId: 'Vnap.Web'
+});
+
+vnap.run(['authService', '$window', function (authService, $window) {
+    authService.fillAuthData();
+}]);

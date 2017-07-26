@@ -15,3 +15,7 @@ function MainCtrl($timeout, $state, authService, $scope) {
         $state.go('login');
     }
 }
+
+function NavigationCtrl($timeout, $state, authService, $scope) {
+    
+}

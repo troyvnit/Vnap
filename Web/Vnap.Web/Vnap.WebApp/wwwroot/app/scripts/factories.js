@@ -48,7 +48,7 @@ angular.module('vnap')
             var deferred = $q.defer();
 
             $http.post(serviceBase + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
-                _authentication.isAdmin = response.userRoles === 'Admin' || response.userRoles === 'SuperAdmin';
+                _authentication.isAdmin = response.userRoles.indexOf('SuperAdmin') > -1;
 
                 if (loginData.useRefreshTokens) {
                     localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName, userRole: response.userRoles, isAdmin: _authentication.isAdmin, userInfo: response.userInfo, refreshToken: response.refresh_token, useRefreshTokens: true });

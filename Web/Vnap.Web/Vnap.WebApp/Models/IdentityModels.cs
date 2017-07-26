@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Vnap.Web.DataAccess.Entity;
+using System;
 
 namespace Vnap.WebApp.Models
 {
@@ -14,6 +15,10 @@ namespace Vnap.WebApp.Models
         public string Address { get; set; }
         public string City { get; set; }
         public string Plant { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int Level { get; set; }
+        public DateTime JoinedDate { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {

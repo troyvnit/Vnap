@@ -1,11 +1,13 @@
 'use strict';
 var vnap = angular.module('vnap', [
-        'ui.router',                    // Routing
-        'ui.bootstrap',                 // Bootstrap
-        'oc.lazyLoad',
-        'ngIdle',                       // Idle timer
-        'LocalStorageModule',
-        'cloudinary'
+    'ui.router',                    // Routing
+    'ui.bootstrap',                 // Bootstrap
+    'oc.lazyLoad',
+    'ngIdle',                       // Idle timer
+    'LocalStorageModule',
+    'cloudinary',
+    'validation',
+    'validation.rule'
 ]);
 
 var baseUrl = $('base').attr('href');

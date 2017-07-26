@@ -294,10 +294,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Mappers\AutoMapperConfiguration.cs" />
-    <Compile Include="Migrations\201611010425194_Init.cs" />
-    <Compile Include="Migrations\201611010425194_Init.Designer.cs">
-      <DependentUpon>201611010425194_Init.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -2558,6 +2554,7 @@
     <Content Include="wwwroot\app\scripts\app.js" />
     <Content Include="wwwroot\app\scripts\config.js" />
     <Content Include="wwwroot\app\scripts\controllers.js" />
+    <Content Include="wwwroot\app\scripts\controllers\account\login.js" />
     <Content Include="wwwroot\app\scripts\controllers\article\form.js" />
     <Content Include="wwwroot\app\scripts\controllers\article\list.js" />
     <Content Include="wwwroot\app\scripts\controllers\main.js" />
@@ -3090,11 +3087,6 @@
     <Content Include="wwwroot\dist\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="wwwroot\dist\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="wwwroot\dist\fonts\glyphicons-halflings-regular.woff2" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611010425194_Init.resx">
-      <DependentUpon>201611010425194_Init.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

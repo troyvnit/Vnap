@@ -34,5 +34,13 @@ namespace Vnap.WebApp
                 this.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
         }
+
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
+        {
+            var applicationDbContext = context.Get<ApplicationDbContext>();
+            var applicationUserManager = new ApplicationUserManager(new UserStore<ApplicationUser>(applicationDbContext), options);
+
+            return applicationUserManager;
+        }
     }
 }

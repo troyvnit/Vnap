@@ -11,5 +11,9 @@ namespace Vnap.Web.ViewModels
         public string Address { get; set; }
         public string City { get; set; }
         public string Plant { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int Level { get; set; }
+        public DateTime JoinedDate { get; set; }
     }
 }

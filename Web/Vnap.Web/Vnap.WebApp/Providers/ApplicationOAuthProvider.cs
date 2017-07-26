@@ -10,6 +10,8 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Vnap.WebApp.Models;
+using AutoMapper;
+using Vnap.Web.ViewModels;
 
 namespace Vnap.WebApp.Providers
 {
@@ -31,20 +33,43 @@ namespace Vnap.WebApp.Providers
         {
             var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
 
-            ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
+            ApplicationUser user = await userManager.FindByEmailAsync(context.UserName);
 
             if (user == null)
             {
                 context.SetError("invalid_grant", "The user name or password is incorrect.");
                 return;
             }
+            else
+            {
+                var result = userManager.PasswordHasher.VerifyHashedPassword(user.PasswordHash, context.Password);
+                if(result == PasswordVerificationResult.Failed)
+                {
+                    context.SetError("invalid_grant", "The user name or password is incorrect.");
+                    return;
+                }
+            }
 
             ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager,
                OAuthDefaults.AuthenticationType);
             ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
                 CookieAuthenticationDefaults.AuthenticationType);
-
-            AuthenticationProperties properties = CreateProperties(user.UserName);
+            
+            AuthenticationProperties properties = new AuthenticationProperties(new Dictionary<string, string>
+                {
+                    {
+                        "as:client_id", (context.ClientId == null) ? string.Empty : context.ClientId
+                    },
+                    {
+                        "userName", context.UserName
+                    },
+                    {
+                        "userInfo", Newtonsoft.Json.JsonConvert.SerializeObject(Mapper.Map<UserVM>(user))
+                    },
+                    {
+                        "userRoles", string.Join(";", await userManager.GetRolesAsync(user.Id))
+                    }
+                });
             AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
             context.Validated(ticket);
             context.Request.Context.Authentication.SignIn(cookiesIdentity);

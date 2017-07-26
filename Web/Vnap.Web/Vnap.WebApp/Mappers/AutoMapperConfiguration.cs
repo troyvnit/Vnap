@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Vnap.Web.DataAccess.Entity;
 using Vnap.Web.ViewModels;
+using Vnap.WebApp.Models;
 
 namespace Vnap.Web.Mappers
 {
@@ -48,6 +49,7 @@ namespace Vnap.Web.Mappers
                 CreateMap<Image, ImageVM>();
                 CreateMap<AdvisoryMessage, AdvisoryMessageVM>().ForMember(am => am.ImageUrl, o => o.MapFrom(am => am.ImageUrl.Replace("upload", "upload/a_exif")));
                 CreateMap<Article, ArticleVM>();
+                CreateMap<ApplicationUser, UserVM>();
             }
         }
     }

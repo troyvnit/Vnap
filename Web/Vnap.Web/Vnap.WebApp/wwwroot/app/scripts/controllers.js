@@ -9,4 +9,6 @@ angular.module('vnap')
     .controller('SolutionCtrl', SolutionCtrl)
     .controller('SolutionFormCtrl', SolutionFormCtrl)
     .controller('ArticleCtrl', ArticleCtrl)
-    .controller('ArticleFormCtrl', ArticleFormCtrl);
+    .controller('ArticleFormCtrl', ArticleFormCtrl)
+    .controller('LoginCtrl', LoginCtrl)
+    .controller('NavigationCtrl', NavigationCtrl);

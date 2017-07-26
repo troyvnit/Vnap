@@ -4,7 +4,14 @@
  * @param {object} $rootScope TBD.
  * @param {object} Solution TBD.
  */
-function SolutionFormCtrl($scope, $rootScope, $stateParams, $state, $http, $uibModal, Solution, Upload, cloudinary) {
+function SolutionFormCtrl($scope, $rootScope, $stateParams, $state, $http, $uibModal, Solution, Upload, cloudinary, authService) {
+    this.authentication = authService.authentication;
+
+    if (this.authentication.isAuth && this.authentication.isAdmin) {
+        //Welcome Message
+    } else {
+        $state.go('login');
+    }
 
     $scope.Solution = new Solution();
     $scope.solution = { Id: 0, Images: [] };

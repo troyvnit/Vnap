@@ -23,15 +23,20 @@
                     templateUrl: appBaseUrl + "views/account/login.html",
                     data: { pageTitle: 'Đăng nhập' }
                 })
+                .state('register', {
+                    url: "/register",
+                    templateUrl: appBaseUrl + "views/account/register.html",
+                    data: { pageTitle: 'Đăng ký' }
+                })
                 .state('index', {
                     abstract: true,
                     url: "",
                     templateUrl: appBaseUrl + "views/common/content.html"
                 })
                 .state('index.user', {
-                    url: "/user",
+                    url: "/advisory",
                     templateUrl: appBaseUrl + "views/user/list.html",
-                    data: { pageTitle: 'Danh sách người dùng' },
+                    data: { pageTitle: 'Tư vấn' },
                     resolve: {
                         loadPlugin: function ($ocLazyLoad) {
                             return $ocLazyLoad.load([

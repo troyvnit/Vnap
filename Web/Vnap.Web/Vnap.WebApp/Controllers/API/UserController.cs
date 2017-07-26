@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using Vnap.Web.DataAccess.Entity;
 using Vnap.Web.ViewModels;
 using Vnap.WebApp.Models;
+using System;
 
 namespace Vnap.WebApp.Controllers.API
 {
@@ -23,7 +24,7 @@ namespace Vnap.WebApp.Controllers.API
 
         public IEnumerable<UserVM> GetUsers()
         {
-            IEnumerable<UserVM> users = _userManager.Users.Select(u => new UserVM()
+            IEnumerable<UserVM> users = _userManager.Users.Where(u => u.Level == 3).Select(u => new UserVM()
             {
                 Address = u.Address,
                 City = u.City,
@@ -45,7 +46,9 @@ namespace Vnap.WebApp.Controllers.API
                 Address = userVm.Address,
                 City = userVm.City,
                 Plant = userVm.Plant,
-                Email = $"{userVm.UserName}@vnap.vn"
+                Email = $"{userVm.UserName}@vnap.vn",
+                Level = 3,
+                JoinedDate = DateTime.Now
             };
             var existingUser = await _userManager.FindByNameAsync(user.UserName);
             if (existingUser != null)
@@ -67,6 +70,8 @@ namespace Vnap.WebApp.Controllers.API
                     return null;
                 }
             }
+
+            await _userManager.AddToRoleAsync(user.Id, "User");
             return user;
         }
     }

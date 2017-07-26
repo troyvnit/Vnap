@@ -3,6 +3,9 @@
 
         return function (key) {
             var strings = {
+                'advisory': 'Tư vấn',
+                'advisoryList': 'Quản lý tư vấn',
+                'advisoryListHeader': 'Quản lý tư vấn',
                 'article': 'Bài viết',
                 'articleList': 'Danh sách bài viết',
                 'articleListHeader': 'Quản lý bài viết',
@@ -76,7 +79,8 @@
                 'title': 'Tiêu đề',
                 'content': 'Nội dung',
 
-                'homeLinkText': 'Dashboard'
+                'homeLinkText': 'Dashboard',
+                'createUser': 'Tạo Mod User'
             };
             return strings[key] || key;
         };

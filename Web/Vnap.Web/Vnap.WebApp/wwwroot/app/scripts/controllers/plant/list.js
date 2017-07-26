@@ -4,7 +4,15 @@
  * @param {object} $rootScope TBD.
  * @param {object} Plant TBD.
  */
-function PlantCtrl($scope, $rootScope, $uibModal, Plant) {
+function PlantCtrl($scope, $rootScope, $uibModal, Plant, $state, authService) {
+    this.authentication = authService.authentication;
+
+    if (this.authentication.isAuth && this.authentication.isAdmin) {
+        //Welcome Message
+    } else {
+        $state.go('login');
+    }
+
     $scope.Plant = new Plant();
     $scope.Plant.GetAllPlants();
 

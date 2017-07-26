@@ -27,7 +27,7 @@ function LoginCtrl($scope, $location, $stateParams, $state, authService, ngAuthS
                 $state.go('index.user');
             },
             function (err) {
-                alert('Login failed!', err.error_description, 'error');
+                swal('Login failed!', err.error_description, 'error');
             })
     }
 }

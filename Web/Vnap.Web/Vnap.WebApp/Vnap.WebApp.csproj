@@ -376,6 +376,14 @@
     <Content Include="wwwroot\app\bower_components\angular-bootstrap\ui-bootstrap.min.js">
       <DependentUpon>ui-bootstrap.js</DependentUpon>
     </Content>
+    <Content Include="wwwroot\app\bower_components\angular-local-storage\.gitattributes" />
+    <Content Include="wwwroot\app\bower_components\angular-local-storage\.gitignore" />
+    <Content Include="wwwroot\app\bower_components\angular-local-storage\demo\demo-app.js" />
+    <Content Include="wwwroot\app\bower_components\angular-local-storage\demo\demo-style.css" />
+    <Content Include="wwwroot\app\bower_components\angular-local-storage\demo\demo.html" />
+    <Content Include="wwwroot\app\bower_components\angular-local-storage\dist\angular-local-storage.js" />
+    <Content Include="wwwroot\app\bower_components\angular-local-storage\dist\angular-local-storage.min.js" />
+    <Content Include="wwwroot\app\bower_components\angular-local-storage\index.js" />
     <Content Include="wwwroot\app\bower_components\angular-messages\angular-messages.js" />
     <Content Include="wwwroot\app\bower_components\angular-messages\angular-messages.min.js">
       <DependentUpon>angular-messages.js</DependentUpon>
@@ -412,6 +420,28 @@
     <Content Include="wwwroot\app\bower_components\angular-ui-router\src\view.js" />
     <Content Include="wwwroot\app\bower_components\angular-ui-router\src\viewDirective.js" />
     <Content Include="wwwroot\app\bower_components\angular-ui-router\src\viewScroll.js" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\bundle.js" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\config\karma.conf.angular.1.3.js" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\config\karma.conf.angular.1.4.js" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\demo\demo.js" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\demo\iconmonstr-github-10-icon-128.png" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\demo\main.css" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\dist\angular-validation-rule.js" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\dist\angular-validation-rule.min.js" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\dist\angular-validation.js" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\dist\angular-validation.min.js" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\dist\bundle.js" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\Gruntfile.js" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\index.html" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\main.js" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\package.js" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\src\module.js" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\src\provider.js" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\src\reset.directive.js" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\src\rule.js" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\src\submit.directive.js" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\src\validator.directive.js" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\webpack.config.js" />
     <Content Include="wwwroot\app\bower_components\angular\angular-csp.css" />
     <Content Include="wwwroot\app\bower_components\angular\angular.js" />
     <Content Include="wwwroot\app\bower_components\angular\angular.min.js">
@@ -506,6 +536,28 @@
       <DependentUpon>build.less</DependentUpon>
     </Content>
     <Content Include="wwwroot\app\bower_components\awesome-bootstrap-checkbox\demo\index.html" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\.gitignore" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\assets\bootstrap-sweetalert.png" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\assets\docs.css" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\assets\thumbs-up.jpg" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\dev\gulpfile-wrap-template.js" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\dev\ie9.css" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\dev\loader-animation.css" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\dev\modules\default-params.js" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\dev\modules\handle-click.js" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\dev\modules\handle-dom.js" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\dev\modules\handle-key.js" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\dev\modules\handle-swal-dom.js" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\dev\modules\injected-html.js" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\dev\modules\set-params.js" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\dev\modules\utils.js" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\dev\sweetalert.es6.js" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\dist\sweetalert.css" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\dist\sweetalert.js" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\dist\sweetalert.min.js" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\index.html" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\test\index.html" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\test\tests.js" />
     <Content Include="wwwroot\app\bower_components\bootstrap\dist\css\bootstrap-theme.css" />
     <Content Include="wwwroot\app\bower_components\bootstrap\dist\css\bootstrap-theme.min.css">
       <DependentUpon>bootstrap-theme.css</DependentUpon>
@@ -2554,6 +2606,7 @@
     <Content Include="wwwroot\app\scripts\app.js" />
     <Content Include="wwwroot\app\scripts\config.js" />
     <Content Include="wwwroot\app\scripts\controllers.js" />
+    <Content Include="wwwroot\app\scripts\controllers\account\register.js" />
     <Content Include="wwwroot\app\scripts\controllers\account\login.js" />
     <Content Include="wwwroot\app\scripts\controllers\article\form.js" />
     <Content Include="wwwroot\app\scripts\controllers\article\list.js" />
@@ -2597,6 +2650,7 @@
     <Content Include="wwwroot\app\styles\patterns\shattered.png" />
     <Content Include="wwwroot\app\styles\patterns\triangular.png" />
     <Content Include="wwwroot\app\styles\style.css" />
+    <Content Include="wwwroot\app\views\account\register.html" />
     <Content Include="wwwroot\app\views\account\login.html" />
     <Content Include="wwwroot\app\views\article-details.html" />
     <Content Include="wwwroot\app\views\article.html" />
@@ -2650,6 +2704,38 @@
     <Content Include="wwwroot\dist\views\plant\list.html" />
     <Content Include="wwwroot\favicon.ico" />
     <None Include="Properties\PublishProfiles\Vnap.pubxml" />
+    <Content Include="wwwroot\app\bower_components\angular-local-storage\.bower.json" />
+    <Content Include="wwwroot\app\bower_components\angular-local-storage\.bowerrc" />
+    <Content Include="wwwroot\app\bower_components\angular-local-storage\.editorconfig" />
+    <Content Include="wwwroot\app\bower_components\angular-local-storage\.travis.yml" />
+    <Content Include="wwwroot\app\bower_components\angular-local-storage\bower.json" />
+    <Content Include="wwwroot\app\bower_components\angular-local-storage\CHANGELOG.md" />
+    <Content Include="wwwroot\app\bower_components\angular-local-storage\dist\angular-local-storage.min.js.map" />
+    <Content Include="wwwroot\app\bower_components\angular-local-storage\LICENSE" />
+    <Content Include="wwwroot\app\bower_components\angular-local-storage\package.json" />
+    <Content Include="wwwroot\app\bower_components\angular-local-storage\README.md" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\.bower.json" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\API.md" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\bower.json" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\CHANGELOG.md" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\CONTRIBUTING.md" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\package.json" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\Q&amp;A.md" />
+    <Content Include="wwwroot\app\bower_components\angular-validation\README.md" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\.bower.json" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\.editorconfig" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\.jshintrc" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\.travis.yml" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\bootstrap\mixins.less" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\bootstrap\variables.less" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\bower.json" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\Gruntfile.coffee" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\lib\sweet-alert-animations.less" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\lib\sweet-alert-combine.less" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\lib\sweet-alert.less" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\LICENSE" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\package.json" />
+    <Content Include="wwwroot\app\bower_components\bootstrap-sweetalert\README.md" />
     <None Include="wwwroot\_references.js" />
   </ItemGroup>
   <ItemGroup>

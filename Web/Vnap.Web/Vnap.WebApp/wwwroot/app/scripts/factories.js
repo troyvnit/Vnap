@@ -15,6 +15,7 @@ angular.module('vnap')
             userName: "",
             userRole: "",
             isAdmin: false,
+            isMod: false,
             useRefreshTokens: false,
             userInfo: {}
         };
@@ -29,9 +30,11 @@ angular.module('vnap')
 
         var _saveRegistration = function (registration) {
 
-            _logOut();
-
-            return $http.post(serviceBase + 'api/account/register', registration).then(function (response) {
+            var authData = localStorageService.get('authorizationData');
+            if (!authData) {
+                alert('Chỉ có admin được tạo tài khoản Mod!')
+            }
+            return $http.post(serviceBase + 'api/account/register', registration, { headers: { 'Authorization': 'Bearer ' + authData.token } }).then(function (response) {
                 return response;
             });
 
@@ -49,12 +52,13 @@ angular.module('vnap')
 
             $http.post(serviceBase + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
                 _authentication.isAdmin = response.userRoles.indexOf('SuperAdmin') > -1;
+                _authentication.isMod = response.userRoles.indexOf('Mod') > -1;
 
                 if (loginData.useRefreshTokens) {
-                    localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName, userRole: response.userRoles, isAdmin: _authentication.isAdmin, userInfo: response.userInfo, refreshToken: response.refresh_token, useRefreshTokens: true });
+                    localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName, userRole: response.userRoles, isAdmin: _authentication.isAdmin, isMod: _authentication.isMod, userInfo: response.userInfo, refreshToken: response.refresh_token, useRefreshTokens: true });
                 }
                 else {
-                    localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName, userRole: response.userRoles, isAdmin: _authentication.isAdmin, userInfo: response.userInfo, refreshToken: "", useRefreshTokens: false });
+                    localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName, userRole: response.userRoles, isAdmin: _authentication.isAdmin, isMod: _authentication.isMod, userInfo: response.userInfo, refreshToken: "", useRefreshTokens: false });
                 }
 
                 _authentication.isAuth = true;
@@ -92,7 +96,8 @@ angular.module('vnap')
                 _authentication.isAuth = true;
                 _authentication.userName = authData.userName;
                 _authentication.userRole = authData.userRoles;
-                _authentication.isAdmin = authData.isAdmin;
+                _authentication.isAdmin = authData.isAdmin; 
+                _authentication.isMod = authData.isMod;
                 _authentication.useRefreshTokens = authData.useRefreshTokens;
                 _authentication.userInfo = authData.userInfo ? JSON.parse(authData.userInfo) : {};
             }

@@ -4,7 +4,15 @@
  * @param {object} $rootScope TBD.
  * @param {object} Solution TBD.
  */
-function SolutionCtrl($scope, $rootScope, $uibModal, Solution) {
+function SolutionCtrl($scope, $rootScope, $uibModal, Solution, $state, authService) {
+    this.authentication = authService.authentication;
+
+    if (this.authentication.isAuth && this.authentication.isAdmin) {
+        //Welcome Message
+    } else {
+        $state.go('login');
+    }
+
     $scope.Solution = new Solution();
     $scope.Solution.GetAllSolutions();
 

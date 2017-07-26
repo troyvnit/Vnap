@@ -24,18 +24,6 @@ namespace Vnap.WebApp.Migrations
 
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
 
-            var user = new ApplicationUser()
-            {
-                UserName = "vnap.vn@gmail.com",
-                Email = "vnap.vn@gmail.com",
-                EmailConfirmed = true,
-                FirstName = "Vnap",
-                LastName = "dotVn",
-                Level = 1,
-                JoinedDate = DateTime.UtcNow.AddYears(-3)
-            };
-
-            manager.Create(user, "Password@1");
 
             if (roleManager.Roles.Count() == 0)
             {
@@ -45,9 +33,26 @@ namespace Vnap.WebApp.Migrations
                 roleManager.Create(new IdentityRole { Name = "User" });
             }
 
-            var adminUser = manager.FindByName("vnap.vn@gmail.com");
+            var admin = manager.FindByEmail("vnap.vn@gmail.com");
+            if (admin == null)
+            {
+                var user = new ApplicationUser()
+                {
+                    UserName = "vnap.vn@gmail.com",
+                    Email = "vnap.vn@gmail.com",
+                    EmailConfirmed = true,
+                    FirstName = "Vnap",
+                    LastName = "dotVn",
+                    Level = 1,
+                    JoinedDate = DateTime.UtcNow.AddYears(-3)
+                };
 
-            manager.AddToRoles(adminUser.Id, new string[] { "SuperAdmin", "Admin" });
+                manager.Create(user, "Password@1");
+
+                var adminUser = manager.FindByName("vnap.vn@gmail.com");
+
+                manager.AddToRoles(adminUser.Id, new string[] { "SuperAdmin", "Admin" });
+            }
         }
     }
 }

@@ -4,7 +4,15 @@
  * @param {object} $rootScope TBD.
  * @param {object} User TBD.
  */
-function UserCtrl($scope, $rootScope, $uibModal, User, Upload, cloudinary) {
+function UserCtrl($scope, $rootScope, $uibModal, User, Upload, cloudinary, $state, authService) {
+    this.authentication = authService.authentication;
+
+    if (this.authentication.isAuth && (this.authentication.isAdmin || this.authentication.isMod)) {
+        //Welcome Message
+    } else {
+        $state.go('login');
+    }
+
     $scope.User = new User();
     $scope.User.GetAllUsers(function (data) {
         $scope.loadAdvisoryMessages(data[0].UserName);

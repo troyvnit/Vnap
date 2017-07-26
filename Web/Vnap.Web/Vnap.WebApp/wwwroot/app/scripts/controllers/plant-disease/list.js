@@ -4,7 +4,15 @@
  * @param {object} $rootScope TBD.
  * @param {object} PlantDisease TBD.
  */
-function PlantDiseaseCtrl($scope, $rootScope, $uibModal, PlantDisease) {
+function PlantDiseaseCtrl($scope, $rootScope, $uibModal, PlantDisease, $state, authService) {
+    this.authentication = authService.authentication;
+
+    if (this.authentication.isAuth && this.authentication.isAdmin) {
+        //Welcome Message
+    } else {
+        $state.go('login');
+    }
+
     $scope.PlantDisease = new PlantDisease();
     $scope.PlantDisease.GetAllPlantDiseases();
 

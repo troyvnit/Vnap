@@ -4,7 +4,14 @@
  * @param {object} $rootScope TBD.
  * @param {object} Article TBD.
  */
-function ArticleFormCtrl($scope, $rootScope, $stateParams, $state, Article, Upload, cloudinary) {
+function ArticleFormCtrl($scope, $rootScope, $stateParams, $state, Article, Upload, cloudinary, authService) {
+    this.authentication = authService.authentication;
+
+    if (this.authentication.isAuth && this.authentication.isAdmin) {
+        //Welcome Message
+    } else {
+        $state.go('login');
+    }
 
     $scope.Article = new Article();
     $scope.article = { Id: 0 };

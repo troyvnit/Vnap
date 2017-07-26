@@ -4,7 +4,14 @@
  * @param {object} $rootScope TBD.
  * @param {object} Plant TBD.
  */
-function PlantFormCtrl($scope, $rootScope, $stateParams, $state, Plant, Upload, cloudinary) {
+function PlantFormCtrl($scope, $rootScope, $stateParams, $state, Plant, Upload, cloudinary, authService) {
+    this.authentication = authService.authentication;
+
+    if (this.authentication.isAuth && this.authentication.isAdmin) {
+        //Welcome Message
+    } else {
+        $state.go('login');
+    }
 
     $scope.Plant = new Plant();
     $scope.plant = { Id: 0 };

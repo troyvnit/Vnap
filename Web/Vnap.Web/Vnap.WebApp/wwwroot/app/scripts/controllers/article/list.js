@@ -4,7 +4,15 @@
  * @param {object} $rootScope TBD.
  * @param {object} Article TBD.
  */
-function ArticleCtrl($scope, $rootScope, $uibModal, Article) {
+function ArticleCtrl($scope, $rootScope, $uibModal, Article, $state, authService) {
+    this.authentication = authService.authentication;
+
+    if (this.authentication.isAuth && this.authentication.isAdmin) {
+        //Welcome Message
+    } else {
+        $state.go('login');
+    }
+
     $scope.Article = new Article();
     $scope.Article.GetAllArticles();
 

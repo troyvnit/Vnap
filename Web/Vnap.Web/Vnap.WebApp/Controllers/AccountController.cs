@@ -319,7 +319,6 @@ namespace Vnap.WebApp.Controllers
         }
 
         // POST api/Account/Register
-        [AllowAnonymous]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
@@ -328,7 +327,7 @@ namespace Vnap.WebApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, JoinedDate = DateTime.Now, Level = 2 };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
@@ -336,6 +335,8 @@ namespace Vnap.WebApp.Controllers
             {
                 return GetErrorResult(result);
             }
+
+            UserManager.AddToRoles(user.Id, new string[] { "Mod" });
 
             return Ok();
         }

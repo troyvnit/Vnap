@@ -47,6 +47,12 @@
 			 */
 			this.$el = (F.is.jq(element) ? element : $(element)).first(); // ensure one table, one instance
 			/**
+			 * A loader jQuery instance
+			 * @instance
+			 * @type {jQuery}
+			 */
+			this.$loader = $('<div/>', { 'class': 'footable-loader' }).append($('<span/>', {'class': 'fooicon fooicon-loader'}));
+			/**
 			 * The options for the plugin. This is a merge of user defined options and the default options.
 			 * @instance
 			 * @type {object}
@@ -109,22 +115,23 @@
 		 */
 		_construct: function(ready){
 			var self = this;
-			this._preinit().then(function(){
-				return self._init();
-			}).always(function(arg){
-				if (F.is.error(arg)){
-					console.error('FooTable: unhandled error thrown during initialization.', arg);
-				} else {
+			return this._preinit().then(function(){
+				return self._init().then(function(){
 					/**
-					 * The postinit.ft.table event is raised after the plugin has been initialized and the table drawn.
+					 * The ready.ft.table event is raised after the plugin has been initialized and the table drawn.
 					 * Calling preventDefault on this event will stop the ready callback being executed.
-					 * @event FooTable.Table#"postinit.ft.table"
+					 * @event FooTable.Table#"ready.ft.table"
 					 * @param {jQuery.Event} e - The jQuery.Event object for the event.
 					 * @param {FooTable.Table} ft - The instance of the plugin raising the event.
 					 */
 					return self.raise('ready.ft.table').then(function(){
 						if (F.is.fn(ready)) ready.call(self, self);
 					});
+				});
+			}).always(function(arg){
+				self.$el.show();
+				if (F.is.error(arg)){
+					console.error('FooTable: unhandled error thrown during initialization.', arg);
 				}
 			});
 		},
@@ -146,7 +153,7 @@
 			 * @param {object} data - The jQuery data object from the root table element.
 			 */
 			return this.raise('preinit.ft.table', [self.data]).then(function(){
-				var classes = self.$el.attr('class').match(/\S+/g);
+				var classes = (self.$el.attr('class') || '').match(/\S+/g) || [];
 
 				self.o.ajax = F.checkFnValue(self, self.data.ajax, self.o.ajax);
 				self.o.stopPropagation = F.is.boolean(self.data.stopPropagation)
@@ -156,12 +163,9 @@
 				for (var i = 0, len = classes.length; i < len; i++){
 					if (!F.str.startsWith(classes[i], 'footable')) self.classes.push(classes[i]);
 				}
-				var $loader = $('<div/>', { 'class': 'footable-loader' }).append($('<span/>', {'class': 'fooicon fooicon-loader'}));
-				self.$el.hide().after($loader);
-				return self.execute(false, false, 'preinit', self.data).always(function(){
-					self.$el.show();
-					$loader.remove();
-				});
+
+				self.$el.hide().after(self.$loader);
+				return self.execute(false, false, 'preinit', self.data);
 			});
 		},
 		/**
@@ -232,7 +236,9 @@
 				return self.execute(true, true, 'destroy').then(function () {
 					self.$el.removeData('__FooTable__').removeClass('footable-' + self.id);
 					if (F.is.hash(self.o.on)) self.$el.off(self.o.on);
+					$(window).off('resize.ft'+self.id, self._onWindowResize);
 					self.initialized = false;
+					F.instances[self.id] = null;
 				});
 			}).fail(function(err){
 				if (F.is.error(err)){
@@ -291,6 +297,13 @@
 		 */
 		draw: function () {
 			var self = this;
+
+			// Clone the current table and insert it into the original's place
+			var $elCopy = self.$el.clone().insertBefore(self.$el);
+
+			// Detach `self.$el` from the DOM, retaining its event handlers
+			self.$el.detach();
+
 			// when drawing the order that the components are executed is important so chain the methods but use promises to retain async safety.
 			return self.execute(false, true, 'predraw').then(function(){
 				/**
@@ -324,6 +337,10 @@
 				if (F.is.error(err)){
 					console.error('FooTable: unhandled error thrown during a draw operation.', err);
 				}
+			}).always(function(){
+				// Replace the copy that we added above with the modified `self.$el`
+				$elCopy.replaceWith(self.$el);
+				self.$loader.remove();
 			});
 		},
 		/**

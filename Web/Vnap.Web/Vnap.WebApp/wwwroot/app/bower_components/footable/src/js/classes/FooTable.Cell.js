@@ -121,11 +121,12 @@
 		collapse: function(){
 			if (!this.created) return;
 			this.$detail.children('th').html(this.column.title);
-			this.$detail.children('td').first()
-				.attr('class', this.$el.attr('class'))
-				.attr('style', this.$el.attr('style'))
+			this.$el.clone()
+				.attr('id', this.$el.attr('id') ? this.$el.attr('id') + '-detail' : undefined)
 				.css('display', 'table-cell')
-				.append(this.$el.contents().detach());
+				.html('')
+				.append(this.$el.contents().detach())
+				.replaceAll(this.$detail.children('td').first());
 
 			if (!F.is.jq(this.$detail.parent()))
 				this.$detail.appendTo(this.row.$details.find('.footable-details > tbody'));
@@ -168,7 +169,7 @@
 		 * @this FooTable.Cell
 		 */
 		format: function(value){
-			return this.column.formatter.call(this.column, value, this.ft.o);
+			return this.column.formatter.call(this.column, value, this.ft.o, this.row.value);
 		},
 		/**
 		 * Allows easy access to getting or setting the cell's value. If the value is set all associated properties are also updated along with the actual element.
@@ -176,10 +177,11 @@
 		 * @instance
 		 * @param {*} [value] - The value to set for the cell. If not supplied the current value of the cell is returned.
 		 * @param {boolean} [redraw=true] - Whether or not to redraw the row once the value has been set.
+		 * @param {boolean} [redrawSelf=true] - Whether or not to redraw the cell itself once the value has been set, if `false` this will override the supplied `redraw` value and prevent the row from redrawing as well.
 		 * @returns {(*|undefined)}
 		 * @this FooTable.Cell
 		 */
-		val: function(value, redraw){
+		val: function(value, redraw, redrawSelf){
 			if (F.is.undef(value)){
 				// get
 				return this.value;
@@ -195,7 +197,8 @@
 			this.classes = F.is.array(this.o.classes) ? this.o.classes : (F.is.string(this.o.classes) ? this.o.classes.match(/\S+/g) : []);
 			this.style = F.is.hash(this.o.style) ? this.o.style : (F.is.string(this.o.style) ? F.css2json(this.o.style) : {});
 
-			if (this.created){
+			redrawSelf = F.is.boolean(redrawSelf) ? redrawSelf : true;
+			if (this.created && redrawSelf){
 				this.$el.data('value', this.value).empty();
 
 				var $detail = this.$detail.children('td').first().empty(),

@@ -58,6 +58,10 @@
           <ul class="dropdown-menu ">
             
             <li>
+              <a href="FooTable.ArrayColumn.html">FooTable.ArrayColumn</a>
+            </li>
+            
+            <li>
               <a href="FooTable.Breakpoint.html">FooTable.Breakpoint</a>
             </li>
             
@@ -106,6 +110,10 @@
             </li>
             
             <li>
+              <a href="FooTable.Export.html">FooTable.Export</a>
+            </li>
+            
+            <li>
               <a href="FooTable.Filter.html">FooTable.Filter</a>
             </li>
             
@@ -119,6 +127,10 @@
             
             <li>
               <a href="FooTable.NumberColumn.html">FooTable.NumberColumn</a>
+            </li>
+            
+            <li>
+              <a href="FooTable.ObjectColumn.html">FooTable.ObjectColumn</a>
             </li>
             
             <li>
@@ -348,6 +360,10 @@
             </li>
             
             <li>
+              <a href="FooTable.html#.event:Table%2522ready.ft.table%2522">FooTable.event:Table"ready.ft.table"</a>
+            </li>
+            
+            <li>
               <a href="FooTable.html#.event:Table%2522resize.ft.table%2522">FooTable.event:Table"resize.ft.table"</a>
             </li>
             
@@ -399,13 +415,78 @@
 
     <section class="readme-section">
         <article><h1>FooTable V3</h1><p>This is a complete re-write of the plugin. There is no upgrade path from V2 to V3 at present as the options and the way the code is written are inherently different. Please check out the full documentation for V3 found in the docs folder or by viewing it <a href="http://fooplugins.github.io/FooTable/">online here</a>.</p>
-<h1>Changelog</h1><h3>x.x.x - Develop Branch</h3><ul>
-<li>Added the &quot;breakpoint&quot; class to the table when columns are hidden.</li>
+<h3>Contributors</h3><p>Pull requests need to be made against the <a href="https://github.com/fooplugins/FooTable/tree/develop">develop branch</a> as a new feature. I've switched to using a GitFlow process with this repository to try keep things organized a bit more. It makes it easier for me to test and make changes to submitted pull requests before merging the feature into the develop branch. The master branch now only contains release versions of the code.</p>
+<h1>Changelog</h1><h3>3.1.6</h3><ul>
+<li>Fixed a critical issue with the new export feature throwing an error if Moment.js and the DateColumn were not included in the page.</li>
+</ul>
+<h3>3.1.5</h3><ul>
+<li>Added two new events <code>expanded.ft.row</code> and <code>collapsed.ft.row</code> that occur after there complementary <code>expand.ft.row</code> and <code>collapse.ft.row</code> events.</li>
+<li>Added a new <code>FooTable.Export</code> component which exposes two primary methods on the <code>FooTable.Table</code> object, <code>.toJSON()</code> and <code>.toCSV()</code>.</li>
+<li>Added a new <code>array</code> column type to make rendering JavaScript arrays as cell contents easier.</li>
+<li>Added a new <code>object</code> column type to make rendering JavaScript objects containing multiple properties as cell contents easier.</li>
+<li>Added a new <code>container</code> option to the filtering component. This option allows you to provide a selector to specify where the filtering form is rendered. The selector should match only a single element and if multiple are found only the first is used.</li>
+<li>Added a new <code>container</code> option to the paging component. This option allows you to provide a selector to specify where the paging UI is rendered. The selector should match only a single element and if multiple are found only the first is used.</li>
+<li>Added <code>redrawSelf</code> as an extra parameter to the <code>FooTable.Cell#val(value, redraw, redrawSelf)</code> and <code>FooTable.Row#val(value, redraw, redrawSelf)</code> methods. This parameter dictates whether the row or cell updates its' own DOM when a value is set.</li>
+<li>Updated the <code>FooTable.Paging#pageSize</code> method to also accept string values. If the parameter is not supplied or is not a valid number the current page size is returned.</li>
+<li>Updated the <code>FooTable.Filtering#filter</code> method to accept a single boolean param simply called <code>focus</code>, if supplied and true the default search input receives focus after the component performs a filter operation. This new param is used internally when auto applying a query after a user types in the search input, or clicks the search/clear buttons. This behavior can be disabled by setting the new <code>filtering.focus</code> option to <code>false</code>.</li>
+<li>Updated the <code>.formatter()</code> function of all column types to now accept three parameters; <code>value</code>, <code>options</code> and <code>rowData</code>. <code>value</code> and <code>options</code> have always been available, the new addition is the <code>rowData</code> parameter which is an object containing the current rows' parsed values, the properties of this object match the names of the columns for the current table, if no names are specified the properties will be <code>col1</code>, <code>col2</code>, etc.</li>
+<li>Updated the <code>FooTable.HTMLColumn#sortValue</code> method to offload additional parsing to its <code>.parser()</code> method.</li>
+<li>Fixed an issue in the sorting component where values in a number column supplied as strings were being sorted as such and not as numbers as they should.</li>
+<li>Fixed an issue with the <code>FooTable.NumberColumn</code> where it was converting negative numbers to positive when parsing values directly from the DOM.</li>
+<li>Fixed the <code>FooTable.Table#_construct</code> method which was not returning a promise as it should have been doing.</li>
+<li>Fixes memory leak when destroying the table, properties that were holding onto references should now be cleared.</li>
+</ul>
+<hr>
+<h3>3.1.4</h3><ul>
+<li>Updated the <code>FooTable.Table#draw</code> method to prevent unnecessary browser reflows and hide an unstyled flash of content during the initial loading of the table. (@jleider &amp; @mrdziuban)</li>
+<li>Updated the <code>FooTable.DateColumn#formatter</code> method to perform a check for invalid dates and return an empty string instead of <code>&quot;Invalid Date&quot;</code>. (@jnimety)</li>
+<li>Updated the <code>FooTable.Cell#collapse</code> method to copy all attributes from the original element to the one displayed in the details row. If the element has an ID, the copied version is suffixed with <code>&quot;-detail&quot;</code> to avoid duplicates. (@mrdziuban)</li>
+<li>Updated the <code>FooTable.Column#parser</code> method to use jQuery's <code>.html()</code> method instead of <code>.text()</code> as the latter was decoding HTML entities which were then reinserted into the DOM which opened up the possibility of XSS.</li>
+<li>Removed the <code>FooTable.Paging#_countFormat</code> private method and replaced it with a new <code>FooTable.Paging#format( string )</code> method to make custom paging UI's simpler to implement.</li>
+<li>Fixed an issue with column classes and styles supplied through the options not being applied to the actual column header <code>TH</code> element.</li>
+</ul>
+<hr>
+<h3>3.1.3</h3><ul>
+<li>Added a new <code>dropdownTitle</code> option to the filtering component. This options specifies a title to display at the top of the column select dropdown.</li>
+<li>Added a new <code>exactMatch</code> option to the filtering component.</li>
+<li>Added a new utility method <code>FooTable.str.containsExact(string, match, ignoreCase)</code>.</li>
+<li>Added a class <code>footable-filtering-search</code> to the <code>form-group</code> of the built in search input for the filtering component.</li>
+<li>Added <code>footable-first-visible</code> and <code>footable-last-visible</code> classes to all cells (including headers) in either the first or last visible columns respectively.</li>
+<li>Updated the <code>min</code> option default value from <code>3</code> to <code>1</code> for the filtering component.</li>
+<li>Updated the load priority for rows and columns supplied via options or ajax load, they now take precedence over those supplied through the DOM to work around issues with the plugin being reinitialized multiple times on the same element.</li>
+<li>Fixed an issue in the <code>FooTable.Query</code> object where phrases were not being matched correctly.</li>
+<li>Fixed filtering component not properly clearing filters when the search input is cleared using backspace or delete.</li>
+<li>Fixed the resize event not being removed when the plugin is destroyed.</li>
+<li>Fixed an issue with unexpected sorting and filtering results if the <code>sortValue</code> and <code>filterValue</code> attributes contained a falsy value. The values are now subject to a strict undefined check before being passed off.</li>
+<li>Fixed an issue with the <code>date</code> column type not sorting it's values as expected.</li>
+</ul>
+<hr>
+<h3>3.1.2</h3><ul>
+<li>Added <code>sortValue</code> column option. This option allows you to supply your own function to retrieve the sort value for a cell.</li>
+<li>Updated filtering component internals to clean things up a bit.</li>
+<li>Updated filtering component search input to trigger a filtering operation on paste.</li>
+<li>Updated <code>FooTable.Filtering#addFilter</code> method to accept an object or <code>FooTable.Filter</code> as the first argument to make custom filters easier to implement.</li>
+<li>Updated filtering <code>preinit</code> and <code>init</code> to return a promise to make custom filters easier to implement.</li>
+<li>Updated <code>FooTable.Filter</code> to accept a <code>FooTable.Query</code> as the query parameter along with the original plain string.</li>
+<li>Updated paging component to expose some previously private properties to make setting a custom count label element easier.</li>
+<li>Fixed issue where the filtering components <code>min</code> option was not being applied.</li>
+<li>Fixed the paging components' <code>countFormat</code> option placeholder <code>{TR}</code> to correctly reflect filtered rows.</li>
+<li>Fixed preinit unhandled exception if the <code>table</code> the plugin is initialized on has no <code>class</code> attribute.</li>
+<li>Fixed issue with the individual components .ZIP missing the <code>footable.core.bootstrap.min.css</code> and <code>footable.core.standalone.min.css</code> minified files.</li>
+</ul>
+<hr>
+<h3>3.1.1</h3><ul>
+<li>Added the <code>breakpoint</code> class to the table when columns are hidden.</li>
+<li>Added an internal key used as part of the storage keys generated by the state component. Can be changed if an update breaks backwards compatibility.</li>
+<li>Added the <code>hidden</code> option that can be used for filters. When set to true the filter is always applied to the table, can not be cleared unless removed using the <code>FooTable.Filtering#removeFilter()</code> method and they will not effect the default UI search/clear buttons.</li>
 <li>Updated some utility functions with additional parameter checking to avoid unhandled errors under certain scenarios.</li>
 <li>Updated the <code>FooTable.Filtering#addFilter()</code> method to expose the last three parameters of the <code>FooTable.Filter</code> constructor; ignoreCase, connectors and space.</li>
 <li>Fixed an issue when reinitializing the plugin for a second time on a table after it's DOM had been modified by a 3rd party.</li>
 <li>Fixed an issue where the <code>FooTable.Filtering#draw()</code> method was not setting the button to the clear icon if the filter supplied was not the default.</li>
+<li>Fixed state component clearing filters supplied through options if the state value was an empty array.</li>
+<li>Fixed an issue with the incorrect sort icon appearing if a column was set to just <code>sorted=true</code> without supplying a direction.</li>
 </ul>
+<hr>
 <h3>3.1.0</h3><ul>
 <li>Added a new state component that handles the page number, sorted column and any filters applied across sessions.</li>
 <li>Added in the ability to toggle the visibility of the various editing component buttons.</li>
@@ -489,7 +570,7 @@
           
     <span class="jsdoc-message">
     Documentation generated by <a href="https://github.com/jsdoc3/jsdoc" target="_blank">JSDoc 3.4.1</a>
-    on 2016-09-16T04:23:05+02:00
+    on 2017-07-18T22:57:29+02:00
     </span>
         </footer>
       </div>

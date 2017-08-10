@@ -1,0 +1,112 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html ng-app="vnap">
+<head>
+  <base href='@Url.Content("~/")'>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Page title set in pageTitle directive -->
+  <title page-title></title>
+
+  <!-- Google Open Sans -->
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+
+  <!-- build:css(.) styles/vendor.css -->
+  <!-- bower:css -->
+  <!-- Font awesome -->
+  <link href="wwwroot/app/bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet">
+
+  <!-- Bootstrap -->
+  <link href="wwwroot/app/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="wwwroot/app/bower_components/bootstrap-sweetalert/dist/sweetalert.css" rel="stylesheet">
+
+  <!-- Main Inspinia CSS files -->
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css({.tmp,app}) styles/style.css -->
+  <link href="wwwroot/app/styles/animate.css" rel="stylesheet">
+  <link href="wwwroot/app/styles/style.css" rel="stylesheet">
+  <!-- endbuild -->
+</head>
+
+<!-- ControllerAs syntax -->
+<!-- Main controller with serveral data used in Inspinia theme on diferent view -->
+<body>
+
+  <div id="app" ui-view></div>
+
+  <!-- jQuery and Bootstrap -->
+  <script src="wwwroot/app/bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="wwwroot/app/bower_components/jquery-ui/ui/jquery-ui.custom.js"></script>
+  <script src="wwwroot/app/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="wwwroot/app/bower_components/bootstrap-sweetalert/dist/sweetalert.min.js"></script>
+
+  <!-- MetsiMenu -->
+  <script src="wwwroot/app/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+  <!-- SlimScroll -->
+  <script src="wwwroot/app/bower_components/slimScroll/jquery.slimscroll.min.js"></script>
+
+  <!-- Angular scripts-->
+  <script src="wwwroot/app/bower_components/angular/angular.min.js"></script>
+  <script src="wwwroot/app/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script src="wwwroot/app/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
+  <!-- Angular Dependiences -->
+  <!-- Cloudianry api -->
+  <script src="wwwroot/app/bower_components/lodash/lodash.js"></script>
+  <script src="wwwroot/app/bower_components/cloudinary-core/cloudinary-core.js"></script>
+  <script src="wwwroot/app/bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
+  <script src="wwwroot/app/bower_components/cloudinary_ng/js/angular.cloudinary.js"></script>
+  <script src="wwwroot/app/bower_components/ng-idle/angular-idle.min.js"></script>
+  <script src="wwwroot/app/bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
+  <script src="wwwroot/app/bower_components/angular-validation/dist/angular-validation.min.js"></script>
+  <script src="wwwroot/app/bower_components/angular-validation/dist/angular-validation-rule.min.js"></script>
+  <!--                      -->
+  <!--                      -->
+  <!--                      -->
+  <!-- endbuild -->
+  <!--custom scripts-->
+  <script src="wwwroot/app/scripts/vnap.js"></script>
+
+  <!--main app scripts-->
+  <script src="wwwroot/app/scripts/app.js"></script>
+  <script src="wwwroot/app/scripts/config.js"></script>
+  <script src="wwwroot/app/scripts/directives.js"></script>
+  <script src="wwwroot/app/scripts/filters.js"></script>
+
+  <!--Service scripts-->
+  <script src="wwwroot/app/scripts/services/article.js"></script>
+  <script src="wwwroot/app/scripts/services.js"></script>
+
+  <!--Factory scripts-->
+  <script src="wwwroot/app/scripts/factories/article.js"></script>
+  <script src="wwwroot/app/scripts/factories/user.js"></script>
+  <script src="wwwroot/app/scripts/factories/plant.js"></script>
+  <script src="wwwroot/app/scripts/factories/plant-disease.js"></script>
+  <script src="wwwroot/app/scripts/factories/solution.js"></script>
+  <script src="wwwroot/app/scripts/factories/article.js"></script>
+  <script src="wwwroot/app/scripts/factories.js"></script>
+
+  <!--Controller scripts-->
+  <script src="wwwroot/app/scripts/controllers/main.js"></script>
+  <script src="wwwroot/app/scripts/controllers/user/list.js"></script>
+  <script src="wwwroot/app/scripts/controllers/plant/list.js"></script>
+  <script src="wwwroot/app/scripts/controllers/plant/form.js"></script>
+  <script src="wwwroot/app/scripts/controllers/plant-disease/list.js"></script>
+  <script src="wwwroot/app/scripts/controllers/plant-disease/form.js"></script>
+  <script src="wwwroot/app/scripts/controllers/solution/list.js"></script>
+  <script src="wwwroot/app/scripts/controllers/solution/form.js"></script>
+  <script src="wwwroot/app/scripts/controllers/article/list.js"></script>
+  <script src="wwwroot/app/scripts/controllers/article/form.js"></script>
+  <script src="wwwroot/app/scripts/controllers/account/login.js"></script>
+  <script src="wwwroot/app/scripts/controllers/account/register.js"></script>
+  <script src="wwwroot/app/scripts/controllers.js"></script>
+
+</body>
+</html>
+

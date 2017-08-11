@@ -168,7 +168,7 @@ function PlantDiseaseFormCtrl($scope, $rootScope, $stateParams, $state, $http, $
     $scope.confirmDeleteImage = function (image) {
         $scope.deletedImage = image;
         $scope.modalInstance = $uibModal.open({
-            templateUrl: 'views/modals/delete-confirm.html',
+            templateUrl: 'wwwroot/app/views/modals/delete-confirm.html',
             scope: $scope
         });
     }

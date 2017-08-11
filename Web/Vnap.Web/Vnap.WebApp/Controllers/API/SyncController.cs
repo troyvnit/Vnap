@@ -22,14 +22,16 @@ namespace Vnap.WebApp.Controllers.API
         private IImageRepository _imageRepository { get; set; }
         private ISolutionRepository _solutionRepository { get; set; }
         private IArticleRepository _articleRepository { get; set; }
+        private ISettingRepository _settingRepository { get; set; }
 
-        public SyncController(IPlantRepository plantRepository, IPlantDiseaseRepository plantDiseaseRepository, IImageRepository imageRepository, ISolutionRepository solutionRepository, IArticleRepository articleRepository)
+        public SyncController(IPlantRepository plantRepository, IPlantDiseaseRepository plantDiseaseRepository, IImageRepository imageRepository, ISolutionRepository solutionRepository, IArticleRepository articleRepository, ISettingRepository settingRepository)
         {
             _plantRepository = plantRepository;
             _plantDiseaseRepository = plantDiseaseRepository;
             _imageRepository = imageRepository;
             _solutionRepository = solutionRepository;
             _articleRepository = articleRepository;
+            _settingRepository = settingRepository;
         }
 
         [HttpGet]
@@ -38,12 +40,14 @@ namespace Vnap.WebApp.Controllers.API
             var plants = await _plantRepository.GetAllAsync();
             var plantDiseases = await _plantDiseaseRepository.AllIncludingAsync(pd => pd.Plant, pd => pd.Images, pd => pd.Solutions);
             var articles = await _articleRepository.GetAllAsync();
+            var settings = await _settingRepository.GetAllAsync();
 
             return new SyncResponseVM()
             {
                 Plants = Mapper.Map<IEnumerable<PlantVM>>(plants),
                 PlantDiseases = Mapper.Map<IEnumerable<PlantDiseaseVM>>(plantDiseases),
-                Articles = Mapper.Map<IEnumerable<ArticleVM>>(articles)
+                Articles = Mapper.Map<IEnumerable<ArticleVM>>(articles),
+                Settings = Mapper.Map<IEnumerable<SettingVM>>(settings)
             };
         }
     }

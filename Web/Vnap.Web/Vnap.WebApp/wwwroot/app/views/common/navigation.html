@@ -1,4 +1,4 @@
-<nav class="navbar-default navbar-static-side" role="navigation" ng-controller="NavigationCtrl as aas">
+<nav class="navbar-default navbar-static-side" role="navigation" ng-controller="NavigationCtrl">
   <div class="sidebar-collapse">
     <ul side-navigation class="nav metismenu" id="side-menu">
       <li class="nav-header">
@@ -51,6 +51,13 @@
         <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes('article')}">
           <li ui-sref-active="active"><a ui-sref="index.article"><i class="fa fa-camera-retro"></i> {{'list' | stringRes}}</a></li>
           <li ui-sref-active="active"><a ui-sref="index.article-form"><i class="fa fa-cubes"></i> {{'add' | stringRes}}</a></li>
+        </ul>
+      </li>
+      <li ui-sref-active="active" ng-show="main.authentication.isAdmin">
+        <a ui-sref="index.setting"><i class="fa fa-chrome"></i> <span class="nav-label">{{'setting' | stringRes}}</span> </a>
+        <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes('setting')}">
+          <li ui-sref-active="active"><a ui-sref="index.setting"><i class="fa fa-camera-retro"></i> {{'list' | stringRes}}</a></li>
+          <li ui-sref-active="active"><a ui-sref="index.setting-form"><i class="fa fa-cubes"></i> {{'add' | stringRes}}</a></li>
         </ul>
       </li>
       <li ui-sref-active="active" ng-show="main.authentication.isAdmin">

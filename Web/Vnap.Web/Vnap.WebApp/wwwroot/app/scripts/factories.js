@@ -5,6 +5,7 @@ angular.module('vnap')
     .factory('PlantDisease', PlantDiseaseFactory)
     .factory('Solution', SolutionFactory)
     .factory('Article', ArticleFactory)
+    .factory('Setting', SettingFactory)
     .factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSettings', function ($http, $q, localStorageService, ngAuthSettings) {
 
         var serviceBase = ngAuthSettings.apiServiceBaseUri;

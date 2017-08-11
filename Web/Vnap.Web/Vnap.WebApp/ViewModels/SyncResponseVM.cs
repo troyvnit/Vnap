@@ -11,5 +11,6 @@ namespace Vnap.WebApp.ViewModels
         public IEnumerable<PlantVM> Plants { get; set; }
         public IEnumerable<PlantDiseaseVM> PlantDiseases { get; set; }
         public IEnumerable<ArticleVM> Articles { get; set; }
+        public IEnumerable<SettingVM> Settings { get; set; }
     }
 }

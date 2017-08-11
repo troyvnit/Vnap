@@ -21,7 +21,7 @@ function UserCtrl($scope, $rootScope, $uibModal, User, Upload, cloudinary, $stat
     $scope.confirmDelete = function (user) {
         $scope.deletedUser = user;
         $scope.modalInstance = $uibModal.open({
-            templateUrl: 'views/modals/delete-confirm.html',
+            templateUrl: 'wwwroot/app/views/modals/delete-confirm.html',
             scope: $scope
         });
     }

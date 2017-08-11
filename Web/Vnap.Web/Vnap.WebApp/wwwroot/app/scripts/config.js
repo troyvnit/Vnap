@@ -171,6 +171,38 @@
                         }
                     }
                 })
+                .state('index.setting', {
+                    url: "/setting",
+                    templateUrl: appBaseUrl + "views/setting/list.html",
+                    data: { pageTitle: 'Danh sách cài đặt' },
+                    resolve: {
+                        loadPlugin: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    files: [appBaseUrl + "bower_components/ng-file-upload/ng-file-upload-all.min.js"]
+                                }
+                            ]);
+                        }
+                    }
+                })
+                .state('index.setting-form', {
+                    url: "/setting-form/:Id",
+                    templateUrl: appBaseUrl + "views/setting/form.html",
+                    data: { pageTitle: 'Thêm/Sửa cài đặt' },
+                    resolve: {
+                        loadPlugin: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    files: [appBaseUrl + "bower_components/ng-file-upload/ng-file-upload-all.min.js"]
+                                },
+                                {
+                                    name: 'summernote',
+                                    files: [appBaseUrl + 'bower_components/summernote/dist/summernote.css', appBaseUrl + 'bower_components/summernote/dist/summernote.js', appBaseUrl + 'bower_components/angular-summernote/dist/angular-summernote.min.js']
+                                }
+                            ]);
+                        }
+                    }
+                })
                 .state('index.main', {
                     url: "/main",
                     templateUrl: appBaseUrl + "views/main.html",

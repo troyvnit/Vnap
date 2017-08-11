@@ -1,0 +1,69 @@
+﻿<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-10">
+    <h2>{{'settingListHeader' | stringRes}}</h2>
+    <ol class="breadcrumb">
+      <li>
+        <a ui-sref="index.main">{{'homeLinkText' | stringRes}}</a>
+      </li>
+      <li>
+        <a>{{'setting' | stringRes}}</a>
+      </li>
+      <li class="active">
+        <strong>{{'settingList' | stringRes}}</strong>
+      </li>
+    </ol>
+  </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight ecommerce" ng-controller="SettingCtrl">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox">
+        <div class="ibox-title">
+          <h5>{{'settingListSubheader' | stringRes}}</h5>
+          <div class="ibox-tools">
+            <a href="" class="btn btn-primary btn-xs" ui-sref="index.setting-form">{{'settingAdd' | stringRes}}</a>
+          </div>
+        </div>
+        <div class="ibox-content">
+          <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+            <thead>
+            <tr>
+              <th data-toggle="true">Mã</th>
+              <th>Từ khóa</th>
+              <th>Tên</th>
+              <th>Giá trị</th>
+              <th>Kiểu dữ liệu</th>
+              <th>Tạo ngày</th>
+              <th class="text-right" data-sort-ignore="true">Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="setting in Setting.settings">
+              <td>{{ setting.Id }}</td>
+              <td>{{ setting.Key }}</td>
+              <td>{{ setting.Name }}</td>
+              <td>{{ setting.Value }}</td>
+              <td><select placeholder="Kiểu dữ liệu?" disabled="disabled" ng-options="dataType.Id as dataType.Name for dataType in dataTypes" ng-model="setting.DataType"></select></td>
+              <td>{{ setting.CreatedDate }}</td>
+              <td class="text-right">
+                <div class="btn-group">
+                  <button class="btn-info btn btn-xs" ui-sref="index.setting-form({Id: setting.Id})">{{'edit' | stringRes}}</button>
+                  <button class="btn-danger btn btn-xs" ng-click="confirmDelete(setting)">{{'delete' | stringRes}}</button>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+            <!--<tfoot>
+            <tr>
+              <td colspan="6">
+                <ul class="pagination pull-right"></ul>
+              </td>
+            </tr>
+            </tfoot>-->
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

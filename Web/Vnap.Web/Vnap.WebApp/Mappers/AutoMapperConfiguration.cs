@@ -31,6 +31,7 @@ namespace Vnap.Web.Mappers
                 CreateMap<ImageVM, Image>().ForMember(p => p.CreatedDate, o => o.Ignore());
                 CreateMap<AdvisoryMessageVM, AdvisoryMessage>().ForMember(p => p.CreatedDate, o => o.Ignore());
                 CreateMap<ArticleVM, Article>().ForMember(p => p.CreatedDate, o => o.Ignore());
+                CreateMap<SettingVM, Setting>().ForMember(p => p.CreatedDate, o => o.Ignore());
             }
         }
 
@@ -49,6 +50,7 @@ namespace Vnap.Web.Mappers
                 CreateMap<Image, ImageVM>();
                 CreateMap<AdvisoryMessage, AdvisoryMessageVM>().ForMember(am => am.ImageUrl, o => o.MapFrom(am => am.ImageUrl.Replace("upload", "upload/a_exif")));
                 CreateMap<Article, ArticleVM>();
+                CreateMap<Setting, SettingVM>();
                 CreateMap<ApplicationUser, UserVM>();
             }
         }

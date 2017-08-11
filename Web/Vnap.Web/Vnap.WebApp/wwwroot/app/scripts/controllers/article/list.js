@@ -19,7 +19,7 @@ function ArticleCtrl($scope, $rootScope, $uibModal, Article, $state, authService
     $scope.confirmDelete = function (article) {
         $scope.deletedArticle = article;
         $scope.modalInstance = $uibModal.open({
-            templateUrl: 'views/modals/delete-confirm.html',
+            templateUrl: 'wwwroot/app/views/modals/delete-confirm.html',
             scope: $scope
         });
     }
@@ -38,5 +38,5 @@ function ArticleCtrl($scope, $rootScope, $uibModal, Article, $state, authService
         $scope.modalInstance.dismiss('cancel');
     };
 
-    $scope.articleTypes = [{ Name: 'Giới thiệu', Id: 0 }, { Name: 'Thông báo', Id: 1 }, { Name: 'Tin tức', Id: 2 }];
+    $scope.articleTypes = [{ Name: 'Giới thiệu', Id: 0 }, { Name: 'Thông báo', Id: 1 }, { Name: 'Tin tức', Id: 2 }, { Name: 'Hướng dẫn', Id: 3 }];
 }

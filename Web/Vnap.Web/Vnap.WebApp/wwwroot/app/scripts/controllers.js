@@ -10,6 +10,8 @@ angular.module('vnap')
     .controller('SolutionFormCtrl', SolutionFormCtrl)
     .controller('ArticleCtrl', ArticleCtrl)
     .controller('ArticleFormCtrl', ArticleFormCtrl)
+    .controller('SettingCtrl', SettingCtrl)
+    .controller('SettingFormCtrl', SettingFormCtrl)
     .controller('LoginCtrl', LoginCtrl)
     .controller('RegisterCtrl', RegisterCtrl)
     .controller('NavigationCtrl', NavigationCtrl);

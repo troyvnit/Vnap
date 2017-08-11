@@ -1,10 +1,10 @@
 ﻿/**
- * PlantDiseaseCtrl - controller
+ * SettingCtrl - controller
  * @param {object} $scope TBD.
  * @param {object} $rootScope TBD.
- * @param {object} PlantDisease TBD.
+ * @param {object} Setting TBD.
  */
-function PlantDiseaseCtrl($scope, $rootScope, $uibModal, PlantDisease, $state, authService) {
+function SettingCtrl($scope, $rootScope, $uibModal, Setting, $state, authService) {
     this.authentication = authService.authentication;
 
     if (this.authentication.isAuth && this.authentication.isAdmin) {
@@ -13,11 +13,11 @@ function PlantDiseaseCtrl($scope, $rootScope, $uibModal, PlantDisease, $state, a
         $state.go('login');
     }
 
-    $scope.PlantDisease = new PlantDisease();
-    $scope.PlantDisease.GetAllPlantDiseases();
+    $scope.Setting = new Setting();
+    $scope.Setting.GetAllSettings();
 
-    $scope.confirmDelete = function (plantDisease) {
-        $scope.deletedPlantDisease = plantDisease;
+    $scope.confirmDelete = function (setting) {
+        $scope.deletedSetting = setting;
         $scope.modalInstance = $uibModal.open({
             templateUrl: 'wwwroot/app/views/modals/delete-confirm.html',
             scope: $scope
@@ -25,10 +25,10 @@ function PlantDiseaseCtrl($scope, $rootScope, $uibModal, PlantDisease, $state, a
     }
 
     $scope.ok = function () {
-        $scope.PlantDisease.Delete($scope.deletedPlantDisease, function () {
+        $scope.Setting.Delete($scope.deletedSetting, function () {
             $scope.$apply(function () {
-                var index = $scope.PlantDisease.plantDiseases.indexOf($scope.deletedPlantDisease);
-                $scope.PlantDisease.plantDiseases.splice(index, 1);
+                var index = $scope.Setting.settings.indexOf($scope.deletedSetting);
+                $scope.Setting.settings.splice(index, 1);
             });
         });
         $scope.modalInstance.close();
@@ -37,4 +37,6 @@ function PlantDiseaseCtrl($scope, $rootScope, $uibModal, PlantDisease, $state, a
     $scope.cancel = function () {
         $scope.modalInstance.dismiss('cancel');
     };
+
+    $scope.dataTypes = [{ Name: 'Chuỗi', Id: 0 }, { Name: 'Số', Id: 1 }, { Name: 'Luận lý', Id: 2 }, { Name: 'Ngày', Id: 3 }];
 }

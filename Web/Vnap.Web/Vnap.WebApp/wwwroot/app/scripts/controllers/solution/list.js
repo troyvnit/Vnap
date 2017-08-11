@@ -20,7 +20,7 @@ function SolutionCtrl($scope, $rootScope, $uibModal, Solution, $state, authServi
         $scope.deletedSolution = solution;
         $scope.solutions = solutions;
         $scope.modalInstance = $uibModal.open({
-            templateUrl: 'views/modals/delete-confirm.html',
+            templateUrl: 'wwwroot/app/views/modals/delete-confirm.html',
             scope: $scope
         });
     }

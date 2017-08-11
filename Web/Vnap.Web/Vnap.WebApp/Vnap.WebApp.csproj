@@ -256,6 +256,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\AdvisoryMessageController.cs" />
+    <Compile Include="Controllers\API\SettingController.cs" />
     <Compile Include="Controllers\API\ArticleController.cs" />
     <Compile Include="Controllers\API\SolutionController.cs" />
     <Compile Include="Controllers\API\PlantController.cs" />
@@ -306,6 +307,7 @@
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AdvisoryMessageVM.cs" />
+    <Compile Include="ViewModels\SettingVM.cs" />
     <Compile Include="ViewModels\ArticleVM.cs" />
     <Compile Include="ViewModels\UserVM.cs" />
     <Compile Include="ViewModels\ImageVM.cs" />
@@ -2681,6 +2683,8 @@
     <Content Include="wwwroot\app\scripts\controllers.js" />
     <Content Include="wwwroot\app\scripts\controllers\account\register.js" />
     <Content Include="wwwroot\app\scripts\controllers\account\login.js" />
+    <Content Include="wwwroot\app\scripts\controllers\setting\form.js" />
+    <Content Include="wwwroot\app\scripts\controllers\setting\list.js" />
     <Content Include="wwwroot\app\scripts\controllers\article\form.js" />
     <Content Include="wwwroot\app\scripts\controllers\article\list.js" />
     <Content Include="wwwroot\app\scripts\controllers\main.js" />
@@ -2693,6 +2697,7 @@
     <Content Include="wwwroot\app\scripts\controllers\plant\list.js" />
     <Content Include="wwwroot\app\scripts\directives.js" />
     <Content Include="wwwroot\app\scripts\factories.js" />
+    <Content Include="wwwroot\app\scripts\factories\setting.js" />
     <Content Include="wwwroot\app\scripts\factories\article.js" />
     <Content Include="wwwroot\app\scripts\factories\user.js" />
     <Content Include="wwwroot\app\scripts\factories\solution.js" />
@@ -2725,6 +2730,8 @@
     <Content Include="wwwroot\app\styles\style.css" />
     <Content Include="wwwroot\app\views\account\register.html" />
     <Content Include="wwwroot\app\views\account\login.html" />
+    <Content Include="wwwroot\app\views\setting\form.html" />
+    <Content Include="wwwroot\app\views\setting\list.html" />
     <Content Include="wwwroot\app\views\article-details.html" />
     <Content Include="wwwroot\app\views\article.html" />
     <Content Include="wwwroot\app\views\common\content.html" />
@@ -3275,9 +3282,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>47562</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:6789/</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:6789/</IISAppRootUrl>
+          <IISUrl>http://localhost:6969/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -18,6 +18,18 @@
                 'articleDescriptionPlaceHolder': 'Mô tả bài viết',
                 'articleContentPlaceHolder': 'Nội dung bài viết',
 
+                'setting': 'Cài đặt',
+                'settingList': 'Danh sách cài đặt',
+                'settingListHeader': 'Quản lý cài đặt',
+                'settingListSubheader': 'Danh sách cài đặt',
+
+                'settingAdd': 'Thêm cài đặt',
+                'settingAddHeader': 'Thêm cài đặt',
+                'settingDetail': 'Chi tiết cài đặt',
+                'settingKeyPlaceHolder': 'Từ khóa cài đặt',
+                'settingNamePlaceHolder': 'Tên cài đặt',
+                'settingValuePlaceHolder': 'Giá trị cài đặt',
+
                 'user': 'Người dùng',
                 'userList': 'Danh sách người dùng',
                 'userListHeader': 'Quản lý người dùng',
@@ -73,11 +85,14 @@
                 'delete': 'Xóa',
                 'avatar': 'Hình đại diện',
                 'type': 'Loại',
+                'dataType': 'Kiểu dữ liệu',
+                'key': 'Từ khóa',
                 'image': 'Hình ảnh',
                 'imageAdd': 'Thêm hình ảnh',
                 'imageListSubheader': 'Danh sách hình ảnh',
                 'title': 'Tiêu đề',
                 'content': 'Nội dung',
+                'value': 'Giá trị',
 
                 'homeLinkText': 'Dashboard',
                 'createUser': 'Tạo Mod User'

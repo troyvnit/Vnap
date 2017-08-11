@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Prism.Navigation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace Vnap.Models
         public string Text { get; set; }
         public string Icon { get; set; }
         public string Command { get; set; }
+        public NavigationParameters NavigationParameters { get; set; }
         public CommandType CommandType { get; set; }
         public bool IsActived { get; set; }
     }

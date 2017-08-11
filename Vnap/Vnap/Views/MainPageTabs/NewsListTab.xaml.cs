@@ -22,10 +22,10 @@ namespace Vnap.Views
             ArticleListView.SelectedItem = null;
         }
 
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             var context = BindingContext as NewsListTabViewModel;
-            if (context != null) await context.LoadArticles(0);
+            if (context != null) context.LoadArticles(0);
             base.OnAppearing();
         }
 

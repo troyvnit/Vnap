@@ -37,12 +37,12 @@ namespace Vnap.ViewModels
             return IsNotBusy;
         }
 
-        public async void ExecuteRefreshCommand()
+        public void ExecuteRefreshCommand()
         {
             IsBusy = true;
 
             _articles = new ObservableCollection<Article>();
-            await LoadArticles(0);
+            LoadArticles(0);
 
             IsBusy = false;
         }
@@ -52,25 +52,25 @@ namespace Vnap.ViewModels
             return IsNotBusy && _articles.Count > _totalArticles;
         }
 
-        public async void ExecuteLoadMoreCommand(Article item)
+        public void ExecuteLoadMoreCommand(Article item)
         {
             IsBusy = true;
 
             var skip = _articles.Count;
-            await LoadArticles(skip);
+            LoadArticles(skip);
 
             IsBusy = false;
         }
 
-        public async Task LoadArticles(int skip)
+        public void LoadArticles(int skip)
         {
             var rq = new GetArticlesRq()
             {
                 Skip = skip,
                 ArticleType = ArticleType.News
             };
-            var newArticles = await _articleService.GetArticles(rq);
-            _totalArticles = await _articleService.GetArticlesCount();
+            var newArticles = _articleService.GetArticles(rq);
+            _totalArticles = _articleService.GetArticlesCount();
             
             foreach (var article in newArticles)
             {

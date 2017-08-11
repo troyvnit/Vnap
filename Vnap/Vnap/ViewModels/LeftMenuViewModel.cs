@@ -8,6 +8,7 @@ using Prism.Navigation;
 using Vnap.Models;
 using Vnap.Service.Utils;
 using Xamarin.Forms;
+using AutoMapper;
 
 namespace Vnap.ViewModels
 {
@@ -49,6 +50,8 @@ namespace Vnap.ViewModels
         {
             get
             {
+                var introduction = LocalDataStorage.GetArticles().FirstOrDefault(a => a.ArticleType == Entity.ArticleType.Introduction);
+                var tutorial = LocalDataStorage.GetArticles().FirstOrDefault(a => a.ArticleType == Entity.ArticleType.Tutorial);
                 var menuItems = new ObservableCollection<LeftMenuItem>()
                 {
                     new LeftMenuItem()
@@ -62,6 +65,8 @@ namespace Vnap.ViewModels
                    {
                        Icon = "flaticon-house",
                        Text = "Giới thiệu về Vnap",
+                       Command = "Navigation/ArticleDetailPage",
+                       NavigationParameters = new NavigationParameters(){{ "Article", Mapper.Map<Article>(introduction) }},
                        IsActived = true
                    },
                     new LeftMenuItem()
@@ -82,6 +87,8 @@ namespace Vnap.ViewModels
                    {
                        Icon = "flaticon-smartphone-10",
                        Text = "Hướng dẫn sử dụng",
+                       Command = "Navigation/ArticleDetailPage",
+                       NavigationParameters = new NavigationParameters(){{ "Article", Mapper.Map<Article>(tutorial) }},
                        IsActived = true
                    },
                     new LeftMenuItem()
@@ -150,7 +157,7 @@ namespace Vnap.ViewModels
                 case CommandType.Navigation:
                     if (!string.IsNullOrEmpty(menuItem.Command))
                     {
-                        _navigationService.NavigateAsync(menuItem.Command);
+                        _navigationService.NavigateAsync(menuItem.Command, menuItem.NavigationParameters);
                     }
                     break;
             }

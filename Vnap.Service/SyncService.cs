@@ -27,6 +27,7 @@ namespace Vnap.Service
                     var syncResult = JsonConvert.DeserializeObject<SyncResult>(syncResultString);
                     LocalDataStorage.SetPlants(syncResult.Plants);
                     LocalDataStorage.SetPlantDiseases(syncResult.PlantDiseases);
+                    LocalDataStorage.SetArticles(syncResult.Articles);
                     return syncResult;
                 }
             }
@@ -41,6 +42,6 @@ namespace Vnap.Service
     {
         public List<Plant> Plants { get; set; }
         public List<PlantDisease> PlantDiseases { get; set; }
-        public ArticleEntity Introduction { get; set; }
+        public List<ArticleEntity> Articles { get; set; }
     }
 }

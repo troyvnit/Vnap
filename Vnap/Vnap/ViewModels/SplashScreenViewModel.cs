@@ -20,6 +20,7 @@ using Vnap.Service;
 using Vnap.Service.Utils;
 using Vnap.Views.Popups;
 using Xamarin.Forms;
+using Plugin.Messaging;
 
 namespace Vnap.ViewModels
 {
@@ -189,17 +190,17 @@ namespace Vnap.ViewModels
         {
             if (string.IsNullOrEmpty(UserName))
             {
-                UserDialogs.Instance.ShowError("Vui lòng nhập số điện thoại!");
+                UserDialogs.Instance.Alert("Vui lòng nhập số điện thoại!");
                 return;
             }
             if (string.IsNullOrEmpty(Plant))
             {
-                UserDialogs.Instance.ShowError("Vui lòng chọn cây trồng!");
+                UserDialogs.Instance.Alert("Vui lòng chọn cây trồng!");
                 return;
             }
             if (string.IsNullOrEmpty(City))
             {
-                UserDialogs.Instance.ShowError("Vui lòng chọn tỉnh / thành phố!");
+                UserDialogs.Instance.Alert("Vui lòng chọn tỉnh / thành phố!");
                 return;
             }
             var user = new User()
@@ -215,9 +216,12 @@ namespace Vnap.ViewModels
 
             if (!result.IsSuccessStatusCode)
             {
-                var retry = await UserDialogs.Instance.ConfirmAsync("Đăng ký thất bại! Vui lòng thử lại hoặc liên hệ đường dây nóng 0909090909!", null, "Thử lại", "Bỏ qua");
+                var retry = await UserDialogs.Instance.ConfirmAsync("Đăng ký thất bại! Vui lòng thử lại hoặc liên hệ đường dây nóng +84987575246!", null, "Gọi", "Bỏ qua");
                 if (retry)
                 {
+                    var phoneDialer = CrossMessaging.Current.PhoneDialer;
+                    if (phoneDialer.CanMakePhoneCall)
+                        phoneDialer.MakePhoneCall("+84987575246", "Vnap");
                     return;
                 }
             }
@@ -228,24 +232,29 @@ namespace Vnap.ViewModels
 
         public async Task SyncData()
         {
-            UserDialogs.Instance.ShowLoading("Tải dữ liệu...");
-            var syncResult = await _syncService.Sync();
-            if (syncResult.Plants != null)
-            {
-                _plants = syncResult.Plants.Select(p => p.Name).ToObservableCollection();
-            }
-            UserDialogs.Instance.HideLoading();
 
             var user = App.CurrentUser;
             if (!string.IsNullOrEmpty(user?.UserName) && !string.IsNullOrEmpty(user.City) &&
                 !string.IsNullOrEmpty(user.Plant))
             {
                 await _navigationService.GoBackAsync(useModalNavigation: true);
+                await Task.Run(async () =>
+                {
+                    var syncResult = await _syncService.Sync();
+                });
             }
             else
             {
                 try
                 {
+                    UserDialogs.Instance.ShowLoading("Tải dữ liệu...");
+
+                    var syncResult = await _syncService.Sync();
+                    if (syncResult.Plants != null)
+                    {
+                        _plants = syncResult.Plants.Select(p => p.Name).ToObservableCollection();
+                    }
+
                     var locator = CrossGeolocator.Current;
                     locator.DesiredAccuracy = 50;
                     var position = await locator.GetPositionAsync(10000);
@@ -258,10 +267,12 @@ namespace Vnap.ViewModels
                     {
                         City = city;
                     }
+
+                    UserDialogs.Instance.HideLoading();
                 }
                 catch (Exception)
                 {
-                    UserDialogs.Instance.ShowError("Vùi lòng bật tính năng GPS!");
+                    UserDialogs.Instance.Alert("Vùi lòng bật tính năng GPS!");
                 }
             }
             //ImageService.Instance.LoadUrl("http://vannghetiengiang.vn/uploads/news/2014_11/cay-lua2.jpg", TimeSpan.FromDays(3))

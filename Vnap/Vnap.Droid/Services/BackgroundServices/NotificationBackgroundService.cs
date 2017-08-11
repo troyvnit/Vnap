@@ -89,7 +89,7 @@ namespace Vnap.Droid.Services.BackgroundServices
                         var articles = LocalDataStorage.GetArticles();
                         var isNotEmpty = articles.Any();
                         var url = isNotEmpty
-                                ? $"http://vnap.vn/api/Article/GetByLatestId?latestId={articles.OrderByDescending(a => a.CreatedDate).FirstOrDefault()?.Id}"
+                                ? $"http://vnap.vn/api/Article/GetByLatestId?latestId={articles.Max(x => x.Id)}"
                                 : $"http://vnap.vn/api/Article";
                         var getArticlesRs = await httpClient.GetStringAsync(url);
                         var newArticles = JsonConvert.DeserializeObject<List<ArticleEntity>>(getArticlesRs);

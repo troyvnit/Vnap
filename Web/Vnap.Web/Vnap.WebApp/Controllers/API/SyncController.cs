@@ -37,13 +37,13 @@ namespace Vnap.WebApp.Controllers.API
         {
             var plants = await _plantRepository.GetAllAsync();
             var plantDiseases = await _plantDiseaseRepository.AllIncludingAsync(pd => pd.Plant, pd => pd.Images, pd => pd.Solutions);
-            var introduction = await _articleRepository.Queryable().Where(a => a.ArticleType == ArticleType.Introduction).FirstOrDefaultAsync();
+            var articles = await _articleRepository.GetAllAsync();
 
             return new SyncResponseVM()
             {
                 Plants = Mapper.Map<IEnumerable<PlantVM>>(plants),
                 PlantDiseases = Mapper.Map<IEnumerable<PlantDiseaseVM>>(plantDiseases),
-                Introduction = Mapper.Map<ArticleVM>(introduction)
+                Articles = Mapper.Map<IEnumerable<ArticleVM>>(articles)
             };
         }
     }

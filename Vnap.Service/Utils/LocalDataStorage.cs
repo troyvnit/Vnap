@@ -49,7 +49,7 @@ namespace Vnap.Service.Utils
         {
             return Settings.Current.Get("Articles", new List<ArticleEntity>());
         }
-
+        
         public static void SetUser(User user)
         {
             Settings.Current.Set("User", user);

@@ -12,8 +12,8 @@ namespace Vnap.Service
     public interface IArticleService
     {
         Task Sync();
-        Task<List<ArticleEntity>> GetArticles(GetArticlesRq rq);
-        Task<int> GetArticlesCount();
+        List<ArticleEntity> GetArticles(GetArticlesRq rq);
+        int GetArticlesCount();
     }
     public class ArticleService : IArticleService
     {
@@ -113,7 +113,7 @@ namespace Vnap.Service
             LocalDataStorage.SetArticles(posts);
         }
 
-        public async Task<List<ArticleEntity>> GetArticles(GetArticlesRq rq)
+        public List<ArticleEntity> GetArticles(GetArticlesRq rq)
         {
             var query = LocalDataStorage.GetArticles()
                 .OrderByDescending(post => post.Priority)
@@ -124,12 +124,12 @@ namespace Vnap.Service
             return query.ToList();
         }
 
-        public async Task<ArticleEntity> SearchFirstArticle(string query)
+        public ArticleEntity SearchFirstArticle(string query)
         {
             return LocalDataStorage.GetArticles().AsQueryable().FirstOrDefault(post => post.Title.Contains(query) || post.Description.Contains(query));
         }
 
-        public async Task<int> GetArticlesCount()
+        public int GetArticlesCount()
         {
             return LocalDataStorage.GetArticles().AsQueryable().Count();
         }

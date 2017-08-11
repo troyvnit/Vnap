@@ -276,6 +276,7 @@
     <Compile Include="DataAccess\Entity\Image.cs" />
     <Compile Include="DataAccess\Entity\Plant.cs" />
     <Compile Include="DataAccess\Entity\PlantDisease.cs" />
+    <Compile Include="DataAccess\Entity\Setting.cs" />
     <Compile Include="DataAccess\Entity\Solution.cs" />
     <Compile Include="DataAccess\Infrastructure\CommonInterface\IDbFactory.cs" />
     <Compile Include="DataAccess\Infrastructure\CommonInterface\IRepository.cs" />
@@ -284,6 +285,7 @@
     <Compile Include="DataAccess\Infrastructure\Disposable.cs" />
     <Compile Include="DataAccess\Infrastructure\RepositoryBase.cs" />
     <Compile Include="DataAccess\Infrastructure\UnitOfWork.cs" />
+    <Compile Include="DataAccess\Repository\SettingRepository.cs" />
     <Compile Include="DataAccess\Repository\ImageRepository.cs" />
     <Compile Include="DataAccess\Repository\AdvisoryMessageRepository.cs" />
     <Compile Include="DataAccess\Repository\ConversationRepository.cs" />

@@ -72,7 +72,7 @@ function ArticleFormCtrl($scope, $rootScope, $stateParams, $state, Article, Uplo
             });
     };
 
-    $scope.articleTypes = [{ Name: 'Giới thiệu', Id: 0 }, { Name: 'Thông báo', Id: 1 }, { Name: 'Tin tức', Id: 2 }];
+    $scope.articleTypes = [{ Name: 'Giới thiệu', Id: 0 }, { Name: 'Thông báo', Id: 1 }, { Name: 'Tin tức', Id: 2 }, { Name: 'Hướng dẫn', Id: 3 }];
 
     $scope.save = function () {
         if ($scope.article.Id > 0) {

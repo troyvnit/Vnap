@@ -18,6 +18,7 @@ using Vnap.Service.Requests.Message;
 using Vnap.Service.Requests.Plant;
 using Xamarin.Forms;
 using Image = Vnap.Models.Image;
+using Vnap.Service.Utils;
 
 namespace Vnap.ViewModels
 {
@@ -65,7 +66,7 @@ namespace Vnap.ViewModels
         {
             var phoneDialer = CrossMessaging.Current.PhoneDialer;
             if (phoneDialer.CanMakePhoneCall)
-                phoneDialer.MakePhoneCall("+84987575246", "Vnap");
+                phoneDialer.MakePhoneCall(LocalDataStorage.GetHotLine(), "Vnap");
         }
 
         public bool CanExecuteRefreshCommand()

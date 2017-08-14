@@ -9,6 +9,7 @@ using Vnap.Models;
 using Vnap.Service.Utils;
 using Xamarin.Forms;
 using AutoMapper;
+using Plugin.Messaging;
 
 namespace Vnap.ViewModels
 {
@@ -95,6 +96,8 @@ namespace Vnap.ViewModels
                    {
                        Icon = "flaticon-users-1",
                        Text = "Mời bạn bè sử dụng",
+                       Command = "Bạn nhận được lời mời dùng thử Vnap - Làm nông chuyên nghiệp tại http://vnap.vn!",
+                       CommandType = CommandType.Sms,
                        IsActived = true
                    }
                 };
@@ -119,6 +122,7 @@ namespace Vnap.ViewModels
                    {
                        Icon = "flaticon-exit-1",
                        Text = "Đăng xuất",
+                       CommandType = CommandType.Logout,
                        IsActived = true
                    }
                 };
@@ -159,6 +163,15 @@ namespace Vnap.ViewModels
                     {
                         _navigationService.NavigateAsync(menuItem.Command, menuItem.NavigationParameters);
                     }
+                    break;
+                case CommandType.Sms:
+                    var smsMessenger = CrossMessaging.Current.SmsMessenger;
+                    if (smsMessenger.CanSendSms)
+                        smsMessenger.SendSms("", menuItem.Command);
+                    break;
+                case CommandType.Logout:
+                    App.CurrentUser = null;
+                    _navigationService.NavigateAsync("SplashScreen", animated: false, useModalNavigation: true);
                     break;
             }
         }

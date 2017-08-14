@@ -12,13 +12,7 @@ namespace Vnap.Views
             InitializeComponent();
             IsPresentedChanged += (sender, args) =>
             {
-                var context = BindingContext as LeftMenuViewModel;
-                if (context != null)
-                {
-                    context.UserName = App.CurrentUser.UserName;
-                    context.City = App.CurrentUser.City;
-                    context.Plant = App.CurrentUser.Plant;
-                }
+                UpdateUserInfo();
             };
         }
 
@@ -30,6 +24,7 @@ namespace Vnap.Views
             var context = BindingContext as LeftMenuViewModel;
             context?.AccountMenuItemSelectedHandler(AccountMenuListView.SelectedItem as LeftMenuItem);
             LeftMenuListView.SelectedItem = null;
+            AccountMenuListView.SelectedItem = null;
         }
 
         private void LeftMenu_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -38,6 +33,23 @@ namespace Vnap.Views
             var context = BindingContext as LeftMenuViewModel;
             context?.LeftMenuItemSelectedHandler(LeftMenuListView.SelectedItem as LeftMenuItem);
             AccountMenuListView.SelectedItem = null;
+        }
+
+        private void UpdateUserInfo()
+        {
+            var context = BindingContext as LeftMenuViewModel;
+            if (context != null && App.CurrentUser != null)
+            {
+                context.UserName = App.CurrentUser.UserName;
+                context.City = App.CurrentUser.City;
+                context.Plant = App.CurrentUser.Plant;
+            }
+        }
+
+        protected override void OnAppearing()
+        {
+            UpdateUserInfo();
+            base.OnAppearing();
         }
     }
 }

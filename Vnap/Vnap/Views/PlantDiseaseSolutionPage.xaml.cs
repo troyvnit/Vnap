@@ -1,4 +1,5 @@
 ﻿using Plugin.Messaging;
+using Vnap.Service.Utils;
 using Vnap.ViewModels;
 using Xamarin.Forms;
 
@@ -22,7 +23,7 @@ namespace Vnap.Views
         {
             var phoneDialer = CrossMessaging.Current.PhoneDialer;
             if (phoneDialer.CanMakePhoneCall)
-                phoneDialer.MakePhoneCall("+84987575246", "Vnap");
+                phoneDialer.MakePhoneCall(LocalDataStorage.GetHotLine(), "Vnap");
         }
     }
 }

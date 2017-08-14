@@ -49,7 +49,23 @@ namespace Vnap.Service.Utils
         {
             return Settings.Current.Get("Articles", new List<ArticleEntity>());
         }
-        
+
+        public static void SetSettings(List<SettingEntity> posts)
+        {
+            Settings.Current.Set("Settings", posts);
+        }
+
+        public static List<SettingEntity> GetSettings()
+        {
+            return Settings.Current.Get("Settings", new List<SettingEntity>());
+        }
+
+        public static string GetHotLine()
+        {
+            var hotlineSetting = GetSettings().FirstOrDefault(s => s.Key == "[Android]Hotline");
+            return hotlineSetting != null ? hotlineSetting.Value : "+84987575246";
+        }
+
         public static void SetUser(User user)
         {
             Settings.Current.Set("User", user);

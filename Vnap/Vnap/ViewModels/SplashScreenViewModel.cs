@@ -21,6 +21,7 @@ using Vnap.Service.Utils;
 using Vnap.Views.Popups;
 using Xamarin.Forms;
 using Plugin.Messaging;
+using System.Text.RegularExpressions;
 
 namespace Vnap.ViewModels
 {
@@ -216,14 +217,15 @@ namespace Vnap.ViewModels
 
             if (!result.IsSuccessStatusCode)
             {
-                var retry = await UserDialogs.Instance.ConfirmAsync("Đăng ký thất bại! Vui lòng thử lại hoặc liên hệ đường dây nóng +84987575246!", null, "Gọi", "Bỏ qua");
+                var retry = await UserDialogs.Instance.ConfirmAsync($"Đăng ký thất bại! Vui lòng thử lại hoặc liên hệ đường dây nóng {LocalDataStorage.GetHotLine()}!", null, "Gọi", "Bỏ qua");
                 if (retry)
                 {
                     var phoneDialer = CrossMessaging.Current.PhoneDialer;
                     if (phoneDialer.CanMakePhoneCall)
-                        phoneDialer.MakePhoneCall("+84987575246", "Vnap");
-                    return;
+                        phoneDialer.MakePhoneCall(LocalDataStorage.GetHotLine(), "Vnap");
                 }
+
+                return;
             }
             
             App.CurrentUser = user;

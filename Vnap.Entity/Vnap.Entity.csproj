@@ -35,6 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="SettingEntity.cs" />
     <Compile Include="BaseEntity.cs" />
     <Compile Include="AdvisoryMessageEntity.cs" />
     <Compile Include="Solution.cs" />

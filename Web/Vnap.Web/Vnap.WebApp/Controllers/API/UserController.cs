@@ -69,9 +69,11 @@ namespace Vnap.WebApp.Controllers.API
                 {
                     return null;
                 }
+                else
+                {
+                    await _userManager.AddToRoleAsync(user.Id, "User");
+                }
             }
-
-            await _userManager.AddToRoleAsync(user.Id, "User");
             return user;
         }
     }

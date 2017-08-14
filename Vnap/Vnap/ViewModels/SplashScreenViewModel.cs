@@ -229,7 +229,8 @@ namespace Vnap.ViewModels
             }
             
             App.CurrentUser = user;
-            await _navigationService.GoBackAsync(useModalNavigation: true);
+            //await _navigationService.GoBackAsync(useModalNavigation: true);
+            await _navigationService.NavigateAsync("TermsPage", animated: false, useModalNavigation: true);
         }
 
         public async Task SyncData()
@@ -274,6 +275,7 @@ namespace Vnap.ViewModels
                 }
                 catch (Exception)
                 {
+                    UserDialogs.Instance.HideLoading();
                     UserDialogs.Instance.Alert("Vùi lòng bật tính năng GPS!");
                 }
             }

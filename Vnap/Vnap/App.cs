@@ -47,8 +47,14 @@ namespace Vnap
         protected override void OnInitialized()
         {
             AutoMapperConfiguration.Configure();
-            NavigationService.NavigateAsync("LeftMenu/Navigation/MainPage/PlantListTab", animated: false);
-            NavigationService.NavigateAsync("SplashScreen", animated: false, useModalNavigation: true);
+            if(CurrentUser != null && !string.IsNullOrEmpty(CurrentUser.UserName))
+            {
+                NavigationService.NavigateAsync("LeftMenu/Navigation/MainPage/PlantListTab", animated: false);
+            }
+            else
+            {
+                NavigationService.NavigateAsync("SplashScreen", animated: false, useModalNavigation: true);
+            }
         }
 
         protected override void RegisterTypes()
@@ -67,6 +73,7 @@ namespace Vnap
             Container.RegisterTypeForNavigation<PlantDiseaseSolutionPage>();
             Container.RegisterTypeForNavigation<PinchToZoomPage>();
             Container.RegisterTypeForNavigation<ArticleDetailPage>();
+            Container.RegisterTypeForNavigation<TermsPage>();
             Container.RegisterType<ISyncService, SyncService>();
             Container.RegisterType<IPlantService, PlantService>();
             Container.RegisterType<IPlantDiseaseService, PlantDiseaseService>();

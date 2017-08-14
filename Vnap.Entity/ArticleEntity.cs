@@ -15,6 +15,6 @@ namespace Vnap.Entity
 
     public enum ArticleType
     {
-        Introduction, Notice, News, Tutorial
+        Introduction, Notice, News, Tutorial, Terms
     }
 }

@@ -38,5 +38,5 @@ function ArticleCtrl($scope, $rootScope, $uibModal, Article, $state, authService
         $scope.modalInstance.dismiss('cancel');
     };
 
-    $scope.articleTypes = [{ Name: 'Giới thiệu', Id: 0 }, { Name: 'Thông báo', Id: 1 }, { Name: 'Tin tức', Id: 2 }, { Name: 'Hướng dẫn', Id: 3 }];
+    $scope.articleTypes = [{ Name: 'Giới thiệu', Id: 0 }, { Name: 'Thông báo', Id: 1 }, { Name: 'Tin tức', Id: 2 }, { Name: 'Hướng dẫn', Id: 3 }, { Name: 'Điều khoản', Id: 4 }];
 }

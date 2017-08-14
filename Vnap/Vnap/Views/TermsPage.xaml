@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:components="clr-namespace:Vnap.Views.Components;assembly=Vnap"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Vnap.Views.TermsPage">
+  <StackLayout BackgroundColor="White">
+        <ffimageloading:CachedImage Source="logo" WidthRequest="75" HeightRequest="75" HorizontalOptions="CenterAndExpand"></ffimageloading:CachedImage>
+        <WebView Source="{Binding Content}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+      <Button Text="Đồng ý" TextColor="White" BackgroundColor="Accent" HorizontalOptions="FillAndExpand" Command="{Binding AgreeCommand}"/>
+  </StackLayout>
+</ContentPage>

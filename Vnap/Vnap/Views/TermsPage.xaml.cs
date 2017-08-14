@@ -1,22 +1,17 @@
 ﻿using Acr.UserDialogs;
-using FormsPlugin.Iconize;
 using Vnap.Services;
 using Xamarin.Forms;
 
 namespace Vnap.Views
 {
-    public partial class MainPage : IconTabbedPage
+    public partial class TermsPage : ContentPage
     {
         IAppService _appService;
 
-        public MainPage(IAppService appService)
+        public TermsPage(IAppService appService)
         {
             _appService = appService;
             InitializeComponent();
-            Children.Add(new PlantListTab());
-            Children.Add(new AdvisoryTab());
-            Children.Add(new NoticeListTab());
-            Children.Add(new NewsListTab());
         }
 
         protected override bool OnBackButtonPressed()

@@ -1,13 +1,31 @@
-﻿using Vnap.ViewModels;
+﻿using Acr.UserDialogs;
+using Vnap.Services;
+using Vnap.ViewModels;
 using Xamarin.Forms;
 
 namespace Vnap.Views
 {
     public partial class SplashScreen : ContentPage
     {
-        public SplashScreen()
+        IAppService _appService;
+
+        public SplashScreen(IAppService appService)
         {
+            _appService = appService;
             InitializeComponent();
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                if (await UserDialogs.Instance.ConfirmAsync("Bạn có chắc muốn thoát ứng dụng?", "Thoát", "Thoát", "Ở lại"))
+                {
+                    _appService.CloseApp();
+                }
+            });
+
+            return true;
         }
 
         protected override async void OnAppearing()

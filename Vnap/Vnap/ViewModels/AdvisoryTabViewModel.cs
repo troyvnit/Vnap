@@ -19,6 +19,7 @@ using Vnap.Service.Requests.Plant;
 using Xamarin.Forms;
 using Image = Vnap.Models.Image;
 using Vnap.Service.Utils;
+using Microsoft.AspNet.SignalR.Client;
 
 namespace Vnap.ViewModels
 {
@@ -112,20 +113,27 @@ namespace Vnap.ViewModels
         private async void ExecuteSendAdvisoryMessageCommand()
         {
             UserDialogs.Instance.ShowLoading("Đang gửi...");
-            var result = await _httpClient.PostAsync("http://vnap.vn/api/advisorymessage/add", new StringContent(JsonConvert.SerializeObject(new AdvisoryMessage()
+            var message = new AdvisoryMessage()
             {
                 AuthorName = App.CurrentUser.UserName,
                 Content = NewMessage
-            }), Encoding.UTF8, "application/json"));
-            if (result.IsSuccessStatusCode)
+            };
+            try
             {
-                var contents = await result.Content.ReadAsStringAsync();
-                if (contents != null)
+                if (App.HubConnection.State == ConnectionState.Disconnected)
                 {
-                    var advisoryMessage = JsonConvert.DeserializeObject<AdvisoryMessage>(contents);
-                    _messages.Add(advisoryMessage);
+                    await App.HubConnection.Start();
+                    await App.HubProxy.Invoke("HandShake", App.CurrentUser.UserName);
+                }
+                var result = await App.HubProxy.Invoke<AdvisoryMessage>("SubscribeAdvisoryMessage", message);
+                if (result != null)
+                {
+                    _messages.Add(result);
                     NewMessage = string.Empty;
                 }
+            }
+            catch (Exception e)
+            {
             }
             UserDialogs.Instance.HideLoading();
         }

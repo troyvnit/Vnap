@@ -16,6 +16,8 @@ using Vnap.Service;
 using Vnap.Service.Utils;
 using Vnap.Services;
 using Xamarin.Forms;
+using Microsoft.AspNet.SignalR.Client;
+using System.Threading;
 
 namespace Vnap
 {
@@ -26,6 +28,9 @@ namespace Vnap
         private IArticleService _articleService;
         private IMessageService _messageService;
         public static string SearchKey;
+
+        public static HubConnection HubConnection;
+        public static IHubProxy HubProxy;
 
         private static User _currentUser = LocalDataStorage.GetUser();
         public static User CurrentUser
@@ -42,12 +47,20 @@ namespace Vnap
 
         public App(IPlatformInitializer initializer = null) : base(initializer)
         {
+            try
+            {
+                HubConnection = new HubConnection("http://10.164.0.181:6969/");
+                HubProxy = HubConnection.CreateHubProxy("AdvisoryHub");
+            }
+            catch (Exception e)
+            {
+            }
         }
 
         protected override void OnInitialized()
         {
             AutoMapperConfiguration.Configure();
-            if(CurrentUser != null && !string.IsNullOrEmpty(CurrentUser.UserName))
+            if (CurrentUser != null && !string.IsNullOrEmpty(CurrentUser.UserName))
             {
                 NavigationService.NavigateAsync("LeftMenu/Navigation/MainPage/PlantListTab", animated: false);
             }

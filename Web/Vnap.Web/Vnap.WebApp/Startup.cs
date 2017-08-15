@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using Owin;
+using Microsoft.AspNet.SignalR;
+using Vnap.WebApp.Hubs;
+using Vnap.Web.DataAccess.Repository;
+using Vnap.Web.DataAccess;
 
 [assembly: OwinStartup(typeof(Vnap.WebApp.Startup))]
 
@@ -12,6 +13,10 @@ namespace Vnap.WebApp
     {
         public void Configuration(IAppBuilder app)
         {
+            GlobalHost.DependencyResolver.Register(typeof(AdvisoryHub), () => new AdvisoryHub(new ConversationRepository(new DbFactory())));
+            var config = new HubConfiguration();
+            config.EnableJSONP = true;
+            app.MapSignalR(config);
             ConfigureAuth(app);
         }
     }

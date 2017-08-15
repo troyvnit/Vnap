@@ -11,6 +11,8 @@ namespace Vnap.Web.DataAccess.Entity
 
         public string Name { get; set; }
 
+        public string ConnectionId { get; set; }
+
         public List<AdvisoryMessage> AdvisoryMessages { get; set; }
     }
 }

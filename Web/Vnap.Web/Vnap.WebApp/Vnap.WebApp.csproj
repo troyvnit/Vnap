@@ -2685,9 +2685,7 @@
     <Content Include="wwwroot\app\bower_components\summernote\src\js\outro.js" />
     <Content Include="wwwroot\app\bower_components\summernote\src\js\summernote.js" />
     <Content Include="wwwroot\app\bower_components\summernote\tools\nuget.exe" />
-    <AndroidResource Include="wwwroot\app\img\no_avatar.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </AndroidResource>
+    <Content Include="wwwroot\app\img\no_avatar.png" />
     <Content Include="wwwroot\app\scripts\app.js" />
     <Content Include="wwwroot\app\scripts\config.js" />
     <Content Include="wwwroot\app\scripts\controllers.js" />

@@ -13,6 +13,7 @@ namespace Vnap.Models
         public bool IsAdviser { get; set; }
         public string AuthorName { get; set; }
         public string Content { get; set; }
+        public string ConversationName { get; set; }
         public DateTime CreatedDate { get; set; }
     }
 }

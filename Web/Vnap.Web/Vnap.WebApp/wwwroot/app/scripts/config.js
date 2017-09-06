@@ -34,8 +34,22 @@
                     templateUrl: appBaseUrl + "views/common/content.html"
                 })
                 .state('index.user', {
-                    url: "/advisory",
+                    url: "/user",
                     templateUrl: appBaseUrl + "views/user/list.html",
+                    data: { pageTitle: 'Người dùng' },
+                    resolve: {
+                        loadPlugin: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    files: [appBaseUrl + "bower_components/ng-file-upload/ng-file-upload-all.min.js"]
+                                }
+                            ]);
+                        }
+                    }
+                })
+                .state('index.advisory', {
+                    url: "/advisory",
+                    templateUrl: appBaseUrl + "views/advisory/list.html",
                     data: { pageTitle: 'Tư vấn' },
                     resolve: {
                         loadPlugin: function ($ocLazyLoad) {

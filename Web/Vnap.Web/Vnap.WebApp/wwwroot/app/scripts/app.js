@@ -7,7 +7,8 @@ var vnap = angular.module('vnap', [
     'LocalStorageModule',
     'cloudinary',
     'validation',
-    'validation.rule'
+    'validation.rule',
+    'SignalR'
 ]);
 
 var baseUrl = $('base').attr('href');

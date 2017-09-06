@@ -243,7 +243,7 @@ namespace Vnap.ViewModels
                 await _navigationService.GoBackAsync(useModalNavigation: true);
                 await Task.Run(async () =>
                 {
-                    var syncResult = await _syncService.Sync();
+                    var syncResult = await _syncService.Sync(App.CurrentUser.UserName);
                 });
             }
             else
@@ -252,7 +252,7 @@ namespace Vnap.ViewModels
                 {
                     UserDialogs.Instance.ShowLoading("Tải dữ liệu...");
 
-                    var syncResult = await _syncService.Sync();
+                    var syncResult = await _syncService.Sync(App.CurrentUser.UserName);
                     if (syncResult.Plants != null)
                     {
                         _plants = syncResult.Plants.Select(p => p.Name).ToObservableCollection();

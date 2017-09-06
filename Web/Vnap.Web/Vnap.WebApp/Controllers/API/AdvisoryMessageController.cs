@@ -43,6 +43,17 @@ namespace Vnap.WebApp.Controllers.API
         }
 
         [HttpGet]
+        [Route("GetConversations")]
+        public async Task<IEnumerable<ConversationVM>> GetConversations(int skip = 0, int take = 10)
+        {
+            IEnumerable<Conversation> pageData = await _conversationRepository.Queryable().Include(c => c.AdvisoryMessages)
+                .Where(c => c.AdvisoryMessages.Any())
+                .OrderByDescending(c => c.CreatedDate).ToListAsync();
+
+            return Mapper.Map<IEnumerable<ConversationVM>>(pageData);
+        }
+
+        [HttpGet]
         [Route("GetByLatestId")]
         public async Task<IEnumerable<AdvisoryMessageVM>> GetAdvisoryMessagesByLatestId(string conversationName, int latestId)
         {

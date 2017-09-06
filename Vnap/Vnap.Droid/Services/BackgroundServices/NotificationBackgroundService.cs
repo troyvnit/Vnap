@@ -33,52 +33,52 @@ namespace Vnap.Droid.Services.BackgroundServices
         {
             _cts = new CancellationTokenSource();
 
-            Task.Run(async () =>
-            {
-                try
-                {
-                    while (!_cts.IsCancellationRequested)
-                    {
-                        if(App.CurrentUser != null && !string.IsNullOrEmpty(App.CurrentUser.UserName))
-                        {
-                            var advisoryMessages = LocalDataStorage.GetAdvisoryMessages();
-                            var isNotEmpty = advisoryMessages.Any();
-                            var url = isNotEmpty
-                                    ? $"http://vnap.vn/api/AdvisoryMessage/GetByLatestId?conversationName={App.CurrentUser.UserName}&latestId={advisoryMessages.OrderByDescending(a => a.CreatedDate).FirstOrDefault()?.Id}"
-                                    : $"http://vnap.vn/api/AdvisoryMessage?conversationName={App.CurrentUser.UserName}";
-                            var getAdvisoryMessagesRs = await httpClient.GetStringAsync(url);
-                            var newAdvisoryMessages = JsonConvert.DeserializeObject<List<AdvisoryMessageEntity>>(getAdvisoryMessagesRs);
+            //Task.Run(async () =>
+            //{
+            //    try
+            //    {
+            //        while (!_cts.IsCancellationRequested)
+            //        {
+            //            if(App.CurrentUser != null && !string.IsNullOrEmpty(App.CurrentUser.UserName))
+            //            {
+            //                var advisoryMessages = LocalDataStorage.GetAdvisoryMessages();
+            //                var isNotEmpty = advisoryMessages.Any();
+            //                var url = isNotEmpty
+            //                        ? $"http://vnap.vn/api/AdvisoryMessage/GetByLatestId?conversationName={App.CurrentUser.UserName}&latestId={advisoryMessages.OrderByDescending(a => a.CreatedDate).FirstOrDefault()?.Id}"
+            //                        : $"http://vnap.vn/api/AdvisoryMessage?conversationName={App.CurrentUser.UserName}";
+            //                var getAdvisoryMessagesRs = await httpClient.GetStringAsync(url);
+            //                var newAdvisoryMessages = JsonConvert.DeserializeObject<List<AdvisoryMessageEntity>>(getAdvisoryMessagesRs);
 
-                            if (newAdvisoryMessages.Any())
-                            {
-                                advisoryMessages.AddRange(newAdvisoryMessages.ToList());
-                                LocalDataStorage.SetAdvisoryMessages(advisoryMessages);
-                                var first = newAdvisoryMessages.OrderByDescending(a => a.CreatedDate).FirstOrDefault(a => a.IsAdviser);
-                                if (first != null && isNotEmpty)
-                                {
-                                    _notificationService.Notify("Vnap đã trả lời câu hỏi của bạn!", !string.IsNullOrEmpty(first.Content) ? first.Content : "[Hình ảnh]", newAdvisoryMessages.Count);
-                                }
-                            }
-                        }
-                        Log.Info("", "Reconnecting to stream in 10 seconds");
-                        Thread.Sleep(10000);
-                    }
-                }
-                catch (Exception e)
-                {
-                    // Suppress?
-                }
-                finally
-                {
-                    if (_cts.IsCancellationRequested)
-                    {
-                        var message = new CancelledMessage();
-                        Device.BeginInvokeOnMainThread(
-                            () => MessagingCenter.Send(message, "CancelledMessage")
-                            );
-                    }
-                }
-            }, _cts.Token);
+            //                if (newAdvisoryMessages.Any())
+            //                {
+            //                    advisoryMessages.AddRange(newAdvisoryMessages.ToList());
+            //                    LocalDataStorage.SetAdvisoryMessages(advisoryMessages);
+            //                    var first = newAdvisoryMessages.OrderByDescending(a => a.CreatedDate).FirstOrDefault(a => a.IsAdviser);
+            //                    if (first != null && isNotEmpty)
+            //                    {
+            //                        _notificationService.Notify("Vnap đã trả lời câu hỏi của bạn!", !string.IsNullOrEmpty(first.Content) ? first.Content : "[Hình ảnh]", newAdvisoryMessages.Count);
+            //                    }
+            //                }
+            //            }
+            //            Log.Info("", "Reconnecting to stream in 10 seconds");
+            //            Thread.Sleep(10000);
+            //        }
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        // Suppress?
+            //    }
+            //    finally
+            //    {
+            //        if (_cts.IsCancellationRequested)
+            //        {
+            //            var message = new CancelledMessage();
+            //            Device.BeginInvokeOnMainThread(
+            //                () => MessagingCenter.Send(message, "CancelledMessage")
+            //                );
+            //        }
+            //    }
+            //}, _cts.Token);
 
             Task.Run(async () =>
             {

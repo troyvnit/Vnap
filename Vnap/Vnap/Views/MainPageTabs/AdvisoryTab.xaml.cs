@@ -21,10 +21,10 @@ namespace Vnap.Views
             MessageListView.SelectedItem = null;
         }
 
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             var context = BindingContext as AdvisoryTabViewModel;
-            if (context != null) await context.LoadMessages(0);
+            if (context != null) context.LoadMessages(0);
             var last = MessageListView.ItemsSource.Cast<AdvisoryMessage>().LastOrDefault();
             if (last != null)
             {

@@ -13,11 +13,11 @@ namespace Vnap.Service
 {
     public interface ISyncService
     {
-        Task<SyncResult> Sync();
+        Task<SyncResult> Sync(string currentUserName);
     }
     public class SyncService : ISyncService
     {
-        public async Task<SyncResult> Sync()
+        public async Task<SyncResult> Sync(string currentUserName)
         {
             try
             {
@@ -28,6 +28,12 @@ namespace Vnap.Service
                     LocalDataStorage.SetPlants(syncResult.Plants);
                     LocalDataStorage.SetPlantDiseases(syncResult.PlantDiseases);
                     LocalDataStorage.SetArticles(syncResult.Articles);
+                    LocalDataStorage.SetSettings(syncResult.Settings);
+
+                    var getAdvisoryMessagesRs = await httpClient.GetStringAsync($"http://vnap.vn/api/advisorymessage?conversationName={currentUserName}");
+                    var advisoryMessages = JsonConvert.DeserializeObject<List<AdvisoryMessageEntity>>(getAdvisoryMessagesRs);
+                    LocalDataStorage.SetAdvisoryMessages(advisoryMessages);
+
                     return syncResult;
                 }
             }
@@ -43,5 +49,6 @@ namespace Vnap.Service
         public List<Plant> Plants { get; set; }
         public List<PlantDisease> PlantDiseases { get; set; }
         public List<ArticleEntity> Articles { get; set; }
+        public List<SettingEntity> Settings { get; set; }
     }
 }

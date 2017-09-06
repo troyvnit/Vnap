@@ -2,6 +2,7 @@
 angular.module('vnap')
     .controller('MainCtrl', MainCtrl)
     .controller('UserCtrl', UserCtrl)
+    .controller('AdvisoryMessageCtrl', AdvisoryMessageCtrl)
     .controller('PlantCtrl', PlantCtrl)
     .controller('PlantFormCtrl', PlantFormCtrl)
     .controller('PlantDiseaseCtrl', PlantDiseaseCtrl)

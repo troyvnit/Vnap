@@ -20,6 +20,8 @@ using Xamarin.Forms;
 using Image = Vnap.Models.Image;
 using Vnap.Service.Utils;
 using Microsoft.AspNet.SignalR.Client;
+using Vnap.Entity;
+using Vnap.Services;
 
 namespace Vnap.ViewModels
 {
@@ -28,6 +30,7 @@ namespace Vnap.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IMessageService _messageService;
         private readonly HttpClient _httpClient = new HttpClient();
+        private bool subscribed;
 
         private ObservableCollection<AdvisoryMessage> _messages = new ObservableCollection<AdvisoryMessage>();
         public ObservableCollection<AdvisoryMessage> Messages => _messages;
@@ -80,7 +83,8 @@ namespace Vnap.ViewModels
             IsBusy = true;
 
             _messages = new ObservableCollection<AdvisoryMessage>();
-            await LoadMessages(0);
+            await _messageService.Sync(App.CurrentUser.UserName);
+            LoadMessages(0);
 
             IsBusy = false;
         }
@@ -90,12 +94,12 @@ namespace Vnap.ViewModels
             return IsNotBusy && _messages.Count < _totalMessages;
         }
 
-        public async void ExecuteLoadMoreCommand(AdvisoryMessage item)
+        public void ExecuteLoadMoreCommand(AdvisoryMessage item)
         {
             IsBusy = true;
 
             var skip = _messages.Count;
-            await LoadMessages(skip);
+            LoadMessages(skip);
 
             IsBusy = false;
         }
@@ -120,11 +124,6 @@ namespace Vnap.ViewModels
             };
             try
             {
-                if (App.HubConnection.State == ConnectionState.Disconnected)
-                {
-                    await App.HubConnection.Start();
-                    await App.HubProxy.Invoke("HandShake", App.CurrentUser.UserName);
-                }
                 var result = await App.HubProxy.Invoke<AdvisoryMessage>("SubscribeAdvisoryMessage", message);
                 if (result != null)
                 {
@@ -202,22 +201,39 @@ namespace Vnap.ViewModels
             }
         }
 
-        public async Task LoadMessages(int skip)
+        public void LoadMessages(int skip)
         {
+            if (App.HubConnection.State == ConnectionState.Disconnected)
+            {
+                App.HubConnection.Start().Wait();
+                App.HubProxy.Invoke("HandShake", App.CurrentUser.UserName).Wait();
+            }
+            if (!subscribed)
+            {
+                App.HubProxy.Subscribe("Publish").Received += rs => {
+                    var newMessage = rs[0]?.ToObject<AdvisoryMessage>();
+                    if (newMessage?.ConversationName == App.CurrentUser.UserName && newMessage.IsAdviser)
+                    {
+                        _messages.Add(newMessage);
+                        LocalDataStorage.SetAdvisoryMessages(_messages.Select(Mapper.Map<AdvisoryMessageEntity>).ToList());
+                        DependencyService.Get<INotificationService>().Notify("Vnap đã trả lời câu hỏi của bạn!", !string.IsNullOrEmpty(newMessage.Content) ? newMessage.Content : "[Hình ảnh]", 1);
+                    }
+                };
+
+                subscribed = true;
+            }
+
             var rq = new GetMessagesRq()
             {
                 Skip = skip,
                 ConversationName = App.CurrentUser.UserName
             };
-            var newMessages = await _messageService.GetMessages(rq);
-            _totalMessages = await _messageService.GetMessagesCount();
+            var newMessages = _messageService.GetMessages(rq);
+            _totalMessages = _messageService.GetMessagesCount();
             
             foreach (var message in newMessages)
             {
-                if (!_messages.Select(p => p.Id).Contains(message.Id))
-                {
-                    _messages.Add(Mapper.Map<AdvisoryMessage>(message));
-                }
+                _messages.Add(Mapper.Map<AdvisoryMessage>(message));
             }
         }
 

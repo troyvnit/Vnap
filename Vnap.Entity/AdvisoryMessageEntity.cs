@@ -9,6 +9,7 @@ namespace Vnap.Entity
         public string AuthorName { get; set; }
         public string Content { get; set; }
         public string NavigateUrl { get; set; }
+        public string ConversationName { get; set; }
         public DateTime CreatedDate { get; set; }
     }
 }

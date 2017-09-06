@@ -314,6 +314,7 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ConversationVM.cs" />
     <Compile Include="ViewModels\AdvisoryMessageVM.cs" />
     <Compile Include="ViewModels\SettingVM.cs" />
     <Compile Include="ViewModels\ArticleVM.cs" />
@@ -2696,6 +2697,7 @@
     <Content Include="wwwroot\app\scripts\controllers\article\form.js" />
     <Content Include="wwwroot\app\scripts\controllers\article\list.js" />
     <Content Include="wwwroot\app\scripts\controllers\main.js" />
+    <Content Include="wwwroot\app\scripts\controllers\advisory\list.js" />
     <Content Include="wwwroot\app\scripts\controllers\user\list.js" />
     <Content Include="wwwroot\app\scripts\controllers\solution\form.js" />
     <Content Include="wwwroot\app\scripts\controllers\solution\list.js" />
@@ -2707,6 +2709,7 @@
     <Content Include="wwwroot\app\scripts\factories.js" />
     <Content Include="wwwroot\app\scripts\factories\setting.js" />
     <Content Include="wwwroot\app\scripts\factories\article.js" />
+    <Content Include="wwwroot\app\scripts\factories\advisory.js" />
     <Content Include="wwwroot\app\scripts\factories\user.js" />
     <Content Include="wwwroot\app\scripts\factories\solution.js" />
     <Content Include="wwwroot\app\scripts\factories\plant-disease.js" />
@@ -2752,6 +2755,7 @@
     <Content Include="wwwroot\app\views\modals\delete-confirm.html" />
     <Content Include="wwwroot\app\views\article\form.html" />
     <Content Include="wwwroot\app\views\article\list.html" />
+    <Content Include="wwwroot\app\views\advisory\list.html" />
     <Content Include="wwwroot\app\views\user\list.html" />
     <Content Include="wwwroot\app\views\plant-disease\list.html" />
     <Content Include="wwwroot\app\views\solution\form.html" />

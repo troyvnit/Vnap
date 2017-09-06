@@ -40,7 +40,8 @@
         "angular-local-storage": "^0.7.1",
         "angular-validation": "^1.4.4",
         "bootstrap-sweetalert": "^1.0.1",
-        "footable": "^3.1.6"
+        "footable": "^3.1.6",
+        "angular-signalr-hub": "^1.6.3"
     },
   "resolutions": {
     "jquery": "~2.1.4",

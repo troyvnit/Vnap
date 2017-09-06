@@ -53,12 +53,31 @@ namespace Vnap.WebApp.Hubs
             conversation.AdvisoryMessages.Add(advisoryMessage);
             await _conversationRepository.CommitAsync();
 
-            return Mapper.Map<AdvisoryMessageVM>(advisoryMessage);
+            advisoryMessageVm = Mapper.Map<AdvisoryMessageVM>(advisoryMessage);
+
+            await PublishAdvisoryMessage(advisoryMessageVm);
+
+            return advisoryMessageVm;
         }
 
-        public void PublishAdvisoryMessage(string connectionId)
+        public async Task PublishAdvisoryMessage(AdvisoryMessageVM advisoryMessageVm)
         {
-            Clients.Client(connectionId).Publish("Troy");
+            if (advisoryMessageVm.IsAdviser)
+            {
+                var conversation = await _conversationRepository.Queryable().FirstOrDefaultAsync(c => c.Name == advisoryMessageVm.ConversationName);
+                if (conversation == null)
+                {
+                    Clients.All.Publish(advisoryMessageVm);
+                }
+                else
+                {
+                    Clients.Client(conversation.ConnectionId).Publish(advisoryMessageVm);
+                }
+            }
+            else
+            {
+                Clients.All.Publish(advisoryMessageVm);
+            }
         }
     }
 }

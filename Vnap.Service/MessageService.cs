@@ -15,8 +15,8 @@ namespace Vnap.Service
     public interface IMessageService
     {
         Task Sync(string currentUserName);
-        Task<List<AdvisoryMessageEntity>> GetMessages(GetMessagesRq rq);
-        Task<int> GetMessagesCount();
+        List<AdvisoryMessageEntity> GetMessages(GetMessagesRq rq);
+        int GetMessagesCount();
     }
 
     public class MessageService : IMessageService
@@ -43,16 +43,16 @@ namespace Vnap.Service
             }
         }
 
-        public async Task<List<AdvisoryMessageEntity>> GetMessages(GetMessagesRq rq)
+        public List<AdvisoryMessageEntity> GetMessages(GetMessagesRq rq)
         {
             var query = LocalDataStorage.GetAdvisoryMessages()
                 .OrderBy(message => message.CreatedDate)
                 .AsQueryable();
-            query = query.Skip(rq.Skip);
+            query = query.Skip(rq.Skip).Take(10);
             return query.ToList();
         }
 
-        public async Task<int> GetMessagesCount()
+        public int GetMessagesCount()
         {
             return LocalDataStorage.GetAdvisoryMessages().AsQueryable().Count();
         }

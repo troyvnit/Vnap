@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Linq;
 using Vnap.Web.DataAccess.Entity;
 using Vnap.Web.ViewModels;
 using Vnap.WebApp.Models;
@@ -49,6 +50,7 @@ namespace Vnap.Web.Mappers
                 CreateMap<Solution, SolutionVM>().ForMember(pd => pd.PlantDiseaseName, o => o.MapFrom(pd => pd.PlantDisease != null ? pd.PlantDisease.Name : string.Empty));
                 CreateMap<Image, ImageVM>();
                 CreateMap<AdvisoryMessage, AdvisoryMessageVM>().ForMember(am => am.ImageUrl, o => o.MapFrom(am => am.ImageUrl.Replace("upload", "upload/a_exif")));
+                CreateMap<Conversation, ConversationVM>().ForMember(c => c.LatestMessage, o => o.MapFrom(c => c.AdvisoryMessages.LastOrDefault()));
                 CreateMap<Article, ArticleVM>();
                 CreateMap<Setting, SettingVM>();
                 CreateMap<ApplicationUser, UserVM>();

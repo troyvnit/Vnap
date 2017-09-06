@@ -1,6 +1,7 @@
 ﻿// Declare your factories
 angular.module('vnap')
     .factory('User', UserFactory)
+    .factory('AdvisoryMessage', AdvisoryMessageFactory)
     .factory('Plant', PlantFactory)
     .factory('PlantDisease', PlantDiseaseFactory)
     .factory('Solution', SolutionFactory)

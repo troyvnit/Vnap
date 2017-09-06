@@ -1,10 +1,10 @@
 ﻿/**
- * UserCtrl - controller
+ * AdvisoryMessageCtrl - controller
  * @param {object} $scope TBD.
  * @param {object} $rootScope TBD.
- * @param {object} User TBD.
+ * @param {object} AdvisoryMessage TBD.
  */
-function UserCtrl($scope, $rootScope, $uibModal, User, Upload, cloudinary, $state, authService) {
+function AdvisoryMessageCtrl($scope, $rootScope, $uibModal, AdvisoryMessage, Upload, cloudinary, $state, authService) {
     this.authentication = authService.authentication;
 
     if (this.authentication.isAuth && (this.authentication.isAdmin || this.authentication.isMod)) {
@@ -13,13 +13,13 @@ function UserCtrl($scope, $rootScope, $uibModal, User, Upload, cloudinary, $stat
         $state.go('login');
     }
 
-    $scope.User = new User();
-    $scope.User.GetAllUsers(function (data) {
-        $scope.loadAdvisoryMessages(data[0].UserName);
+    $scope.AdvisoryMessage = new AdvisoryMessage($scope);
+    $scope.AdvisoryMessage.GetConversations(function (data) {
+        $scope.loadAdvisoryMessages(data[0].Name);
     });
 
-    $scope.confirmDelete = function (user) {
-        $scope.deletedUser = user;
+    $scope.confirmDelete = function (advisoryMessage) {
+        $scope.deletedAdvisoryMessage = advisoryMessage;
         $scope.modalInstance = $uibModal.open({
             templateUrl: 'wwwroot/app/views/modals/delete-confirm.html',
             scope: $scope
@@ -27,10 +27,10 @@ function UserCtrl($scope, $rootScope, $uibModal, User, Upload, cloudinary, $stat
     }
 
     $scope.ok = function () {
-        $scope.User.Delete($scope.deletedUser, function () {
+        $scope.AdvisoryMessage.Delete($scope.deletedAdvisoryMessage, function () {
             $scope.$apply(function () {
-                var index = $scope.User.users.indexOf($scope.deletedUser);
-                $scope.User.users.splice(index, 1);
+                var index = $scope.AdvisoryMessage.advisoryMessages.indexOf($scope.deletedAdvisoryMessage);
+                $scope.AdvisoryMessage.advisoryMessages.splice(index, 1);
             });
         });
         $scope.modalInstance.close();
@@ -42,9 +42,9 @@ function UserCtrl($scope, $rootScope, $uibModal, User, Upload, cloudinary, $stat
 
     $scope.loadAdvisoryMessages = function (conversationName) {
         $scope.currentConversationName = conversationName;
-        $scope.User.LoadAdvisoryMessages(conversationName, function (data) {
+        $scope.AdvisoryMessage.LoadAdvisoryMessages(conversationName, function (data) {
             $scope.$apply(function () {
-                $scope.AdvisoryMessage.messages = data;
+                $scope.AdvisoryMessages = data;
             });
         });
     }
@@ -55,12 +55,9 @@ function UserCtrl($scope, $rootScope, $uibModal, User, Upload, cloudinary, $stat
         $scope.advisoryMessage.AuthorName = "Vnap";
         $scope.advisoryMessage.ImageUrl = imageUrl;
         $scope.advisoryMessage.ConversationName = $scope.currentConversationName;
-        $scope.User.AddAdvisoryMessage($scope.advisoryMessage, function (data) {
-            $scope.$apply(function () {
-                $scope.AdvisoryMessages.push(data);
-                $scope.advisoryMessage.Content = '';
-            });
-        });
+        $scope.AdvisoryMessage.Add($scope.advisoryMessage);
+
+        $scope.advisoryMessage.Content = '';
     }
 
     $scope.uploadAdvisoryImage = function(file) {

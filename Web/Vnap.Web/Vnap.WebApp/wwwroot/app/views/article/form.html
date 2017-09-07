@@ -66,10 +66,19 @@
                     </div>
                   </div>
                 </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"></label>
+                  <div class="col-sm-8">
+                    <label>
+                      <input icheck type="checkbox" ng-model="article.IsActived">
+                      Thông báo lập tức
+                    </label>
+                  </div>
+                </div>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">
                   <div class="col-sm-4 col-sm-offset-2">
-                    <button class="btn btn-white" type="submit" ui-sref="index.article">{{'cancel' | stringRes}}</button>
+                    <button class="btn btn-white" type="button" ui-sref="index.article">{{'cancel' | stringRes}}</button>
                     <button class="btn btn-primary" type="submit" ng-click="save()">{{'save' | stringRes}}</button>
                   </div>
                 </div>

@@ -5,14 +5,15 @@ using System.Threading.Tasks;
 using Vnap.Web.DataAccess.Entity;
 using Vnap.Web.DataAccess.Repository;
 using Vnap.Web.ViewModels;
+using System;
 
 namespace Vnap.WebApp.Hubs
 {
-    public class AdvisoryHub : Hub
+    public class NotificationHub : Hub
     {
         private readonly IConversationRepository _conversationRepository;
 
-        public AdvisoryHub(IConversationRepository conversationRepository)
+        public NotificationHub(IConversationRepository conversationRepository)
         {
             _conversationRepository = conversationRepository;
         }
@@ -67,16 +68,16 @@ namespace Vnap.WebApp.Hubs
                 var conversation = await _conversationRepository.Queryable().FirstOrDefaultAsync(c => c.Name == advisoryMessageVm.ConversationName);
                 if (conversation == null)
                 {
-                    Clients.All.Publish(advisoryMessageVm);
+                    Clients.All.PublishAdvisoryMessage(advisoryMessageVm);
                 }
                 else
                 {
-                    Clients.Client(conversation.ConnectionId).Publish(advisoryMessageVm);
+                    Clients.Client(conversation.ConnectionId).PublishAdvisoryMessage(advisoryMessageVm);
                 }
             }
             else
             {
-                Clients.All.Publish(advisoryMessageVm);
+                Clients.All.PublishAdvisoryMessage(advisoryMessageVm);
             }
         }
     }

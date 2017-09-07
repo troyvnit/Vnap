@@ -23,14 +23,14 @@ namespace Vnap.Views
 
         protected override void OnAppearing()
         {
+            base.OnAppearing();
             var context = BindingContext as AdvisoryTabViewModel;
-            if (context != null) context.LoadMessages(0);
+            if (context != null && !context.Messages.Any()) context.LoadMessages(0);
             var last = MessageListView.ItemsSource.Cast<AdvisoryMessage>().LastOrDefault();
             if (last != null)
             {
                 MessageListView.ScrollTo(last, ScrollToPosition.MakeVisible, true);
             }
-            base.OnAppearing();
         }
     }
 }

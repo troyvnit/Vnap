@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
+using Vnap.Entity;
 
 namespace Vnap.Models
 {
@@ -17,5 +13,8 @@ namespace Vnap.Models
         public int Priority { get; set; }
         public string NavigateUrl { get; set; }
         public DateTime CreatedDate { get; set; }
+        public string CreatedDateDisplay => CreatedDate.ToString("dd/MM/yyyy HH:mm");
+        public ArticleType ArticleType { get; set; }
+        public bool IsActived { get; set; }
     }
 }

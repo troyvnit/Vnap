@@ -49,8 +49,8 @@ namespace Vnap
         {
             try
             {
-                HubConnection = new HubConnection("http://10.164.0.181:6969/");
-                HubProxy = HubConnection.CreateHubProxy("AdvisoryHub");
+                HubConnection = new HubConnection("http://vnap.vn/");
+                HubProxy = HubConnection.CreateHubProxy("NotificationHub");
             }
             catch (Exception e)
             {
@@ -108,8 +108,8 @@ namespace Vnap
 
         protected override void OnStart()
         {
-            var message = new NotificationMessage();
-            MessagingCenter.Send(message, "NotificationBackgroundService");
+            //var message = new NotificationMessage();
+            //MessagingCenter.Send(message, "NotificationBackgroundService");
         }
     }
 }

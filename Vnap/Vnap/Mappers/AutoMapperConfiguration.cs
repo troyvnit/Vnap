@@ -50,6 +50,7 @@ namespace Vnap.Mappers
                 CreateMap<Models.PlantDisease, Entity.PlantDisease>();
                 CreateMap<Models.Solution, Entity.Solution>();
                 CreateMap<Article, ArticleEntity>();
+                CreateMap<AdvisoryMessage, AdvisoryMessageEntity>();
                 CreateMap<Models.Image, Entity.Image>();
             }
         }

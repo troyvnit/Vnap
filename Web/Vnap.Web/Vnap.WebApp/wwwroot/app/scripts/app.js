@@ -8,7 +8,8 @@ var vnap = angular.module('vnap', [
     'cloudinary',
     'validation',
     'validation.rule',
-    'SignalR'
+    'SignalR',
+    'angularMoment'
 ]);
 
 var baseUrl = $('base').attr('href');
@@ -20,6 +21,7 @@ vnap.constant('ngAuthSettings', {
     clientId: 'Vnap.Web'
 });
 
-vnap.run(['authService', '$window', function (authService, $window) {
+vnap.run(['authService', '$window', 'amMoment', function (authService, $window, amMoment) {
     authService.fillAuthData();
+    amMoment.changeLocale('vi');
 }]);

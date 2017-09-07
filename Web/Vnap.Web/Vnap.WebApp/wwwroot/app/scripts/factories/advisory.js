@@ -14,11 +14,11 @@ function AdvisoryMessageFactory($http, Hub) {
     };
 
     //declaring the hub connection
-    var hub = new Hub('advisoryHub', {
+    var hub = new Hub('notificationHub', {
 
         //client side methods
         listeners: {
-            'publish': function (message) {
+            'publishAdvisoryMessage': function (message) {
                 if (message.ConversationName == _scope.currentConversationName) {
                     _scope.AdvisoryMessages.push(message);
                     _scope.$apply();

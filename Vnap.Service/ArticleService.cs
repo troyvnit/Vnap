@@ -28,7 +28,7 @@ namespace Vnap.Service
                 .OrderByDescending(post => post.Priority)
                 .ThenByDescending(post => post.CreatedDate)
                 .AsQueryable();
-            query = query.Where(post => post.ArticleType == rq.ArticleType);
+            query = query.Where(post => post.ArticleType == ArticleType.News || post.ArticleType == ArticleType.Notice);
             query = query.Skip(rq.Skip).Take(rq.Take);
             return query.ToList();
         }

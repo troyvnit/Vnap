@@ -41,7 +41,9 @@
         "angular-validation": "^1.4.4",
         "bootstrap-sweetalert": "^1.0.1",
         "footable": "^3.1.6",
-        "angular-signalr-hub": "^1.6.3"
+        "angular-signalr-hub": "^1.6.3",
+        "iCheck": "^1.0.2",
+        "angular-moment": "^1.0.1"
     },
   "resolutions": {
     "jquery": "~2.1.4",

@@ -210,7 +210,7 @@ namespace Vnap.ViewModels
             }
             if (!subscribed)
             {
-                App.HubProxy.Subscribe("Publish").Received += rs => {
+                App.HubProxy.Subscribe("PublishAdvisoryMessage").Received += rs => {
                     var newMessage = rs[0]?.ToObject<AdvisoryMessage>();
                     if (newMessage?.ConversationName == App.CurrentUser.UserName && newMessage.IsAdviser)
                     {

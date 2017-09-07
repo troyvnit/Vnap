@@ -26,6 +26,7 @@ function ArticleFormCtrl($scope, $rootScope, $stateParams, $state, Article, Uplo
                 $scope.article.Priority = data.Priority;
                 $scope.article.Avatar = data.Avatar;
                 $scope.article.ArticleType = data.ArticleType;
+                $scope.article.IsActived = data.IsActived;
             });
         });
     }

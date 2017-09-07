@@ -38,11 +38,11 @@
                       ItemClickCommand="{Binding ItemClickCommand}"
                       SeparatorVisibility="None"
                       Grid.Row="0">
-                <ListView.Behaviors>
+                <!--<ListView.Behaviors>
                     <behaviors:ListViewBehavior
                         Command="{Binding LoadMoreCommand}"
                         Converter="{StaticResource ItemVisibilityConverter}" />
-                </ListView.Behaviors>
+                </ListView.Behaviors>-->
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <rerenders:MessageViewCell />

@@ -39,10 +39,10 @@ namespace Vnap.Droid
             var app = new App(new Androidinitializer());
             LoadApplication(app);
 
-            MessagingCenter.Subscribe<NotificationMessage>(this, "NotificationBackgroundService", message => {
-                var notificationIntent = new Intent(this, typeof(NotificationBackgroundService));
-                StartService(notificationIntent);
-            });
+            //MessagingCenter.Subscribe<NotificationMessage>(this, "NotificationBackgroundService", message => {
+            //    var notificationIntent = new Intent(this, typeof(NotificationBackgroundService));
+            //    StartService(notificationIntent);
+            //});
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)

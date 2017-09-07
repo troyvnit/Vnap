@@ -28,7 +28,7 @@
              VerticalOptions="Start" />
       <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand">
         <iconize:IconLabel Text="flaticon-clock-1" TextColor="Gray" FontSize="10"/>
-        <Label Text="18 phút trước" TextColor="Gray" FontSize="10"/>
+        <Label Text="{Binding CreatedDateDisplay}" TextColor="Gray" FontSize="10"/>
       </StackLayout>
     </StackLayout>
   </Grid>

@@ -175,7 +175,7 @@
                         loadPlugin: function ($ocLazyLoad) {
                             return $ocLazyLoad.load([
                                 {
-                                    files: [appBaseUrl + "bower_components/ng-file-upload/ng-file-upload-all.min.js"]
+                                    files: [appBaseUrl + "bower_components/ng-file-upload/ng-file-upload-all.min.js", appBaseUrl + 'bower_components/iCheck/skins/all.css', appBaseUrl + 'bower_components/iCheck/icheck.min.js']
                                 },
                                 {
                                     name: 'summernote',

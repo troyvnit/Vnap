@@ -3,7 +3,7 @@
     <ul side-navigation class="nav metismenu" id="side-menu">
       <li class="nav-header">
         <div class="profile-element" uib-dropdown>
-          <img alt="image" class="img-circle"  src="wwwroot/app/img/no_avatar.png">
+          <img alt="image" class="img-circle" width="48" src="wwwroot/app/img/no_avatar.png">
           <a uib-dropdown-toggle href="#">
             <span class="clear">
               <span class="block m-t-xs">
@@ -43,7 +43,7 @@
       </li>
       <li ui-sref-active="active" ng-show="main.authentication.isAdmin || main.authentication.isMod">
         <a ui-sref="index.user"><i class="fa fa-chrome"></i> <span class="nav-label">{{'advisory' | stringRes}}</span> </a>
-        <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes('user')}">
+        <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes('advisory')}">
           <li ui-sref-active="active"><a ui-sref="index.user"><i class="fa fa-camera-retro"></i> {{'list' | stringRes}}</a></li>
         </ul>
       </li>

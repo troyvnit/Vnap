@@ -48,7 +48,6 @@ namespace Vnap.Service
             var query = LocalDataStorage.GetAdvisoryMessages()
                 .OrderBy(message => message.CreatedDate)
                 .AsQueryable();
-            query = query.Skip(rq.Skip).Take(10);
             return query.ToList();
         }
 

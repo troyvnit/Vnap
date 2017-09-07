@@ -34,9 +34,9 @@
                 </a>
 
                 <div class="media-body ">
-                  <small class="pull-right">{{conversation.LatestMessage.CreatedDate}}</small>
+                  <small class="pull-right" am-time-ago="conversation.LatestMessage.CreatedDate"></small>
                   <strong>{{conversation.Name}}</strong> {{conversation.LatestMessage.IsAdviser ? 'đã nhận được câu trả lời từ tư vấn viên.' : 'đã gửi thông điệp.'}} <br>
-                  <small class="text-muted">{{conversation.LatestMessage.CreatedDate}}</small>
+                  <small class="text-muted">{{conversation.LatestMessage.CreatedDate | date:'dd/MM/yyyy HH:mm:ss'}}</small>
                   <div class="well">
                     {{conversation.LatestMessage.Content}}
                   </div>
@@ -65,7 +65,7 @@
                 </a>
 
                 <div class="media-body">
-                  <small class="text-navy">1m ago</small>
+                  <small class="text-navy" am-time-ago="advisoryMessage.CreatedDate"></small>
                   <strong>{{advisoryMessage.AuthorName}}</strong>
                   <a ng-if="advisoryMessage.ImageUrl" ng-attr-href="{{advisoryMessage.ImageUrl}}" target="_blank">
                     <img ng-src="{{advisoryMessage.ImageUrl}}" />
@@ -73,7 +73,7 @@
                   <p class="m-b-xs">
                     {{advisoryMessage.Content}}
                   </p>
-                  <small class="text-muted">{{advisoryMessage.CreatedDate}}</small>
+                  <small class="text-muted">{{advisoryMessage.CreatedDate | date:'dd/MM/yyyy HH:mm:ss'}}</small>
                 </div>
               </div>
             </div>

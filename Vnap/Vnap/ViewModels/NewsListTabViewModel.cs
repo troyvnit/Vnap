@@ -8,6 +8,10 @@ using Vnap.Entity;
 using Vnap.Models;
 using Vnap.Service;
 using Vnap.Service.Requests.Article;
+using Microsoft.AspNet.SignalR.Client;
+using Vnap.Service.Utils;
+using Xamarin.Forms;
+using Vnap.Services;
 
 namespace Vnap.ViewModels
 {
@@ -15,6 +19,7 @@ namespace Vnap.ViewModels
     {
         private readonly INavigationService _navigationService;
         private readonly IArticleService _articleService;
+        private bool subscribed;
 
         private ObservableCollection<Article> _articles = new ObservableCollection<Article>();
         public ObservableCollection<Article> Articles => _articles;
@@ -64,20 +69,39 @@ namespace Vnap.ViewModels
 
         public void LoadArticles(int skip)
         {
+            if (App.HubConnection.State == ConnectionState.Disconnected)
+            {
+                App.HubConnection.Start().Wait();
+                App.HubProxy.Invoke("HandShake", App.CurrentUser.UserName).Wait();
+            }
+            if (!subscribed)
+            {
+                App.HubProxy.Subscribe("PublishArticle").Received += rs => {
+                    var newArticle = rs[0]?.ToObject<Article>();
+                    if (newArticle != null && (newArticle.ArticleType == ArticleType.News || newArticle.ArticleType == ArticleType.Notice))
+                    {
+                        _articles.Add(newArticle);
+                        LocalDataStorage.SetArticles(_articles.Select(Mapper.Map<ArticleEntity>).ToList());
+                        if (newArticle.IsActived)
+                        {
+                            DependencyService.Get<INotificationService>().Notify(newArticle.Title, !string.IsNullOrEmpty(newArticle.Description) ? newArticle.Description : newArticle.Content, 1);
+                        }
+                    }
+                };
+
+                subscribed = true;
+            }
+
             var rq = new GetArticlesRq()
             {
-                Skip = skip,
-                ArticleType = ArticleType.News
+                Skip = skip
             };
             var newArticles = _articleService.GetArticles(rq);
             _totalArticles = _articleService.GetArticlesCount();
             
             foreach (var article in newArticles)
             {
-                if (!_articles.Select(p => p.Id).Contains(article.Id))
-                {
-                    _articles.Add(Mapper.Map<Article>(article));
-                }
+                _articles.Add(Mapper.Map<Article>(article));
             }
         }
 

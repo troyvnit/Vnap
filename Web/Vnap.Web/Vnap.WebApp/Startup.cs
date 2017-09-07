@@ -13,7 +13,7 @@ namespace Vnap.WebApp
     {
         public void Configuration(IAppBuilder app)
         {
-            GlobalHost.DependencyResolver.Register(typeof(AdvisoryHub), () => new AdvisoryHub(new ConversationRepository(new DbFactory())));
+            GlobalHost.DependencyResolver.Register(typeof(NotificationHub), () => new NotificationHub(new ConversationRepository(new DbFactory())));
             var config = new HubConfiguration();
             config.EnableJSONP = true;
             app.MapSignalR(config);

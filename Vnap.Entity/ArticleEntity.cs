@@ -11,6 +11,7 @@ namespace Vnap.Entity
         public int Priority { get; set; }
         public ArticleType ArticleType { get; set; }
         public DateTime CreatedDate { get; set; }
+        public bool IsActived { get; set; }
     }
 
     public enum ArticleType

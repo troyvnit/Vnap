@@ -4,6 +4,7 @@ using Vnap.Models;
 using Vnap.ViewModels;
 using Xamarin.Forms;
 using Vnap.Service.Utils;
+using System.Linq;
 
 namespace Vnap.Views
 {
@@ -26,7 +27,7 @@ namespace Vnap.Views
         protected override void OnAppearing()
         {
             var context = BindingContext as NewsListTabViewModel;
-            if (context != null) context.LoadArticles(0);
+            if (context != null && !context.Articles.Any()) context.LoadArticles(0);
             base.OnAppearing();
         }
 

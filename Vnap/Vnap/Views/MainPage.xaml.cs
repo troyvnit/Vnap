@@ -1,6 +1,7 @@
 ﻿using Acr.UserDialogs;
 using FormsPlugin.Iconize;
 using Vnap.Services;
+using Vnap.ViewModels;
 using Xamarin.Forms;
 
 namespace Vnap.Views
@@ -15,7 +16,7 @@ namespace Vnap.Views
             InitializeComponent();
             Children.Add(new PlantListTab());
             Children.Add(new AdvisoryTab());
-            Children.Add(new NoticeListTab());
+            //Children.Add(new NoticeListTab());
             Children.Add(new NewsListTab());
         }
 
@@ -30,6 +31,13 @@ namespace Vnap.Views
             });
 
             return true;
+        }
+
+        protected override async void OnAppearing()
+        {
+            var context = BindingContext as MainPageViewModel;
+            if (context != null) await context.SyncData();
+            base.OnAppearing();
         }
     }
 }

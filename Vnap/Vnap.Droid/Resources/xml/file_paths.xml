@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-path name="vnap_images" path="Android/data/com.troylee.vnap/files/Pictures" />
+    <external-path name="vnap_movies" path="Android/data/com.troylee.vnap/files/Movies" />
+</paths>

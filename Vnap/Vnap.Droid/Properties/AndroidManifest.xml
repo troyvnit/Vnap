@@ -1,7 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="preferExternal" package="com.troylee.vnap" android:versionName="1.0.2" android:versionCode="3">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="preferExternal" package="com.troylee.vnap" android:versionName="1.0.3" android:versionCode="4">
 	<uses-sdk android:minSdkVersion="15" android:targetSdkVersion="25" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-	<application android:label="Vnap" android:theme="@style/MyTheme" android:icon="@drawable/icon"></application>
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<application android:label="Vnap" android:theme="@style/MyTheme" android:icon="@drawable/icon">
+    <provider android:name="android.support.v4.content.FileProvider"
+                android:authorities="com.troylee.vnap.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+      <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
+          android:resource="@xml/file_paths"></meta-data>
+    </provider>
+  </application>
 </manifest>

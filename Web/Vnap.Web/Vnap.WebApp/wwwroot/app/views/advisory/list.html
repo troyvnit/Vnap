@@ -28,7 +28,7 @@
         <div class="ibox-content">
           <div>
             <div class="feed-activity-list">
-              <div class="feed-element" ng-repeat="conversation in AdvisoryMessage.conversations" ng-click="loadAdvisoryMessages(conversation.Name);">
+              <div class="feed-element" ng-repeat="conversation in AdvisoryMessage.conversations | filter:conversationFilter" ng-click="loadAdvisoryMessages(conversation.Name);">
                 <a ui-sref="profile" class="pull-left">
                   <img alt="image" class="img-circle" src="wwwroot/app/img/no_avatar.png">
                 </a>

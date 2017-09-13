@@ -244,6 +244,19 @@ namespace Vnap.ViewModels
                 await Task.Run(async () =>
                 {
                     var syncResult = await _syncService.Sync(App.CurrentUser.UserName);
+                    if (syncResult.Plants != null)
+                    {
+                        _plants = syncResult.Plants.Select(p => p.Name).ToObservableCollection();
+                    }
+                    else
+                    {
+                        var plants = LocalDataStorage.GetPlants();
+                        _plants = plants.Select(p => p.Name).ToObservableCollection();
+                        if (!_plants.Any())
+                        {
+                            _plants.Add("Cây Trồng Khác");
+                        }
+                    }
                 });
             }
             else
@@ -252,10 +265,19 @@ namespace Vnap.ViewModels
                 {
                     UserDialogs.Instance.ShowLoading("Tải dữ liệu...");
 
-                    var syncResult = await _syncService.Sync(App.CurrentUser.UserName);
+                    var syncResult = await _syncService.Sync();
                     if (syncResult.Plants != null)
                     {
                         _plants = syncResult.Plants.Select(p => p.Name).ToObservableCollection();
+                    }
+                    else
+                    {
+                        var plants = LocalDataStorage.GetPlants();
+                        _plants = plants.Select(p => p.Name).ToObservableCollection();
+                        if (!_plants.Any())
+                        {
+                            _plants.Add("Cây Trồng Khác");
+                        }
                     }
 
                     var locator = CrossGeolocator.Current;

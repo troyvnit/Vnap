@@ -47,14 +47,6 @@ namespace Vnap
 
         public App(IPlatformInitializer initializer = null) : base(initializer)
         {
-            try
-            {
-                HubConnection = new HubConnection("http://vnap.vn/");
-                HubProxy = HubConnection.CreateHubProxy("NotificationHub");
-            }
-            catch (Exception e)
-            {
-            }
         }
 
         protected override void OnInitialized()
@@ -108,8 +100,7 @@ namespace Vnap
 
         protected override void OnStart()
         {
-            //var message = new NotificationMessage();
-            //MessagingCenter.Send(message, "NotificationBackgroundService");
+            DependencyService.Get<INotificationService>().ClearBadge();
         }
     }
 }

@@ -64,6 +64,31 @@ namespace Vnap.ViewModels
             SendAdvisoryMessageCommand = new DelegateCommand(ExecuteSendAdvisoryMessageCommand);
             TakeOrPickPhotoCommand = new DelegateCommand(ExecuteTakeOrPickPhotoCommandAsync);
             MakePhoneCallCommand = new DelegateCommand(ExecuteMakePhoneCallCommand);
+
+            MessagingCenter.Subscribe<AdvisoryMessage>(this, "UpdateAdvisoryMessages", newMessage =>
+            {
+                _messages.Add(newMessage);
+                LocalDataStorage.SetAdvisoryMessages(_messages.Select(Mapper.Map<AdvisoryMessageEntity>).ToList());
+            });
+
+            //if (App.HubConnection.State == ConnectionState.Disconnected)
+            //{
+            //    App.HubConnection.Start().Wait();
+            //    App.HubProxy.Invoke("HandShake", App.CurrentUser.UserName).Wait();
+            //}
+            //if (!subscribed)
+            //{
+            //    App.HubProxy.Subscribe("PublishAdvisoryMessage").Received += rs => {
+            //        var newMessage = rs[0]?.ToObject<AdvisoryMessage>();
+            //        if (newMessage?.ConversationName == App.CurrentUser.UserName && newMessage.IsAdviser)
+            //        {
+            //            _messages.Add(newMessage);
+            //            LocalDataStorage.SetAdvisoryMessages(_messages.Select(Mapper.Map<AdvisoryMessageEntity>).ToList());
+            //        }
+            //    };
+
+            //    subscribed = true;
+            //}
         }
 
         private void ExecuteMakePhoneCallCommand()
@@ -124,6 +149,12 @@ namespace Vnap.ViewModels
             };
             try
             {
+                if (App.HubConnection.State == ConnectionState.Disconnected)
+                {
+                    App.HubConnection.Start().Wait();
+                    App.HubProxy.Invoke("HandShake", App.CurrentUser.UserName).Wait();
+                }
+
                 var result = await App.HubProxy.Invoke<AdvisoryMessage>("SubscribeAdvisoryMessage", message);
                 if (result != null)
                 {
@@ -203,26 +234,6 @@ namespace Vnap.ViewModels
 
         public void LoadMessages(int skip)
         {
-            if (App.HubConnection.State == ConnectionState.Disconnected)
-            {
-                App.HubConnection.Start().Wait();
-                App.HubProxy.Invoke("HandShake", App.CurrentUser.UserName).Wait();
-            }
-            if (!subscribed)
-            {
-                App.HubProxy.Subscribe("PublishAdvisoryMessage").Received += rs => {
-                    var newMessage = rs[0]?.ToObject<AdvisoryMessage>();
-                    if (newMessage?.ConversationName == App.CurrentUser.UserName && newMessage.IsAdviser)
-                    {
-                        _messages.Add(newMessage);
-                        LocalDataStorage.SetAdvisoryMessages(_messages.Select(Mapper.Map<AdvisoryMessageEntity>).ToList());
-                        DependencyService.Get<INotificationService>().Notify("Vnap đã trả lời câu hỏi của bạn!", !string.IsNullOrEmpty(newMessage.Content) ? newMessage.Content : "[Hình ảnh]", 1);
-                    }
-                };
-
-                subscribed = true;
-            }
-
             var rq = new GetMessagesRq()
             {
                 Skip = skip,

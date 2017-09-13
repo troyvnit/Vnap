@@ -537,6 +537,18 @@
     <Content Include="wwwroot\app\bower_components\angular-validation\src\submit.directive.js" />
     <Content Include="wwwroot\app\bower_components\angular-validation\src\validator.directive.js" />
     <Content Include="wwwroot\app\bower_components\angular-validation\webpack.config.js" />
+    <Content Include="wwwroot\app\bower_components\angularjs-toaster\index.js" />
+    <Content Include="wwwroot\app\bower_components\angularjs-toaster\karma.conf.js" />
+    <Content Include="wwwroot\app\bower_components\angularjs-toaster\karma.coverage.js" />
+    <Content Include="wwwroot\app\bower_components\angularjs-toaster\test\directiveTemplateSpec.js" />
+    <Content Include="wwwroot\app\bower_components\angularjs-toaster\test\toasterContainerControllerSpec.js" />
+    <Content Include="wwwroot\app\bower_components\angularjs-toaster\test\toasterContainerSpec.js" />
+    <Content Include="wwwroot\app\bower_components\angularjs-toaster\test\toasterEventRegistrySpec.js" />
+    <Content Include="wwwroot\app\bower_components\angularjs-toaster\test\toasterServiceSpec.js" />
+    <Content Include="wwwroot\app\bower_components\angularjs-toaster\toaster.css" />
+    <Content Include="wwwroot\app\bower_components\angularjs-toaster\toaster.js" />
+    <Content Include="wwwroot\app\bower_components\angularjs-toaster\toaster.min.css" />
+    <Content Include="wwwroot\app\bower_components\angularjs-toaster\toaster.min.js" />
     <Content Include="wwwroot\app\bower_components\angular\angular-csp.css" />
     <Content Include="wwwroot\app\bower_components\angular\angular.js" />
     <Content Include="wwwroot\app\bower_components\angular\angular.min.js">
@@ -2850,6 +2862,7 @@
     <Content Include="wwwroot\app\styles\bootstrap.min.css">
       <DependentUpon>bootstrap.css</DependentUpon>
     </Content>
+    <Content Include="wwwroot\app\styles\custom.css" />
     <Content Include="wwwroot\app\styles\patterns\1.png" />
     <Content Include="wwwroot\app\styles\patterns\2.png" />
     <Content Include="wwwroot\app\styles\patterns\3.png" />
@@ -2868,6 +2881,7 @@
     <Content Include="wwwroot\app\styles\style.css" />
     <Content Include="wwwroot\app\views\account\register.html" />
     <Content Include="wwwroot\app\views\account\login.html" />
+    <Content Include="wwwroot\app\views\common\right_sidebar.html" />
     <Content Include="wwwroot\app\views\setting\form.html" />
     <Content Include="wwwroot\app\views\setting\list.html" />
     <Content Include="wwwroot\app\views\article-details.html" />
@@ -2991,6 +3005,12 @@
     <Content Include="wwwroot\app\bower_components\angular-moment\LICENSE" />
     <Content Include="wwwroot\app\bower_components\angular-moment\package.json" />
     <Content Include="wwwroot\app\bower_components\angular-moment\README.md" />
+    <Content Include="wwwroot\app\bower_components\angularjs-toaster\.bower.json" />
+    <Content Include="wwwroot\app\bower_components\angularjs-toaster\bower.json" />
+    <Content Include="wwwroot\app\bower_components\angularjs-toaster\LICENSE" />
+    <Content Include="wwwroot\app\bower_components\angularjs-toaster\package.json" />
+    <Content Include="wwwroot\app\bower_components\angularjs-toaster\README.md" />
+    <Content Include="wwwroot\app\bower_components\angularjs-toaster\toaster.scss" />
     <None Include="wwwroot\_references.js" />
   </ItemGroup>
   <ItemGroup>

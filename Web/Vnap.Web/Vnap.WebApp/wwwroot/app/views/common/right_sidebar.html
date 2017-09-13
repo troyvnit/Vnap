@@ -1,0 +1,76 @@
+﻿<div ng-controller="AdvisoryMessageCtrl">
+  <div id="right-sidebar" ng-show="rightSidebar" class="sidebar-open">
+    <div class="sidebar-container" full-scroll>
+      <div class="sidebar-title">
+        <h3> <i class="fa fa-comments-o"></i> Danh sách tư vấn</h3>
+        <small><i class="fa fa-tim"></i> Bạn có 10 tin mới.</small>
+      </div>
+      <div>
+        <div class="sidebar-message" ng-repeat="conversation in AdvisoryMessage.conversations | filter:conversationFilter" ng-click="loadAdvisoryMessages(conversation.Name);">
+          <a href="#">
+            <div class="pull-left text-center">
+              <img alt="image" class="img-circle message-avatar" src="wwwroot/app/img/no_avatar.png">
+
+              <div class="m-t-xs" ng-show="!conversation.LatestMessage.IsAdviser">
+                <i class="fa fa-comments-o text-warning"></i>
+              </div>
+            </div>
+            <div class="media-body">
+              <strong>{{conversation.Name}}</strong>
+              <br>
+              {{conversation.LatestMessage.Content}}
+              <br>
+              <small class="text-muted">{{conversation.LatestMessage.CreatedDate | date:'dd/MM/yyyy HH:mm:ss'}}</small>
+            </div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="small-chat-box ng-small-chat fadeInRight animated" ng-show="openChat">
+
+    <div class="heading" draggable="true">
+      {{currentConversationName}}
+    </div>
+
+    <div class="content" chat-slim-scroll>
+
+      <div ng-class="{left: !advisoryMessage.IsAdviser, right: advisoryMessage.IsAdviser}" ng-repeat="advisoryMessage in AdvisoryMessages">
+        <div class="author-name">
+          {{advisoryMessage.AuthorName}} <small class="chat-date" ng-class="{'pull-left': advisoryMessage.IsAdviser, 'pull-right': !advisoryMessage.IsAdviser}" am-time-ago="advisoryMessage.CreatedDate"></small>
+        </div>
+        <div ng-class="{'chat-message': true, active: !advisoryMessage.IsAdviser}">
+          <a ng-if="advisoryMessage.ImageUrl" ng-attr-href="{{advisoryMessage.ImageUrl}}" target="_blank">
+            <img ng-src="{{advisoryMessage.ImageUrl}}" />
+          </a>
+          {{advisoryMessage.Content}}
+        </div>
+
+      </div>
+    </div>
+    <div class="form-chat">
+      <div class="form-group">
+        <textarea class="form-control" ng-model="advisoryMessage.Content" placeholder="Nội dung tư vấn"></textarea>
+      </div>
+      <div class="text-right">
+        <span ng-show="fileProgress > 0">Tải lên {{fileProgress}}%...</span>
+        <div class="btn btn-sm btn-default m-t-n-xs" ngf-select="uploadAdvisoryImage($file)">
+          <i class="fa fa-camera-retro"></i>
+        </div>
+        <button type="button" class="btn btn-sm btn-primary m-t-n-xs" ng-click="addAdvisoryMessage()"><strong>Gửi</strong></button>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="small-chat" ng-click="openChat = !openChat">
+    <!--<span class="badge badge-warning pull-right">5</span>-->
+    <a class="open-small-chat">
+      <i class="fa fa-comments"></i>
+    </a>
+  </div>
+</div>
+
+<toaster-container></toaster-container>

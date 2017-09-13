@@ -19,10 +19,20 @@ function AdvisoryMessageFactory($http, Hub) {
         //client side methods
         listeners: {
             'publishAdvisoryMessage': function (message) {
+                var conversation = _scope.AdvisoryMessage.conversations.find(x => x.Name == message.ConversationName);
+                if (!conversation) {
+                    conversation = { Name: message.ConversationName, LatestMessage: message };
+                    _scope.AdvisoryMessage.conversations.unshift(conversation);
+                } else {
+                    conversation.LatestMessage = message;
+                }
                 if (message.ConversationName == _scope.currentConversationName) {
                     _scope.AdvisoryMessages.push(message);
-                    _scope.$apply();
                 }
+
+                _scope.notify(message);
+                _scope.openChat = true;
+                _scope.$apply();
             }
         },
 
@@ -108,7 +118,14 @@ function AdvisoryMessageFactory($http, Hub) {
     }
 
     AdvisoryMessage.prototype.Add = function (advisoryMessage) {
-        hub.subscribeAdvisoryMessage(advisoryMessage).done((message) => _scope.AdvisoryMessages.push(message));
+        hub.subscribeAdvisoryMessage(advisoryMessage).done((message) => {
+            _scope.AdvisoryMessages.push(message);
+            var conversation = _scope.AdvisoryMessage.conversations.find(x => x.Name == message.ConversationName);
+            if (conversation) {
+                conversation.LatestMessage = message;
+            }
+            _scope.$apply();
+        });
         //$.ajax({
         //    method: "POST",
         //    url: apiBaseUrl + "advisoryMessage/add",

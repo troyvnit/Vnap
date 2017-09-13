@@ -138,7 +138,79 @@ function iboxToolsFullScreen($timeout) {
     };
 }
 
+/**
+ * icheck - Directive for custom checkbox icheck
+ */
+function icheck($timeout) {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function ($scope, element, $attrs, ngModel) {
+            return $timeout(function () {
+                var value;
+                value = $attrs['value'];
 
+                $scope.$watch($attrs['ngModel'], function (newValue) {
+                    $(element).iCheck('update');
+                })
+
+                return $(element).iCheck({
+                    checkboxClass: 'icheckbox_square-green',
+                    radioClass: 'iradio_square-green'
+
+                }).on('ifChanged', function (event) {
+                    if ($(element).attr('type') === 'checkbox' && $attrs['ngModel']) {
+                        $scope.$apply(function () {
+                            return ngModel.$setViewValue(event.target.checked);
+                        });
+                    }
+                    if ($(element).attr('type') === 'radio' && $attrs['ngModel']) {
+                        return $scope.$apply(function () {
+                            return ngModel.$setViewValue(value);
+                        });
+                    }
+                });
+            });
+        }
+    };
+}
+
+
+/**
+ * fullScroll - Directive for slimScroll with 100%
+ */
+function fullScroll($timeout) {
+    return {
+        restrict: 'A',
+        link: function (scope, element) {
+            $timeout(function () {
+                element.slimscroll({
+                    height: '100%',
+                    railOpacity: 0.9
+                });
+
+            });
+        }
+    };
+}
+
+/**
+ * chatSlimScroll - Directive for slim scroll for small chat
+ */
+function chatSlimScroll($timeout) {
+    return {
+        restrict: 'A',
+        link: function (scope, element) {
+            $timeout(function () {
+                element.slimscroll({
+                    height: '450px',
+                    railOpacity: 0.4
+                });
+
+            });
+        }
+    };
+}
 
 /**
  *
@@ -150,4 +222,7 @@ angular
     .directive('sideNavigation', sideNavigation)
     .directive('iboxTools', iboxTools)
     .directive('minimalizaSidebar', minimalizaSidebar)
-    .directive('iboxToolsFullScreen', iboxToolsFullScreen);
+    .directive('iboxToolsFullScreen', iboxToolsFullScreen)
+    .directive('icheck', icheck)
+    .directive('fullScroll', fullScroll)
+    .directive('chatSlimScroll', chatSlimScroll);

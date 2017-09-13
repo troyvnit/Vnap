@@ -10,7 +10,7 @@ namespace Vnap.Service.Requests
     {
         protected BaseRq()
         {
-            Take = 5;
+            Take = 10;
         }
         public int Skip { get; set; }
         public int Take { get; set; }

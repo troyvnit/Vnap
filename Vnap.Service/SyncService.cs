@@ -13,11 +13,11 @@ namespace Vnap.Service
 {
     public interface ISyncService
     {
-        Task<SyncResult> Sync(string currentUserName);
+        Task<SyncResult> Sync(string currentUserName = null);
     }
     public class SyncService : ISyncService
     {
-        public async Task<SyncResult> Sync(string currentUserName)
+        public async Task<SyncResult> Sync(string currentUserName = null)
         {
             try
             {
@@ -30,9 +30,12 @@ namespace Vnap.Service
                     LocalDataStorage.SetArticles(syncResult.Articles);
                     LocalDataStorage.SetSettings(syncResult.Settings);
 
-                    var getAdvisoryMessagesRs = await httpClient.GetStringAsync($"http://vnap.vn/api/advisorymessage?conversationName={currentUserName}");
-                    var advisoryMessages = JsonConvert.DeserializeObject<List<AdvisoryMessageEntity>>(getAdvisoryMessagesRs);
-                    LocalDataStorage.SetAdvisoryMessages(advisoryMessages);
+                    if (!string.IsNullOrEmpty(currentUserName))
+                    {
+                        var getAdvisoryMessagesRs = await httpClient.GetStringAsync($"http://vnap.vn/api/advisorymessage?conversationName={currentUserName}");
+                        var advisoryMessages = JsonConvert.DeserializeObject<List<AdvisoryMessageEntity>>(getAdvisoryMessagesRs);
+                        LocalDataStorage.SetAdvisoryMessages(advisoryMessages);
+                    }
 
                     return syncResult;
                 }

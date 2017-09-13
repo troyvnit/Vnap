@@ -35,6 +35,31 @@ namespace Vnap.ViewModels
             _navigationService = navigationService;
             RefreshCommand = new DelegateCommand(ExecuteRefreshCommand, CanExecuteRefreshCommand);
             LoadMoreCommand = new DelegateCommand<Article>(ExecuteLoadMoreCommand, CanExecuteLoadMoreCommand);
+
+            MessagingCenter.Subscribe<Article>(this, "UpdateArticles", newArticle =>
+            {
+                _articles.Add(newArticle);
+                LocalDataStorage.SetArticles(_articles.Select(Mapper.Map<ArticleEntity>).ToList());
+            });
+
+            //if (App.HubConnection.State == ConnectionState.Disconnected)
+            //{
+            //    App.HubConnection.Start().Wait();
+            //    App.HubProxy.Invoke("HandShake", App.CurrentUser.UserName).Wait();
+            //}
+            //if (!subscribed)
+            //{
+            //    App.HubProxy.Subscribe("PublishArticle").Received += rs => {
+            //        var newArticle = rs[0]?.ToObject<Article>();
+            //        if (newArticle != null && (newArticle.ArticleType == ArticleType.News || newArticle.ArticleType == ArticleType.Notice))
+            //        {
+            //            _articles.Add(newArticle);
+            //            LocalDataStorage.SetArticles(_articles.Select(Mapper.Map<ArticleEntity>).ToList());
+            //        }
+            //    };
+
+            //    subscribed = true;
+            //}
         }
 
         public bool CanExecuteRefreshCommand()
@@ -69,32 +94,10 @@ namespace Vnap.ViewModels
 
         public void LoadArticles(int skip)
         {
-            if (App.HubConnection.State == ConnectionState.Disconnected)
-            {
-                App.HubConnection.Start().Wait();
-                App.HubProxy.Invoke("HandShake", App.CurrentUser.UserName).Wait();
-            }
-            if (!subscribed)
-            {
-                App.HubProxy.Subscribe("PublishArticle").Received += rs => {
-                    var newArticle = rs[0]?.ToObject<Article>();
-                    if (newArticle != null && (newArticle.ArticleType == ArticleType.News || newArticle.ArticleType == ArticleType.Notice))
-                    {
-                        _articles.Add(newArticle);
-                        LocalDataStorage.SetArticles(_articles.Select(Mapper.Map<ArticleEntity>).ToList());
-                        if (newArticle.IsActived)
-                        {
-                            DependencyService.Get<INotificationService>().Notify(newArticle.Title, !string.IsNullOrEmpty(newArticle.Description) ? newArticle.Description : newArticle.Content, 1);
-                        }
-                    }
-                };
-
-                subscribed = true;
-            }
-
             var rq = new GetArticlesRq()
             {
-                Skip = skip
+                Skip = skip,
+                Take = 10
             };
             var newArticles = _articleService.GetArticles(rq);
             _totalArticles = _articleService.GetArticlesCount();

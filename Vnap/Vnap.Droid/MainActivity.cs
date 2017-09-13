@@ -19,6 +19,8 @@ namespace Vnap.Droid
     [Activity(Theme = "@style/MyTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, WindowSoftInputMode = SoftInput.AdjustPan, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
+        private bool subscribed;
+
         protected override void OnCreate(Bundle bundle)
         {
             TabLayoutResource = Resource.Layout.tabs;
@@ -39,10 +41,16 @@ namespace Vnap.Droid
             var app = new App(new Androidinitializer());
             LoadApplication(app);
 
-            //MessagingCenter.Subscribe<NotificationMessage>(this, "NotificationBackgroundService", message => {
-            //    var notificationIntent = new Intent(this, typeof(NotificationBackgroundService));
-            //    StartService(notificationIntent);
-            //});
+            MessagingCenter.Subscribe<NotificationMessage>(this, "NotificationBackgroundService", message =>
+            {
+                if (!subscribed)
+                {
+                    var notificationIntent = new Intent(this, typeof(NotificationBackgroundService));
+                    StartService(notificationIntent);
+
+                    subscribed = true;
+                }
+            });
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)

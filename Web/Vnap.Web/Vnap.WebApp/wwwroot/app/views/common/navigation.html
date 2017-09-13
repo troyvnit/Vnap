@@ -42,8 +42,8 @@
         </ul>
       </li>
       <li ui-sref-active="active" ng-show="main.authentication.isAdmin || main.authentication.isMod">
-        <a ui-sref="index.user"><i class="fa fa-chrome"></i> <span class="nav-label">{{'advisory' | stringRes}}</span> </a>
-        <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes('advisory')}">
+        <a ui-sref="index.user"><i class="fa fa-chrome"></i> <span class="nav-label">{{'user' | stringRes}}</span> </a>
+        <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes('user')}">
           <li ui-sref-active="active"><a ui-sref="index.user"><i class="fa fa-camera-retro"></i> {{'list' | stringRes}}</a></li>
         </ul>
       </li>

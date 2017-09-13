@@ -43,7 +43,8 @@
         "footable": "^3.1.6",
         "angular-signalr-hub": "^1.6.3",
         "iCheck": "^1.0.2",
-        "angular-moment": "^1.0.1"
+        "angular-moment": "^1.0.1",
+        "angularjs-toaster": "^2.2.0"
     },
   "resolutions": {
     "jquery": "~2.1.4",

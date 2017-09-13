@@ -9,7 +9,9 @@ var vnap = angular.module('vnap', [
     'validation',
     'validation.rule',
     'SignalR',
-    'angularMoment'
+    'angularMoment',
+    'toaster',
+    'ngAnimate'
 ]);
 
 var baseUrl = $('base').attr('href');

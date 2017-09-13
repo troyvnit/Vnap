@@ -97,31 +97,5 @@ function UserFactory($http) {
         });
     };
 
-    User.prototype.LoadAdvisoryMessages = function(conversationName, successCallback) {
-        $.ajax({
-                method: "Get",
-                url: apiBaseUrl + "advisoryMessage",
-                data: { 'conversationName': conversationName }
-            })
-            .success(function(data) {
-                if (successCallback) {
-                    successCallback(data);
-                }
-            });
-    };
-
-    User.prototype.AddAdvisoryMessage = function (advisoryMessage, successCallback) {
-        $.ajax({
-            method: "POST",
-            url: apiBaseUrl + "advisoryMessage/add",
-            data: advisoryMessage
-        })
-        .success(function (data) {
-            if (successCallback) {
-                successCallback(data);
-            }
-        });
-    };
-
     return User;
 }

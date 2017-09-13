@@ -4,7 +4,7 @@
  * @param {object} $rootScope TBD.
  * @param {object} AdvisoryMessage TBD.
  */
-function AdvisoryMessageCtrl($scope, $rootScope, $uibModal, AdvisoryMessage, Upload, cloudinary, $state, authService) {
+function AdvisoryMessageCtrl($scope, $rootScope, $uibModal, AdvisoryMessage, Upload, cloudinary, $state, authService, toaster) {
     this.authentication = authService.authentication;
 
     if (this.authentication.isAuth && (this.authentication.isAdmin || this.authentication.isMod)) {
@@ -12,6 +12,10 @@ function AdvisoryMessageCtrl($scope, $rootScope, $uibModal, AdvisoryMessage, Upl
     } else {
         $state.go('login');
     }
+    
+    $scope.conversationFilter = function (item) {
+        return item.LatestMessage;
+    };
 
     $scope.AdvisoryMessage = new AdvisoryMessage($scope);
     $scope.AdvisoryMessage.GetConversations(function (data) {
@@ -42,6 +46,7 @@ function AdvisoryMessageCtrl($scope, $rootScope, $uibModal, AdvisoryMessage, Upl
 
     $scope.loadAdvisoryMessages = function (conversationName) {
         $scope.currentConversationName = conversationName;
+        $scope.openChat = true;
         $scope.AdvisoryMessage.LoadAdvisoryMessages(conversationName, function (data) {
             $scope.$apply(function () {
                 $scope.AdvisoryMessages = data;
@@ -58,6 +63,15 @@ function AdvisoryMessageCtrl($scope, $rootScope, $uibModal, AdvisoryMessage, Upl
         $scope.AdvisoryMessage.Add($scope.advisoryMessage);
 
         $scope.advisoryMessage.Content = '';
+    }
+
+    $scope.notify = function (message) {
+        toaster.pop({
+            type: 'info',
+            title: message.AuthorName,
+            body: message.Content ? message.Content : message.ImageUrl,
+            showCloseButton: true
+        });
     }
 
     $scope.uploadAdvisoryImage = function(file) {

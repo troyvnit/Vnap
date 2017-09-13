@@ -47,7 +47,6 @@ namespace Vnap.WebApp.Controllers.API
         public async Task<IEnumerable<ConversationVM>> GetConversations(int skip = 0, int take = 10)
         {
             IEnumerable<Conversation> pageData = await _conversationRepository.Queryable().Include(c => c.AdvisoryMessages)
-                .Where(c => c.AdvisoryMessages.Any())
                 .OrderByDescending(c => c.CreatedDate).ToListAsync();
 
             return Mapper.Map<IEnumerable<ConversationVM>>(pageData);
@@ -158,7 +157,7 @@ namespace Vnap.WebApp.Controllers.API
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return null;
             }

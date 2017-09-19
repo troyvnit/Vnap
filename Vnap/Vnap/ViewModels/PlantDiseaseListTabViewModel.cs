@@ -40,12 +40,12 @@ namespace Vnap.ViewModels
             return IsNotBusy;
         }
 
-        public async void ExecuteRefreshCommand()
+        public void ExecuteRefreshCommand()
         {
             IsBusy = true;
 
             _plantDiseases = new ObservableRangeCollection<PlantDisease>();
-            await LoadPlantDiseases(0);
+            LoadPlantDiseases(0);
 
             IsBusy = false;
         }
@@ -55,17 +55,17 @@ namespace Vnap.ViewModels
             return IsNotBusy && _plantDiseases.Count < _totalPlantDiseases;
         }
 
-        public async void ExecuteLoadMoreCommand()
+        public void ExecuteLoadMoreCommand()
         {
             IsBusy = true;
 
             var skip = _plantDiseases.Count;
-            await LoadPlantDiseases(skip);
+            LoadPlantDiseases(skip);
 
             IsBusy = false;
         }
 
-        public async Task LoadPlantDiseases(int skip, string searchKey = "")
+        public void LoadPlantDiseases(int skip, string searchKey = "")
         {
             var rq = new GetPlantDiseasesRq()
             {
@@ -77,7 +77,7 @@ namespace Vnap.ViewModels
             var newPlantDiseases = _plantDiseaseService.GetPlantDiseases(rq);
             _totalPlantDiseases = _plantDiseaseService.GetPlantDiseasesCount();
 
-            PlantDiseases.AddRange(newPlantDiseases.Select(Mapper.Map<PlantDisease>));
+            PlantDiseases.AddRange(newPlantDiseases.Where(p => PlantDiseases.All(ep => ep.Id != p.Id)).Select(Mapper.Map<PlantDisease>));
             for (int i = 0; i < PlantDiseases.Count; i++)
             {
                 PlantDiseases[i].IsEven = i % 2 == 0;

@@ -18,7 +18,7 @@ namespace Vnap.Views
                     
                     if (context.PlantDiseases.Count == 0)
                     {
-                        await context.LoadPlantDiseases(0, App.SearchKey);
+                        context.LoadPlantDiseases(0, App.SearchKey);
                     }
                 }
             };

@@ -45,12 +45,12 @@ namespace Vnap.ViewModels
             return IsNotBusy;
         }
 
-        public async void ExecuteRefreshCommand()
+        public void ExecuteRefreshCommand()
         {
             IsBusy = true;
 
             _plants = new ObservableRangeCollection<Plant>();
-            await LoadPlants(0);
+            LoadPlants(0);
 
             IsBusy = false;
         }
@@ -60,17 +60,17 @@ namespace Vnap.ViewModels
             return IsNotBusy;
         }
 
-        public async void ExecuteLoadMoreCommand()
+        public void ExecuteLoadMoreCommand()
         {
             IsBusy = true;
 
             var skip = _plants.Count;
-            await LoadPlants(skip);
+            LoadPlants(skip);
 
             IsBusy = false;
         }
 
-        public async Task LoadPlants(int skip)
+        public void LoadPlants(int skip)
         {
             var rq = new GetPlantsRq()
             {

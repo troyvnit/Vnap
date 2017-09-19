@@ -35,6 +35,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Requests\Solution\GetSolutionsRq.cs" />
+    <Compile Include="SolutionService.cs" />
     <Compile Include="PlantDiseaseService.cs" />
     <Compile Include="MessageService.cs" />
     <Compile Include="SyncService.cs" />

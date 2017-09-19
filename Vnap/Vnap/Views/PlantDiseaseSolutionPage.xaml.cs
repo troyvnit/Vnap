@@ -12,13 +12,6 @@ namespace Vnap.Views
             InitializeComponent();
         }
 
-        protected override void OnAppearing()
-        {
-            var context = BindingContext as PlantDiseaseSolutionPageViewModel;
-            context?.LoadSolutionDetail();
-            base.OnAppearing();
-        }
-
         private void FloatingActionButton_OnClicked(object sender, System.EventArgs e)
         {
             var phoneDialer = CrossMessaging.Current.PhoneDialer;

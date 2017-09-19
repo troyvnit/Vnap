@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 using Prism.Navigation;
 using Vnap.Models;
 using Xamarin.Forms;
+using Prism.Commands;
 
 namespace Vnap.ViewModels
 {
     public class PlantDiseaseSolutionPageViewModel : BaseViewModel
     {
+        private readonly INavigationService _navigationService;
+        private int PlantDiseaseId { get; set; }
 
         ImageSource _avatar = null;
         public ImageSource Avatar
@@ -42,9 +45,17 @@ namespace Vnap.ViewModels
             }
         }
 
-        public void LoadSolutionDetail()
+        public DelegateCommand NavigateCommand { get; set; }
+        public PlantDiseaseSolutionPageViewModel(INavigationService navigationService)
         {
-            
+            _navigationService = navigationService;
+            NavigateCommand = new DelegateCommand(Navigate);
+        }
+
+        private async void Navigate()
+        {
+            var navigationParameters = new NavigationParameters { { "PlantDiseaseId", PlantDiseaseId } };
+            await _navigationService.NavigateAsync($"PlantDiseaseSolutionListPage", navigationParameters, animated: false);
         }
 
         public override void OnNavigatedTo(NavigationParameters parameters)
@@ -58,7 +69,10 @@ namespace Vnap.ViewModels
                 {
                     Html = solution.Description
                 };
+                PlantDiseaseId = solution.PlantDiseaseId;
             }
+
+            base.OnNavigatedTo(parameters);
         }
     }
 }

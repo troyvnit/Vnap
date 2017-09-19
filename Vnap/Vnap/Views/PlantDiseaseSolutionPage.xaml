@@ -25,7 +25,11 @@
                     VerticalOptions="FillAndExpand" />
           <StackLayout Orientation="Horizontal" Padding="5,0,5,0">
             <Label Text="{Binding CompanyName}" FontAttributes="Bold" FontSize="16" TextColor="Green" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
-            <controls:ExtendedLabel Text="Cần giải pháp khác?" TextColor="#FFA300" IsUnderline="True" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand"/>
+            <controls:ExtendedLabel Text="Cần giải pháp khác?" TextColor="#FFA300" IsUnderline="True" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand">
+                <controls:ExtendedLabel.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateCommand}" />
+                </controls:ExtendedLabel.GestureRecognizers>
+            </controls:ExtendedLabel>
           </StackLayout>
           <ContentView BackgroundColor="White" Padding="10" HeightRequest="400">
             <WebView Source="{Binding Description}" />

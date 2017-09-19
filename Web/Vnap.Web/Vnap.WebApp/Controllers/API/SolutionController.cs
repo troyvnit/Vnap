@@ -28,9 +28,9 @@ namespace Vnap.WebApp.Controllers.API
             _solutionRepository = solutionRepository;
         }
 
-        public async Task<IEnumerable<SolutionVM>> GetSolutions(int skip = 0, int take = 10)
+        public async Task<IEnumerable<SolutionVM>> GetSolutions(int skip = 0, int take = 10, int plantDiseaseId = 0)
         {
-            IEnumerable<Solution> pageData = await _solutionRepository.AllIncludingAsync(pd => pd.PlantDisease);
+            IEnumerable<Solution> pageData = await _solutionRepository.FindByAsync(pd => plantDiseaseId == 0 || pd.PlantDiseaseId == plantDiseaseId);
 
             return Mapper.Map<IEnumerable<SolutionVM>>(pageData);
         }

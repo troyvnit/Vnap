@@ -9,5 +9,6 @@
         public string Description { get; set; }
         public int Priority { get; set; }
         public bool Prime { get; set; }
+        public int PlantDiseaseId { get; set; }
     }
 }

@@ -76,6 +76,7 @@ namespace Vnap
             Container.RegisterTypeForNavigation<PlantDiseasePage>();
             Container.RegisterTypeForNavigation<PlantDiseaseDetailPage>(); 
             Container.RegisterTypeForNavigation<PlantDiseaseSolutionPage>();
+            Container.RegisterTypeForNavigation<PlantDiseaseSolutionListPage>();
             Container.RegisterTypeForNavigation<PinchToZoomPage>();
             Container.RegisterTypeForNavigation<ArticleDetailPage>();
             Container.RegisterTypeForNavigation<TermsPage>();
@@ -84,6 +85,7 @@ namespace Vnap
             Container.RegisterType<IPlantDiseaseService, PlantDiseaseService>();
             Container.RegisterType<IArticleService, ArticleService>();
             Container.RegisterType<IMessageService, MessageService>();
+            Container.RegisterType<ISolutionService, SolutionService>();
             Container.RegisterType(typeof(IRepository<>), typeof(Repository<>));
         }
 

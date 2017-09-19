@@ -108,7 +108,7 @@ namespace Vnap.ViewModels
             }
         }
 
-        public async Task ArticleListItemSelectedHandler(Article article)
+        public async void ArticleListItemSelectedHandler(Article article)
         {
             var navigationParameters = new NavigationParameters {{"Article", article}};
             await _navigationService.NavigateAsync($"ArticleDetailPage", navigationParameters, animated: false, useModalNavigation: true);

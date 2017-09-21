@@ -213,3 +213,4 @@ Logs/
 sh.exe.stackdump
 src/Tata/project.lock.json
 NuGet.Config
+Web/Vnap.Web/Vnap.WebApp/App_Data/com.troylee.vnap.apk

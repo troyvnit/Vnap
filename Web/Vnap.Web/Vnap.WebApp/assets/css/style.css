@@ -1064,6 +1064,7 @@ section.video {
   box-shadow: 0 0 0px 10px rgba(40, 155, 71, 0.5);
   -webkit-box-shadow: 0 0 0px 10px rgba(40, 155, 71, 0.5);
   -moz-box-shadow: 0 0 0px 10px rgba(40, 155, 71, 0.5);
+  overflow: hidden;
 }
 .review-img:after {
   position: absolute;
@@ -1242,6 +1243,7 @@ section.video {
   margin: 50px 0 0; 
   padding: 50px 30px 30px;
   text-align: center;
+  min-height: 491px;
 }
 .support-block:hover,
 .support-block.active {
@@ -1626,4 +1628,7 @@ section.contact > .container {
 	background:url(../images/ui.totop.png) no-repeat left -51px;
 }
 
+.text-justify{
+    text-align: justify;
+}
 

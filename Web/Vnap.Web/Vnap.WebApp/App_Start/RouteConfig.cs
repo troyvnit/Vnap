@@ -20,6 +20,12 @@ namespace Vnap.WebApp
              );
 
             routes.MapRoute(
+                name: "Home Download",
+                url: "Download",
+                defaults: new { controller = "Home", action = "Download" }
+            );
+
+            routes.MapRoute(
                 name: "Home Index",
                 url: "Home/{act}",
                 defaults: new { controller = "Home", action = "Index", act = UrlParameter.Optional }

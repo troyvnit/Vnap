@@ -374,14 +374,22 @@
     <Content Include="assets\images\screenshot-4.png" />
     <Content Include="assets\images\screenshot-5.png" />
     <Content Include="assets\images\screenshot-6.png" />
+    <Content Include="assets\images\screenshot-7.png" />
+    <Content Include="assets\images\screenshot-8.png" />
+    <Content Include="assets\images\screenshot-9.png" />
     <Content Include="assets\images\screenshot.jpg" />
     <Content Include="assets\images\slider\slide-1.jpg" />
     <Content Include="assets\images\slider\slide-2.jpg" />
     <Content Include="assets\images\slider\slide-3.jpg" />
     <Content Include="assets\images\subscription_bg.jpg" />
     <Content Include="assets\images\thumb-1.png" />
+    <Content Include="assets\images\thumb-2.png" />
+    <Content Include="assets\images\thumb-3.png" />
     <Content Include="assets\images\transparent-bg.png" />
     <Content Include="assets\images\ui.totop.png" />
+    <Content Include="assets\images\user-1.png" />
+    <Content Include="assets\images\user-2.png" />
+    <Content Include="assets\images\user-3.png" />
     <Content Include="assets\images\video_bg.jpg" />
     <Content Include="assets\js\bootstrap.js" />
     <Content Include="assets\js\bootstrap.min.js" />
@@ -2949,6 +2957,7 @@
     <Content Include="assets\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="assets\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="assets\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="App_Data\com.troylee.vnap.apk" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\Vnap.pubxml" />
@@ -3019,9 +3028,7 @@
     <Content Include="wwwroot\app\bower_components\angularjs-toaster\toaster.scss" />
     <None Include="wwwroot\_references.js" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />

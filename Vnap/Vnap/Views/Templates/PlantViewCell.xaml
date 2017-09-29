@@ -17,6 +17,7 @@
                                 Aspect="AspectFill"
                                 HorizontalOptions="FillAndExpand"
                                 VerticalOptions="FillAndExpand"
+                                DownsampleToViewSize="true"
                                 AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
                                 AbsoluteLayout.LayoutFlags="All" />
     <ActivityIndicator x:Name="ActivityIndicator"

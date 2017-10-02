@@ -209,28 +209,36 @@ namespace Vnap.ViewModels
                 UserName = UserName, Address = Address, City = City, Plant = Plant
             };
 
-            UserDialogs.Instance.ShowLoading("Đang đăng ký...");
-
-            var result = await _httpClient.PostAsync("http://vnap.vn/api/user/create", new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json"));
-
-            UserDialogs.Instance.HideLoading();
-
-            if (!result.IsSuccessStatusCode)
+            try
             {
-                var retry = await UserDialogs.Instance.ConfirmAsync($"Đăng ký thất bại! Vui lòng thử lại hoặc liên hệ đường dây nóng {LocalDataStorage.GetHotLine()}!", null, "Gọi", "Bỏ qua");
-                if (retry)
+                UserDialogs.Instance.ShowLoading("Đang đăng ký...");
+
+                var result = await _httpClient.PostAsync("http://vnap.vn/api/user/create", new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json"));
+
+                UserDialogs.Instance.HideLoading();
+
+                if (!result.IsSuccessStatusCode)
                 {
-                    var phoneDialer = CrossMessaging.Current.PhoneDialer;
-                    if (phoneDialer.CanMakePhoneCall)
-                        phoneDialer.MakePhoneCall(LocalDataStorage.GetHotLine(), "Vnap");
+                    var retry = await UserDialogs.Instance.ConfirmAsync($"Đăng ký thất bại! Vui lòng thử lại hoặc liên hệ đường dây nóng {LocalDataStorage.GetHotLine()}!", null, "Gọi", "Bỏ qua");
+                    if (retry)
+                    {
+                        var phoneDialer = CrossMessaging.Current.PhoneDialer;
+                        if (phoneDialer.CanMakePhoneCall)
+                            phoneDialer.MakePhoneCall(LocalDataStorage.GetHotLine(), "Vnap");
+                    }
+
+                    return;
                 }
 
-                return;
+                App.CurrentUser = user;
+                //await _navigationService.GoBackAsync(useModalNavigation: true);
+                await _navigationService.NavigateAsync("TermsPage", animated: false, useModalNavigation: true);
             }
-            
-            App.CurrentUser = user;
-            //await _navigationService.GoBackAsync(useModalNavigation: true);
-            await _navigationService.NavigateAsync("TermsPage", animated: false, useModalNavigation: true);
+            catch
+            {
+                UserDialogs.Instance.HideLoading();
+                UserDialogs.Instance.Alert("Máy chủ đang bảo trì, mong bà con thông cảm và quay lại sau!");
+            }
         }
 
         public async Task SyncData()
@@ -282,7 +290,7 @@ namespace Vnap.ViewModels
 
                     var locator = CrossGeolocator.Current;
                     locator.DesiredAccuracy = 50;
-                    var position = await locator.GetPositionAsync(10000);
+                    var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(30));
                     var result = await _httpClient.GetStringAsync($"https://maps.googleapis.com/maps/api/geocode/json?latlng={position.Latitude},{position.Longitude}&key=AIzaSyCKO7qZp5U-WCmCNBbuvw6-psle2hi21lg");
                     var jObject = JObject.Parse(result);
                     var address = (string)jObject["results"][0]["formatted_address"];

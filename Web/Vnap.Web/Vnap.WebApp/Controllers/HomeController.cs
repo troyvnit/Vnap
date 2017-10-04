@@ -20,7 +20,7 @@ namespace Vnap.WebApp.Controllers
         {
             var file = "com.troylee.vnap.apk";
             var dir = Path.Combine(Server.MapPath("~/App_Data"), file);
-            return File(dir, "application/vnd.ms-excel", file);
+            return File(dir, "application/vnd.android.package-archive", file);
         }
     }
 }

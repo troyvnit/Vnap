@@ -314,6 +314,7 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utilities\GcmUtil.cs" />
     <Compile Include="ViewModels\ConversationVM.cs" />
     <Compile Include="ViewModels\AdvisoryMessageVM.cs" />
     <Compile Include="ViewModels\SettingVM.cs" />

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Vnap.Web.DataAccess.Entity;
 using Vnap.Web.DataAccess.Repository;
 using Vnap.Web.ViewModels;
-using System;
+using Vnap.WebApp.Utilities;
 
 namespace Vnap.WebApp.Hubs
 {
@@ -74,6 +74,9 @@ namespace Vnap.WebApp.Hubs
                 {
                     Clients.Client(conversation.ConnectionId).PublishAdvisoryMessage(advisoryMessageVm);
                 }
+
+                var content = !string.IsNullOrEmpty(advisoryMessageVm.Content) ? advisoryMessageVm.Content : "[Hình Ảnh]";
+                GcmUtil.SendGcmMessage(content, "advisory");
             }
             else
             {

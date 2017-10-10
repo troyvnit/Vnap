@@ -31,6 +31,7 @@ namespace Vnap
 
         public static HubConnection HubConnection;
         public static IHubProxy HubProxy;
+        public static bool IsPlayServicesAvailable;
 
         private static User _currentUser = LocalDataStorage.GetUser();
         public static User CurrentUser

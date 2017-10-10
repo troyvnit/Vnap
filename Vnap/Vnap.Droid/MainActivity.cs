@@ -2,6 +2,7 @@
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
+using Android.Gms.Common;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
@@ -10,6 +11,7 @@ using Microsoft.Practices.Unity;
 using Plugin.CurrentActivity;
 using Plugin.Permissions;
 using Prism.Unity;
+using Vnap.Droid.Services;
 using Vnap.Droid.Services.BackgroundServices;
 using Vnap.Droid.Utils.IconizeModules;
 using Xamarin.Forms;
@@ -41,6 +43,15 @@ namespace Vnap.Droid
             var app = new App(new Androidinitializer());
             LoadApplication(app);
 
+            App.IsPlayServicesAvailable = IsPlayServicesAvailable();
+            // Check for Google Play Services on the device:
+            if (App.IsPlayServicesAvailable)
+            {
+                // Start the registration intent service; try to get a token:
+                var intent = new Intent(this, typeof(RegistrationIntentService));
+                StartService(intent);
+            }
+
             MessagingCenter.Subscribe<NotificationMessage>(this, "NotificationBackgroundService", message =>
             {
                 if (!subscribed)
@@ -51,6 +62,33 @@ namespace Vnap.Droid
                     subscribed = true;
                 }
             });
+        }
+
+        // Utility method to check for the presence of the Google Play Services APK:
+        public bool IsPlayServicesAvailable()
+        {
+            // These methods are moving to GoogleApiAvailability soon:
+            int resultCode = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable(this);
+            if (resultCode != ConnectionResult.Success)
+            {
+                // Google Play Service check failed - display the error to the user:
+                if (GoogleApiAvailability.Instance.IsUserResolvableError(resultCode))
+                {
+                    // Give the user a chance to download the APK:
+                    //msgText.Text = GoogleApiAvailability.Instance.GetErrorString(resultCode);
+                }
+                else
+                {
+                    //msgText.Text = "Sorry, this device is not supported";
+                    Finish();
+                }
+                return false;
+            }
+            else
+            {
+                //msgText.Text = "Google Play Services is available.";
+                return true;
+            }
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)

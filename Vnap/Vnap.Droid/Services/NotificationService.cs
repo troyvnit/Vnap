@@ -34,6 +34,11 @@ namespace Vnap.Droid.Services
 
         public void Notify(string title, string content, int badge, string parameter = null)
         {
+            if (App.IsPlayServicesAvailable)
+            {
+                return;
+            }
+
             // Set up an intent so that tapping the notifications returns to this app
             var startupIntent = new Intent(Application.Context, typeof(MainActivity));
             if (!string.IsNullOrEmpty(parameter))

@@ -188,7 +188,8 @@ namespace Vnap.ViewModels
                     file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
                     {
                         SaveToAlbum = true,
-                        AllowCropping = true
+                        AllowCropping = true,
+                        PhotoSize = PhotoSize.Medium
                     });
 
                     if (file == null)
@@ -228,7 +229,7 @@ namespace Vnap.ViewModels
             }
             catch (Exception e)
             {
-                // ignored
+                UserDialogs.Instance.HideLoading();
             }
         }
 
@@ -245,6 +246,18 @@ namespace Vnap.ViewModels
             foreach (var message in newMessages)
             {
                 _messages.Add(Mapper.Map<AdvisoryMessage>(message));
+            }
+
+            if (!_messages.Any())
+            {
+                _messages.Add(new AdvisoryMessage()
+                {
+                    AuthorName = "Vnap",
+                    ConversationName = rq.ConversationName,
+                    Content = "Kính chào quý bà con. Đây là nơi để bà con gửi tin nhắn, hình ảnh sâu bệnh về tổng đài cho kỹ sư tư vấn.",
+                    IsAdviser = true,
+                    CreatedDate = DateTime.Now
+                });
             }
         }
 

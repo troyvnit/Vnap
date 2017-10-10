@@ -22,7 +22,7 @@
         <div class="ibox-title">
           <h5>Danh sách tư vấn</h5>
           <div class="ibox-tools">
-            <span class="label label-warning-light">10 tin mới</span>
+            <span class="label label-warning-light">{{AdvisoryMessage.conversations.length}} cuộc hội thoại</span>
           </div>
         </div>
         <div class="ibox-content">
@@ -34,7 +34,7 @@
                 </a>
 
                 <div class="media-body ">
-                  <small class="pull-right" am-time-ago="conversation.LatestMessage.CreatedDate"></small>
+                  <button class="btn-danger btn btn-xs pull-right" ng-click="confirmDeleteConversation(conversation)"><i class="fa fa-remove"></i></button><small class="pull-right" am-time-ago="conversation.LatestMessage.CreatedDate"></small>
                   <strong>{{conversation.Name}}</strong> {{conversation.LatestMessage.IsAdviser ? 'đã nhận được câu trả lời từ tư vấn viên.' : 'đã gửi thông điệp.'}} <br>
                   <small class="text-muted">{{conversation.LatestMessage.CreatedDate | date:'dd/MM/yyyy HH:mm:ss'}}</small>
                   <div class="well">

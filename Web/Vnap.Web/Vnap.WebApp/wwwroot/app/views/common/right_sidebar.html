@@ -7,6 +7,7 @@
       </div>
       <div>
         <div class="sidebar-message" ng-repeat="conversation in AdvisoryMessage.conversations | filter:conversationFilter" ng-click="loadAdvisoryMessages(conversation.Name);">
+          <button class="btn-danger btn btn-xs pull-right" ng-click="confirmDeleteConversation(conversation)"><i class="fa fa-remove"></i></button>
           <a href="#">
             <div class="pull-left text-center">
               <img alt="image" class="img-circle message-avatar" src="wwwroot/app/img/no_avatar.png">

@@ -11,7 +11,7 @@
             IdleProvider.timeout(120); // in seconds
 
             $locationProvider.html5Mode(true);
-            $urlRouterProvider.otherwise("/advisory");
+            $urlRouterProvider.otherwise("/user");
             $ocLazyLoadProvider.config({
                 // Set to true if you want to see what and when is dynamically loaded
                 debug: false

@@ -113,6 +113,18 @@ namespace Vnap.WebApp.Controllers.API
             return advisoryMessageVm;
         }
 
+
+
+        [HttpPost]
+        [Route("DeleteConversation")]
+        public async Task<ConversationVM> DeleteConversation(ConversationVM conversation)
+        {
+            await _conversationRepository.DeleteByIdAsync(conversation.Id);
+            await _conversationRepository.CommitAsync();
+
+            return conversation;
+        }
+
         [HttpPost]
         [Route("Upload")]
         public async Task<AdvisoryMessageVM> Upload(string authorName)

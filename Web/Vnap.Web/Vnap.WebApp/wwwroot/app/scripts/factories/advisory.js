@@ -177,5 +177,18 @@ function AdvisoryMessageFactory($http, Hub) {
             });
     };
 
+    AdvisoryMessage.prototype.DeleteConversation = function (conversation, successCallback) {
+        $.ajax({
+            method: "POST",
+            url: apiBaseUrl + "advisoryMessage/deleteConversation",
+            data: conversation
+        })
+            .success(function (data) {
+                if (successCallback) {
+                    successCallback(data);
+                }
+            });
+    };
+
     return AdvisoryMessage;
 }

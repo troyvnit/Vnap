@@ -19,8 +19,17 @@ function AdvisoryMessageCtrl($scope, $rootScope, $uibModal, AdvisoryMessage, Upl
 
     $scope.AdvisoryMessage = new AdvisoryMessage($scope);
     $scope.AdvisoryMessage.GetConversations(function (data) {
-        $scope.loadAdvisoryMessages(data[0].Name);
+        $scope.loadPopupData();
     });
+
+    $scope.loadPopupData = function () {
+        for (var i = 0; i < $scope.AdvisoryMessage.conversations.length; i++) {
+            if ($scope.AdvisoryMessage.conversations[i].LatestMessage) {
+                $scope.loadAdvisoryMessages($scope.AdvisoryMessage.conversations[i].Name);
+                break;
+            }
+        }
+    }
 
     $scope.confirmDelete = function (advisoryMessage) {
         $scope.deletedAdvisoryMessage = advisoryMessage;
@@ -30,13 +39,33 @@ function AdvisoryMessageCtrl($scope, $rootScope, $uibModal, AdvisoryMessage, Upl
         });
     }
 
-    $scope.ok = function () {
-        $scope.AdvisoryMessage.Delete($scope.deletedAdvisoryMessage, function () {
-            $scope.$apply(function () {
-                var index = $scope.AdvisoryMessage.advisoryMessages.indexOf($scope.deletedAdvisoryMessage);
-                $scope.AdvisoryMessage.advisoryMessages.splice(index, 1);
-            });
+    $scope.confirmDeleteConversation = function (conversation) {
+        $scope.deletedConversation = conversation;
+        $scope.modalInstance = $uibModal.open({
+            templateUrl: 'wwwroot/app/views/modals/delete-confirm.html',
+            scope: $scope
         });
+    }
+
+    $scope.ok = function () {
+        if ($scope.deletedConversation) {
+            $scope.AdvisoryMessage.DeleteConversation($scope.deletedConversation, function () {
+                $scope.$apply(function () {
+                    var index = $scope.AdvisoryMessage.conversations.indexOf($scope.deletedConversation);
+                    $scope.AdvisoryMessage.conversations.splice(index, 1);
+                    $scope.deletedConversation = null;
+                    $scope.loadPopupData();
+                });
+            });
+        } else {
+            $scope.AdvisoryMessage.Delete($scope.deletedAdvisoryMessage, function () {
+                $scope.$apply(function () {
+                    var index = $scope.AdvisoryMessage.advisoryMessages.indexOf($scope.deletedAdvisoryMessage);
+                    $scope.AdvisoryMessage.advisoryMessages.splice(index, 1);
+                    $scope.deletedAdvisoryMessage = null;
+                });
+            });
+        }
         $scope.modalInstance.close();
     };
 

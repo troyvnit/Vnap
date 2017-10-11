@@ -33,7 +33,7 @@ namespace Vnap.WebApp.Utilities
                         "Authorization", "key=" + API_KEY);
 
                     Task.WaitAll(client.PostAsync(url,
-                        new StringContent(jGcmData.ToString(), Encoding.Default, "application/json"))
+                        new StringContent(jGcmData.ToString(), Encoding.UTF8, "application/json"))
                             .ContinueWith(response =>
                             {
                                 Console.WriteLine(response);

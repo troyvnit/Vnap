@@ -11,6 +11,8 @@ using Android.Views;
 using Android.Widget;
 using Android.Gms.Gcm;
 using Android.Util;
+using Newtonsoft.Json;
+using Vnap.Models;
 
 namespace Vnap.Droid.Services
 {
@@ -21,12 +23,25 @@ namespace Vnap.Droid.Services
         {
             // Extract the message received from GCM:
             var message = data.GetString("message");
-            var title = data.GetString("messageType") == "advisory" ? "Vnap đã trả lời câu hỏi của bạn!" : "Vnap - Làm nông chuyên nghiệp";
+            var messageType = data.GetString("messageType");
+            switch (messageType)
+            {
+                case "advisory":
+                    var advisoryMessage = JsonConvert.DeserializeObject<AdvisoryMessage>(message);
+                    if (advisoryMessage.ConversationName == App.CurrentUser.UserName && advisoryMessage.IsAdviser)
+                    {
+                        SendNotification(!string.IsNullOrEmpty(advisoryMessage.Content) ? advisoryMessage.Content : "[Hình ảnh]", "Vnap đã trả lời câu hỏi của bạn!");
+                    }
+                    break;
+                case "article":
+                    var article = JsonConvert.DeserializeObject<Article>(message);
+                    SendNotification(!string.IsNullOrEmpty(article.Description) ? article.Description : article.Content, article.Title);
+                    break;
+                default:
+                    break;
+            }
             Log.Debug("MyGcmListenerService", "From:    " + from);
             Log.Debug("MyGcmListenerService", "Message: " + message);
-
-            // Forward the received message in a local notification:
-            SendNotification(message, title);
         }
 
         // Use Notification Builder to create and launch the notification:

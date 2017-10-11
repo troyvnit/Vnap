@@ -11,6 +11,7 @@ using Vnap.WebApp.Models;
 using Vnap.WebApp.Hubs;
 using Microsoft.AspNet.SignalR;
 using Vnap.WebApp.Utilities;
+using Newtonsoft.Json;
 
 namespace Vnap.WebApp.Controllers.API
 {
@@ -78,9 +79,12 @@ namespace Vnap.WebApp.Controllers.API
             var article = Mapper.Map<Article>(articleVm);
             _articleRepository.Add(article);
             await _articleRepository.CommitAsync();
-            var hubContext = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-            hubContext.Clients.All.PublishArticle(articleVm);
-            GcmUtil.SendGcmMessage(articleVm.Title);
+            if (articleVm.IsActived)
+            {
+                var hubContext = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+                hubContext.Clients.All.PublishArticle(articleVm);
+                GcmUtil.SendGcmMessage(JsonConvert.SerializeObject(Mapper.Map<ArticleVM>(article)));
+            }
             return articleVm;
         }
 

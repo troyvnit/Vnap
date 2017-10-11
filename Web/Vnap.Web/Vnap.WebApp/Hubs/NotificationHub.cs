@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNet.SignalR;
+using Newtonsoft.Json;
 using System.Data.Entity;
 using System.Threading.Tasks;
 using Vnap.Web.DataAccess.Entity;
@@ -74,9 +75,8 @@ namespace Vnap.WebApp.Hubs
                 {
                     Clients.Client(conversation.ConnectionId).PublishAdvisoryMessage(advisoryMessageVm);
                 }
-
-                var content = !string.IsNullOrEmpty(advisoryMessageVm.Content) ? advisoryMessageVm.Content : "[Hình Ảnh]";
-                GcmUtil.SendGcmMessage(content, "advisory");
+                
+                GcmUtil.SendGcmMessage(JsonConvert.SerializeObject(advisoryMessageVm), "advisory");
             }
             else
             {

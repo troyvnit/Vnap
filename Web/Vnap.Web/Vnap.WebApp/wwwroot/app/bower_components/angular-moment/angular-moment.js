@@ -1,4 +1,4 @@
-/* angular-moment.js / v1.0.1 / (c) 2013, 2014, 2015, 2016 Uri Shaked / MIT Licence */
+/* angular-moment.js / v1.1.0 / (c) 2013, 2014, 2015, 2016, 2017 Uri Shaked / MIT Licence */
 
 'format amd';
 /* global define */
@@ -732,6 +732,6 @@
 	} else if (typeof module !== 'undefined' && module && module.exports && (typeof require === 'function') && !isElectron) {
 		module.exports = angularMoment(require('angular'), require('moment'));
 	} else {
-		angularMoment(angular, (typeof global !== 'undefined' ? global : window).moment);
+		angularMoment(angular, (typeof global !== 'undefined' && typeof global.moment !== 'undefined' ? global : window).moment);
 	}
 })();

@@ -1,11 +1,12 @@
 
 /**
- * Cloudinary's JavaScript library - Version 2.1.3
+ * Cloudinary's JavaScript library - Version 2.3.0
  * Copyright Cloudinary
  * see https://github.com/cloudinary/cloudinary_js
  *
  */
-var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+var slice = [].slice,
+  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   hasProp = {}.hasOwnProperty;
 
 (function(root, factory) {
@@ -3522,6 +3523,175 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
   ;
 
   /*
+   * Includes common utility methods and shims
+   */
+  var ArrayParam, BaseUtil, ClientHintsMetaTag, Cloudinary, Condition, Configuration, Expression, ExpressionParam, HtmlTag, ImageTag, Layer, LayerParam, Param, RangeParam, RawParam, SubtitlesLayer, TextLayer, Transformation, TransformationBase, TransformationParam, Util, VideoTag, addClass, allStrings, augmentWidthOrHeight, camelCase, cloudinary, contains, convertKeys, crc32, cssExpand, cssValue, curCSS, defaults, domStyle, getAttribute, getData, getStyles, getWidthOrHeight, hasClass, isNumberLike, m, parameters, pnum, reWords, removeAttribute, rnumnonpx, setAttribute, setAttributes, setData, smartEscape, snakeCase, utf8_encode, width, withCamelCaseKeys, withSnakeCaseKeys, without;
+  allStrings = function(list) {
+    var item, j, len;
+    for (j = 0, len = list.length; j < len; j++) {
+      item = list[j];
+      if (!Util.isString(item)) {
+        return false;
+      }
+    }
+    return true;
+  };
+  without = function(array, item) {
+    var i, length, newArray;
+    newArray = [];
+    i = -1;
+    length = array.length;
+    while (++i < length) {
+      if (array[i] !== item) {
+        newArray.push(array[i]);
+      }
+    }
+    return newArray;
+  };
+  isNumberLike = function(value) {
+    return (value != null) && !isNaN(parseFloat(value));
+  };
+  smartEscape = function(string, unsafe) {
+    if (unsafe == null) {
+      unsafe = /([^a-zA-Z0-9_.\-\/:]+)/g;
+    }
+    return string.replace(unsafe, function(match) {
+      return match.split("").map(function(c) {
+        return "%" + c.charCodeAt(0).toString(16).toUpperCase();
+      }).join("");
+    });
+  };
+  defaults = function() {
+    var destination, sources;
+    destination = arguments[0], sources = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+    return sources.reduce(function(dest, source) {
+      var key, value;
+      for (key in source) {
+        value = source[key];
+        if (dest[key] === void 0) {
+          dest[key] = value;
+        }
+      }
+      return dest;
+    }, destination);
+  };
+
+  /** Used to match words to create compound words. */
+  reWords = (function() {
+    var lower, upper;
+    upper = '[A-Z]';
+    lower = '[a-z]+';
+    return RegExp(upper + '+(?=' + upper + lower + ')|' + upper + '?' + lower + '|' + upper + '+|[0-9]+', 'g');
+  })();
+  camelCase = function(source) {
+    var i, word, words;
+    words = source.match(reWords);
+    words = (function() {
+      var j, len, results;
+      results = [];
+      for (i = j = 0, len = words.length; j < len; i = ++j) {
+        word = words[i];
+        word = word.toLocaleLowerCase();
+        if (i) {
+          results.push(word.charAt(0).toLocaleUpperCase() + word.slice(1));
+        } else {
+          results.push(word);
+        }
+      }
+      return results;
+    })();
+    return words.join('');
+  };
+  snakeCase = function(source) {
+    var i, word, words;
+    words = source.match(reWords);
+    words = (function() {
+      var j, len, results;
+      results = [];
+      for (i = j = 0, len = words.length; j < len; i = ++j) {
+        word = words[i];
+        results.push(word.toLocaleLowerCase());
+      }
+      return results;
+    })();
+    return words.join('_');
+  };
+  convertKeys = function(source, converter) {
+    var key, result, value;
+    if (converter == null) {
+      converter = Util.identity;
+    }
+    result = {};
+    for (key in source) {
+      value = source[key];
+      key = converter(key);
+      if (!Util.isEmpty(key)) {
+        result[key] = value;
+      }
+    }
+    return result;
+  };
+  withCamelCaseKeys = function(source) {
+    return convertKeys(source, Util.camelCase);
+  };
+  withSnakeCaseKeys = function(source) {
+    return convertKeys(source, Util.snakeCase);
+  };
+  BaseUtil = {
+
+    /**
+     * Return true if all items in list are strings
+     * @param {Array} list - an array of items
+     */
+    allStrings: allStrings,
+
+    /**
+    * Convert string to camelCase
+    * @param {string} string - the string to convert
+    * @return {string} in camelCase format
+     */
+    camelCase: camelCase,
+    convertKeys: convertKeys,
+
+    /**
+     * Assign values from sources if they are not defined in the destination.
+     * Once a value is set it does not change
+     * @param {Object} destination - the object to assign defaults to
+     * @param {...Object} source - the source object(s) to assign defaults from
+     * @return {Object} destination after it was modified
+     */
+    defaults: defaults,
+
+    /**
+     * Convert string to snake_case
+     * @param {string} string - the string to convert
+     * @return {string} in snake_case format
+     */
+    snakeCase: snakeCase,
+
+    /**
+    * Creates a new array without the given item.
+    * @param {Array} array - original array
+    * @param {*} item - the item to exclude from the new array
+    * @return {Array} a new array made of the original array's items except for `item`
+     */
+    without: without,
+
+    /**
+    * Return true is value is a number or a string representation of a number.
+    * @example
+    *    Util.isNumber(0) // true
+    *    Util.isNumber("1.3") // true
+    *    Util.isNumber("") // false
+    *    Util.isNumber(undefined) // false
+     */
+    isNumberLike: isNumberLike,
+    smartEscape: smartEscape,
+    withCamelCaseKeys: withCamelCaseKeys,
+    withSnakeCaseKeys: withSnakeCaseKeys
+  };
+
+  /*
    * Includes utility methods and lodash / jQuery shims
    */
 
@@ -3534,7 +3704,6 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
    * @returns the value associated with the `name`
    *
    */
-  var ArrayParam, Cloudinary, Condition, Configuration, HtmlTag, ImageTag, Layer, LayerParam, Param, RangeParam, RawParam, SubtitlesLayer, TextLayer, Transformation, TransformationBase, TransformationParam, Util, VideoTag, addClass, allStrings, augmentWidthOrHeight, cloudinary, contains, crc32, cssExpand, cssValue, curCSS, domStyle, getAttribute, getData, getStyles, getWidthOrHeight, hasClass, parameters, pnum, removeAttribute, rmargin, rnumnonpx, setAttribute, setAttributes, setData, utf8_encode, width, without;
   getData = function(element, name) {
     var ref;
     switch (false) {
@@ -3671,7 +3840,8 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     }
   };
   curCSS = function(elem, name, computed) {
-    var maxWidth, minWidth, ret, style, width;
+    var maxWidth, minWidth, ret, rmargin, style, width;
+    rmargin = /^margin/;
     width = void 0;
     minWidth = void 0;
     maxWidth = void 0;
@@ -3740,7 +3910,6 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       return val;
     }
   };
-  rmargin = /^margin/;
   pnum = /[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/.source;
   rnumnonpx = new RegExp("^(" + pnum + ")(?!px)[a-z%]+$", "i");
   getWidthOrHeight = function(elem, name, extra) {
@@ -3765,33 +3934,11 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
   width = function(element) {
     return getWidthOrHeight(element, "width", "content");
   };
-  allStrings = function(list) {
-    var item, j, len;
-    for (j = 0, len = list.length; j < len; j++) {
-      item = list[j];
-      if (!Util.isString(item)) {
-        return false;
-      }
-    }
-    return true;
-  };
-  without = function(array, item) {
-    var i, length, newArray;
-    newArray = [];
-    i = -1;
-    length = array.length;
-    while (++i < length) {
-      if (array[i] !== item) {
-        newArray.push(array[i]);
-      }
-    }
-    return newArray;
-  };
 
   /**
    * @class Util
    */
-  Util = {
+  Util = _.assign(BaseUtil, {
     hasClass: hasClass,
     addClass: addClass,
 
@@ -3811,12 +3958,6 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     getData: getData,
     setData: setData,
     width: width,
-
-    /**
-     * Return true if all items in list are strings
-     * @param {Array} list - an array of items
-     */
-    allStrings: allStrings,
     isString: _.isString,
     isArray: _.isArray,
     isEmpty: _.isEmpty,
@@ -3831,22 +3972,9 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     /**
      * Recursively assign source properties to destination
      * @param {Object} destination - the object to assign to
+     * @param {...Object} [sources] The source objects.
      */
     merge: _.merge,
-
-    /**
-     * Convert string to camelCase
-     * @param {string} string - the string to convert
-     * @return {string} in camelCase format
-     */
-    camelCase: _.camelCase,
-
-    /**
-     * Convert string to snake_case
-     * @param {string} string - the string to convert
-     * @return {string} in snake_case format
-     */
-    snakeCase: _.snakeCase,
 
     /**
      * Create a new copy of the given object, including all internal objects.
@@ -3869,15 +3997,6 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
      * @return {boolean} true if the item is included in the array
      */
     contains: _.includes,
-
-    /**
-     * Assign values from sources if they are not defined in the destination.
-     * Once a value is set it does not change
-     * @param {Object} destination - the object to assign defaults to
-     * @param {...Object} source - the source object(s) to assign defaults from
-     * @return {Object} destination after it was modified
-     */
-    defaults: _.defaults,
 
     /**
      * Returns values in the given array that are not included in the other array
@@ -3914,16 +4033,8 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
      * @param {string} text
      * @return {string} the `text` without leading or trailing spaces
      */
-    trim: _.trim,
-
-    /**
-     * Creates a new array without the given item.
-     * @param {Array} array - original array
-     * @param {*} item - the item to exclude from the new array
-     * @return {Array} a new array made of the original array's items except for `item`
-     */
-    without: without
-  };
+    trim: _.trim
+  });
 
   /**
    * UTF8 encoder
@@ -3993,6 +4104,273 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     }
     return crc;
   };
+  Layer = (function() {
+
+    /**
+     * Layer
+     * @constructor Layer
+     * @param {Object} options - layer parameters
+     */
+    function Layer(options) {
+      this.options = {};
+      if (options != null) {
+        ["resourceType", "type", "publicId", "format"].forEach((function(_this) {
+          return function(key) {
+            var ref;
+            return _this.options[key] = (ref = options[key]) != null ? ref : options[Util.snakeCase(key)];
+          };
+        })(this));
+      }
+    }
+
+    Layer.prototype.resourceType = function(value) {
+      this.options.resourceType = value;
+      return this;
+    };
+
+    Layer.prototype.type = function(value) {
+      this.options.type = value;
+      return this;
+    };
+
+    Layer.prototype.publicId = function(value) {
+      this.options.publicId = value;
+      return this;
+    };
+
+
+    /**
+     * Get the public ID, formatted for layer parameter
+     * @function Layer#getPublicId
+     * @return {String} public ID
+     */
+
+    Layer.prototype.getPublicId = function() {
+      var ref;
+      return (ref = this.options.publicId) != null ? ref.replace(/\//g, ":") : void 0;
+    };
+
+
+    /**
+     * Get the public ID, with format if present
+     * @function Layer#getFullPublicId
+     * @return {String} public ID
+     */
+
+    Layer.prototype.getFullPublicId = function() {
+      if (this.options.format != null) {
+        return this.getPublicId() + "." + this.options.format;
+      } else {
+        return this.getPublicId();
+      }
+    };
+
+    Layer.prototype.format = function(value) {
+      this.options.format = value;
+      return this;
+    };
+
+
+    /**
+     * generate the string representation of the layer
+     * @function Layer#toString
+     */
+
+    Layer.prototype.toString = function() {
+      var components;
+      components = [];
+      if (this.options.publicId == null) {
+        throw "Must supply publicId";
+      }
+      if (!(this.options.resourceType === "image")) {
+        components.push(this.options.resourceType);
+      }
+      if (!(this.options.type === "upload")) {
+        components.push(this.options.type);
+      }
+      components.push(this.getFullPublicId());
+      return Util.compact(components).join(":");
+    };
+
+    return Layer;
+
+  })();
+  TextLayer = (function(superClass) {
+    extend(TextLayer, superClass);
+
+
+    /**
+     * @constructor TextLayer
+     * @param {Object} options - layer parameters
+     */
+
+    function TextLayer(options) {
+      var keys;
+      TextLayer.__super__.constructor.call(this, options);
+      keys = ["resourceType", "resourceType", "fontFamily", "fontSize", "fontWeight", "fontStyle", "textDecoration", "textAlign", "stroke", "letterSpacing", "lineSpacing", "text"];
+      if (options != null) {
+        keys.forEach((function(_this) {
+          return function(key) {
+            var ref;
+            return _this.options[key] = (ref = options[key]) != null ? ref : options[Util.snakeCase(key)];
+          };
+        })(this));
+      }
+      this.options.resourceType = "text";
+    }
+
+    TextLayer.prototype.resourceType = function(resourceType) {
+      throw "Cannot modify resourceType for text layers";
+    };
+
+    TextLayer.prototype.type = function(type) {
+      throw "Cannot modify type for text layers";
+    };
+
+    TextLayer.prototype.format = function(format) {
+      throw "Cannot modify format for text layers";
+    };
+
+    TextLayer.prototype.fontFamily = function(fontFamily) {
+      this.options.fontFamily = fontFamily;
+      return this;
+    };
+
+    TextLayer.prototype.fontSize = function(fontSize) {
+      this.options.fontSize = fontSize;
+      return this;
+    };
+
+    TextLayer.prototype.fontWeight = function(fontWeight) {
+      this.options.fontWeight = fontWeight;
+      return this;
+    };
+
+    TextLayer.prototype.fontStyle = function(fontStyle) {
+      this.options.fontStyle = fontStyle;
+      return this;
+    };
+
+    TextLayer.prototype.textDecoration = function(textDecoration) {
+      this.options.textDecoration = textDecoration;
+      return this;
+    };
+
+    TextLayer.prototype.textAlign = function(textAlign) {
+      this.options.textAlign = textAlign;
+      return this;
+    };
+
+    TextLayer.prototype.stroke = function(stroke) {
+      this.options.stroke = stroke;
+      return this;
+    };
+
+    TextLayer.prototype.letterSpacing = function(letterSpacing) {
+      this.options.letterSpacing = letterSpacing;
+      return this;
+    };
+
+    TextLayer.prototype.lineSpacing = function(lineSpacing) {
+      this.options.lineSpacing = lineSpacing;
+      return this;
+    };
+
+    TextLayer.prototype.text = function(text) {
+      this.options.text = text;
+      return this;
+    };
+
+
+    /**
+     * generate the string representation of the layer
+     * @function TextLayer#toString
+     * @return {String}
+     */
+
+    TextLayer.prototype.toString = function() {
+      var components, hasPublicId, hasStyle, publicId, re, res, start, style, text, textSource;
+      style = this.textStyleIdentifier();
+      if (this.options.publicId != null) {
+        publicId = this.getFullPublicId();
+      }
+      if (this.options.text != null) {
+        hasPublicId = !Util.isEmpty(publicId);
+        hasStyle = !Util.isEmpty(style);
+        if (hasPublicId && hasStyle || !hasPublicId && !hasStyle) {
+          throw "Must supply either style parameters or a public_id when providing text parameter in a text overlay/underlay, but not both!";
+        }
+        re = /\$\([a-zA-Z]\w*\)/g;
+        start = 0;
+        textSource = Util.smartEscape(this.options.text, /[,\/]/g);
+        text = "";
+        while (res = re.exec(textSource)) {
+          text += Util.smartEscape(textSource.slice(start, res.index));
+          text += res[0];
+          start = res.index + res[0].length;
+        }
+        text += Util.smartEscape(textSource.slice(start));
+      }
+      components = [this.options.resourceType, style, publicId, text];
+      return Util.compact(components).join(":");
+    };
+
+    TextLayer.prototype.textStyleIdentifier = function() {
+      var components;
+      components = [];
+      if (this.options.fontWeight !== "normal") {
+        components.push(this.options.fontWeight);
+      }
+      if (this.options.fontStyle !== "normal") {
+        components.push(this.options.fontStyle);
+      }
+      if (this.options.textDecoration !== "none") {
+        components.push(this.options.textDecoration);
+      }
+      components.push(this.options.textAlign);
+      if (this.options.stroke !== "none") {
+        components.push(this.options.stroke);
+      }
+      if (!(Util.isEmpty(this.options.letterSpacing) && !Util.isNumberLike(this.options.letterSpacing))) {
+        components.push("letter_spacing_" + this.options.letterSpacing);
+      }
+      if (!(Util.isEmpty(this.options.lineSpacing) && !Util.isNumberLike(this.options.lineSpacing))) {
+        components.push("line_spacing_" + this.options.lineSpacing);
+      }
+      if (!Util.isEmpty(Util.compact(components))) {
+        if (Util.isEmpty(this.options.fontFamily)) {
+          throw "Must supply fontFamily. " + components;
+        }
+        if (Util.isEmpty(this.options.fontSize) && !Util.isNumberLike(this.options.fontSize)) {
+          throw "Must supply fontSize.";
+        }
+      }
+      components.unshift(this.options.fontFamily, this.options.fontSize);
+      components = Util.compact(components).join("_");
+      return components;
+    };
+
+    return TextLayer;
+
+  })(Layer);
+  SubtitlesLayer = (function(superClass) {
+    extend(SubtitlesLayer, superClass);
+
+
+    /**
+     * Represent a subtitles layer
+     * @constructor SubtitlesLayer
+     * @param {Object} options - layer parameters
+     */
+
+    function SubtitlesLayer(options) {
+      SubtitlesLayer.__super__.constructor.call(this, options);
+      this.options.resourceType = "subtitles";
+    }
+
+    return SubtitlesLayer;
+
+  })(TextLayer);
 
   /**
    * Transformation parameters
@@ -4153,18 +4531,19 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     }
 
     ArrayParam.prototype.serialize = function() {
-      var array, flat, t;
+      var arrayValue, flat, t;
       if (this.shortName != null) {
-        array = this.value();
-        if (cloudinary.Util.isEmpty(array)) {
+        arrayValue = this.value();
+        if (cloudinary.Util.isEmpty(arrayValue)) {
           return '';
+        } else if (cloudinary.Util.isString(arrayValue)) {
+          return this.shortName + "_" + arrayValue;
         } else {
           flat = (function() {
-            var j, len, ref, results;
-            ref = this.value();
+            var j, len, results;
             results = [];
-            for (j = 0, len = ref.length; j < len; j++) {
-              t = ref[j];
+            for (j = 0, len = arrayValue.length; j < len; j++) {
+              t = arrayValue[j];
               if (cloudinary.Util.isFunction(t.serialize)) {
                 results.push(t.serialize());
               } else {
@@ -4172,11 +4551,26 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
               }
             }
             return results;
-          }).call(this);
+          })();
           return this.shortName + "_" + (flat.join(this.sep));
         }
       } else {
         return '';
+      }
+    };
+
+    ArrayParam.prototype.value = function() {
+      var j, len, ref, results, v;
+      if (cloudinary.Util.isArray(this.origValue)) {
+        ref = this.origValue;
+        results = [];
+        for (j = 0, len = ref.length; j < len; j++) {
+          v = ref[j];
+          results.push(this.process(v));
+        }
+        return results;
+      } else {
+        return this.process(this.origValue);
       }
     };
 
@@ -4327,93 +4721,43 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     }
 
     LayerParam.prototype.value = function() {
-      var components, format, layer, publicId, resourceType, text, textStyle, type;
-      layer = this.origValue;
-      if (cloudinary.Util.isPlainObject(layer)) {
-        publicId = layer.public_id;
-        format = layer.format;
-        resourceType = layer.resource_type || "image";
-        type = layer.type || "upload";
-        text = layer.text;
-        textStyle = null;
-        components = [];
-        if (publicId != null) {
-          publicId = publicId.replace(/\//g, ":");
-          if (format != null) {
-            publicId = publicId + "." + format;
-          }
-        }
-        if ((text == null) && resourceType !== "text") {
-          if (cloudinary.Util.isEmpty(publicId)) {
-            throw "Must supply public_id for resource_type layer_parameter";
-          }
-          if (resourceType === "subtitles") {
-            textStyle = this.textStyle(layer);
-          }
+      var layerOptions, result;
+      layerOptions = this.origValue;
+      if (cloudinary.Util.isPlainObject(layerOptions)) {
+        if (layerOptions.resource_type === "text" || (layerOptions.text != null)) {
+          result = new cloudinary.TextLayer(layerOptions).toString();
+        } else if (layerOptions.resource_type === "subtitles") {
+          result = new cloudinary.SubtitlesLayer(layerOptions).toString();
         } else {
-          resourceType = "text";
-          type = null;
-          textStyle = this.textStyle(layer);
-          if (text != null) {
-            if (!((publicId != null) ^ (textStyle != null))) {
-              throw "Must supply either style parameters or a public_id when providing text parameter in a text overlay/underlay";
-            }
-            text = cloudinary.Util.smart_escape(cloudinary.Util.smart_escape(text, /([,\/])/));
-          }
+          result = new cloudinary.Layer(layerOptions).toString();
         }
-        if (resourceType !== "image") {
-          components.push(resourceType);
-        }
-        if (type !== "upload") {
-          components.push(type);
-        }
-        components.push(textStyle);
-        components.push(publicId);
-        components.push(text);
-        layer = cloudinary.Util.compact(components).join(":");
+      } else {
+        result = layerOptions;
       }
-      return layer;
+      return result;
     };
 
-    LAYER_KEYWORD_PARAMS = [["font_weight", "normal"], ["font_style", "normal"], ["text_decoration", "none"], ["text_align", null], ["stroke", "none"]];
+    LAYER_KEYWORD_PARAMS = [["font_weight", "normal"], ["font_style", "normal"], ["text_decoration", "none"], ["text_align", null], ["stroke", "none"], ["letter_spacing", null], ["line_spacing", null]];
 
     LayerParam.prototype.textStyle = function(layer) {
-      var attr, defaultValue, fontFamily, fontSize, keywords, letterSpacing, lineSpacing;
-      fontFamily = layer.font_family;
-      fontSize = layer.font_size;
-      keywords = (function() {
-        var j, len, ref, results;
-        results = [];
-        for (j = 0, len = LAYER_KEYWORD_PARAMS.length; j < len; j++) {
-          ref = LAYER_KEYWORD_PARAMS[j], attr = ref[0], defaultValue = ref[1];
-          if (layer[attr] !== defaultValue) {
-            results.push(layer[attr]);
-          }
-        }
-        return results;
-      })();
-      letterSpacing = layer.letter_spacing;
-      if (!cloudinary.Util.isEmpty(letterSpacing)) {
-        keywords.push("letter_spacing_" + letterSpacing);
-      }
-      lineSpacing = layer.line_spacing;
-      if (!cloudinary.Util.isEmpty(lineSpacing)) {
-        keywords.push("line_spacing_" + lineSpacing);
-      }
-      if (!cloudinary.Util.isEmpty(fontSize) || !cloudinary.Util.isEmpty(fontFamily) || !cloudinary.Util.isEmpty(keywords)) {
-        if (cloudinary.Util.isEmpty(fontFamily)) {
-          throw "Must supply font_family for text in overlay/underlay";
-        }
-        if (cloudinary.Util.isEmpty(fontSize)) {
-          throw "Must supply font_size for text in overlay/underlay";
-        }
-        keywords.unshift(fontSize);
-        keywords.unshift(fontFamily);
-        return cloudinary.Util.compact(keywords).join("_");
-      }
+      return (new cloudinary.TextLayer(layer)).textStyleIdentifier();
     };
 
     return LayerParam;
+
+  })(Param);
+  ExpressionParam = (function(superClass) {
+    extend(ExpressionParam, superClass);
+
+    function ExpressionParam() {
+      return ExpressionParam.__super__.constructor.apply(this, arguments);
+    }
+
+    ExpressionParam.prototype.serialize = function() {
+      return Expression.normalize(ExpressionParam.__super__.serialize.call(this));
+    };
+
+    return ExpressionParam;
 
   })(Param);
   parameters = {};
@@ -4423,12 +4767,15 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
   parameters.RawParam = RawParam;
   parameters.TransformationParam = TransformationParam;
   parameters.LayerParam = LayerParam;
-  Condition = (function() {
+  parameters.ExpressionParam = ExpressionParam;
+  Expression = (function() {
 
     /**
      * @internal
      */
-    Condition.OPERATORS = {
+    var faceCount;
+
+    Expression.OPERATORS = {
       "=": 'eq',
       "!=": 'ne',
       "<": 'lt',
@@ -4436,21 +4783,382 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       "<=": 'lte',
       ">=": 'gte',
       "&&": 'and',
-      "||": 'or'
+      "||": 'or',
+      "*": "mul",
+      "/": "div",
+      "+": "add",
+      "-": "sub"
     };
 
-    Condition.PARAMETERS = {
-      "width": "w",
-      "height": "h",
+
+    /**
+     * @internal
+     */
+
+    Expression.PREDEFINED_VARS = {
       "aspect_ratio": "ar",
       "aspectRatio": "ar",
-      "page_count": "pc",
-      "pageCount": "pc",
+      "current_page": "cp",
+      "currentPage": "cp",
       "face_count": "fc",
-      "faceCount": "fc"
+      "faceCount": "fc",
+      "height": "h",
+      "initial_aspect_ratio": "iar",
+      "initial_height": "ih",
+      "initial_width": "iw",
+      "initialAspectRatio": "iar",
+      "initialHeight": "ih",
+      "initialWidth": "iw",
+      "page_count": "pc",
+      "page_x": "px",
+      "page_y": "py",
+      "pageCount": "pc",
+      "pageX": "px",
+      "pageY": "py",
+      "tags": "tags",
+      "width": "w"
     };
 
-    Condition.BOUNDRY = "[ _]+";
+
+    /**
+     * @internal
+     */
+
+    Expression.BOUNDRY = "[ _]+";
+
+
+    /**
+     * Represents a transformation expression
+     * @param {string} expressionStr - a expression in string format
+     * @class Expression
+     *
+     */
+
+    function Expression(expressionStr) {
+
+      /**
+        * @protected
+        * @inner Expression-expressions
+       */
+      this.expressions = [];
+      if (expressionStr != null) {
+        this.expressions.push(Expression.normalize(expressionStr));
+      }
+    }
+
+
+    /**
+     * Convenience constructor method
+     * @function Expression.new
+     */
+
+    Expression["new"] = function(expressionStr) {
+      return new this(expressionStr);
+    };
+
+
+    /**
+     * Normalize a string expression
+     * @function Cloudinary#normalize
+     * @param {string} expression a expression, e.g. "w gt 100", "width_gt_100", "width > 100"
+     * @return {string} the normalized form of the value expression, e.g. "w_gt_100"
+     */
+
+    Expression.normalize = function(expression) {
+      var operators, pattern, replaceRE;
+      if (expression == null) {
+        return expression;
+      }
+      expression = String(expression);
+      operators = "\\|\\||>=|<=|&&|!=|>|=|<|/|-|\\+|\\*";
+      pattern = "((" + operators + ")(?=[ _])|" + Object.keys(Expression.PREDEFINED_VARS).join("|") + ")";
+      replaceRE = new RegExp(pattern, "g");
+      expression = expression.replace(replaceRE, function(match) {
+        return Expression.OPERATORS[match] || Expression.PREDEFINED_VARS[match];
+      });
+      return expression.replace(/[ _]+/g, '_');
+    };
+
+
+    /**
+     * Serialize the expression
+     * @return {string} the expression as a string
+     */
+
+    Expression.prototype.serialize = function() {
+      return Expression.normalize(this.expressions.join("_"));
+    };
+
+    Expression.prototype.toString = function() {
+      return this.serialize();
+    };
+
+
+    /**
+     * Get the parent transformation of this expression
+     * @return Transformation
+     */
+
+    Expression.prototype.getParent = function() {
+      return this.parent;
+    };
+
+
+    /**
+     * Set the parent transformation of this expression
+     * @param {Transformation} the parent transformation
+     * @return {Expression} this expression
+     */
+
+    Expression.prototype.setParent = function(parent) {
+      this.parent = parent;
+      return this;
+    };
+
+
+    /**
+     * Add a expression
+     * @function Expression#predicate
+     * @internal
+     */
+
+    Expression.prototype.predicate = function(name, operator, value) {
+      if (Expression.OPERATORS[operator] != null) {
+        operator = Expression.OPERATORS[operator];
+      }
+      this.expressions.push(name + "_" + operator + "_" + value);
+      return this;
+    };
+
+
+    /**
+     * @function Expression#and
+     */
+
+    Expression.prototype.and = function() {
+      this.expressions.push("and");
+      return this;
+    };
+
+
+    /**
+     * @function Expression#or
+     */
+
+    Expression.prototype.or = function() {
+      this.expressions.push("or");
+      return this;
+    };
+
+
+    /**
+     * Conclude expression
+     * @function Expression#then
+     * @return {Transformation} the transformation this expression is defined for
+     */
+
+    Expression.prototype.then = function() {
+      return this.getParent()["if"](this.toString());
+    };
+
+
+    /**
+     * @function Expression#height
+     * @param {string} operator the comparison operator (e.g. "<", "lt")
+     * @param {string|number} value the right hand side value
+     * @return {Expression} this expression
+     */
+
+    Expression.prototype.height = function(operator, value) {
+      return this.predicate("h", operator, value);
+    };
+
+
+    /**
+     * @function Expression#width
+     * @param {string} operator the comparison operator (e.g. "<", "lt")
+     * @param {string|number} value the right hand side value
+     * @return {Expression} this expression
+     */
+
+    Expression.prototype.width = function(operator, value) {
+      return this.predicate("w", operator, value);
+    };
+
+
+    /**
+     * @function Expression#aspectRatio
+     * @param {string} operator the comparison operator (e.g. "<", "lt")
+     * @param {string|number} value the right hand side value
+     * @return {Expression} this expression
+     */
+
+    Expression.prototype.aspectRatio = function(operator, value) {
+      return this.predicate("ar", operator, value);
+    };
+
+
+    /**
+     * @function Expression#pages
+     * @param {string} operator the comparison operator (e.g. "<", "lt")
+     * @param {string|number} value the right hand side value
+     * @return {Expression} this expression
+     */
+
+    Expression.prototype.pageCount = function(operator, value) {
+      return this.predicate("pc", operator, value);
+    };
+
+
+    /**
+     * @function Expression#faces
+     * @param {string} operator the comparison operator (e.g. "<", "lt")
+     * @param {string|number} value the right hand side value
+     * @return {Expression} this expression
+     */
+
+    Expression.prototype.faceCount = function(operator, value) {
+      return this.predicate("fc", operator, value);
+    };
+
+    Expression.prototype.value = function(value) {
+      this.expressions.push(value);
+      return this;
+    };
+
+
+    /**
+     */
+
+    Expression.variable = function(name, value) {
+      return new this(name).value(value);
+    };
+
+
+    /**
+      * @returns a new expression with the predefined variable "width"
+      * @function Expression.width
+     */
+
+    Expression.width = function() {
+      return new this("width");
+    };
+
+
+    /**
+      * @returns a new expression with the predefined variable "height"
+      * @function Expression.height
+     */
+
+    Expression.height = function() {
+      return new this("height");
+    };
+
+
+    /**
+      * @returns a new expression with the predefined variable "initialWidth"
+      * @function Expression.initialWidth
+     */
+
+    Expression.initialWidth = function() {
+      return new this("initialWidth");
+    };
+
+
+    /**
+      * @returns a new expression with the predefined variable "initialHeight"
+      * @function Expression.initialHeight
+     */
+
+    Expression.initialHeight = function() {
+      return new this("initialHeight");
+    };
+
+
+    /**
+      * @returns a new expression with the predefined variable "aspectRatio"
+      * @function Expression.aspectRatio
+     */
+
+    Expression.aspectRatio = function() {
+      return new this("aspectRatio");
+    };
+
+
+    /**
+      * @returns a new expression with the predefined variable "initialAspectRatio"
+      * @function Expression.initialAspectRatio
+     */
+
+    Expression.initialAspectRatio = function() {
+      return new this("initialAspectRatio");
+    };
+
+
+    /**
+      * @returns a new expression with the predefined variable "pageCount"
+      * @function Expression.pageCount
+     */
+
+    Expression.pageCount = function() {
+      return new this("pageCount");
+    };
+
+
+    /**
+      * @returns a new expression with the predefined variable "faceCount"
+      * @function Expression.faceCount
+     */
+
+    faceCount = function() {
+      return new this("faceCount");
+    };
+
+
+    /**
+      * @returns a new expression with the predefined variable "currentPage"
+      * @function Expression.currentPage
+     */
+
+    Expression.currentPage = function() {
+      return new this("currentPage");
+    };
+
+
+    /**
+      * @returns a new expression with the predefined variable "tags"
+      * @function Expression.tags
+     */
+
+    Expression.tags = function() {
+      return new this("tags");
+    };
+
+
+    /**
+      * @returns a new expression with the predefined variable "pageX"
+      * @function Expression.pageX
+     */
+
+    Expression.pageX = function() {
+      return new this("pageX");
+    };
+
+
+    /**
+      * @returns a new expression with the predefined variable "pageY"
+      * @function Expression.pageY
+     */
+
+    Expression.pageY = function() {
+      return new this("pageY");
+    };
+
+    return Expression;
+
+  })();
+  Condition = (function(superClass) {
+    extend(Condition, superClass);
 
 
     /**
@@ -4478,116 +5186,8 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
      */
 
     function Condition(conditionStr) {
-      this.predicate_list = [];
-      if (conditionStr != null) {
-        this.predicate_list.push(this.normalize(conditionStr));
-      }
+      Condition.__super__.constructor.call(this, conditionStr);
     }
-
-
-    /**
-     * Convenience constructor method
-     * @function Condition.new
-     */
-
-    Condition["new"] = function(conditionStr) {
-      return new this(conditionStr);
-    };
-
-
-    /**
-     * Normalize a string condition
-     * @function Cloudinary#normalize
-     * @param {string} value a condition, e.g. "w gt 100", "width_gt_100", "width > 100"
-     * @return {string} the normalized form of the value condition, e.g. "w_gt_100"
-     */
-
-    Condition.prototype.normalize = function(value) {
-      var replaceRE;
-      replaceRE = new RegExp("(" + Object.keys(Condition.PARAMETERS).join("|") + "|[=<>&|!]+)", "g");
-      value = value.replace(replaceRE, function(match) {
-        return Condition.OPERATORS[match] || Condition.PARAMETERS[match];
-      });
-      return value.replace(/[ _]+/g, '_');
-    };
-
-
-    /**
-     * Get the parent transformation of this condition
-     * @return Transformation
-     */
-
-    Condition.prototype.getParent = function() {
-      return this.parent;
-    };
-
-
-    /**
-     * Set the parent transformation of this condition
-     * @param {Transformation} the parent transformation
-     * @return {Condition} this condition
-     */
-
-    Condition.prototype.setParent = function(parent) {
-      this.parent = parent;
-      return this;
-    };
-
-
-    /**
-     * Serialize the condition
-     * @return {string} the condition as a string
-     */
-
-    Condition.prototype.toString = function() {
-      return this.predicate_list.join("_");
-    };
-
-
-    /**
-     * Add a condition
-     * @function Condition#predicate
-     * @internal
-     */
-
-    Condition.prototype.predicate = function(name, operator, value) {
-      if (Condition.OPERATORS[operator] != null) {
-        operator = Condition.OPERATORS[operator];
-      }
-      this.predicate_list.push(name + "_" + operator + "_" + value);
-      return this;
-    };
-
-
-    /**
-     * @function Condition#and
-     */
-
-    Condition.prototype.and = function() {
-      this.predicate_list.push("and");
-      return this;
-    };
-
-
-    /**
-     * @function Condition#or
-     */
-
-    Condition.prototype.or = function() {
-      this.predicate_list.push("or");
-      return this;
-    };
-
-
-    /**
-     * Conclude condition
-     * @function Condition#then
-     * @return {Transformation} the transformation this condition is defined for
-     */
-
-    Condition.prototype.then = function() {
-      return this.getParent()["if"](this.toString());
-    };
 
 
     /**
@@ -4651,6 +5251,207 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
 
     return Condition;
 
+  })(Expression);
+
+  /**
+   * Cloudinary configuration class
+   * Depends on 'utils'
+   */
+  Configuration = (function() {
+
+    /**
+     * Defaults configuration.
+     */
+    var DEFAULT_CONFIGURATION_PARAMS, ref;
+
+    DEFAULT_CONFIGURATION_PARAMS = {
+      responsive_class: 'cld-responsive',
+      responsive_use_breakpoints: true,
+      round_dpr: true,
+      secure: (typeof window !== "undefined" && window !== null ? (ref = window.location) != null ? ref.protocol : void 0 : void 0) === 'https:'
+    };
+
+    Configuration.CONFIG_PARAMS = ["api_key", "api_secret", "callback", "cdn_subdomain", "cloud_name", "cname", "private_cdn", "protocol", "resource_type", "responsive", "responsive_class", "responsive_use_breakpoints", "responsive_width", "round_dpr", "secure", "secure_cdn_subdomain", "secure_distribution", "shorten", "type", "upload_preset", "url_suffix", "use_root_path", "version"];
+
+
+    /**
+     * Cloudinary configuration class
+     * @constructor Configuration
+     * @param {Object} options - configuration parameters
+     */
+
+    function Configuration(options) {
+      if (options == null) {
+        options = {};
+      }
+      this.configuration = Util.cloneDeep(options);
+      Util.defaults(this.configuration, DEFAULT_CONFIGURATION_PARAMS);
+    }
+
+
+    /**
+     * Initialize the configuration.
+     * The function first tries to retrieve the configuration form the environment and then from the document.
+     * @function Configuration#init
+     * @return {Configuration} returns this for chaining
+     * @see fromDocument
+     * @see fromEnvironment
+     */
+
+    Configuration.prototype.init = function() {
+      this.fromEnvironment();
+      this.fromDocument();
+      return this;
+    };
+
+
+    /**
+     * Set a new configuration item
+     * @function Configuration#set
+     * @param {string} name - the name of the item to set
+     * @param {*} value - the value to be set
+     * @return {Configuration}
+     *
+     */
+
+    Configuration.prototype.set = function(name, value) {
+      this.configuration[name] = value;
+      return this;
+    };
+
+
+    /**
+     * Get the value of a configuration item
+     * @function Configuration#get
+     * @param {string} name - the name of the item to set
+     * @return {*} the configuration item
+     */
+
+    Configuration.prototype.get = function(name) {
+      return this.configuration[name];
+    };
+
+    Configuration.prototype.merge = function(config) {
+      if (config == null) {
+        config = {};
+      }
+      Util.assign(this.configuration, Util.cloneDeep(config));
+      return this;
+    };
+
+
+    /**
+     * Initialize Cloudinary from HTML meta tags.
+     * @function Configuration#fromDocument
+     * @return {Configuration}
+     * @example <meta name="cloudinary_cloud_name" content="mycloud">
+     *
+     */
+
+    Configuration.prototype.fromDocument = function() {
+      var el, j, len, meta_elements;
+      meta_elements = typeof document !== "undefined" && document !== null ? document.querySelectorAll('meta[name^="cloudinary_"]') : void 0;
+      if (meta_elements) {
+        for (j = 0, len = meta_elements.length; j < len; j++) {
+          el = meta_elements[j];
+          this.configuration[el.getAttribute('name').replace('cloudinary_', '')] = el.getAttribute('content');
+        }
+      }
+      return this;
+    };
+
+
+    /**
+     * Initialize Cloudinary from the `CLOUDINARY_URL` environment variable.
+     *
+     * This function will only run under Node.js environment.
+     * @function Configuration#fromEnvironment
+     * @requires Node.js
+     */
+
+    Configuration.prototype.fromEnvironment = function() {
+      var cloudinary_url, j, k, len, query, ref1, ref2, ref3, uri, uriRegex, v, value;
+      cloudinary_url = typeof process !== "undefined" && process !== null ? (ref1 = process.env) != null ? ref1.CLOUDINARY_URL : void 0 : void 0;
+      if (cloudinary_url != null) {
+        uriRegex = /cloudinary:\/\/(?:(\w+)(?:\:(\w+))?@)?([\w\.-]+)(?:\/([^?]*))?(?:\?(.+))?/;
+        uri = uriRegex.exec(cloudinary_url);
+        if (uri) {
+          if (uri[3] != null) {
+            this.configuration['cloud_name'] = uri[3];
+          }
+          if (uri[1] != null) {
+            this.configuration['api_key'] = uri[1];
+          }
+          if (uri[2] != null) {
+            this.configuration['api_secret'] = uri[2];
+          }
+          if (uri[4] != null) {
+            this.configuration['private_cdn'] = uri[4] != null;
+          }
+          if (uri[4] != null) {
+            this.configuration['secure_distribution'] = uri[4];
+          }
+          query = uri[5];
+          if (query != null) {
+            ref2 = query.split('&');
+            for (j = 0, len = ref2.length; j < len; j++) {
+              value = ref2[j];
+              ref3 = value.split('='), k = ref3[0], v = ref3[1];
+              if (v == null) {
+                v = true;
+              }
+              this.configuration[k] = v;
+            }
+          }
+        }
+      }
+      return this;
+    };
+
+
+    /**
+     * Create or modify the Cloudinary client configuration
+     *
+     * Warning: `config()` returns the actual internal configuration object. modifying it will change the configuration.
+     *
+     * This is a backward compatibility method. For new code, use get(), merge() etc.
+     * @function Configuration#config
+     * @param {hash|string|boolean} new_config
+     * @param {string} new_value
+     * @returns {*} configuration, or value
+     *
+     * @see {@link fromEnvironment} for initialization using environment variables
+     * @see {@link fromDocument} for initialization using HTML meta tags
+     */
+
+    Configuration.prototype.config = function(new_config, new_value) {
+      switch (false) {
+        case new_value === void 0:
+          this.set(new_config, new_value);
+          return this.configuration;
+        case !Util.isString(new_config):
+          return this.get(new_config);
+        case !Util.isPlainObject(new_config):
+          this.merge(new_config);
+          return this.configuration;
+        default:
+          return this.configuration;
+      }
+    };
+
+
+    /**
+     * Returns a copy of the configuration parameters
+     * @function Configuration#toOptions
+     * @returns {Object} a key:value collection of the configuration parameters
+     */
+
+    Configuration.prototype.toOptions = function() {
+      return Util.cloneDeep(this.configuration);
+    };
+
+    return Configuration;
+
   })();
 
   /**
@@ -4659,7 +5460,9 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
    * @internal
    */
   TransformationBase = (function() {
-    var lastArgCallback;
+    var VAR_NAME_RE, lastArgCallback, processVar;
+
+    VAR_NAME_RE = /^\$[a-zA-Z0-9]+$/;
 
     TransformationBase.prototype.trans_separator = '/';
 
@@ -4683,7 +5486,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
      */
 
     function TransformationBase(options) {
-      var m, parent, trans;
+      var parent, trans;
       if (options == null) {
         options = {};
       }
@@ -4700,7 +5503,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
        * @return {Object} Returns a plain object representing this transformation
        */
       this.toOptions || (this.toOptions = function(withChain) {
-        var key, list, opt, ref, tr, value;
+        var key, list, opt, ref, ref1, tr, value;
         if (withChain == null) {
           withChain = true;
         }
@@ -4728,9 +5531,15 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
             return results;
           }).call(this);
           list.push(opt);
-          opt = {
-            transformation: list
-          };
+          opt = {};
+          ref1 = this.otherOptions;
+          for (key in ref1) {
+            value = ref1[key];
+            if (value !== void 0) {
+              opt[key] = value;
+            }
+          }
+          opt.transformation = list;
         }
         return opt;
       });
@@ -4881,7 +5690,9 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
           var results;
           results = [];
           for (key in trans) {
-            results.push(Util.snakeCase(key));
+            if (key != null) {
+              results.push(key.match(VAR_NAME_RE) ? key : Util.snakeCase(key));
+            }
           }
           return results;
         })()).sort();
@@ -4945,36 +5756,6 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         return this;
       });
       this.otherOptions || (this.otherOptions = {});
-
-      /**
-       * Transformation Class methods.
-       * This is a list of the parameters defined in Transformation.
-       * Values are camelCased.
-       * @private
-       * @ignore
-       * @type {Array<string>}
-       */
-      this.methods || (this.methods = Util.difference(Util.functions(Transformation.prototype), Util.functions(TransformationBase.prototype)));
-
-      /**
-       * Parameters that are filtered out before passing the options to an HTML tag.
-       *
-       * The list of parameters is a combination of `Transformation::methods` and `Configuration::CONFIG_PARAMS`
-       * @const {Array<string>} Transformation.PARAM_NAMES
-       * @private
-       * @ignore
-       * @see toHtmlAttributes
-       */
-      this.PARAM_NAMES || (this.PARAM_NAMES = ((function() {
-        var j, len, ref, results;
-        ref = this.methods;
-        results = [];
-        for (j = 0, len = ref.length; j < len; j++) {
-          m = ref[j];
-          results.push(Util.snakeCase(m));
-        }
-        return results;
-      }).call(this)).concat(Configuration.CONFIG_PARAMS));
       this.chained = [];
       if (!Util.isEmpty(options)) {
         this.fromOptions(options);
@@ -5004,9 +5785,19 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
             return new value.constructor(value.toOptions());
           }
         });
+        if (options["if"]) {
+          this.set("if", options["if"]);
+          delete options["if"];
+        }
         for (key in options) {
           opt = options[key];
-          this.set(key, opt);
+          if (key.match(VAR_NAME_RE)) {
+            if (key !== '$attr') {
+              this.set('variable', key, opt);
+            }
+          } else {
+            this.set(key, opt);
+          }
         }
       }
       return this;
@@ -5033,13 +5824,14 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
      * @returns {Transformation} Returns this instance for chaining
      */
 
-    TransformationBase.prototype.set = function(key, value) {
-      var camelKey;
+    TransformationBase.prototype.set = function() {
+      var camelKey, key, values;
+      key = arguments[0], values = 2 <= arguments.length ? slice.call(arguments, 1) : [];
       camelKey = Util.camelCase(key);
-      if (Util.contains(this.methods, camelKey)) {
-        this[camelKey](value);
+      if (Util.contains(Transformation.methods, camelKey)) {
+        this[camelKey].apply(this, values);
       } else {
-        this.otherOptions[key] = value;
+        this.otherOptions[key] = values[0];
       }
       return this;
     };
@@ -5056,7 +5848,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
      */
 
     TransformationBase.prototype.serialize = function() {
-      var ifParam, paramList, ref, ref1, resultArray, t, tr, transformationList, transformationString, transformations, value;
+      var ifParam, j, len, paramList, ref, ref1, ref2, ref3, ref4, resultArray, t, tr, transformationList, transformationString, transformations, value, variables, vars;
       resultArray = (function() {
         var j, len, ref, results;
         ref = this.chained;
@@ -5070,16 +5862,18 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       paramList = this.keys();
       transformations = (ref = this.get("transformation")) != null ? ref.serialize() : void 0;
       ifParam = (ref1 = this.get("if")) != null ? ref1.serialize() : void 0;
-      paramList = Util.difference(paramList, ["transformation", "if"]);
-      transformationList = (function() {
-        var j, len, ref2, results;
-        results = [];
-        for (j = 0, len = paramList.length; j < len; j++) {
-          t = paramList[j];
-          results.push((ref2 = this.get(t)) != null ? ref2.serialize() : void 0);
+      variables = processVar((ref2 = this.get("variables")) != null ? ref2.value() : void 0);
+      paramList = Util.difference(paramList, ["transformation", "if", "variables"]);
+      vars = [];
+      transformationList = [];
+      for (j = 0, len = paramList.length; j < len; j++) {
+        t = paramList[j];
+        if (t.match(VAR_NAME_RE)) {
+          vars.push(t + "_" + Expression.normalize((ref3 = this.get(t)) != null ? ref3.value() : void 0));
+        } else {
+          transformationList.push((ref4 = this.get(t)) != null ? ref4.serialize() : void 0);
         }
-        return results;
-      }).call(this);
+      }
       switch (false) {
         case !Util.isString(transformations):
           transformationList.push(transformations);
@@ -5087,23 +5881,24 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         case !Util.isArray(transformations):
           resultArray = resultArray.concat(transformations);
       }
-      transformationList = ((function() {
-        var j, len, results;
+      transformationList = (function() {
+        var l, len1, results;
         results = [];
-        for (j = 0, len = transformationList.length; j < len; j++) {
-          value = transformationList[j];
+        for (l = 0, len1 = transformationList.length; l < len1; l++) {
+          value = transformationList[l];
           if (Util.isArray(value) && !Util.isEmpty(value) || !Util.isArray(value) && value) {
             results.push(value);
           }
         }
         return results;
-      })()).sort();
+      })();
+      transformationList = vars.sort().concat(variables).concat(transformationList.sort());
       if (ifParam === "if_end") {
         transformationList.push(ifParam);
       } else if (!Util.isEmpty(ifParam)) {
         transformationList.unshift(ifParam);
       }
-      transformationString = transformationList.join(this.param_separator);
+      transformationString = Util.compact(transformationList).join(this.param_separator);
       if (!Util.isEmpty(transformationString)) {
         resultArray.push(transformationString);
       }
@@ -5119,7 +5914,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
      */
 
     TransformationBase.prototype.listNames = function() {
-      return this.methods;
+      return Transformation.methods;
     };
 
 
@@ -5135,7 +5930,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       ref = this.otherOptions;
       for (key in ref) {
         value = ref[key];
-        if (!(!Util.contains(this.PARAM_NAMES, key))) {
+        if (!(!Util.contains(Transformation.PARAM_NAMES, Util.snakeCase(key)))) {
           continue;
         }
         attrName = /^html_/.test(key) ? key.slice(5) : key;
@@ -5145,7 +5940,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       for (j = 0, len = ref1.length; j < len; j++) {
         key = ref1[j];
         if (/^html_/.test(key)) {
-          options[key.slice(5)] = this.getValue(key);
+          options[Util.camelCase(key.slice(5))] = this.getValue(key);
         }
       }
       if (!(this.hasLayer() || this.getValue("angle") || Util.contains(["fit", "limit", "lfill"], this.getValue("crop")))) {
@@ -5166,7 +5961,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     };
 
     TransformationBase.prototype.isValidParamName = function(name) {
-      return this.methods.indexOf(Util.camelCase(name)) >= 0;
+      return Transformation.methods.indexOf(Util.camelCase(name)) >= 0;
     };
 
 
@@ -5190,6 +5985,40 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
 
     TransformationBase.prototype.toString = function() {
       return this.serialize();
+    };
+
+    processVar = function(varArray) {
+      var j, len, name, ref, results, v;
+      if (Util.isArray(varArray)) {
+        results = [];
+        for (j = 0, len = varArray.length; j < len; j++) {
+          ref = varArray[j], name = ref[0], v = ref[1];
+          results.push(name + "_" + (Expression.normalize(v)));
+        }
+        return results;
+      } else {
+        return varArray;
+      }
+
+      /**
+       * Transformation Class methods.
+       * This is a list of the parameters defined in Transformation.
+       * Values are camelCased.
+       * @const Transformation.methods
+       * @private
+       * @ignore
+       * @type {Array<string>}
+       */
+
+      /**
+       * Parameters that are filtered out before passing the options to an HTML tag.
+       *
+       * The list of parameters is a combination of `Transformation::methods` and `Configuration::CONFIG_PARAMS`
+       * @const {Array<string>} Transformation.PARAM_NAMES
+       * @private
+       * @ignore
+       * @see toHtmlAttributes
+       */
     };
 
     return TransformationBase;
@@ -5216,6 +6045,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         options = {};
       }
       Transformation.__super__.constructor.call(this, options);
+      this;
     }
 
 
@@ -5236,7 +6066,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
      */
 
     Transformation.prototype.angle = function(value) {
-      return this.arrayParam(value, "angle", "a", ".");
+      return this.arrayParam(value, "angle", "a", ".", Expression.normalize);
     };
 
     Transformation.prototype.audioCodec = function(value) {
@@ -5248,7 +6078,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     };
 
     Transformation.prototype.aspectRatio = function(value) {
-      return this.param(value, "aspect_ratio", "ar");
+      return this.param(value, "aspect_ratio", "ar", Expression.normalize);
     };
 
     Transformation.prototype.background = function(value) {
@@ -5290,7 +6120,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     };
 
     Transformation.prototype.delay = function(value) {
-      return this.param(value, "delay", "l");
+      return this.param(value, "delay", "dl");
     };
 
     Transformation.prototype.density = function(value) {
@@ -5305,19 +6135,17 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       return this.param(value, "dpr", "dpr", (function(_this) {
         return function(dpr) {
           dpr = dpr.toString();
-          if ((dpr === "auto") && _this.getValue("client_hints") !== true) {
-            return "1.0";
-          } else if (dpr != null ? dpr.match(/^\d+$/) : void 0) {
+          if (dpr != null ? dpr.match(/^\d+$/) : void 0) {
             return dpr + ".0";
           } else {
-            return dpr;
+            return Expression.normalize(dpr);
           }
         };
       })(this));
     };
 
     Transformation.prototype.effect = function(value) {
-      return this.arrayParam(value, "effect", "e", ":");
+      return this.arrayParam(value, "effect", "e", ":", Expression.normalize);
     };
 
     Transformation.prototype["else"] = function() {
@@ -5356,7 +6184,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       return this.param(value, "height", "h", (function(_this) {
         return function() {
           if (_this.getValue("crop") || _this.getValue("overlay") || _this.getValue("underlay")) {
-            return value;
+            return Expression.normalize(value);
           } else {
             return null;
           }
@@ -5423,7 +6251,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     };
 
     Transformation.prototype.opacity = function(value) {
-      return this.param(value, "opacity", "o");
+      return this.param(value, "opacity", "o", Expression.normalize);
     };
 
     Transformation.prototype.overlay = function(value) {
@@ -5443,11 +6271,11 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     };
 
     Transformation.prototype.quality = function(value) {
-      return this.param(value, "quality", "q");
+      return this.param(value, "quality", "q", Expression.normalize);
     };
 
     Transformation.prototype.radius = function(value) {
-      return this.param(value, "radius", "r");
+      return this.param(value, "radius", "r", Expression.normalize);
     };
 
     Transformation.prototype.rawTransformation = function(value) {
@@ -5487,6 +6315,14 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       return this.layerParam(value, "underlay", "u");
     };
 
+    Transformation.prototype.variable = function(name, value) {
+      return this.param(value, name, name);
+    };
+
+    Transformation.prototype.variables = function(values) {
+      return this.arrayParam(values, "variables");
+    };
+
     Transformation.prototype.videoCodec = function(value) {
       return this.param(value, "video_codec", "vc", Param.process_video_params);
     };
@@ -5499,7 +6335,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       return this.param(value, "width", "w", (function(_this) {
         return function() {
           if (_this.getValue("crop") || _this.getValue("overlay") || _this.getValue("underlay")) {
-            return value;
+            return Expression.normalize(value);
           } else {
             return null;
           }
@@ -5508,15 +6344,15 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     };
 
     Transformation.prototype.x = function(value) {
-      return this.param(value, "x", "x");
+      return this.param(value, "x", "x", Expression.normalize);
     };
 
     Transformation.prototype.y = function(value) {
-      return this.param(value, "y", "y");
+      return this.param(value, "y", "y", Expression.normalize);
     };
 
     Transformation.prototype.zoom = function(value) {
-      return this.param(value, "zoom", "z");
+      return this.param(value, "zoom", "z", Expression.normalize);
     };
 
     return Transformation;
@@ -5524,190 +6360,27 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
   })(TransformationBase);
 
   /**
-   * Cloudinary configuration class
-   * Depends on 'utils'
+   * Transformation Class methods.
+   * This is a list of the parameters defined in Transformation.
+   * Values are camelCased.
    */
-  Configuration = (function() {
+  Transformation.methods || (Transformation.methods = Util.difference(Util.functions(Transformation.prototype), Util.functions(TransformationBase.prototype)));
 
-    /**
-     * Defaults configuration.
-     * @const {Object} Configuration.DEFAULT_CONFIGURATION_PARAMS
-     */
-    var DEFAULT_CONFIGURATION_PARAMS, ref;
-
-    DEFAULT_CONFIGURATION_PARAMS = {
-      responsive_class: 'cld-responsive',
-      responsive_use_breakpoints: true,
-      round_dpr: true,
-      secure: (typeof window !== "undefined" && window !== null ? (ref = window.location) != null ? ref.protocol : void 0 : void 0) === 'https:'
-    };
-
-    Configuration.CONFIG_PARAMS = ["api_key", "api_secret", "cdn_subdomain", "cloud_name", "cname", "private_cdn", "protocol", "resource_type", "responsive_class", "responsive_use_breakpoints", "responsive_width", "round_dpr", "secure", "secure_cdn_subdomain", "secure_distribution", "shorten", "type", "url_suffix", "use_root_path", "version"];
-
-
-    /**
-     * Cloudinary configuration class
-     * @constructor Configuration
-     * @param {Object} options - configuration parameters
-     */
-
-    function Configuration(options) {
-      if (options == null) {
-        options = {};
-      }
-      this.configuration = Util.cloneDeep(options);
-      Util.defaults(this.configuration, DEFAULT_CONFIGURATION_PARAMS);
+  /**
+   * Parameters that are filtered out before passing the options to an HTML tag.
+   *
+   * The list of parameters is a combination of `Transformation::methods` and `Configuration::CONFIG_PARAMS`
+   */
+  Transformation.PARAM_NAMES || (Transformation.PARAM_NAMES = ((function() {
+    var j, len, ref, results;
+    ref = Transformation.methods;
+    results = [];
+    for (j = 0, len = ref.length; j < len; j++) {
+      m = ref[j];
+      results.push(Util.snakeCase(m));
     }
-
-
-    /**
-     * Initialize the configuration.
-     * The function first tries to retrieve the configuration form the environment and then from the document.
-     * @function Configuration#init
-     * @return {Configuration} returns this for chaining
-     * @see fromDocument
-     * @see fromEnvironment
-     */
-
-    Configuration.prototype.init = function() {
-      this.fromEnvironment();
-      this.fromDocument();
-      return this;
-    };
-
-
-    /**
-     * Set a new configuration item
-     * @function Configuration#set
-     * @param {string} name - the name of the item to set
-     * @param {*} value - the value to be set
-     * @return {Configuration}
-     *
-     */
-
-    Configuration.prototype.set = function(name, value) {
-      this.configuration[name] = value;
-      return this;
-    };
-
-
-    /**
-     * Get the value of a configuration item
-     * @function Configuration#get
-     * @param {string} name - the name of the item to set
-     * @return {*} the configuration item
-     */
-
-    Configuration.prototype.get = function(name) {
-      return this.configuration[name];
-    };
-
-    Configuration.prototype.merge = function(config) {
-      if (config == null) {
-        config = {};
-      }
-      Util.assign(this.configuration, Util.cloneDeep(config));
-      return this;
-    };
-
-
-    /**
-     * Initialize Cloudinary from HTML meta tags.
-     * @function Configuration#fromDocument
-     * @return {Configuration}
-     * @example <meta name="cloudinary_cloud_name" content="mycloud">
-     *
-     */
-
-    Configuration.prototype.fromDocument = function() {
-      var el, j, len, meta_elements;
-      meta_elements = typeof document !== "undefined" && document !== null ? document.querySelectorAll('meta[name^="cloudinary_"]') : void 0;
-      if (meta_elements) {
-        for (j = 0, len = meta_elements.length; j < len; j++) {
-          el = meta_elements[j];
-          this.configuration[el.getAttribute('name').replace('cloudinary_', '')] = el.getAttribute('content');
-        }
-      }
-      return this;
-    };
-
-
-    /**
-     * Initialize Cloudinary from the `CLOUDINARY_URL` environment variable.
-     *
-     * This function will only run under Node.js environment.
-     * @function Configuration#fromEnvironment
-     * @requires Node.js
-     */
-
-    Configuration.prototype.fromEnvironment = function() {
-      var cloudinary_url, k, ref1, ref2, uri, v;
-      cloudinary_url = typeof process !== "undefined" && process !== null ? (ref1 = process.env) != null ? ref1.CLOUDINARY_URL : void 0 : void 0;
-      if (cloudinary_url != null) {
-        uri = require('url').parse(cloudinary_url, true);
-        this.configuration = {
-          cloud_name: uri.host,
-          api_key: uri.auth && uri.auth.split(":")[0],
-          api_secret: uri.auth && uri.auth.split(":")[1],
-          private_cdn: uri.pathname != null,
-          secure_distribution: uri.pathname && uri.pathname.substring(1)
-        };
-        if (uri.query != null) {
-          ref2 = uri.query;
-          for (k in ref2) {
-            v = ref2[k];
-            this.configuration[k] = v;
-          }
-        }
-      }
-      return this;
-    };
-
-
-    /**
-     * Create or modify the Cloudinary client configuration
-     *
-     * Warning: `config()` returns the actual internal configuration object. modifying it will change the configuration.
-     *
-     * This is a backward compatibility method. For new code, use get(), merge() etc.
-     * @function Configuration#config
-     * @param {hash|string|boolean} new_config
-     * @param {string} new_value
-     * @returns {*} configuration, or value
-     *
-     * @see {@link fromEnvironment} for initialization using environment variables
-     * @see {@link fromDocument} for initialization using HTML meta tags
-     */
-
-    Configuration.prototype.config = function(new_config, new_value) {
-      switch (false) {
-        case new_value === void 0:
-          this.set(new_config, new_value);
-          return this.configuration;
-        case !Util.isString(new_config):
-          return this.get(new_config);
-        case !Util.isPlainObject(new_config):
-          this.merge(new_config);
-          return this.configuration;
-        default:
-          return this.configuration;
-      }
-    };
-
-
-    /**
-     * Returns a copy of the configuration parameters
-     * @function Configuration#toOptions
-     * @returns {Object} a key:value collection of the configuration parameters
-     */
-
-    Configuration.prototype.toOptions = function() {
-      return Util.cloneDeep(this.configuration);
-    };
-
-    return Configuration;
-
-  })();
+    return results;
+  })()).concat(Configuration.CONFIG_PARAMS));
 
   /**
    * Generic HTML tag
@@ -5989,10 +6662,12 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     /** @override */
 
     ImageTag.prototype.attributes = function() {
-      var attr;
+      var attr, options, srcAttribute;
       attr = ImageTag.__super__.attributes.call(this) || [];
-      if (attr['src'] == null) {
-        attr['src'] = new Cloudinary(this.getOptions()).url(this.publicId);
+      options = this.getOptions();
+      srcAttribute = options.responsive && !options.client_hints ? 'data-src' : 'src';
+      if (attr[srcAttribute] == null) {
+        attr[srcAttribute] = new Cloudinary(this.getOptions()).url(this.publicId);
       }
       return attr;
     };
@@ -6123,7 +6798,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     };
 
     VideoTag.prototype.attributes = function() {
-      var a, attr, defaults, j, len, poster, ref, ref1, sourceTypes;
+      var a, attr, j, len, poster, ref, ref1, sourceTypes;
       sourceTypes = this.getOption('source_types');
       poster = (ref = this.getOption('poster')) != null ? ref : {};
       if (Util.isPlainObject(poster)) {
@@ -6152,256 +6827,42 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     return VideoTag;
 
   })(HtmlTag);
-  Layer = (function() {
+
+  /**
+   * Image Tag
+   * Depends on 'tags/htmltag', 'cloudinary'
+   */
+  ClientHintsMetaTag = (function(superClass) {
+    extend(ClientHintsMetaTag, superClass);
+
 
     /**
-     * Layer
-     * @constructor Layer
-     * @param {Object} options - layer parameters
+     * Creates an HTML (DOM) Meta tag that enables client-hints.
+     * @constructor ClientHintsMetaTag
+     * @extends HtmlTag
      */
-    function Layer(options) {
-      this.options = {};
-      if (options != null) {
-        this.options.resourceType = options["resource_type"];
-        this.options.type = options["type"];
-        this.options.publicId = options["public_id"];
-        this.options.format = options["format"];
-      }
+
+    function ClientHintsMetaTag(options) {
+      ClientHintsMetaTag.__super__.constructor.call(this, 'meta', void 0, Util.assign({
+        "http-equiv": "Accept-CH",
+        content: "DPR, Viewport-Width, Width"
+      }, options));
     }
 
-    Layer.prototype.resourceType = function(value) {
-      this.options.resourceType = value;
-      return this;
+
+    /** @override */
+
+    ClientHintsMetaTag.prototype.closeTag = function() {
+      return "";
     };
 
-    Layer.prototype.type = function(value) {
-      this.options.type = value;
-      return this;
-    };
+    return ClientHintsMetaTag;
 
-    Layer.prototype.publicId = function(value) {
-      this.options.publicId = value;
-      return this;
-    };
-
-
-    /**
-     * Get the public ID, formatted for layer parameter
-     * @function Layer#getPublicId
-     * @return {String} public ID
-     */
-
-    Layer.prototype.getPublicId = function() {
-      var ref;
-      return (ref = this.options.publicId) != null ? ref.replace(/\//g, ":") : void 0;
-    };
-
-
-    /**
-     * Get the public ID, with format if present
-     * @function Layer#getFullPublicId
-     * @return {String} public ID
-     */
-
-    Layer.prototype.getFullPublicId = function() {
-      if (this.options.format != null) {
-        return this.getPublicId() + "." + this.options.format;
-      } else {
-        return this.getPublicId();
-      }
-    };
-
-    Layer.prototype.format = function(value) {
-      this.options.format = value;
-      return this;
-    };
-
-
-    /**
-     * generate the string representation of the layer
-     * @function Layer#toString
-     */
-
-    Layer.prototype.toString = function() {
-      var components;
-      components = [];
-      if (this.options.publicId == null) {
-        throw "Must supply publicId";
-      }
-      if (!(this.options.resourceType === "image")) {
-        components.push(this.options.resourceType);
-      }
-      if (!(this.options.type === "upload")) {
-        components.push(this.options.type);
-      }
-      components.push(this.getFullPublicId());
-      return Util.compact(components).join(":");
-    };
-
-    return Layer;
-
-  })();
-  TextLayer = (function(superClass) {
-    var textStyleIdentifier;
-
-    extend(TextLayer, superClass);
-
-
-    /**
-     * @constructor TextLayer
-     * @param {Object} options - layer parameters
-     */
-
-    function TextLayer(options) {
-      TextLayer.__super__.constructor.call(this, options);
-      this.options.resourceType = "text";
-    }
-
-    TextLayer.prototype.resourceType = function(resourceType) {
-      throw "Cannot modify resourceType for text layers";
-    };
-
-    TextLayer.prototype.type = function(type) {
-      throw "Cannot modify type for text layers";
-    };
-
-    TextLayer.prototype.format = function(format) {
-      throw "Cannot modify format for text layers";
-    };
-
-    TextLayer.prototype.fontFamily = function(fontFamily) {
-      this.options.fontFamily = fontFamily;
-      return this;
-    };
-
-    TextLayer.prototype.fontSize = function(fontSize) {
-      this.options.fontSize = fontSize;
-      return this;
-    };
-
-    TextLayer.prototype.fontWeight = function(fontWeight) {
-      this.options.fontWeight = fontWeight;
-      return this;
-    };
-
-    TextLayer.prototype.fontStyle = function(fontStyle) {
-      this.options.fontStyle = fontStyle;
-      return this;
-    };
-
-    TextLayer.prototype.textDecoration = function(textDecoration) {
-      this.options.textDecoration = textDecoration;
-      return this;
-    };
-
-    TextLayer.prototype.textAlign = function(textAlign) {
-      this.options.textAlign = textAlign;
-      return this;
-    };
-
-    TextLayer.prototype.stroke = function(stroke) {
-      this.options.stroke = stroke;
-      return this;
-    };
-
-    TextLayer.prototype.letterSpacing = function(letterSpacing) {
-      this.options.letterSpacing = letterSpacing;
-      return this;
-    };
-
-    TextLayer.prototype.lineSpacing = function(lineSpacing) {
-      this.options.lineSpacing = lineSpacing;
-      return this;
-    };
-
-    TextLayer.prototype.text = function(text) {
-      this.options.text = text;
-      return this;
-    };
-
-
-    /**
-     * generate the string representation of the layer
-     * @function TextLayer#toString
-     * @return {String}
-     */
-
-    TextLayer.prototype.toString = function() {
-      var components, publicId, text;
-      if (this.options.publicId != null) {
-        publicId = this.getFullPublicId();
-      } else if (this.options.text != null) {
-        text = encodeURIComponent(this.options.text).replace(/%2C/g, "%E2%80%9A").replace(/\//g, "%E2%81%84");
-      } else {
-        throw "Must supply either text or public_id.";
-      }
-      components = [this.options.resourceType, textStyleIdentifier.call(this), publicId, text];
-      return Util.compact(components).join(":");
-    };
-
-    textStyleIdentifier = function() {
-      var components, fontSize;
-      components = [];
-      if (this.options.fontWeight !== "normal") {
-        components.push(this.options.fontWeight);
-      }
-      if (this.options.fontStyle !== "normal") {
-        components.push(this.options.fontStyle);
-      }
-      if (this.options.textDecoration !== "none") {
-        components.push(this.options.textDecoration);
-      }
-      components.push(this.options.textAlign);
-      if (this.options.stroke !== "none") {
-        components.push(this.options.stroke);
-      }
-      if (!Util.isEmpty(this.options.letterSpacing)) {
-        components.push("letter_spacing_" + this.options.letterSpacing);
-      }
-      if (this.options.lineSpacing != null) {
-        components.push("line_spacing_" + this.options.lineSpacing);
-      }
-      if (this.options.fontSize != null) {
-        fontSize = "" + this.options.fontSize;
-      }
-      components.unshift(this.options.fontFamily, fontSize);
-      components = Util.compact(components).join("_");
-      if (!Util.isEmpty(components)) {
-        if (Util.isEmpty(this.options.fontFamily)) {
-          throw "Must supply fontFamily.";
-        }
-        if (Util.isEmpty(fontSize)) {
-          throw "Must supply fontSize.";
-        }
-      }
-      return components;
-    };
-
-    return TextLayer;
-
-  })(Layer);
-  SubtitlesLayer = (function(superClass) {
-    extend(SubtitlesLayer, superClass);
-
-
-    /**
-     * Represent a subtitles layer
-     * @constructor SubtitlesLayer
-     * @param {Object} options - layer parameters
-     */
-
-    function SubtitlesLayer(options) {
-      SubtitlesLayer.__super__.constructor.call(this, options);
-      this.options.resourceType = "subtitles";
-    }
-
-    return SubtitlesLayer;
-
-  })(TextLayer);
+  })(HtmlTag);
   Cloudinary = (function() {
     var AKAMAI_SHARED_CDN, CF_SHARED_CDN, DEFAULT_POSTER_OPTIONS, DEFAULT_VIDEO_SOURCE_TYPES, OLD_AKAMAI_SHARED_CDN, SHARED_CDN, VERSION, absolutize, applyBreakpoints, cdnSubdomainNumber, closestAbove, cloudinaryUrlPrefix, defaultBreakpoints, finalizeResourceType, findContainerWidth, maxWidth, updateDpr;
 
-    VERSION = "2.1.3";
+    VERSION = "2.3.0";
 
     CF_SHARED_CDN = "d3jpl91pxevbkh.cloudfront.net";
 
@@ -6590,7 +7051,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
      */
 
     Cloudinary.prototype.url = function(publicId, options) {
-      var prefix, ref, resourceTypeAndType, transformation, transformationString, url, version;
+      var error, error1, prefix, ref, resourceTypeAndType, transformation, transformationString, url, version;
       if (options == null) {
         options = {};
       }
@@ -6623,7 +7084,12 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
           publicId = encodeURIComponent(publicId).replace(/%3A/g, ':').replace(/%2F/g, '/');
         }
       } else {
-        publicId = encodeURIComponent(decodeURIComponent(publicId)).replace(/%3A/g, ':').replace(/%2F/g, '/');
+        try {
+          publicId = decodeURIComponent(publicId);
+        } catch (error1) {
+          error = error1;
+        }
+        publicId = encodeURIComponent(publicId).replace(/%3A/g, ':').replace(/%2F/g, '/');
         if (options.url_suffix) {
           if (options.url_suffix.match(/[\.\/]/)) {
             throw 'url_suffix should not include . or /';
@@ -6865,7 +7331,14 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
 
 
     /**
+    * Initialize the responsive behaviour.<br>
+    * Calls {@link Cloudinary#cloudinary_update} to modify image tags.
      * @function Cloudinary#responsive
+    * @param {Object} options
+    * @param {String} [options.responsive_class='cld-responsive'] - provide an alternative class used to locate img tags
+    * @param {number} [options.responsive_debounce=100] - the debounce interval in milliseconds.
+    * @param {boolean} [bootstrap=true] if true processes the img tags by calling cloudinary_update. When false the tags will be processed only after a resize event.
+    * @see {@link Cloudinary#cloudinary_update} for additional configuration parameters
      */
 
     Cloudinary.prototype.responsive = function(options, bootstrap) {
@@ -7041,6 +7514,8 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
 
     /**
     * Finds all `img` tags under each node and sets it up to provide the image through Cloudinary
+    * @param {Element[]} nodes the parent nodes to search for img under
+    * @param {Object} [options={}] options and transformations params
     * @function Cloudinary#processImageTags
      */
 
@@ -7048,6 +7523,9 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       var images, imgOptions, node, publicId, url;
       if (options == null) {
         options = {};
+      }
+      if (Util.isEmpty(nodes)) {
+        return this;
       }
       options = Util.defaults({}, options, this.config());
       images = (function() {
@@ -7070,7 +7548,8 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
           imgOptions = new Transformation(imgOptions).toHtmlAttributes();
           Util.setData(node, 'src-cache', url);
           node.setAttribute('width', imgOptions.width);
-          results.push(node.setAttribute('height', imgOptions.height));
+          node.setAttribute('height', imgOptions.height);
+          results.push(node);
         }
         return results;
       }).call(this);
@@ -7111,7 +7590,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         imageWidth = requiredWidth;
         Util.setData(tag, 'width', requiredWidth);
       }
-      return requiredWidth;
+      return imageWidth;
     };
 
 
@@ -7131,16 +7610,14 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
      */
 
     Cloudinary.prototype.cloudinary_update = function(elements, options) {
-      var client_hints, containerWidth, dataSrc, j, len, match, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, requiredWidth, responsive, responsiveClass, roundDpr, setUrl, tag;
+      var containerWidth, dataSrc, j, len, match, ref, ref1, ref2, ref3, ref4, ref5, requiredWidth, responsive, responsiveClass, roundDpr, setUrl, tag;
       if (options == null) {
         options = {};
       }
-      client_hints = (ref = (ref1 = options.client_hints) != null ? ref1 : this.config('client_hints')) != null ? ref : false;
-      client_hints = client_hints || (typeof document !== "undefined" && document !== null ? document.querySelector('meta[http-equiv="Accept-CH"]') : void 0);
-      if (client_hints) {
-        return;
+      if (elements === null) {
+        return this;
       }
-      responsive = (ref2 = (ref3 = options.responsive) != null ? ref3 : this.config('responsive')) != null ? ref2 : false;
+      responsive = (ref = (ref1 = options.responsive) != null ? ref1 : this.config('responsive')) != null ? ref : false;
       elements = (function() {
         switch (false) {
           case !Util.isArray(elements):
@@ -7153,15 +7630,15 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
             return [elements];
         }
       })();
-      responsiveClass = (ref4 = (ref5 = this.responsiveConfig['responsive_class']) != null ? ref5 : options['responsive_class']) != null ? ref4 : this.config('responsive_class');
-      roundDpr = (ref6 = options['round_dpr']) != null ? ref6 : this.config('round_dpr');
+      responsiveClass = (ref2 = (ref3 = this.responsiveConfig['responsive_class']) != null ? ref3 : options['responsive_class']) != null ? ref2 : this.config('responsive_class');
+      roundDpr = (ref4 = options['round_dpr']) != null ? ref4 : this.config('round_dpr');
       for (j = 0, len = elements.length; j < len; j++) {
         tag = elements[j];
-        if (!((ref7 = tag.tagName) != null ? ref7.match(/img/i) : void 0)) {
+        if (!((ref5 = tag.tagName) != null ? ref5.match(/img/i) : void 0)) {
           continue;
         }
         setUrl = true;
-        if (responsive && !client_hints) {
+        if (responsive) {
           Util.addClass(tag, responsiveClass);
         }
         dataSrc = Util.getData(tag, 'src-cache') || Util.getData(tag, 'src');
@@ -7221,11 +7698,12 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     HtmlTag: HtmlTag,
     ImageTag: ImageTag,
     VideoTag: VideoTag,
+    ClientHintsMetaTag: ClientHintsMetaTag,
     Layer: Layer,
     TextLayer: TextLayer,
     SubtitlesLayer: SubtitlesLayer,
     Cloudinary: Cloudinary,
-    VERSION: "2.1.3"
+    VERSION: "2.3.0"
   };
   return cloudinary;
 });

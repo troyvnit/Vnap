@@ -83,7 +83,9 @@ namespace Vnap.WebApp.Controllers.API
             {
                 var hubContext = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
                 hubContext.Clients.All.PublishArticle(articleVm);
-                GcmUtil.SendGcmMessage(JsonConvert.SerializeObject(Mapper.Map<ArticleVM>(article)));
+                articleVm = Mapper.Map<ArticleVM>(article);
+                articleVm.Content = "";
+                GcmUtil.SendGcmMessage(JsonConvert.SerializeObject(articleVm));
             }
             return articleVm;
         }

@@ -84,7 +84,7 @@ define([
      * @see http://www.w3.org/html/wg/drafts/html/master/syntax.html#void-elements
      */
     var isVoid = function (node) {
-      return node && /^BR|^IMG|^HR|^IFRAME|^BUTTON/.test(node.nodeName.toUpperCase());
+      return node && /^BR|^IMG|^HR|^IFRAME|^BUTTON|^INPUT/.test(node.nodeName.toUpperCase());
     };
 
     var isPara = function (node) {
@@ -994,6 +994,18 @@ define([
       });
     };
 
+    /**
+     * @method isCustomStyleTag
+     *
+     * assert if a node contains a "note-styletag" class,
+     * which implies that's a custom-made style tag node
+     *
+     * @param {Node} an HTML DOM node
+     */
+    var isCustomStyleTag = function (node) {
+      return node && !dom.isText(node) && list.contains(node.classList, 'note-styletag');
+    };
+
     return {
       /** @property {String} NBSP_CHAR */
       NBSP_CHAR: NBSP_CHAR,
@@ -1081,7 +1093,8 @@ define([
       value: value,
       posFromPlaceholder: posFromPlaceholder,
       attachEvents: attachEvents,
-      detachEvents: detachEvents
+      detachEvents: detachEvents,
+      isCustomStyleTag: isCustomStyleTag
     };
   })();
 

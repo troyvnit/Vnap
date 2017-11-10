@@ -11,7 +11,8 @@ var vnap = angular.module('vnap', [
     'SignalR',
     'angularMoment',
     'toaster',
-    'ngAnimate'
+    'ngAnimate',
+    'ngResource'
 ]);
 
 var baseUrl = $('base').attr('href');

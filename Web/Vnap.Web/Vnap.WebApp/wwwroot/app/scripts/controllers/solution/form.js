@@ -4,7 +4,7 @@
  * @param {object} $rootScope TBD.
  * @param {object} Solution TBD.
  */
-function SolutionFormCtrl($scope, $rootScope, $stateParams, $state, $http, $uibModal, Solution, Upload, cloudinary, authService) {
+function SolutionFormCtrl($scope, $rootScope, $stateParams, $state, $http, $uibModal, Solution, Upload, cloudinary, authService, $resource) {
     this.authentication = authService.authentication;
 
     if (this.authentication.isAuth && this.authentication.isAdmin) {
@@ -27,14 +27,13 @@ function SolutionFormCtrl($scope, $rootScope, $stateParams, $state, $http, $uibM
                     $scope.solution.Priority = data.Priority;
                     $scope.solution.Prime = data.Prime;
                     $scope.solution.Avatar = data.Avatar;
-                    $scope.solution.PlantDiseaseId = data.PlantDiseaseId;
-                    $scope.selectedPlantDisease = { Name: data.PlantDiseaseName, Id: data.PlantDiseaseId };
+                    $scope.solution.PlantDiseaseIds = data.PlantDiseaseIds;
+                    $scope.solution.PlantIds = data.PlantIds;
                 });
             });
     } else {
         if ($stateParams.PlantDiseaseId && $stateParams.PlantDiseaseId > 0) {
-            $scope.solution.PlantDiseaseId = $stateParams.PlantDiseaseId;
-            $scope.selectedPlantDisease = { Name: $stateParams.PlantDiseaseName, Id: $stateParams.PlantDiseaseId };
+            $scope.solution.PlantDiseaseId = [$stateParams.PlantDiseaseId];
         }
     }
 
@@ -110,6 +109,14 @@ function SolutionFormCtrl($scope, $rootScope, $stateParams, $state, $http, $uibM
                 return item;
             });
         });
+    };
+
+    $scope.plants = $resource(apiBaseUrl + 'plant').query();
+
+    $scope.plantDiseases = $resource(apiBaseUrl + 'plantDisease/getByPlantIds?plantIds=:plantIds', { plantIds: [] }).query();
+
+    $scope.selectedPlantsChanged = function () {
+        $scope.plantDiseases = $resource(apiBaseUrl + 'plantDisease/getByPlantIds?plantIds=:plantIds', { plantIds: $scope.solution.PlantIds }).query();
     };
 
     $scope.onSelectPlantDisease = function (item, model, label) {

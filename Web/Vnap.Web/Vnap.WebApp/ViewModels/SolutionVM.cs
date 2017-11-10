@@ -15,8 +15,8 @@ namespace Vnap.Web.ViewModels
         public string Description { get; set; }
         public string Avatar { get; set; }
         public int Priority { get; set; }
-        public int PlantDiseaseId { get; set; }
-        public string PlantDiseaseName { get; set; }
+        public int[] PlantDiseaseIds { get; set; }
+        public int[] PlantIds { get; set; }
         public bool Prime { get; set; }
         public DateTime CreatedDate { get; set; }
     }

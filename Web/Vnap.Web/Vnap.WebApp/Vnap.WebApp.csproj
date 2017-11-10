@@ -477,6 +477,14 @@
     <Content Include="wwwroot\app\bower_components\angular-bootstrap\ui-bootstrap.min.js">
       <DependentUpon>ui-bootstrap.js</DependentUpon>
     </Content>
+    <Content Include="wwwroot\app\bower_components\angular-chosen-localytics\chosen-spinner.css" />
+    <Content Include="wwwroot\app\bower_components\angular-chosen-localytics\chosen.js" />
+    <Content Include="wwwroot\app\bower_components\angular-chosen-localytics\dist\angular-chosen.js" />
+    <Content Include="wwwroot\app\bower_components\angular-chosen-localytics\dist\angular-chosen.min.js" />
+    <Content Include="wwwroot\app\bower_components\angular-chosen-localytics\example\choose-a-beer.png" />
+    <Content Include="wwwroot\app\bower_components\angular-chosen-localytics\example\index.html" />
+    <Content Include="wwwroot\app\bower_components\angular-chosen-localytics\example\index.js" />
+    <Content Include="wwwroot\app\bower_components\angular-chosen-localytics\spinner.gif" />
     <Content Include="wwwroot\app\bower_components\angular-local-storage\.gitattributes" />
     <Content Include="wwwroot\app\bower_components\angular-local-storage\.gitignore" />
     <Content Include="wwwroot\app\bower_components\angular-local-storage\demo\demo-app.js" />
@@ -714,6 +722,15 @@
     <Content Include="wwwroot\app\bower_components\bootstrap\js\tooltip.js" />
     <Content Include="wwwroot\app\bower_components\bootstrap\js\transition.js" />
     <Content Include="wwwroot\app\bower_components\bootstrap\package.js" />
+    <Content Include="wwwroot\app\bower_components\chosen\bootstrap-chosen.css" />
+    <Content Include="wwwroot\app\bower_components\chosen\chosen-sprite%402x.png" />
+    <Content Include="wwwroot\app\bower_components\chosen\chosen-sprite.png" />
+    <Content Include="wwwroot\app\bower_components\chosen\chosen.css" />
+    <Content Include="wwwroot\app\bower_components\chosen\chosen.jquery.js" />
+    <Content Include="wwwroot\app\bower_components\chosen\chosen.jquery.min.js" />
+    <Content Include="wwwroot\app\bower_components\chosen\chosen.min.css" />
+    <Content Include="wwwroot\app\bower_components\chosen\chosen.proto.js" />
+    <Content Include="wwwroot\app\bower_components\chosen\chosen.proto.min.js" />
     <Content Include="wwwroot\app\bower_components\cloudinary-core\blank.html" />
     <Content Include="wwwroot\app\bower_components\cloudinary-core\cloudinary-core-shrinkwrap.js" />
     <Content Include="wwwroot\app\bower_components\cloudinary-core\cloudinary-core-shrinkwrap.min.js">
@@ -3027,9 +3044,22 @@
     <Content Include="wwwroot\app\bower_components\angularjs-toaster\package.json" />
     <Content Include="wwwroot\app\bower_components\angularjs-toaster\README.md" />
     <Content Include="wwwroot\app\bower_components\angularjs-toaster\toaster.scss" />
+    <Content Include="wwwroot\app\bower_components\chosen\.bower.json" />
+    <Content Include="wwwroot\app\bower_components\chosen\.travis.yml" />
+    <Content Include="wwwroot\app\bower_components\chosen\bower.json" />
+    <Content Include="wwwroot\app\bower_components\chosen\package.json" />
+    <Content Include="wwwroot\app\bower_components\chosen\README.md" />
+    <Content Include="wwwroot\app\bower_components\angular-chosen-localytics\.bower.json" />
+    <Content Include="wwwroot\app\bower_components\angular-chosen-localytics\.gitignore" />
+    <Content Include="wwwroot\app\bower_components\angular-chosen-localytics\.npmignore" />
+    <Content Include="wwwroot\app\bower_components\angular-chosen-localytics\.travis.yml" />
+    <Content Include="wwwroot\app\bower_components\angular-chosen-localytics\bower.json" />
+    <Content Include="wwwroot\app\bower_components\angular-chosen-localytics\ISSUE_TEMPLATE.md" />
+    <Content Include="wwwroot\app\bower_components\angular-chosen-localytics\LICENSE" />
+    <Content Include="wwwroot\app\bower_components\angular-chosen-localytics\package.json" />
+    <Content Include="wwwroot\app\bower_components\angular-chosen-localytics\README.md" />
     <None Include="wwwroot\_references.js" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
@@ -3481,9 +3511,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>47562</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:6969/</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:6969/</IISAppRootUrl>
+          <IISUrl>http://localhost:47562/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

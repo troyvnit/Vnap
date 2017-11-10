@@ -47,7 +47,8 @@ namespace Vnap.Web.Mappers
             {
                 CreateMap<Plant, PlantVM>();
                 CreateMap<PlantDisease, PlantDiseaseVM>().ForMember(pd => pd.PlantName, o => o.MapFrom(pd => pd.Plant != null ? pd.Plant.Name : string.Empty));
-                CreateMap<Solution, SolutionVM>().ForMember(pd => pd.PlantDiseaseName, o => o.MapFrom(pd => pd.PlantDisease != null ? pd.PlantDisease.Name : string.Empty));
+                CreateMap<Solution, SolutionVM>().ForMember(s => s.PlantDiseaseIds, o => o.MapFrom(s => s.PlantDiseases.Select(pd => pd.Id)))
+                    .ForMember(s => s.PlantIds, o => o.MapFrom(s => s.PlantDiseases.Select(pd => pd.PlantId).Distinct()));
                 CreateMap<Image, ImageVM>();
                 CreateMap<AdvisoryMessage, AdvisoryMessageVM>().ForMember(am => am.ImageUrl, o => o.MapFrom(am => am.ImageUrl.Replace("upload", "upload/a_exif")));
                 CreateMap<Conversation, ConversationVM>().ForMember(c => c.LatestMessage, o => o.MapFrom(c => c.AdvisoryMessages.LastOrDefault()));

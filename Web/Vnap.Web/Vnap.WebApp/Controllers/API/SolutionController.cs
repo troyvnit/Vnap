@@ -22,10 +22,12 @@ namespace Vnap.WebApp.Controllers.API
     public class SolutionController : ApiController
     {
         private readonly ISolutionRepository _solutionRepository;
+        private readonly IPlantDiseaseRepository _plantDiseaseRepository;
 
-        public SolutionController(ISolutionRepository solutionRepository)
+        public SolutionController(ISolutionRepository solutionRepository, IPlantDiseaseRepository plantDiseaseRepository)
         {
             _solutionRepository = solutionRepository;
+            _plantDiseaseRepository = plantDiseaseRepository;
         }
 
         public async Task<IEnumerable<SolutionVM>> GetSolutions(int skip = 0, int take = 10, int plantDiseaseId = 0)
@@ -39,7 +41,7 @@ namespace Vnap.WebApp.Controllers.API
         [Route("Get")]
         public async Task<SolutionVM> Get(int id)
         {
-            var solutions = await _solutionRepository.AllIncludingAsync(pd => pd.PlantDisease);
+            var solutions = await _solutionRepository.AllIncludingAsync(pd => pd.PlantDiseases);
 
             return Mapper.Map<SolutionVM>(solutions.FirstOrDefault(pd => pd.Id == id));
         }
@@ -58,6 +60,9 @@ namespace Vnap.WebApp.Controllers.API
         public async Task<SolutionVM> Add(SolutionVM solutionVm)
         {
             var solution = Mapper.Map<Solution>(solutionVm);
+            solution.PlantDiseases = new List<PlantDisease>();
+            var plantDiseases = _plantDiseaseRepository.Queryable().Where(pd => solutionVm.PlantDiseaseIds.Contains(pd.Id)).ToList();
+            solution.PlantDiseases.AddRange(plantDiseases);
             _solutionRepository.Add(solution);
             await _solutionRepository.CommitAsync();
 
@@ -71,6 +76,24 @@ namespace Vnap.WebApp.Controllers.API
             var solution = Mapper.Map<Solution>(solutionVm);
             _solutionRepository.Update(solution);
             await _solutionRepository.CommitAsync();
+
+            var detetedPlantDiseases = _plantDiseaseRepository.Queryable().Include(pd => pd.Solutions).Where(pd => pd.Solutions.Any(s => s.Id == solution.Id)).ToList();
+            foreach (var plantDisease in detetedPlantDiseases)
+            {
+                plantDisease.Solutions.Remove(solution);
+                _plantDiseaseRepository.Update(plantDisease);
+            }
+
+            var addedPlantDiseases = _plantDiseaseRepository.Queryable().Include(pd => pd.Solutions).Where(pd => solutionVm.PlantDiseaseIds.Contains(pd.Id)).ToList();
+            foreach (var plantDisease in addedPlantDiseases)
+            {
+                if(!plantDisease.Solutions.Any(s => s.Id == solution.Id))
+                {
+                    plantDisease.Solutions.Add(solution);
+                    _plantDiseaseRepository.Update(plantDisease);
+                }
+            }
+            await _plantDiseaseRepository.CommitAsync();
 
             return solutionVm;
         }

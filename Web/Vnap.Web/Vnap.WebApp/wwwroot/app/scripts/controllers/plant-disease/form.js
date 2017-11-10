@@ -4,7 +4,7 @@
  * @param {object} $rootScope TBD.
  * @param {object} PlantDisease TBD.
  */
-function PlantDiseaseFormCtrl($scope, $rootScope, $stateParams, $state, $http, $uibModal, PlantDisease, Upload, cloudinary, authService) {
+function PlantDiseaseFormCtrl($scope, $rootScope, $stateParams, $state, $http, $uibModal, PlantDisease, Upload, cloudinary, authService, $resource) {
     this.authentication = authService.authentication;
 
     if (this.authentication.isAuth && this.authentication.isAdmin) {
@@ -29,6 +29,9 @@ function PlantDiseaseFormCtrl($scope, $rootScope, $stateParams, $state, $http, $
                 $scope.plantDisease.PlantDiseaseType = data.PlantDiseaseType;
                 $scope.plantDisease.Images = data.Images;
                 $scope.plantDisease.Solutions = data.Solutions;
+                $scope.plantDisease.SolutionIds = data.Solutions.map(function (solution) {
+                    return solution.Id;
+                });
 
                 if ($stateParams.ActiveTabIndex) {
                     $scope.troy = true;
@@ -36,6 +39,8 @@ function PlantDiseaseFormCtrl($scope, $rootScope, $stateParams, $state, $http, $
             });
         });
     }
+
+    $scope.solutions = $resource(apiBaseUrl + 'solution').query();
 
     $scope.fileProgress = 0;
     $scope.uploadFiles = function(files) {

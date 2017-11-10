@@ -116,7 +116,12 @@
                                 {
                                     name: 'summernote',
                                     files: [appBaseUrl + 'bower_components/summernote/dist/summernote.css', appBaseUrl + 'bower_components/summernote/dist/summernote.js', appBaseUrl + 'bower_components/angular-summernote/dist/angular-summernote.min.js']
-                                }
+                                },
+                                {
+                                    insertBefore: '#loadBefore',
+                                    name: 'localytics.directives',
+                                    files: [appBaseUrl + 'bower_components/chosen/bootstrap-chosen.css', appBaseUrl + 'bower_components/chosen/chosen.jquery.min.js', appBaseUrl + 'bower_components/angular-chosen-localytics/chosen-spinner.css', appBaseUrl + 'bower_components/angular-chosen-localytics/dist/angular-chosen.min.js']
+                                },
                             ]);
                         }
                     }
@@ -148,7 +153,12 @@
                                 {
                                     name: 'summernote',
                                     files: [appBaseUrl + 'bower_components/summernote/dist/summernote.css', appBaseUrl + 'bower_components/summernote/dist/summernote.js', appBaseUrl + 'bower_components/angular-summernote/dist/angular-summernote.min.js']
-                                }
+                                },
+                                {
+                                    insertBefore: '#loadBefore',
+                                    name: 'localytics.directives',
+                                    files: [appBaseUrl + 'bower_components/chosen/bootstrap-chosen.css', appBaseUrl + 'bower_components/chosen/chosen.jquery.min.js', appBaseUrl + 'bower_components/angular-chosen-localytics/chosen-spinner.css', appBaseUrl + 'bower_components/angular-chosen-localytics/dist/angular-chosen.min.js']
+                                },
                             ]);
                         }
                     }

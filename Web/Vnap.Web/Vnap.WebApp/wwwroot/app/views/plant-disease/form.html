@@ -78,6 +78,16 @@
                     </div>
                   </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{'solution' | stringRes}}:</label>
+                    <div class="col-sm-8">
+                        <select multiple chosen class="chosen-select form-control"
+                                ng-model="plantDisease.SolutionIds"
+                                ng-options="solution.Id as solution.Name for solution in solutions">
+                            <option value="">Select</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">
                   <div class="col-sm-4 col-sm-offset-2">

@@ -44,6 +44,15 @@ namespace Vnap.Web.Controllers.API
         }
 
         [HttpGet]
+        [Route("GetByPlantIds")]
+        public IEnumerable<PlantDiseaseVM> GetByPlantIds(string plantIds)
+        {
+            IEnumerable<PlantDisease> pageData = _plantDiseaseRepository.Queryable().Where(pd => string.IsNullOrEmpty(plantIds) || plantIds.Contains(pd.PlantId.ToString())).ToList();
+
+            return Mapper.Map<IEnumerable<PlantDiseaseVM>>(pageData);
+        }
+
+        [HttpGet]
         [Route("Search")]
         public async Task<IEnumerable<PlantDiseaseVM>> Search(string query)
         {

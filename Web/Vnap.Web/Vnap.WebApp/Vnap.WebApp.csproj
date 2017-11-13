@@ -2685,32 +2685,19 @@
     <Content Include="wwwroot\app\bower_components\summernote\dist\lang\summernote-zh-TW.min.js">
       <DependentUpon>summernote-zh-TW.js</DependentUpon>
     </Content>
-    <Content Include="wwwroot\app\bower_components\summernote\dist\plugin\databasic\summernote-ext-databasic.css" />
-    <Content Include="wwwroot\app\bower_components\summernote\dist\plugin\databasic\summernote-ext-databasic.js" />
-    <Content Include="wwwroot\app\bower_components\summernote\dist\plugin\databasic\summernote-ext-databasic.min.css">
-      <DependentUpon>summernote-ext-databasic.css</DependentUpon>
-    </Content>
-    <Content Include="wwwroot\app\bower_components\summernote\dist\plugin\databasic\summernote-ext-databasic.min.js">
-      <DependentUpon>summernote-ext-databasic.js</DependentUpon>
-    </Content>
-    <Content Include="wwwroot\app\bower_components\summernote\dist\plugin\hello\summernote-ext-hello.js" />
-    <Content Include="wwwroot\app\bower_components\summernote\dist\plugin\hello\summernote-ext-hello.min.js">
-      <DependentUpon>summernote-ext-hello.js</DependentUpon>
-    </Content>
-    <Content Include="wwwroot\app\bower_components\summernote\dist\plugin\specialchars\summernote-ext-specialchars.js" />
-    <Content Include="wwwroot\app\bower_components\summernote\dist\plugin\specialchars\summernote-ext-specialchars.min.js">
-      <DependentUpon>summernote-ext-specialchars.js</DependentUpon>
-    </Content>
+    <Content Include="wwwroot\app\bower_components\summernote\dist\summernote-bs4.css" />
+    <Content Include="wwwroot\app\bower_components\summernote\dist\summernote-bs4.js" />
+    <Content Include="wwwroot\app\bower_components\summernote\dist\summernote-bs4.min.js" />
+    <Content Include="wwwroot\app\bower_components\summernote\dist\summernote-lite.css" />
+    <Content Include="wwwroot\app\bower_components\summernote\dist\summernote-lite.js" />
     <Content Include="wwwroot\app\bower_components\summernote\dist\summernote.css" />
     <Content Include="wwwroot\app\bower_components\summernote\dist\summernote.js" />
     <Content Include="wwwroot\app\bower_components\summernote\dist\summernote.min.js">
       <DependentUpon>summernote.js</DependentUpon>
     </Content>
     <Content Include="wwwroot\app\bower_components\summernote\examples\airmode.html" />
-    <Content Include="wwwroot\app\bower_components\summernote\examples\bs3fa4.html" />
     <Content Include="wwwroot\app\bower_components\summernote\examples\codemirror.html" />
     <Content Include="wwwroot\app\bower_components\summernote\examples\external-api.html" />
-    <Content Include="wwwroot\app\bower_components\summernote\examples\get-button.html" />
     <Content Include="wwwroot\app\bower_components\summernote\examples\hint-emoji.html" />
     <Content Include="wwwroot\app\bower_components\summernote\examples\hint-userdefine.html" />
     <Content Include="wwwroot\app\bower_components\summernote\examples\jquery-custom-event.html" />
@@ -2838,20 +2825,9 @@
     <Content Include="wwwroot\app\bower_components\summernote\src\js\base\module\Statusbar.js" />
     <Content Include="wwwroot\app\bower_components\summernote\src\js\base\renderer.js" />
     <Content Include="wwwroot\app\bower_components\summernote\src\js\base\summernote-en-US.js" />
-    <Content Include="wwwroot\app\bower_components\summernote\src\js\bs3\module\AirPopover.js" />
-    <Content Include="wwwroot\app\bower_components\summernote\src\js\bs3\module\Buttons.js" />
-    <Content Include="wwwroot\app\bower_components\summernote\src\js\bs3\module\HelpDialog.js" />
-    <Content Include="wwwroot\app\bower_components\summernote\src\js\bs3\module\HintPopover.js" />
-    <Content Include="wwwroot\app\bower_components\summernote\src\js\bs3\module\ImageDialog.js" />
-    <Content Include="wwwroot\app\bower_components\summernote\src\js\bs3\module\ImagePopover.js" />
-    <Content Include="wwwroot\app\bower_components\summernote\src\js\bs3\module\LinkDialog.js" />
-    <Content Include="wwwroot\app\bower_components\summernote\src\js\bs3\module\LinkPopover.js" />
-    <Content Include="wwwroot\app\bower_components\summernote\src\js\bs3\module\Toolbar.js" />
-    <Content Include="wwwroot\app\bower_components\summernote\src\js\bs3\module\VideoDialog.js" />
     <Content Include="wwwroot\app\bower_components\summernote\src\js\bs3\settings.js" />
     <Content Include="wwwroot\app\bower_components\summernote\src\js\bs3\ui.js" />
     <Content Include="wwwroot\app\bower_components\summernote\src\js\intro.js" />
-    <Content Include="wwwroot\app\bower_components\summernote\src\js\lite\module\Toolbar.js" />
     <Content Include="wwwroot\app\bower_components\summernote\src\js\lite\settings.js" />
     <Content Include="wwwroot\app\bower_components\summernote\src\js\lite\ui.js" />
     <Content Include="wwwroot\app\bower_components\summernote\src\js\outro.js" />
@@ -3492,6 +3468,9 @@
     <Content Include="wwwroot\dist\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="wwwroot\dist\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="wwwroot\dist\fonts\glyphicons-halflings-regular.woff2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\app\bower_components\summernote\dist\plugin\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

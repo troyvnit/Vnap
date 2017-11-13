@@ -30,9 +30,9 @@ namespace Vnap.WebApp.Controllers.API
             _plantDiseaseRepository = plantDiseaseRepository;
         }
 
-        public async Task<IEnumerable<SolutionVM>> GetSolutions(int skip = 0, int take = 10, int plantDiseaseId = 0)
+        public IEnumerable<SolutionVM> GetSolutions(int skip = 0, int take = 10, int plantDiseaseId = 0)
         {
-            IEnumerable<Solution> pageData = await _solutionRepository.FindByAsync(pd => plantDiseaseId == 0 || pd.PlantDiseaseId == plantDiseaseId);
+            IEnumerable<Solution> pageData = _solutionRepository.Queryable().Include(pd => pd.PlantDiseases).Where(s => plantDiseaseId == 0 || s.PlantDiseases.Any(pd => pd.Id == plantDiseaseId)).ToList();
 
             return Mapper.Map<IEnumerable<SolutionVM>>(pageData);
         }

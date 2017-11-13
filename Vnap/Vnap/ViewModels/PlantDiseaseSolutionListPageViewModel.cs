@@ -78,6 +78,7 @@ namespace Vnap.ViewModels
 
         public async void SolutionListItemSelectedHandler(Solution solution)
         {
+            solution.PlantDiseaseId = PlantDiseaseId;
             var navigationParameters = new NavigationParameters { { "Solution", solution } };
             await _navigationService.NavigateAsync($"PlantDiseaseSolutionPage", navigationParameters, animated: false);
         }

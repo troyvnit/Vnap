@@ -78,11 +78,8 @@ namespace Vnap.ViewModels
 
         private async void Navigate()
         {
-            if (Solution != null)
-            {
-                var navigationParameters = new NavigationParameters { { "Solution", Solution } };
-                await _navigationService.NavigateAsync($"LeftMenu/Navigation/PlantDiseaseSolutionPage", navigationParameters, animated: false);
-            }
+            var navigationParameters = new NavigationParameters { { "PlantDiseaseId", PlantDiseaseId } };
+            await _navigationService.NavigateAsync($"LeftMenu/Navigation/PlantDiseaseSolutionListPage", navigationParameters, animated: false);
         }
 
         public bool CanExecutePreviewImageCommand(Image image)

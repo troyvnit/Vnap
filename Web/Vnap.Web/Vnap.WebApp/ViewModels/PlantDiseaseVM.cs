@@ -18,6 +18,7 @@ namespace Vnap.Web.ViewModels
         public int PlantId { get; set; }
         public string PlantName { get; set; }
         public DateTime CreatedDate { get; set; }
+        public int[] SolutionIds { get; set; }
 
         public List<ImageVM> Images { get; set; }
         public List<SolutionVM> Solutions { get; set; }

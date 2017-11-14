@@ -23,6 +23,6 @@ namespace Vnap.Models
 
     public enum CommandType
     {
-        Navigation, Sms, Logout
+        Navigation, Sms, Logout, Login
     }
 }

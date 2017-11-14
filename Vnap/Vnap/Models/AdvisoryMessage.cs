@@ -11,6 +11,7 @@ namespace Vnap.Models
         public int Id { get; set; }
         public string ImageUrl { get; set; }
         public bool IsAdviser { get; set; }
+        public bool IsIntro { get; set; }
         public string AuthorName { get; set; }
         public string Content { get; set; }
         public string ConversationName { get; set; }

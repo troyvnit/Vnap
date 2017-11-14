@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using Acr.UserDialogs;
+using Prism.Navigation;
+using System.Linq;
 using Vnap.Models;
 using Vnap.ViewModels;
 using Xamarin.Forms;
@@ -25,11 +27,25 @@ namespace Vnap.Views
         {
             base.OnAppearing();
             var context = BindingContext as AdvisoryTabViewModel;
-            if (context != null && !context.Messages.Any()) context.LoadMessages(0);
+            if (context != null && !context.Messages.Any(m => !m.IsIntro)) context.LoadMessages(0);
             var last = MessageListView.ItemsSource.Cast<AdvisoryMessage>().LastOrDefault();
             if (last != null)
             {
                 MessageListView.ScrollTo(last, ScrollToPosition.MakeVisible, true);
+            }
+        }
+
+        private async void NewMessage_Focused(object sender, FocusEventArgs e)
+        {
+            var context = BindingContext as AdvisoryTabViewModel;
+            if (context != null)
+            {
+                var unfocused = await context.LoginRequestHandler();
+                if (unfocused)
+                {
+                    var entry = sender as Entry;
+                    entry?.Unfocus();
+                }
             }
         }
     }

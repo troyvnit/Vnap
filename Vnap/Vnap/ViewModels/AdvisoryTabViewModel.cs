@@ -22,6 +22,7 @@ using Vnap.Service.Utils;
 using Microsoft.AspNet.SignalR.Client;
 using Vnap.Entity;
 using Vnap.Services;
+using Vnap.Views.ExtendedControls;
 
 namespace Vnap.ViewModels
 {
@@ -32,8 +33,8 @@ namespace Vnap.ViewModels
         private readonly HttpClient _httpClient = new HttpClient();
         private bool subscribed;
 
-        private ObservableCollection<AdvisoryMessage> _messages = new ObservableCollection<AdvisoryMessage>();
-        public ObservableCollection<AdvisoryMessage> Messages => _messages;
+        private ObservableRangeCollection<AdvisoryMessage> _messages = new ObservableRangeCollection<AdvisoryMessage>();
+        public ObservableRangeCollection<AdvisoryMessage> Messages => _messages;
 
         private string _newMessage = null;
         public string NewMessage
@@ -107,7 +108,7 @@ namespace Vnap.ViewModels
         {
             IsBusy = true;
 
-            _messages = new ObservableCollection<AdvisoryMessage>();
+            _messages = new ObservableRangeCollection<AdvisoryMessage>();
             await _messageService.Sync(App.CurrentUser.UserName);
             LoadMessages(0);
 
@@ -141,6 +142,14 @@ namespace Vnap.ViewModels
 
         private async void ExecuteSendAdvisoryMessageCommand()
         {
+            if(App.CurrentUser.UserName == null)
+            {
+                if (await UserDialogs.Instance.ConfirmAsync("Vui lòng cung cấp thông tin để Vnap hỗ trợ bạn tốt hơn?", "Tu vấn", "Cung cấp", "Để sau"))
+                {
+                    await _navigationService.NavigateAsync("SplashScreen", animated: false, useModalNavigation: true);
+                }
+                return;
+            }
             UserDialogs.Instance.ShowLoading("Đang gửi...");
             var message = new AdvisoryMessage()
             {
@@ -172,6 +181,15 @@ namespace Vnap.ViewModels
         {
             try
             {
+                if (App.CurrentUser.UserName == null)
+                {
+                    if (await UserDialogs.Instance.ConfirmAsync("Vui lòng cung cấp thông tin để Vnap hỗ trợ bạn tốt hơn?", "Tu vấn", "Cung cấp", "Để sau"))
+                    {
+                        await _navigationService.NavigateAsync("SplashScreen", animated: false, useModalNavigation: true);
+                    }
+                    return;
+                }
+
                 MediaFile file = null;
                 var takePhotoString = "Chụp ảnh";
                 var pickFromGalleryString = "Chọn từ thư viện";
@@ -242,20 +260,18 @@ namespace Vnap.ViewModels
             };
             var newMessages = _messageService.GetMessages(rq);
             _totalMessages = _messageService.GetMessagesCount();
-            
-            foreach (var message in newMessages)
-            {
-                _messages.Add(Mapper.Map<AdvisoryMessage>(message));
-            }
 
-            if (!_messages.Any())
+            Messages.AddRange(newMessages.Select(Mapper.Map<AdvisoryMessage>));
+
+            if (!Messages.Any())
             {
-                _messages.Add(new AdvisoryMessage()
+                Messages.Add(new AdvisoryMessage()
                 {
                     AuthorName = "Vnap",
                     ConversationName = rq.ConversationName,
                     Content = "Kính chào quý bà con. Đây là nơi để bà con gửi tin nhắn, hình ảnh sâu bệnh về tổng đài cho kỹ sư tư vấn.",
                     IsAdviser = true,
+                    IsIntro = true,
                     CreatedDate = DateTime.Now
                 });
             }
@@ -266,6 +282,26 @@ namespace Vnap.ViewModels
             if (!string.IsNullOrEmpty(message.ImageUrl))
             {
                 _navigationService.NavigateAsync(message.ImageUrl, animated: false);
+            }
+        }
+
+        public async Task<bool> LoginRequestHandler()
+        {
+            if (App.CurrentUser.UserName == null)
+            {
+                if (await UserDialogs.Instance.ConfirmAsync("Vui lòng cung cấp thông tin để Vnap hỗ trợ bạn tốt hơn?", "Tu vấn", "Cung cấp", "Để sau"))
+                {
+                    await _navigationService.NavigateAsync("SplashScreen", animated: false, useModalNavigation: true);
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return false;
             }
         }
     }

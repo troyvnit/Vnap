@@ -32,7 +32,8 @@ namespace Vnap.ViewModels
 
         private async void ExecuteAgreeCommand()
         {
-            await _navigationService.NavigateAsync("LeftMenu/Navigation/MainPage/PlantListTab", animated: false);;
+            LocalDataStorage.SetReadTerms(true);
+            await _navigationService.NavigateAsync("LeftMenu/Navigation/MainPage/PlantListTab", animated: false);
         }
 
         public override void OnNavigatedFrom(NavigationParameters parameters)

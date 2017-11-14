@@ -117,15 +117,28 @@ namespace Vnap.ViewModels
                        Icon = "flaticon-id-card-2",
                        Text = "Hồ sơ",
                        IsActived = true
-                   },
-                   new LeftMenuItem()
-                   {
-                       Icon = "flaticon-exit-1",
-                       Text = "Đăng xuất",
-                       CommandType = CommandType.Logout,
-                       IsActived = true
                    }
                 };
+                if(App.CurrentUser.UserName == null)
+                {
+                    accountItems.Add(new LeftMenuItem()
+                    {
+                        Icon = "flaticon-login",
+                        Text = "Đăng nhập",
+                        CommandType = CommandType.Login,
+                        IsActived = true
+                    });
+                }
+                else
+                {
+                    accountItems.Add(new LeftMenuItem()
+                    {
+                        Icon = "flaticon-exit-1",
+                        Text = "Đăng xuất",
+                        CommandType = CommandType.Logout,
+                        IsActived = true
+                    });
+                }
                 return accountItems;
             }
 
@@ -170,7 +183,12 @@ namespace Vnap.ViewModels
                         smsMessenger.SendSms("", menuItem.Command);
                     break;
                 case CommandType.Logout:
-                    App.CurrentUser = null;
+                    App.CurrentUser = new Entity.User();
+                    UserName = City = Plant = "???";
+                    LocalDataStorage.SetAdvisoryMessages(new List<Entity.AdvisoryMessageEntity>());
+                    _navigationService.NavigateAsync("SplashScreen", animated: false, useModalNavigation: true);
+                    break;
+                case CommandType.Login:
                     _navigationService.NavigateAsync("SplashScreen", animated: false, useModalNavigation: true);
                     break;
             }

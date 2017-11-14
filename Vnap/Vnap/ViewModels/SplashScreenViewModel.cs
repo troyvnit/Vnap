@@ -146,6 +146,7 @@ namespace Vnap.ViewModels
         public DelegateCommand CityItemClickCommand { get; set; }
         public DelegateCommand PlantItemClickCommand { get; set; }
         public DelegateCommand SignUpCommand { get; set; }
+        public DelegateCommand SkipCommand { get; set; }
 
         public SplashScreenViewModel(INavigationService navigationService, ISyncService syncService,
             IPlantService plantService, IPlantDiseaseService plantDiseaseService, IArticleService articleService,
@@ -161,6 +162,7 @@ namespace Vnap.ViewModels
             CityItemClickCommand = new DelegateCommand(ExecuteCityItemClickCommand);
             PlantItemClickCommand = new DelegateCommand(ExecutePlantItemClickCommand);
             SignUpCommand = new DelegateCommand(ExecuteSignUpCommand);
+            SkipCommand = new DelegateCommand(ExecuteSkipCommand);
         }
 
         public async Task ExecuteOpenCitiesPopupCommand()
@@ -211,7 +213,7 @@ namespace Vnap.ViewModels
 
             try
             {
-                UserDialogs.Instance.ShowLoading("Đang đăng ký...");
+                UserDialogs.Instance.ShowLoading("Đang đăng nhập...");
 
                 var result = await _httpClient.PostAsync("http://vnap.vn/api/user/create", new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json"));
 
@@ -219,7 +221,7 @@ namespace Vnap.ViewModels
 
                 if (!result.IsSuccessStatusCode)
                 {
-                    var retry = await UserDialogs.Instance.ConfirmAsync($"Đăng ký thất bại! Vui lòng thử lại hoặc liên hệ đường dây nóng {LocalDataStorage.GetHotLine()}!", null, "Gọi", "Bỏ qua");
+                    var retry = await UserDialogs.Instance.ConfirmAsync($"Đăng nhập thất bại! Vui lòng thử lại hoặc liên hệ đường dây nóng {LocalDataStorage.GetHotLine()}!", null, "Gọi", "Bỏ qua");
                     if (retry)
                     {
                         var phoneDialer = CrossMessaging.Current.PhoneDialer;
@@ -232,12 +234,31 @@ namespace Vnap.ViewModels
 
                 App.CurrentUser = user;
                 //await _navigationService.GoBackAsync(useModalNavigation: true);
-                await _navigationService.NavigateAsync("TermsPage", animated: false, useModalNavigation: true);
+                if (LocalDataStorage.GetReadTerms())
+                {
+                    await _navigationService.NavigateAsync("LeftMenu/Navigation/MainPage/PlantListTab", animated: false);
+                }
+                else
+                {
+                    await _navigationService.NavigateAsync("TermsPage", animated: false, useModalNavigation: true);
+                }
             }
             catch
             {
                 UserDialogs.Instance.HideLoading();
                 UserDialogs.Instance.Alert("Máy chủ đang bảo trì, mong bà con thông cảm và quay lại sau!");
+            }
+        }
+
+        private async void ExecuteSkipCommand()
+        {
+            if (LocalDataStorage.GetReadTerms())
+            {
+                await _navigationService.NavigateAsync("LeftMenu/Navigation/MainPage/PlantListTab", animated: false);
+            }
+            else
+            {
+                await _navigationService.NavigateAsync("TermsPage", animated: false, useModalNavigation: true);
             }
         }
 
@@ -288,18 +309,18 @@ namespace Vnap.ViewModels
                         }
                     }
 
-                    var locator = CrossGeolocator.Current;
-                    locator.DesiredAccuracy = 50;
-                    var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(30));
-                    var result = await _httpClient.GetStringAsync($"https://maps.googleapis.com/maps/api/geocode/json?latlng={position.Latitude},{position.Longitude}&key=AIzaSyCKO7qZp5U-WCmCNBbuvw6-psle2hi21lg");
-                    var jObject = JObject.Parse(result);
-                    var address = (string)jObject["results"][0]["formatted_address"];
-                    Address = address;
-                    var city = _cities.FirstOrDefault(c => address.ToLower().Contains(c.ToLower()));
-                    if (!string.IsNullOrEmpty(city))
-                    {
-                        City = city;
-                    }
+                    //var locator = CrossGeolocator.Current;
+                    //locator.DesiredAccuracy = 50;
+                    //var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(30));
+                    //var result = await _httpClient.GetStringAsync($"https://maps.googleapis.com/maps/api/geocode/json?latlng={position.Latitude},{position.Longitude}&key=AIzaSyCKO7qZp5U-WCmCNBbuvw6-psle2hi21lg");
+                    //var jObject = JObject.Parse(result);
+                    //var address = (string)jObject["results"][0]["formatted_address"];
+                    //Address = address;
+                    //var city = _cities.FirstOrDefault(c => address.ToLower().Contains(c.ToLower()));
+                    //if (!string.IsNullOrEmpty(city))
+                    //{
+                    //    City = city;
+                    //}
 
                     UserDialogs.Instance.HideLoading();
                 }

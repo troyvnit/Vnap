@@ -38,7 +38,7 @@ namespace Vnap.Views
         private void UpdateUserInfo()
         {
             var context = BindingContext as LeftMenuViewModel;
-            if (context != null && App.CurrentUser != null)
+            if (context != null && App.CurrentUser.UserName != null)
             {
                 context.UserName = App.CurrentUser.UserName;
                 context.City = App.CurrentUser.City;

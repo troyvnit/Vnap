@@ -50,9 +50,9 @@ namespace Vnap.Service.Utils
             return Settings.Current.Get("Articles", new List<ArticleEntity>());
         }
 
-        public static void SetSettings(List<SettingEntity> posts)
+        public static void SetSettings(List<SettingEntity> settings)
         {
-            Settings.Current.Set("Settings", posts);
+            Settings.Current.Set("Settings", settings);
         }
 
         public static List<SettingEntity> GetSettings()
@@ -74,6 +74,16 @@ namespace Vnap.Service.Utils
         public static User GetUser()
         {
             return Settings.Current.Get("User", new User());
+        }
+
+        public static void SetReadTerms(bool read)
+        {
+            Settings.Current.Set("ReadTerms", read);
+        }
+
+        public static bool GetReadTerms()
+        {
+            return Settings.Current.Get("ReadTerms", false);
         }
     }
 }

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms"
+          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+          xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+          xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+          xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+          xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
+          prism:ViewModelLocator.AutowireViewModel="True"
+          x:Class="Vnap.Views.Templates.AdvisoryMessageViewCell">
+    <StackLayout Padding="0" Spacing="0">
+        <Frame x:Name="ContentFrame" CornerRadius="10" OutlineColor="Black" Padding="10" Margin="20,5,5,5" BackgroundColor="#BEE1C7" HorizontalOptions="End">
+            <Label Text="{Binding Content}" FontSize="13" TextColor="Black" VerticalOptions="Start" />
+        </Frame>
+        <Frame x:Name="ImageFrame" CornerRadius="10" OutlineColor="Black" Padding="0" Margin="20,5,5,5" BackgroundColor="#BEE1C7" HorizontalOptions="End">
+            <Label Text="Đang tải hình..." FontSize="13" TextColor="Black" VerticalOptions="Start" />
+            <ffimageloading:CachedImage Source="{Binding ImageUrl}" Aspect="AspectFill" />
+        </Frame>
+        <Label x:Name="CreatedDate" Text="{Binding CreatedDateDisplay}" FontSize="11" Margin="0,0,5,5" TextColor="Gray" HorizontalOptions="End" />
+    </StackLayout>
+</ViewCell>

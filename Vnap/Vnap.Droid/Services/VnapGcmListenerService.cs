@@ -13,6 +13,7 @@ using Android.Gms.Gcm;
 using Android.Util;
 using Newtonsoft.Json;
 using Vnap.Models;
+using Xamarin.Forms;
 
 namespace Vnap.Droid.Services
 {
@@ -31,11 +32,13 @@ namespace Vnap.Droid.Services
                     if (advisoryMessage.ConversationName == App.CurrentUser.UserName && advisoryMessage.IsAdviser)
                     {
                         SendNotification(!string.IsNullOrEmpty(advisoryMessage.Content) ? advisoryMessage.Content : "[Hình ảnh]", "Vnap đã trả lời câu hỏi của bạn!");
+                        MessagingCenter.Send(advisoryMessage, "UpdateAdvisoryMessages");
                     }
                     break;
                 case "article":
                     var article = JsonConvert.DeserializeObject<Article>(message);
                     SendNotification(!string.IsNullOrEmpty(article.Description) ? article.Description : article.Content, article.Title);
+                    MessagingCenter.Send(article, "UpdateArticles");
                     break;
                 default:
                     break;

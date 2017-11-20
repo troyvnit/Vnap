@@ -144,7 +144,7 @@ namespace Vnap.ViewModels
         {
             if(App.CurrentUser.UserName == null)
             {
-                if (await UserDialogs.Instance.ConfirmAsync("Vui lòng cung cấp thông tin để Vnap hỗ trợ bạn tốt hơn?", "Tu vấn", "Cung cấp", "Để sau"))
+                if (await UserDialogs.Instance.ConfirmAsync("Vui lòng đăng nhập để gửi câu hỏi cho kỹ sư!", null, "Đăng nhập", "Hủy"))
                 {
                     await _navigationService.NavigateAsync("SplashScreen", animated: false, useModalNavigation: true);
                 }
@@ -183,7 +183,7 @@ namespace Vnap.ViewModels
             {
                 if (App.CurrentUser.UserName == null)
                 {
-                    if (await UserDialogs.Instance.ConfirmAsync("Vui lòng cung cấp thông tin để Vnap hỗ trợ bạn tốt hơn?", "Tu vấn", "Cung cấp", "Để sau"))
+                    if (await UserDialogs.Instance.ConfirmAsync("Vui lòng đăng nhập để gửi câu hỏi cho kỹ sư!", null, "Đăng nhập", "Hủy"))
                     {
                         await _navigationService.NavigateAsync("SplashScreen", animated: false, useModalNavigation: true);
                     }
@@ -221,7 +221,9 @@ namespace Vnap.ViewModels
                         UserDialogs.Instance.Alert("Vnap cần quyền truy cập Camera của bạn để thực hiện chức năng này!");
                         return;
                     }
-                    file = await CrossMedia.Current.PickPhotoAsync();
+                    file = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions {
+                        PhotoSize = PhotoSize.Medium
+                    });
 
                     if (file == null)
                         return;
@@ -289,7 +291,7 @@ namespace Vnap.ViewModels
         {
             if (App.CurrentUser.UserName == null)
             {
-                if (await UserDialogs.Instance.ConfirmAsync("Vui lòng cung cấp thông tin để Vnap hỗ trợ bạn tốt hơn?", "Tu vấn", "Cung cấp", "Để sau"))
+                if (await UserDialogs.Instance.ConfirmAsync("Vui lòng đăng nhập để gửi câu hỏi cho kỹ sư!", null, "Đăng nhập", "Hủy"))
                 {
                     await _navigationService.NavigateAsync("SplashScreen", animated: false, useModalNavigation: true);
                     return false;

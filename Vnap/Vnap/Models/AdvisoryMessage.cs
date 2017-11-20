@@ -16,5 +16,6 @@ namespace Vnap.Models
         public string Content { get; set; }
         public string ConversationName { get; set; }
         public DateTime CreatedDate { get; set; }
+        public string CreatedDateDisplay => CreatedDate.ToString("HH:mm");
     }
 }

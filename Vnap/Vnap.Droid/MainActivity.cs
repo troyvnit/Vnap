@@ -18,7 +18,7 @@ using Xamarin.Forms;
 
 namespace Vnap.Droid
 {
-    [Activity(Theme = "@style/MyTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, WindowSoftInputMode = SoftInput.AdjustPan, ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Theme = "@style/MyTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         private bool subscribed;
@@ -42,6 +42,8 @@ namespace Vnap.Droid
 
             var app = new App(new Androidinitializer());
             LoadApplication(app);
+
+            Window.SetSoftInputMode(SoftInput.AdjustResize);
 
             App.IsPlayServicesAvailable = IsPlayServicesAvailable();
             // Check for Google Play Services on the device:

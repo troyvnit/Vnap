@@ -207,7 +207,8 @@ namespace Vnap.ViewModels
                     {
                         SaveToAlbum = true,
                         AllowCropping = true,
-                        PhotoSize = PhotoSize.Medium
+                        PhotoSize = PhotoSize.MaxWidthHeight,
+                        MaxWidthHeight = 1024
                     });
 
                     if (file == null)
@@ -222,7 +223,8 @@ namespace Vnap.ViewModels
                         return;
                     }
                     file = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions {
-                        PhotoSize = PhotoSize.Medium
+                        PhotoSize = PhotoSize.MaxWidthHeight,
+                        MaxWidthHeight = 1024
                     });
 
                     if (file == null)

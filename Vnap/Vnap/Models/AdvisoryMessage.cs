@@ -16,6 +16,7 @@ namespace Vnap.Models
         public string Content { get; set; }
         public string ConversationName { get; set; }
         public DateTime CreatedDate { get; set; }
-        public string CreatedDateDisplay => CreatedDate.ToString("HH:mm");
+        public string CreatedDateDisplay => string.IsNullOrEmpty(Status) ? CreatedDate.ToString("dd/MM/yyyy HH:mm") : $"{Status} - {CreatedDate.ToString("dd/MM/yyyy HH:mm")}";
+        public string Status { get; set; }
     }
 }

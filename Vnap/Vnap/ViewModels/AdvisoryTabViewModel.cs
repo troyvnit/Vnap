@@ -150,12 +150,17 @@ namespace Vnap.ViewModels
                 }
                 return;
             }
-            UserDialogs.Instance.ShowLoading("Đang gửi...");
+            //UserDialogs.Instance.ShowLoading("Đang gửi...");
             var message = new AdvisoryMessage()
             {
                 AuthorName = App.CurrentUser.UserName,
-                Content = NewMessage
+                Content = NewMessage,
+                Status = "Đang gửi",
+                CreatedDate = DateTime.Now
             };
+
+            _messages.Add(message);
+            NewMessage = string.Empty;
             try
             {
                 if (App.HubConnection.State == ConnectionState.Disconnected)
@@ -167,14 +172,15 @@ namespace Vnap.ViewModels
                 var result = await App.HubProxy.Invoke<AdvisoryMessage>("SubscribeAdvisoryMessage", message);
                 if (result != null)
                 {
+                    _messages.Remove(message);
+                    result.Status = "Đã gửi";
                     _messages.Add(result);
-                    NewMessage = string.Empty;
                 }
             }
             catch (Exception e)
             {
             }
-            UserDialogs.Instance.HideLoading();
+            //UserDialogs.Instance.HideLoading();
         }
 
         private async void ExecuteTakeOrPickPhotoCommandAsync()
@@ -233,7 +239,7 @@ namespace Vnap.ViewModels
 
                 if (file != null)
                 {
-                    UserDialogs.Instance.ShowLoading("Đang gửi...");
+                    //UserDialogs.Instance.ShowLoading("Đang gửi...");
                     var content = new MultipartFormDataContent();
                     content.Add(new StreamContent(file.GetStream()), "\"file\"", $"AM_{App.CurrentUser.UserName}_{DateTime.Now.Ticks}.png");
                     var result = await _httpClient.PostAsync($"http://vnap.vn/api/advisorymessage/upload?authorName={App.CurrentUser.UserName}", content);
@@ -246,12 +252,12 @@ namespace Vnap.ViewModels
                             _messages.Add(advisoryMessage);
                         }
                     }
-                    UserDialogs.Instance.HideLoading();
+                    //UserDialogs.Instance.HideLoading();
                 }
             }
             catch (Exception e)
             {
-                UserDialogs.Instance.HideLoading();
+                //UserDialogs.Instance.HideLoading();
             }
         }
 

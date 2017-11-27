@@ -64,7 +64,7 @@
                     <TapGestureRecognizer Command="{Binding TakeOrPickPhotoCommand}" />
                   </iconize:IconLabel.GestureRecognizers>
                 </iconize:IconLabel>
-                <Entry Text="{Binding NewMessage}" Placeholder="Nhập nội dung cần tư vấn..." PlaceholderColor="White" FontSize="16" TextColor="White"
+                <Entry Text="{Binding NewMessage}" Keyboard="Chat" Placeholder="Nhập nội dung cần tư vấn..." PlaceholderColor="White" FontSize="16" TextColor="White"
                                    HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" Focused="NewMessage_Focused"/>
                 <iconize:IconLabel Text="flaticon-paper-plane-1" TextColor="White" FontSize="20" Margin="10,0,10,0" HorizontalTextAlignment="Center"
                                    HorizontalOptions="End" VerticalOptions="CenterAndExpand">

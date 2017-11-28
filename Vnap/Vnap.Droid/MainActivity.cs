@@ -15,6 +15,7 @@ using Vnap.Droid.Services;
 using Vnap.Droid.Services.BackgroundServices;
 using Vnap.Droid.Utils.IconizeModules;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 
 namespace Vnap.Droid
 {
@@ -53,17 +54,32 @@ namespace Vnap.Droid
                 var intent = new Intent(this, typeof(RegistrationIntentService));
                 StartService(intent);
             }
-
-            MessagingCenter.Subscribe<NotificationMessage>(this, "NotificationBackgroundService", message =>
+            else
             {
-                if (!subscribed)
+                MessagingCenter.Subscribe<NotificationMessage>(this, "NotificationBackgroundService", message =>
                 {
-                    var notificationIntent = new Intent(this, typeof(NotificationBackgroundService));
-                    StartService(notificationIntent);
+                    if (!subscribed)
+                    {
+                        var notificationIntent = new Intent(this, typeof(NotificationBackgroundService));
+                        StartService(notificationIntent);
 
-                    subscribed = true;
+                        subscribed = true;
+                    }
+                });
+            }
+        }
+
+        public override Android.Views.View CurrentFocus
+        {
+            get
+            {
+                if (App.LieFocus)
+                {
+                    return null;
                 }
-            });
+
+                return base.CurrentFocus;
+            }
         }
 
         // Utility method to check for the presence of the Google Play Services APK:

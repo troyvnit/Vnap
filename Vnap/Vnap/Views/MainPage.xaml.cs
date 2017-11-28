@@ -35,8 +35,8 @@ namespace Vnap.Views
 
         protected override async void OnAppearing()
         {
-            var context = BindingContext as MainPageViewModel;
-            if (context != null) await context.SyncData();
+            //var context = BindingContext as MainPageViewModel;
+            //if (context != null) await context.SyncData();
             base.OnAppearing();
         }
     }

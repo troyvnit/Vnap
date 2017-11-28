@@ -127,7 +127,7 @@ namespace Vnap.WebApp.Controllers.API
 
         [HttpPost]
         [Route("Upload")]
-        public async Task<AdvisoryMessageVM> Upload(string authorName)
+        public async Task<string> Upload(string authorName)
         {
             try
             {
@@ -149,23 +149,25 @@ namespace Vnap.WebApp.Controllers.API
                             UseFilename = true
                         };
                         var result = await cloudinary.UploadAsync(imageUploadParams);
-                        var conversation = await _conversationRepository.Queryable().FirstOrDefaultAsync(c => c.Name == authorName);
-                        if (conversation == null)
-                        {
-                            conversation = new Conversation()
-                            {
-                                Name = authorName
-                            };
-                            _conversationRepository.Add(conversation);
-                        }
-                        var advisoryMessage = new AdvisoryMessage()
-                        {
-                            AuthorName = authorName,
-                            ImageUrl = result.Uri.AbsoluteUri
-                        };
-                        conversation.AdvisoryMessages.Add(advisoryMessage);
-                        await _conversationRepository.CommitAsync();
-                        return Mapper.Map<AdvisoryMessageVM>(advisoryMessage);
+                        return result.Uri.AbsoluteUri;
+                        //var conversation = await _conversationRepository.Queryable().FirstOrDefaultAsync(c => c.Name == authorName);
+                        //if (conversation == null)
+                        //{
+                        //    conversation = new Conversation()
+                        //    {
+                        //        Name = authorName
+                        //    };
+                        //    _conversationRepository.Add(conversation);
+                        //}
+                        //var advisoryMessage = new AdvisoryMessage()
+                        //{
+                        //    AuthorName = authorName,
+                        //    ImageUrl = result.Uri.AbsoluteUri
+                        //};
+                        //conversation.AdvisoryMessages.Add(advisoryMessage);
+                        //await _conversationRepository.CommitAsync();
+
+                        //return Mapper.Map<AdvisoryMessageVM>(advisoryMessage);
                     }
                 }
             }

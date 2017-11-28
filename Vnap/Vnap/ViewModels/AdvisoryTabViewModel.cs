@@ -72,11 +72,14 @@ namespace Vnap.ViewModels
                 LocalDataStorage.SetAdvisoryMessages(_messages.Select(Mapper.Map<AdvisoryMessageEntity>).ToList());
             });
 
-            //if (App.HubConnection.State == ConnectionState.Disconnected)
+            //Device.BeginInvokeOnMainThread(async () =>
             //{
-            //    App.HubConnection.Start().Wait();
-            //    App.HubProxy.Invoke("HandShake", App.CurrentUser.UserName).Wait();
-            //}
+            //    if (App.HubConnection.State == ConnectionState.Disconnected)
+            //    {
+            //        await App.HubConnection.Start();
+            //        await App.HubProxy.Invoke("HandShake", App.CurrentUser.UserName);
+            //    }
+            //});
             //if (!subscribed)
             //{
             //    App.HubProxy.Subscribe("PublishAdvisoryMessage").Received += rs => {
@@ -142,7 +145,7 @@ namespace Vnap.ViewModels
 
         private async void ExecuteSendAdvisoryMessageCommand()
         {
-            if(App.CurrentUser.UserName == null)
+            if (App.CurrentUser.UserName == null)
             {
                 if (await UserDialogs.Instance.ConfirmAsync("Vui lòng đăng nhập để gửi câu hỏi cho kỹ sư!", null, "Đăng nhập", "Hủy"))
                 {
@@ -161,25 +164,33 @@ namespace Vnap.ViewModels
 
             _messages.Add(message);
             NewMessage = string.Empty;
-            try
+            Device.BeginInvokeOnMainThread(async () =>
             {
-                if (App.HubConnection.State == ConnectionState.Disconnected)
+                try
                 {
-                    App.HubConnection.Start().Wait();
-                    App.HubProxy.Invoke("HandShake", App.CurrentUser.UserName).Wait();
-                }
+                    if (App.HubConnection.State == ConnectionState.Disconnected)
+                    {
+                        App.HubConnection.Start().Wait();
+                        App.HubProxy.Invoke("HandShake", App.CurrentUser.UserName).Wait();
+                    }
 
-                var result = await App.HubProxy.Invoke<AdvisoryMessage>("SubscribeAdvisoryMessage", message);
-                if (result != null)
-                {
-                    _messages.Remove(message);
-                    result.Status = "Đã gửi";
-                    _messages.Add(result);
+                    var result = await App.HubProxy.Invoke<AdvisoryMessage>("SubscribeAdvisoryMessage", message);
+                    if (result != null)
+                    {
+                        _messages.Remove(message);
+                        result.Status = "Đã gửi";
+                        _messages.Add(result);
+                    }
                 }
-            }
-            catch (Exception e)
-            {
-            }
+                catch (Exception e)
+                {
+                    if (App.HubConnection.State == ConnectionState.Disconnected)
+                    {
+                        App.HubConnection.Start().Wait();
+                        App.HubProxy.Invoke("HandShake", App.CurrentUser.UserName).Wait();
+                    }
+                }
+            });
             //UserDialogs.Instance.HideLoading();
         }
 
@@ -228,7 +239,8 @@ namespace Vnap.ViewModels
                         UserDialogs.Instance.Alert("Vnap cần quyền truy cập Camera của bạn để thực hiện chức năng này!");
                         return;
                     }
-                    file = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions {
+                    file = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions
+                    {
                         PhotoSize = PhotoSize.MaxWidthHeight,
                         MaxWidthHeight = 1024
                     });
@@ -240,18 +252,59 @@ namespace Vnap.ViewModels
                 if (file != null)
                 {
                     //UserDialogs.Instance.ShowLoading("Đang gửi...");
-                    var content = new MultipartFormDataContent();
-                    content.Add(new StreamContent(file.GetStream()), "\"file\"", $"AM_{App.CurrentUser.UserName}_{DateTime.Now.Ticks}.png");
-                    var result = await _httpClient.PostAsync($"http://vnap.vn/api/advisorymessage/upload?authorName={App.CurrentUser.UserName}", content);
-                    if (result.IsSuccessStatusCode)
+                    var message = new AdvisoryMessage()
                     {
-                        var contents = await result.Content.ReadAsStringAsync();
-                        if (contents != null)
+                        AuthorName = App.CurrentUser.UserName,
+                        ImageUrl = file.Path,
+                        Status = "Đang gửi",
+                        CreatedDate = DateTime.Now
+                    };
+
+                    _messages.Add(message);
+                    Device.BeginInvokeOnMainThread(async () =>
+                    {
+                        try
                         {
-                            var advisoryMessage = JsonConvert.DeserializeObject<AdvisoryMessage>(contents);
-                            _messages.Add(advisoryMessage);
+                            var content = new MultipartFormDataContent();
+                            content.Add(new StreamContent(file.GetStream()), "\"file\"", $"AM_{App.CurrentUser.UserName}_{DateTime.Now.Ticks}.png");
+                            var result = await _httpClient.PostAsync($"http://vnap.vn/api/advisorymessage/upload?authorName={App.CurrentUser.UserName}", content);
+                            if (result.IsSuccessStatusCode)
+                            {
+                                var contents = await result.Content.ReadAsStringAsync();
+                                if (contents != null)
+                                {
+                                    //var advisoryMessage = JsonConvert.DeserializeObject<AdvisoryMessage>(contents);
+                                    message.ImageUrl = contents.Replace("\"", "");
+
+                                    if (App.HubConnection.State == ConnectionState.Disconnected)
+                                    {
+                                        App.HubConnection.Start().Wait();
+                                        App.HubProxy.Invoke("HandShake", App.CurrentUser.UserName).Wait();
+                                    }
+
+                                    var resultMessage = await App.HubProxy.Invoke<AdvisoryMessage>("SubscribeAdvisoryMessage", message);
+                                    if (resultMessage != null)
+                                    {
+                                        _messages.Remove(message);
+                                        resultMessage.Status = "Đã gửi";
+                                        _messages.Add(resultMessage);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                _messages.Remove(message);
+                                message.Status = "Lỗi";
+                                _messages.Add(message);
+                            }
                         }
-                    }
+                        catch (Exception e)
+                        {
+                            _messages.Remove(message);
+                            message.Status = "Lỗi";
+                            _messages.Add(message);
+                        }
+                    });
                     //UserDialogs.Instance.HideLoading();
                 }
             }

@@ -1,4 +1,5 @@
 ﻿using Acr.UserDialogs;
+using Microsoft.AspNet.SignalR.Client;
 using Prism.Navigation;
 using System.Linq;
 using Vnap.Models;
@@ -26,6 +27,9 @@ namespace Vnap.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
+
+            App.LieFocus = true;
+
             var context = BindingContext as AdvisoryTabViewModel;
             if (context != null && !context.Messages.Any(m => !m.IsIntro)) context.LoadMessages(0);
             var last = MessageListView.ItemsSource.Cast<AdvisoryMessage>().LastOrDefault();
@@ -33,6 +37,12 @@ namespace Vnap.Views
             {
                 MessageListView.ScrollTo(last, ScrollToPosition.MakeVisible, true);
             }
+        }
+
+        protected override void OnDisappearing()
+        {
+            NewMessageEntry.Unfocus();
+            base.OnDisappearing();
         }
 
         private async void NewMessage_Focused(object sender, FocusEventArgs e)

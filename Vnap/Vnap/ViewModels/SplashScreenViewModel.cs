@@ -264,7 +264,6 @@ namespace Vnap.ViewModels
 
         public async Task SyncData()
         {
-
             var user = App.CurrentUser;
             if (!string.IsNullOrEmpty(user?.UserName) && !string.IsNullOrEmpty(user.City) &&
                 !string.IsNullOrEmpty(user.Plant))

@@ -17,10 +17,9 @@
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
 
-    <ffimageloading:CachedImage Source="{Binding Avatar}"
-                                  Aspect="AspectFill"
-                                  Grid.Row="0" Grid.Column="0"
-                                Margin="5"/>
+        <StackLayout HeightRequest="100" WidthRequest="100" Grid.Row="0" Grid.Column="0" Margin="5">
+            <ffimageloading:CachedImage Source="{Binding Avatar}" Aspect="AspectFill"/>
+        </StackLayout>
     <StackLayout Grid.Row="0" Grid.Column="1" Padding="0,5,5,5">
       <Label Text="{Binding Title}" FontSize="13" FontAttributes="Bold" TextColor="Black" 
               VerticalOptions="Start" />
